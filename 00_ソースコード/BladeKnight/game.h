@@ -18,6 +18,7 @@ class CLight;
 class CPlayer;
 class CPolygon;
 class CGame_Object;
+class CScarecrow;
 
 //========================================
 //マクロ
@@ -54,6 +55,7 @@ private:
 	static CPlayer *m_pPlayer;			//プレイヤーのポインタ
 	static CPolygon *m_pPolygon;		//ポリゴンのポインタ
 	static CGame_Object *CGame_Object;	//ゲーム内オブジェクト
+	static CScarecrow *m_pScarecrow;	// チュートリアルエネミーポインタ
 	bool m_bPause;						//ポーズ状態のON/OFF
 };
 

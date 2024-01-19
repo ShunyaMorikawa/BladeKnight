@@ -15,6 +15,7 @@
 #include "player.h"
 #include "polygon.h"
 #include "gameobject.h"
+#include "scarecrow.h"
 
 //========================================
 //マクロ定義
@@ -24,13 +25,14 @@
 //========================================
 //静的メンバ変数
 //========================================
-CObject *CGame::m_pObject[] = {};			//オブジェクトのポインタ
-CObjectX *CGame::m_pObjectX = nullptr;		//オブジェクトXのポインタ
-CObject3D *CGame::m_pObject3D = nullptr;	//オブジェクト3Dのポインタ
-CGame *CGame::m_pGame = nullptr;			//ゲームのポインタ
-CLight *CGame::m_pLight = nullptr;			//ライトのポインタ
-CPlayer *CGame::m_pPlayer = nullptr;		//プレイヤーのポインタ
-CPolygon *CGame::m_pPolygon = nullptr;		//ポリゴンのポインタ
+CObject *CGame::m_pObject[] = {};			// オブジェクトのポインタ
+CObjectX *CGame::m_pObjectX = nullptr;		// オブジェクトXのポインタ
+CObject3D *CGame::m_pObject3D = nullptr;	// オブジェクト3Dのポインタ
+CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
+CLight *CGame::m_pLight = nullptr;			// ライトのポインタ
+CPlayer *CGame::m_pPlayer = nullptr;		// プレイヤーのポインタ
+CPolygon *CGame::m_pPolygon = nullptr;		// ポリゴンのポインタ
+CScarecrow *CGame::m_pScarecrow = nullptr;	// チュートリアルエネミーのポインタ
 
 //========================================
 //コンストラクタ
@@ -103,8 +105,20 @@ HRESULT CGame::Init(void)
 		m_pPolygon = new CPolygon;
 	}
 
-	//プレイヤーの初期化処理
+	//ポリゴン初期化処理
 	if (FAILED(m_pPolygon->Init()))
+	{//初期化処理が失敗した場合
+		return -1;
+	}
+
+	// チュートリアルエネミー初期化
+	if (m_pScarecrow == nullptr)
+	{
+		m_pScarecrow = new CScarecrow;
+	}
+
+	//プレイヤーの初期化処理
+	if (FAILED(m_pScarecrow->Init()))
 	{//初期化処理が失敗した場合
 		return -1;
 	}
@@ -130,6 +144,12 @@ void CGame::Uninit(void)
 	{// ポリゴン破棄
 		m_pPolygon->Uninit();
 		m_pPolygon = nullptr;
+	}
+
+	if (m_pScarecrow != nullptr)
+	{// ポリゴン破棄
+		m_pScarecrow->Uninit();
+		m_pScarecrow = nullptr;
 	}
 }
 

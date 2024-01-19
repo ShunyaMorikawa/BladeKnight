@@ -5,7 +5,6 @@
 //
 //========================================
 #include "player.h"
-#include "object2D.h"
 #include "input.h"
 #include "manager.h"
 #include "renderer.h"
@@ -25,7 +24,7 @@
 #define PLAYER_DASH_INTERVAL		(600)		//ダッシュ出来るまでの間隔
 #define PLAYER_DASH_SPEED			(2.0f)		//ダッシュ時の速さ
 
-#define MOTION_PATH	"data\\FILE\\player.txt"	//読み込むファイルのパス
+#define MOTION_PATH	"data\\FILE\\player0.txt"	//読み込むファイルのパス
 
 //========================================
 //コンストラクタ
@@ -90,7 +89,7 @@ HRESULT CPlayer::Init(void)
 	m_pos = D3DXVECTOR3(0.0f, 0.0, 0.0f);
 
 	//向きの設定
-	m_rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f);
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//モーションのポインタ
 	m_pMotion = nullptr;
