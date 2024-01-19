@@ -14,7 +14,7 @@
 //マクロ定義
 //========================================
 #define CLASS_NAME		"WindowClass"		//ウィンドウクラスの名前
-#define WINDOW_NAME		"shoothingaction"	//ウィンドウの名前
+#define WINDOW_NAME		"BladeKnight"		//ウィンドウの名前
 
 //========================================
 //プロトタイプ宣言

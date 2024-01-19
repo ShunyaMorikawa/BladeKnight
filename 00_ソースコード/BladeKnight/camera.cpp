@@ -349,11 +349,11 @@ float CCamera::RotNor(float RotN)
 //=======================================
 void CCamera::following(void)
 {
-	////モード取得
-	//if (CManager::GetMode() != CScene::MODE_GAME)
-	//{
-	//	return;
-	//}
+	//モード取得
+	if (CManager::GetMode() != CScene::MODE_GAME)
+	{
+		return;
+	}
 
 	//プレイヤーのポインタ
 	CPlayer *pPlayer = CGame::GetPlayer();
