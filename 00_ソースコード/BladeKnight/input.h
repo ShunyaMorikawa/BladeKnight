@@ -90,11 +90,10 @@ public:
 		BUTTON_B,		//Bボタン
 		BUTTON_X,		//Xボタン
 		BUTTON_Y,		//Yボタン
-		BUTTON_XSTICK,	//Xスティック
+		BUTTON_L_STICK,	//Xスティック
 		BUTTON_17,		//不明
 		BUTTON_18,		//不明
-		BUTTON_19,		//不明
-		BUTTON_20,
+		BUTTON_R_STICK,	//不明
 		BUTTONSTATE_MAX
 	};
 
@@ -112,8 +111,8 @@ public:
 	SHORT GetLStickXTrigger(JOYKEY Key, int nPlayer) { return m_aPadStateTrigger[nPlayer].Gamepad.sThumbLX; }	//LスティックのX軸トリガー情報取得
 	SHORT GetLStickYTrigger(JOYKEY Key, int nPlayer) { return m_aPadStateTrigger[nPlayer].Gamepad.sThumbLY; }	//LスティックのY軸トリガー情報取得
 
-	SHORT GetRStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLX; }	//RスティックのX軸プレス情報取得
-	SHORT GetRStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLY; }	//RスティックのY軸プレス情報取得
+	SHORT GetRStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRX; }	//RスティックのX軸プレス情報取得
+	SHORT GetRStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRY; }	//RスティックのY軸プレス情報取得
 
 private:
 	//メンバ変数

@@ -272,7 +272,7 @@ void CCamera::CameraMoveV(void)
 	pInputPad = CManager::GetInputPad();			//コントローラーの情報取得
 
 	//Zキーが押された
-	if (pInputKeyboard->GetPress(DIK_C) == true)
+	if (pInputKeyboard->GetPress(DIK_C) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)
 	{
 		m_rot.y += CAMV_MOVE;
 
@@ -283,7 +283,7 @@ void CCamera::CameraMoveV(void)
 		m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
 	}
 	//Cキーが押された
-	else if (pInputKeyboard->GetPress(DIK_Z) == true)
+	else if (pInputKeyboard->GetPress(DIK_Z) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) < 0)
 	{
 		m_rot.y -= CAMV_MOVE;
 
@@ -362,15 +362,13 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	Diff = D3DXVECTOR3(m_RDest.x - m_posR.x, 
 						0.0f, 
 						m_RDest.z - m_posR.z);
+	//注視点の慣性
+	m_posR += Diff * CAM_R_INERTIA;
 
 	//視点
 	VDiff = D3DXVECTOR3(m_VDest.x - m_posV.x, 
 						0.0f,
 						m_VDest.z - m_posV.z);
-
-	//注視点の慣性
-	m_posR += Diff * CAM_R_INERTIA;
-
 	//視点の慣性
 	m_posV += VDiff * CAM_V_INERTIA;
 }
