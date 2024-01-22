@@ -94,9 +94,6 @@ void CCamera::Update(void)
 	//視点の移動
 	CameraMoveV();
 
-	//カメラの追従
-	following();
-
 #ifdef _DEBUG
 	//デバッグ表示
 	pDebugProc->Print("\n視点の位置：%f、%f、%f\n", m_posV.x, m_posV.y, m_posV.z);
@@ -347,45 +344,29 @@ float CCamera::RotNor(float RotN)
 //=======================================
 //カメラ追従
 //=======================================
-void CCamera::following(void)
+void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	//モード取得
-	if (CManager::GetMode() != CScene::MODE_GAME)
-	{
-		return;
-	}
-
-	//プレイヤーのポインタ
-	CPlayer *pPlayer = CGame::GetPlayer();
-
 	//注視点
 	D3DXVECTOR3 Diff;
 
 	//視点
 	D3DXVECTOR3 VDiff;
 
-	//プレイヤーの位置取得
-	D3DXVECTOR3 pos = pPlayer->GetPosition();
-
-	//プレイヤーの向き取得
-	D3DXVECTOR3 rot = pPlayer->GetRot();
-
 	//注視点
-	m_RDest = D3DXVECTOR3(pos.x + -sinf(rot.y) * CAMR, 
-		pos.y, pos.z + -cosf(rot.y) * 25.0f);
+	m_RDest = D3DXVECTOR3(pos.x + -sinf(rot.y) * CAMR, pos.y, pos.z + -cosf(rot.y) * 25.0f);
 
 	m_VDest.x = m_RDest.x + cosf(m_rot.y) * m_fDistance;
 	m_VDest.z = m_RDest.z + sinf(m_rot.y) * m_fDistance;
 
 	//注視点
 	Diff = D3DXVECTOR3(m_RDest.x - m_posR.x, 
-		0.0f, 
-		m_RDest.z - m_posR.z);
+						0.0f, 
+						m_RDest.z - m_posR.z);
 
 	//視点
 	VDiff = D3DXVECTOR3(m_VDest.x - m_posV.x, 
-		0.0f,
-		m_VDest.z - m_posV.z);
+						0.0f,
+						m_VDest.z - m_posV.z);
 
 	//注視点の慣性
 	m_posR += Diff * CAM_R_INERTIA;

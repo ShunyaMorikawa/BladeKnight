@@ -167,6 +167,10 @@ void CPlayer::Update(void)
 	//ポインタ
 	CDebugProc *pDebugProc = CManager::GetDebugProc();
 
+	//カメラ追従
+	CCamera *pCampera = CManager::GetCamera();
+	pCampera->following(pos, rot);
+
 	//デバッグ表示
 	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
@@ -236,51 +240,100 @@ void CPlayer::Move(float fSpeed)
 	//目的の向き
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
+	//Aが押された
 	if (pInputKeyboard->GetPress(DIK_A) == true || pInputPad->GetLStickXPress(CInputPad::BUTTON_XSTICK, 0) < 0)
-	{//Aが押された
-		m_move.x += cosf(rot.y + (-D3DX_PI * 0.5f)) * fSpeed;
-
-		//移動方向にモデルを向ける
-		m_RotDest.y = -rot.y;
-
-		if (pInputKeyboard->GetPress(DIK_LSHIFT) == true || pInputPad->GetPress(CInputPad::BUTTON_B, 0) == true)
+	{
+		//左上
+		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_XSTICK, 0) > 0)
 		{
-			m_move.x += cosf(rot.y + (-D3DX_PI * 0.5f)) * (fSpeed *  PLAYER_DASH_SPEED);
+			m_move.x += cosf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
+			m_move.z += sinf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
+
+			//移動方向にモデルを向ける
+			m_RotDest.y = -rot.y + (D3DX_PI * 0.25f);
 		}
+		//左下
+		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_XSTICK, 0) < 0)
+		{
+			m_move.x += cosf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
+			m_move.z += sinf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
 
-		//注視点をずらす
-		PosR - m_move;
+			//移動方向にモデルを向ける
+			m_RotDest.y = -rot.y + (-D3DX_PI * 0.25f);
 
-		//移動状態にする
-		m_bMove = true;
+		}
+		else
+		{//左
+			m_move.x += cosf(rot.y + (-D3DX_PI * 0.5f)) * fSpeed;
+			m_move.z += sinf(rot.y + (-D3DX_PI * 0.5f)) * fSpeed;
+
+			//移動方向にモデルを向ける
+			m_RotDest.y = -rot.y;
+
+			//注視点をずらす
+			PosR - m_move;
+		}
 	}
-	
-	else if (pInputKeyboard->GetPress(DIK_D) == true || pInputPad->GetLStickXPress(CInputPad::BUTTON_XSTICK, 0) > 0)
-	{//Dが押された
-		m_move.x += cosf(rot.y + (D3DX_PI * 0.5f)) * fSpeed;
 
-		if (pInputKeyboard->GetPress(DIK_LSHIFT) == true || pInputPad->GetPress(CInputPad::BUTTON_B, 0) == true)
-		{
-			m_move.x += cosf(rot.y + (D3DX_PI * 0.5f)) * (fSpeed *  PLAYER_DASH_SPEED);
+	//Dが押された
+	else if (pInputKeyboard->GetPress(DIK_D) == true || pInputPad->GetLStickXPress(CInputPad::BUTTON_XSTICK, 0) > 0)
+	{
+		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_XSTICK, 0) > 0)
+		{//右上
+			m_move.x += cosf(rot.y + (D3DX_PI * 0.75f)) * fSpeed;
+			m_move.z += sinf(rot.y + (D3DX_PI * 0.75f)) * fSpeed;
+
+			//移動方向にモデルを向ける
+			m_RotDest.y = -rot.y + (D3DX_PI * 0.75f);
 		}
+		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_XSTICK, 0) < 0)
+		{//右下
+			m_move.x += cosf(rot.y + (D3DX_PI * 0.25f)) * fSpeed;
+			m_move.z += sinf(rot.y + (D3DX_PI * 0.25f)) * fSpeed;
+
+			//移動方向にモデルを向ける
+			m_RotDest.y = -rot.y + (-D3DX_PI * 0.75f);
+		}
+		else
+		{//右
+			m_move.x += cosf(rot.y + (D3DX_PI * 0.5f)) * fSpeed;
+			m_move.z += sinf(rot.y + (D3DX_PI * 0.5f)) * fSpeed;
+
+			//移動方向にモデルを向ける
+			m_RotDest.y = -rot.y + D3DX_PI;
+
+			//注視点をずらす
+			PosR + m_move;
+		}
+	}
+
+	//Wが押された
+	else if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_XSTICK, 0) > 0)
+	{
+		m_move.x -= cosf(rot.y) * fSpeed;
+		m_move.z -= sinf(rot.y) * fSpeed;
 
 		//移動方向にモデルを向ける
-		m_RotDest.y = -rot.y + D3DX_PI;
+		m_RotDest.y = -rot.y + (D3DX_PI * 0.5f);
+	}
 
-		//注視点をずらす
-		PosR + m_move;
+	//Sが押された
+	else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_XSTICK, 0) < 0)
+	{
+		m_move.x += cosf(rot.y) * fSpeed;
+		m_move.z += sinf(rot.y) * fSpeed;
 
-		//移動状態にする
-		m_bMove = true;
+		//移動方向にモデルを向ける
+		m_RotDest.y = -rot.y - (D3DX_PI * 0.5f);
 	}
 
 	//位置を更新
 	m_pos.x += m_move.x;
-	m_pos.y += m_move.y;
+	m_pos.z += m_move.z;
 
 	//移動量を更新(減衰させる)
 	m_move.x += (0.0f - m_move.x) * PLAYER_INERTIA;
-	m_move.y += (0.0f - m_move.y) * PLAYER_INERTIA;
+	m_move.z += (0.0f - m_move.z) * PLAYER_INERTIA;
 
 	//目的の向き
 	DiffRot.y = m_RotDest.y - m_rot.y;

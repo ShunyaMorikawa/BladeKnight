@@ -22,7 +22,7 @@ public:
 	enum MOTIONTYPE
 	{//ƒ‚[ƒVƒ‡ƒ“‚ÌŽí—Þ
 		MOTIONTYPE_NEUTRAL = 0,	//‘Ò‹@ó‘Ô
-		MOTIONTYPE_WALK,			//•à‚«ó‘Ô
+		MOTIONTYPE_WALK,		//•à‚«ó‘Ô
 		MOTIONTYPE_MAX
 	};
 

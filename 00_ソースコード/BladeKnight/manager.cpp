@@ -111,6 +111,13 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//モード設定
 	SetMode(CScene::MODE_TITLE);
 
+#ifdef _DEBUG
+	{
+		//モード設定
+		SetMode(CScene::MODE_GAME);
+	}
+#endif
+
 	//成功を返す
 	return S_OK;
 }
