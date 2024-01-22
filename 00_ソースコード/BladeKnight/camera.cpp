@@ -19,7 +19,7 @@
 #define MOVEFAST		(0.2f)		//カメラの慣性
 #define CAMR			(25.0f)		//注視点の距離
 #define CAMV_MOVE		(0.03f)		//視点の移動速度
-#define CAM_DISDTANCE	(100.0f)	//カメラとプレイヤーの距離
+#define CAM_DISDTANCE	(250.0f)	//カメラとプレイヤーの距離
 #define CAM_R_INERTIA	(0.3f)		//注視点の慣性
 #define CAM_V_INERTIA	(0.2f)		//視点の慣性
 
@@ -50,7 +50,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init(void)
 {
 	//視点
-	m_posV = D3DXVECTOR3(0.0f, 50.0f, -500.0f);
+	m_posV = D3DXVECTOR3(0.0f, 200.0f, -500.0f);
 
 	//注視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -118,7 +118,7 @@ void CCamera::SetCamera(void)
 
 	//プロジェクションマトリックスを作成[透視投影]
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
-								D3DXToRadian(100.0f),	//視野角
+								D3DXToRadian(75.0f),	//視野角
 								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
 								10.0f,		//Z値の最小値
 								1000.0f);	//Z値の最大値

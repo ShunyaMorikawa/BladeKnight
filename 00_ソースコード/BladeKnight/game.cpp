@@ -99,6 +99,18 @@ HRESULT CGame::Init(void)
 		return -1;
 	}
 
+	// チュートリアルエネミー初期化
+	if (m_pScarecrow == nullptr)
+	{
+		m_pScarecrow = new CScarecrow;
+	}
+
+	//チュートリアルエネミー7の初期化処理
+	if (FAILED(m_pScarecrow->Init()))
+	{//初期化処理が失敗した場合
+		return -1;
+	}
+
 	// ポリゴンの初期化
 	if (m_pPolygon == nullptr)
 	{
@@ -107,18 +119,6 @@ HRESULT CGame::Init(void)
 
 	//ポリゴン初期化処理
 	if (FAILED(m_pPolygon->Init()))
-	{//初期化処理が失敗した場合
-		return -1;
-	}
-
-	// チュートリアルエネミー初期化
-	if (m_pScarecrow == nullptr)
-	{
-		m_pScarecrow = new CScarecrow;
-	}
-
-	//プレイヤーの初期化処理
-	if (FAILED(m_pScarecrow->Init()))
 	{//初期化処理が失敗した場合
 		return -1;
 	}
@@ -147,7 +147,7 @@ void CGame::Uninit(void)
 	}
 
 	if (m_pScarecrow != nullptr)
-	{// ポリゴン破棄
+	{// エネミー破棄
 		m_pScarecrow->Uninit();
 		m_pScarecrow = nullptr;
 	}
@@ -166,6 +166,15 @@ void CGame::Update(void)
 	{
 		CManager::SetMode(CScene::MODE_RESULT);
 	}
+
+#ifdef _DEBUG
+	{
+		if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
+		{
+			CManager::SetMode(CScene::MODE_GAME);
+		}	}
+#endif
+
 }
 
 //========================================

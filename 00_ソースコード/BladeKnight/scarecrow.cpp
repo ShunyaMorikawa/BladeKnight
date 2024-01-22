@@ -17,7 +17,7 @@
 //========================================
 //マクロ定義
 //========================================
-#define MOTION_PATH	"data\\FILE\\player0.txt"	//読み込むファイルのパス
+#define MOTION_PATH	"data\\FILE\\scarecrow.txt"	//読み込むファイルのパス
 
 //========================================
 // コンストラクタ
@@ -112,6 +112,12 @@ void CScarecrow::Uninit(void)
 //========================================
 void CScarecrow::Update(void)
 {
+	//ポインタ
+	CDebugProc *pDebugProc = CManager::GetDebugProc();
+
+	//デバッグ表示
+	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
+	pDebugProc->Print("敵の向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 }
 
 //========================================
@@ -144,6 +150,9 @@ void CScarecrow::Draw(void)
 
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+	//モーション描画
+	m_pMotion->Draw();
 }
 
 //=======================================

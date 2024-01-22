@@ -191,12 +191,6 @@ void CMotion::Update(void)
 			m_nKey = 0;
 		}
 	}
-
-#ifdef _DEBUG
-	//デバッグ表示
-	pDebugProc->Print("\n現在のキー：%d\n", m_aInfo[m_nType].aKeyInfo);
-#endif
-
 }
 
 //========================================
