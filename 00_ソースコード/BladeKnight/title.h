@@ -10,8 +10,6 @@
 #include "manager.h"
 #include "object2D.h"
 #include "renderer.h"
-#include "texture.h"
-#include "input.h"
 
 //========================================
 //タイトルクラス

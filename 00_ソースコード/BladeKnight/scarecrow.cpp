@@ -52,9 +52,6 @@ CScarecrow *CScarecrow::Create()
 
 		// 初期化
 		pScarecrow->Init();
-
-		// 初期位置
-		pScarecrow->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 50.0f));
 	}
 
 	return pScarecrow;
@@ -64,10 +61,7 @@ CScarecrow *CScarecrow::Create()
 // 初期化
 //========================================
 HRESULT CScarecrow::Init(void)
-{
-	// 位置
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	
+{	
 	// 向き
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -79,6 +73,9 @@ HRESULT CScarecrow::Init(void)
 
 	// 最大値
 	m_vtxMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// 位置設定
+	SetPosition(D3DXVECTOR3(0.0f, 50.0f, 0.0f));
 
 	//モーションのポインタ
 	m_pMotion = nullptr;

@@ -20,11 +20,8 @@
 //========================================
 #define PLAYER_SPEED	(1.0f)		//プレイヤーの移動速度
 #define PLAYER_INERTIA	(0.3f)		//プレイヤーの慣性
-#define PLAYER_DASH		(120)		//プレイヤーがダッシュ出来る時間
-#define PLAYER_DASH_INTERVAL		(600)		//ダッシュ出来るまでの間隔
-#define PLAYER_DASH_SPEED			(2.0f)		//ダッシュ時の速さ
 
-#define MOTION_PATH	"data\\FILE\\player0.txt"	//読み込むファイルのパス
+#define PLAYER_PATH	"data\\FILE\\player.txt"	//読み込むファイルのパス
 
 //========================================
 //コンストラクタ
@@ -68,12 +65,6 @@ CPlayer *CPlayer::Create(void)
 
 		//初期化
 		pPlayer->Init();
-
-		//プレイヤーの初期位置
-		pPlayer->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-
-		//プレイヤーの初期向き
-		pPlayer->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
 	//ポインタを返す
@@ -85,17 +76,17 @@ CPlayer *CPlayer::Create(void)
 //========================================
 HRESULT CPlayer::Init(void)
 {
-	//位置の設定
-	m_pos = D3DXVECTOR3(0.0f, 0.0, 0.0f);
-
-	//向きの設定
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
 	//モーションのポインタ
 	m_pMotion = nullptr;
 
 	//目的の向き
 	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	//プレイヤーの初期位置
+	SetPosition(D3DXVECTOR3(0.0f, 0.0f, -150.0f));
+
+	//プレイヤーの初期向き
+	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	if (m_pMotion == nullptr)
 	{
@@ -103,7 +94,7 @@ HRESULT CPlayer::Init(void)
 		m_pMotion = CMotion::Create();
 
 		//モーション読み込み
-		m_pMotion->Load(MOTION_PATH);
+		m_pMotion->Load(PLAYER_PATH);
 
 		//待機モーション
 		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
@@ -157,7 +148,7 @@ void CPlayer::Update(void)
 	Move(PLAYER_SPEED);
 
 	//位置更新
-	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, pos.y += m_move.y, 0.0f));
+	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
 
 	//カメラ追従
 	CCamera *pCampera = CManager::GetCamera();
@@ -260,7 +251,6 @@ void CPlayer::Move(float fSpeed)
 
 			//移動方向にモデルを向ける
 			m_RotDest.y = -rot.y + (-D3DX_PI * 0.25f);
-
 		}
 		else
 		{//左
@@ -292,7 +282,7 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (D3DX_PI * 0.25f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y + (-D3DX_PI * 0.75f);
+			m_RotDest.y = -rot.y - (D3DX_PI * 0.75f);
 		}
 		else
 		{//右

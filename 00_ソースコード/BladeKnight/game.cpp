@@ -172,7 +172,8 @@ void CGame::Update(void)
 		if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 		{
 			CManager::SetMode(CScene::MODE_GAME);
-		}	}
+		}	
+	}
 #endif
 
 }

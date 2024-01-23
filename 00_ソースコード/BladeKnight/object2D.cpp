@@ -373,6 +373,27 @@ void CObject2D::SetVertexEffect(float m_fRadius, D3DXCOLOR m_col)
 }
 
 //========================================
+// 頂点情報の色設定
+//========================================
+void CObject2D::SetVertexColor(D3DXCOLOR col)
+{
+	//頂点情報へのポインタ
+	VERTEX_2D *pVtx;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点カラーの設定
+	pVtx[0].col = col;
+	pVtx[1].col = col;
+	pVtx[2].col = col;
+	pVtx[3].col = col;
+
+	//頂点バッファをアンロック
+	m_pVtxBuff->Unlock();
+}
+
+//========================================
 //スコア頂点情報
 //========================================
 void CObject2D::SetScoreVertex(void)

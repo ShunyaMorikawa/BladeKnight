@@ -41,7 +41,7 @@ public:
 	void SetVertexMoveBg(void);
 	void SetScoreVertex(void);		//スコアの頂点情報
 	void SetScore(int nNum[8]);
-
+	void SetVertexColor(D3DXCOLOR col);
 private:
 	//メンバ変数
 	int m_nIdxTexture;		//テクスチャの番号

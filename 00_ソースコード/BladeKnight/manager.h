@@ -83,6 +83,7 @@ public:
 	static void SetMode(CScene::MODE mode);
 	static CScene::MODE GetMode(void) { return m_pScene->GetMode(); }	//モード取得
 	static CCamera *GetCamera(void) { return m_pCamera; }
+	static CFade *GetFade(void) { return m_pFade; }
 
 private:
 	//メンバ変数
@@ -97,6 +98,7 @@ private:
 	static CTexture *m_pTexture;		//テクスチャへのポインタ
 	static CGame *m_pGame;				//ゲームマネージャーのポインタ
 	static CCamera *m_pCamera;			//カメラのポインタ
+	static CFade *m_pFade;				// フェードのポインタ
 };
 
 #endif

@@ -5,6 +5,8 @@
 //
 //========================================
 #include "title.h"
+#include "texture.h"
+#include "input.h"
 
 //=======================================
 //マクロ定義
@@ -103,13 +105,13 @@ void CTitle::Update(void)
 
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInputPad();			//コントローラーの情報取得
+	pInputPad = CManager::GetInputPad();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{
-		//モード設定
+		// 画面遷移(フェード)
 		CManager::SetMode(CScene::MODE_TUTORIAL);
 	}
 }
