@@ -46,7 +46,7 @@ CHARACTERSET
 	PARTSSET						# [1]ëÃ
 		INDEX = 1
 		PARENT = 0					# (êe)çò
-		POS = 0.0 0.0 0.0
+		POS = 0.0 30.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 

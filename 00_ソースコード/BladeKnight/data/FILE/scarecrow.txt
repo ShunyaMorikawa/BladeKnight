@@ -1,6 +1,6 @@
 #==============================================================================
 #
-# 『モーション』スクリプトファイル [player.txt]
+# 『モーション』スクリプトファイル [scarecrow.txt]
 # Author : MORIKAWA SHUNYA
 #
 #==============================================================================
@@ -146,7 +146,7 @@ MOTIONSET
 	LOOP = 1		# ループするかどうか[0:ループしない / 1:ループする]
 	NUM_KEY = 2		# キー数
 
-	KEYSET			# --- << KEY : 0 / 2 >> ---
+	KEYSET
 		FRAME = 70
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -219,7 +219,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 
-	KEYSET			# --- << KEY : 1 / 2 >> ---
+	KEYSET
 		FRAME = 70
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -300,7 +300,7 @@ MOTIONSET
 	LOOP = 0		# ループするかどうか[0:ループしない / 1:ループする]
 	NUM_KEY = 2		# キー数
 
-	KEYSET			# --- << KEY : 0 / 2 >> ---
+	KEYSET
 		FRAME = 20
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -373,7 +373,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 
-	KEYSET			# --- << KEY : 1 / 2 >> ---
+	KEYSET
 		FRAME = 20
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -454,7 +454,7 @@ MOTIONSET
 	LOOP = 0		# ループするかどうか[0:ループしない / 1:ループする]
 	NUM_KEY = 5		# キー数
 
-	KEYSET			# --- << KEY : 0 / 5 >> ---
+	KEYSET
 		FRAME = 10
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -527,7 +527,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 
-	KEYSET			# --- << KEY : 1 / 5 >> ---
+	KEYSET
 		FRAME = 10
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -600,7 +600,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 
-	KEYSET			# --- << KEY : 2 / 5 >> ---
+	KEYSET
 		FRAME = 10
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -673,7 +673,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 
-	KEYSET			# --- << KEY : 3 / 5 >> ---
+	KEYSET
 		FRAME = 10
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
@@ -746,7 +746,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 
-	KEYSET			# --- << KEY : 4 / 5 >> ---
+	KEYSET
 		FRAME = 10
 		KEY	# ----- [ 0 ] -----
 			POS = 0.00 0.00 0.00
