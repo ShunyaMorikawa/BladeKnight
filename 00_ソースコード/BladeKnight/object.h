@@ -19,26 +19,6 @@
 class CObject
 {
 public: 
-	enum TYPE
-	{//種類
-		TYPE_NONE = 0,	//種類無し
-		TYPE_PLAYER,	//プレイヤー
-		TYPE_ENEMY,		//敵
-		TYPE_BULLET,	//弾
-		TYPE_EXPLOSION,	//爆発
-		TYPE_EFFECT,	//エフェクト
-		TYPE_ITEM,		//アイテム
-		TYPE_MAX
-	};
-
-	enum ITEM
-	{//アイテム
-		ITEM_NONE = 0,
-		ITEM_HEAL,		//回復
-		ITEM_BULLET,	//弾
-		ITEM_MAX
-	};
-
 	CObject();				//コンストラクタ
 	virtual ~CObject();		//デストラクタ
 

@@ -55,7 +55,7 @@ CTitle *CTitle::Create(void)
 HRESULT CTitle::Init(void)
 {
 	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetTexture();
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	if (m_pObj2D == nullptr)
 	{
@@ -101,18 +101,18 @@ void CTitle::Update(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInputPad();
+	pInputPad = CManager::GetInstance()->GetInputPad();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{
 		// 画面遷移(フェード)
-		CManager::SetMode(CScene::MODE_TUTORIAL);
+		CManager::GetInstance()->SetMode(CScene::MODE_TUTORIAL);
 	}
 }
 

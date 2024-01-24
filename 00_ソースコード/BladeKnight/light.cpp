@@ -30,7 +30,7 @@ CLight::~CLight()
 HRESULT CLight::Init(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

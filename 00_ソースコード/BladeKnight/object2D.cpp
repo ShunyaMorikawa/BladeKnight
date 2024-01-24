@@ -71,7 +71,7 @@ CObject2D *CObject2D::Create()
 HRESULT CObject2D::Init(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
@@ -131,13 +131,13 @@ void CObject2D::Update(void)
 void CObject2D::Draw(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
 
 	//CTexture型のポインタ
-	CTexture *pTexture = CManager::GetTexture();
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	if (pDevice != nullptr)
 	{
@@ -399,7 +399,7 @@ void CObject2D::SetVertexColor(D3DXCOLOR col)
 void CObject2D::SetScoreVertex(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

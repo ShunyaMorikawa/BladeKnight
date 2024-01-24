@@ -91,7 +91,7 @@ int CTexture::Regist(const char *pFilename)
 		if (m_apTexture[nCntTex] == nullptr)
 		{//nullptrの時
 			//CRenderer型のポインタ
-			CRenderer *pRenderer = CManager::GetRenderer();
+			CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 			//デバイスの取得
 			LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

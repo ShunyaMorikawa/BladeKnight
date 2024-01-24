@@ -88,14 +88,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 		nullptr);						//ウィンドウ作成データ
 
 	//マネージャのポインタ
-	CManager *pManager = nullptr;
+	CManager *pManager = CManager::GetInstance();
 
-	if (pManager == nullptr)
-	{//マネージャ生成
-		pManager = new CManager;
-	}
-
-	if (pManager != nullptr)
 	{//マネージャ初期化
 		pManager->Init(hInstance, hWnd, TRUE);
 	}

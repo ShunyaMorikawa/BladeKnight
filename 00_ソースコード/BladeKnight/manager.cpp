@@ -18,13 +18,7 @@
 //========================================
 //静的メンバ変数
 //========================================
-CRenderer *CManager::m_pRenderer = nullptr;
-CInputKeyboard *CManager::m_pInputKeyboard = nullptr;
-CInputPad *CManager::m_pInputPad = nullptr;
-CScene *CManager::m_pScene = nullptr;
-CTexture *CManager::m_pTexture = nullptr;
-CDebugProc *CManager::m_pDebugProc = nullptr;
-CCamera *CManager::m_pCamera = nullptr;
+CManager *CManager::m_pManager = nullptr;
 
 //========================================
 //コンストラクタ
@@ -41,6 +35,21 @@ CManager::CManager(void) :
 //========================================
 CManager::~CManager(void)
 {
+}
+
+//========================================
+// シングルトン
+//========================================
+CManager * CManager::GetInstance()
+{
+	if (m_pManager == nullptr)
+	{//インスタンス生成
+		return m_pManager = new CManager;
+	}
+	else
+	{//ポインタを返す
+		return m_pManager;
+	}
 }
 
 //========================================

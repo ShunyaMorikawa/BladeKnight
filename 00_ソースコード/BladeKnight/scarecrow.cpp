@@ -110,7 +110,7 @@ void CScarecrow::Uninit(void)
 void CScarecrow::Update(void)
 {
 	//ポインタ
-	CDebugProc *pDebugProc = CManager::GetDebugProc();
+	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//デバッグ表示
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
@@ -126,7 +126,7 @@ void CScarecrow::Draw(void)
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

@@ -43,7 +43,7 @@ HRESULT CObjectX::Init(void)
 	BYTE *pVtxBuff;		//頂点バッファへのポインタ
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
@@ -163,7 +163,7 @@ void CObjectX::Draw(void)
 	D3DXMATERIAL *pMat;
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

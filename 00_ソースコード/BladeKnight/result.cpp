@@ -60,7 +60,7 @@ CResult *CResult::Create(void)
 HRESULT CResult::Init(void)
 {
 	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetTexture();
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	if (m_pObj2D == nullptr)
 	{
@@ -107,17 +107,17 @@ void CResult::Update(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInputPad();			//コントローラーの情報取得
+	pInputPad = CManager::GetInstance()->GetInputPad();			//コントローラーの情報取得
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true 
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{//ゲーム画面に遷移
-		CManager::SetMode(CScene::MODE_TITLE);
+		CManager::GetInstance()->SetMode(CScene::MODE_TITLE);
 	}
 }
 

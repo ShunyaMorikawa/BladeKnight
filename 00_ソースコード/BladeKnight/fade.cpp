@@ -102,7 +102,7 @@ void CFade::Update()
 				m_State = FADE_IN;
 
 				//ƒ‚[ƒhÝ’è
-				CManager::SetMode(m_modeNext);
+				CManager::GetInstance()->SetMode(m_modeNext);
 			}
 		}
 	}

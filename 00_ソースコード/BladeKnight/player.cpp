@@ -83,7 +83,7 @@ HRESULT CPlayer::Init(void)
 	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//プレイヤーの初期位置
-	SetPosition(D3DXVECTOR3(0.0f, 0.0f, -150.0f));
+	SetPosition(D3DXVECTOR3(0.0f, 0.0f, -300.0f));
 
 	//プレイヤーの初期向き
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -136,7 +136,7 @@ void CPlayer::Update(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//位置取得
 	D3DXVECTOR3 pos = GetPosition();
@@ -151,7 +151,7 @@ void CPlayer::Update(void)
 	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
 
 	//カメラ追従
-	CCamera *pCampera = CManager::GetCamera();
+	CCamera *pCampera = CManager::GetInstance()->GetCamera();
 	pCampera->following(pos, rot);
 
 	if (m_pMotion != nullptr)
@@ -160,7 +160,7 @@ void CPlayer::Update(void)
 	}
 
 	//ポインタ
-	CDebugProc *pDebugProc = CManager::GetDebugProc();
+	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//デバッグ表示
 	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
@@ -176,7 +176,7 @@ void CPlayer::Draw(void)
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
@@ -209,15 +209,15 @@ void CPlayer::Move(float fSpeed)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();	//キーボードの情報取得
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
 
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInputPad();	//コントローラーの情報取得
+	pInputPad = CManager::GetInstance()->GetInputPad();	//コントローラーの情報取得
 
 	//CCamera型のポインタ
 	CCamera *pCamera = nullptr;
-	pCamera = CManager::GetCamera();
+	pCamera = CManager::GetInstance()->GetCamera();
 
 	//rotの取得
 	D3DXVECTOR3 rot = pCamera->GetRot();

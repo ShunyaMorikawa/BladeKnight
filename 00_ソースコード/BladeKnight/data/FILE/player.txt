@@ -34,7 +34,6 @@ MODEL_FILENAME = data/model/player/14_L_sword.x		# [14]左手武器
 # キャラクター情報
 #------------------------------------------------------------------------------
 CHARACTERSET
-	MOVE = 3.0						# 移動量
 	NUM_PARTS = 15					# パーツ数
 
 	PARTSSET						# [0]腰

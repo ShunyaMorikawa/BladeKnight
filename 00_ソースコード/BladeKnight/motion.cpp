@@ -94,7 +94,7 @@ void CMotion::Uninit(void)
 void CMotion::Update(void)
 {
 	//CDebugProc型ポインタ
-	CDebugProc *pDebugProc = CManager::GetDebugProc();
+	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//位置
 	float fDiffPosX = 0;	//差分
@@ -332,15 +332,6 @@ void CMotion::Load(char *pPath)
 				{//文字列がEND_CHARACTERSETの時
 					//抜け出す
 					break;
-				}
-
-				if (strcmp(&garbage[0], "MOVE") == 0)
-				{//文字列がMOVEの時
-					//=捨てる
-					fscanf(pFile, "%s", &garbage[0]);
-
-					//移動量を入れる
-					fscanf(pFile, "%f", &move);
 				}
 
 				if (strcmp(&garbage[0], "NUM_PARTS") == 0)

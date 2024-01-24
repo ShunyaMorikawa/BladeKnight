@@ -86,10 +86,10 @@ void CCamera::Update(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//CDebugProc型ポインタ
-	CDebugProc *pDebugProc = CManager::GetDebugProc();
+	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//視点の移動
 	CameraMoveV();
@@ -108,7 +108,7 @@ void CCamera::Update(void)
 void CCamera::SetCamera(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
@@ -153,7 +153,7 @@ void CCamera::Move(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//Aキーが押された
 	if (pInputKeyboard->GetPress(DIK_A) == true)
@@ -265,11 +265,11 @@ void CCamera::CameraMoveV(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();	//キーボードの情報取得
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
 
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInputPad();			//コントローラーの情報取得
+	pInputPad = CManager::GetInstance()->GetInputPad();			//コントローラーの情報取得
 
 	//Zキーが押された
 	if (pInputKeyboard->GetPress(DIK_C) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)

@@ -73,7 +73,7 @@ void CObject::UpdateAll(void)
 //========================================
 void CObject::DrawAll(void)
 {
-	CCamera *pCamera = CManager::GetCamera();
+	CCamera *pCamera = CManager::GetInstance()->GetCamera();
 
 	//ƒJƒƒ‰Ý’è
 	pCamera->SetCamera();

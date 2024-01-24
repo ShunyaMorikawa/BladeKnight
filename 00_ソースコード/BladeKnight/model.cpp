@@ -61,7 +61,7 @@ HRESULT CModel::Init(const char *pFilename)
 	D3DXMATERIAL *pMat;
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
@@ -142,7 +142,7 @@ void CModel::Draw(void)
 	D3DXMATRIX mtxParent;			//親モデルのマトリックス
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

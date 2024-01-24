@@ -33,7 +33,6 @@ MODEL_FILENAME = data/model/scarecrow/13_enemysword.x	# [13]武器
 # キャラクター情報
 #------------------------------------------------------------------------------
 CHARACTERSET
-	MOVE = 3.0						# 移動量
 	NUM_PARTS = 14					# パーツ数
 
 	PARTSSET						# [0]腰

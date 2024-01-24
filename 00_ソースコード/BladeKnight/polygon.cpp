@@ -60,7 +60,7 @@ CPolygon *CPolygon::Create(void)
 HRESULT CPolygon::Init(void)
 {
 	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetTexture();
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	if (m_pObj3D == nullptr)
 	{

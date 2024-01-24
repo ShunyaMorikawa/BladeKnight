@@ -71,7 +71,7 @@ void CObject3D::BindTexture(int pTexture)
 HRESULT CObject3D::Init(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
@@ -129,13 +129,13 @@ void CObject3D::Draw(void)
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
 
 	//CTexture型のポインタ
-	CTexture *pTexture = CManager::GetTexture();
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -244,7 +244,7 @@ void CObject3D::Collision(void)
 void CObject3D::MeshVertex(void)
 {
 	//CRenderer型のポインタ
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

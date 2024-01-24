@@ -59,7 +59,7 @@ CTutorial *CTutorial::Create(void)
 HRESULT CTutorial::Init(void)
 {
 	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetTexture();
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	if (m_pObj2D == nullptr)
 	{
@@ -108,18 +108,18 @@ void CTutorial::Update(void)
 {
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInputKeyboard();
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInputPad();			//コントローラーの情報取得
+	pInputPad = CManager::GetInstance()->GetInputPad();			//コントローラーの情報取得
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{
 		//モード設定
-		CManager::SetMode(CScene::MODE_GAME);
+		CManager::GetInstance()->SetMode(CScene::MODE_GAME);
 	}
 }
 

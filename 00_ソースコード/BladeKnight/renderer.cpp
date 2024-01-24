@@ -151,7 +151,7 @@ void CRenderer::Draw(void)
 		CObject::DrawAll();
 
 		//ポインタ
-		CDebugProc *pDebugProc = CManager::GetDebugProc();
+		CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 		//デバッグ表示
 		pDebugProc->Draw();
