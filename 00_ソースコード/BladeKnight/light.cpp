@@ -47,13 +47,13 @@ HRESULT CLight::Init(void)
 
 		//ライトの拡散光を設定
 		m_alight[0].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		m_alight[1].Diffuse = D3DXCOLOR(0.65f, 0.65f, 0.65f, 1.0f);
-		m_alight[2].Diffuse = D3DXCOLOR(0.45f, 0.45f, 0.45f, 1.0f);
+		m_alight[1].Diffuse = D3DXCOLOR(0.75f, 0.75f, 0.75f, 1.0f);
+		m_alight[2].Diffuse = D3DXCOLOR(0.65f, 0.65f, 0.65f, 1.0f);
 
 		//ライトの方向を設定
-		vecDir[0] = D3DXVECTOR3(0.22f, -0.87f, 0.44f);
-		vecDir[1] = D3DXVECTOR3(0.8f, 0.23f, -0.55f);
-		vecDir[2] = D3DXVECTOR3(-0.8f, -0.21f, -0.44f);
+		vecDir[0] = D3DXVECTOR3(0.22f, -0.97f, 0.54f);
+		vecDir[1] = D3DXVECTOR3(0.38f, 0.78f, -0.54f);
+		vecDir[2] = D3DXVECTOR3(-0.9f, -0.21f, -0.44f);
 
 		//ベクトルを正規化する
 		D3DXVec3Normalize(&vecDir[nCntLight], &vecDir[nCntLight]);

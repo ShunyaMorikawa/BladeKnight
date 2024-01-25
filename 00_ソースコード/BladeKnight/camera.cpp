@@ -19,7 +19,7 @@
 #define MOVEFAST		(0.2f)		//カメラの慣性
 #define CAMR			(25.0f)		//注視点の距離
 #define CAMV_MOVE		(0.03f)		//視点の移動速度
-#define CAM_DISDTANCE	(300.0f)	//カメラとプレイヤーの距離
+#define CAM_DISDTANCE	(400.0f)	//カメラとプレイヤーの距離
 #define CAM_R_INERTIA	(0.3f)		//注視点の慣性
 #define CAM_V_INERTIA	(0.2f)		//視点の慣性
 

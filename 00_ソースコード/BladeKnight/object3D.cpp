@@ -13,7 +13,7 @@
 //マクロ定義
 //========================================
 #define POLYGON_TEX		"data/texture/block001.jpg"
-#define POLYGON_SIZE	(500.0f)//マップサイズ
+#define POLYGON_SIZE	(1000.0f)//マップサイズ
 #define BILL_WIDTH		(40)	//ビルボードの幅
 #define BILL_HEIGHT		(40)	//ビルボードの高さ
 

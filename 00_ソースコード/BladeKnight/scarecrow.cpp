@@ -1,7 +1,7 @@
 //========================================
 //
 // チュートリアルエネミー[scarecrow.cpp]
-//Author：森川駿弥
+// Author：森川駿弥
 //
 //========================================
 #include "scarecrow.h"
@@ -109,12 +109,16 @@ void CScarecrow::Uninit(void)
 //========================================
 void CScarecrow::Update(void)
 {
+	if (m_pMotion != nullptr)
+	{//モーション更新
+		m_pMotion->Update();
+	}
+
 	//ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//デバッグ表示
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
-	pDebugProc->Print("敵の向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 }
 
 //========================================

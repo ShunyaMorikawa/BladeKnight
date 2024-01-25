@@ -270,7 +270,7 @@ void CModel::SetIndex(CModel *pModel)
 }
 
 //========================================
-//モデルの番号設定
+//モデルの位置設定
 //========================================
 void CModel::SetPos(D3DXVECTOR3 pos)
 {
@@ -294,7 +294,7 @@ void CModel::SetRotate(D3DXVECTOR3 rot)
 }
 
 //========================================
-//モデルの位置取得
+//モデルの向き取得
 //========================================
 D3DXVECTOR3 CModel::GetRotate(void)
 {

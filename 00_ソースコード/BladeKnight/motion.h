@@ -59,7 +59,6 @@ public:
 
 	void SetInfo(int nType);
 	void SetModel(CModel *ppModel, int nNumModel);
-
 	CModel **GetModel(void) { return &m_ppModel[0]; }
 
 	void Load(char *pPath);
@@ -74,6 +73,8 @@ private:
 	int m_nNumMotion;	// 現在のモーション
 	int m_nNumParts;
 	bool m_bFinish;		//終了したかどうか
+	int m_nPartsIndex;	//パーツの番号
+
 	CModel *m_ppModel[MAX_PARTS];	//モデルへのダブルポインタ
 	int m_nNumModel;	//モデルの総数
 	D3DXVECTOR3 m_pos;	//位置
