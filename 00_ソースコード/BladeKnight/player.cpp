@@ -138,6 +138,9 @@ void CPlayer::Uninit(void)
 //========================================
 void CPlayer::Update(void)
 {
+	// 現在のモーション
+	EMotion nowMotion = MOTION_STANDBY;
+
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
@@ -151,8 +154,8 @@ void CPlayer::Update(void)
 	//プレイヤー移動
 	Move(PLAYER_SPEED);
 
-	// プレイヤー攻撃
-	Attack();
+	// モーション管理
+	ManagementMotion(nowMotion);
 
 	//位置更新
 	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
@@ -387,19 +390,22 @@ void CPlayer::Attack()
 //========================================
 //モーション管理
 //========================================
-void CPlayer::ManagementMotion(void)
+void CPlayer::ManagementMotion(int Motion)
 {
-	if (m_bWait == true)
-	{//待機モーション
-		m_pMotion->Set(MOTION_STANDBY);
-		m_bMove = false;
-	}
+	//現在のモーション
+	int nNowMotion = GetMotionType();
 
-	if (m_bMove == true)
-	{//歩きモーション
-		m_pMotion->Set(MOTION_WALK);
-		m_bWait = false;
-	}
+	m_nOldMotion = nNowMotion;
+
+
+}
+
+//========================================
+// モーション種類の取得
+//========================================
+int CPlayer::GetMotionType()
+{
+	return m_pMotion->GetType();
 }
 
 //=======================================

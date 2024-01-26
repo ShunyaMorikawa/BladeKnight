@@ -53,8 +53,9 @@ public:
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		//向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			//向き取得
 
-	void ManagementMotion(void);
+	void ManagementMotion(int Motion);
 
+	int GetMotionType();
 	int GetLife() { return m_nLife; }					// 体力取得
 
 private:
@@ -79,6 +80,7 @@ private:
 	D3DXVECTOR3 m_RotDest;	//目的の向き
 	int m_apNumModel;		//モデル(パーツ)の総数
 	int m_nLife;			// 体力
+	int m_nOldMotion;		// 前回のモーション
 	bool m_bJump;			//ジャンプ
 	bool m_bMove;			//移動
 	bool m_bWait;			//待機

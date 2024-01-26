@@ -52,7 +52,6 @@ public:
 	void Draw(void);
 	int GetType(void);
 	bool IsFinish(void);
-
 	void SetInfo(int nType);
 	void SetModel(CModel *ppModel, int nNumModel);
 	CModel **GetModel(void) { return &m_ppModel[0]; }
