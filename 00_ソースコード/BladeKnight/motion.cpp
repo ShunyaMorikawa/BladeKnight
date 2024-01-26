@@ -99,15 +99,11 @@ void CMotion::Update(void)
 	//CDebugProc型ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
-	//位置
-	float fDiffPosX = 0;	//差分
-	float fDiffPosY = 0;	//差分
-	float fDiffPosZ = 0;	//差分
+	//位置の差分
+	D3DXVECTOR3 Difpos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//向き
-	float fDiffRotX = 0;	//差分
-	float fDiffRotY = 0;	//差分
-	float fDiffRotZ = 0;	//差分
+	//向きの差分
+	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//次の値
 	int nNextKey = m_nKey + 1;	
@@ -129,44 +125,44 @@ void CMotion::Update(void)
 		D3DXVECTOR3 rot = pModel->GetRot();
 
 		//位置を算出
-		fDiffPosX = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].fPosX - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fPosX;
-		fDiffPosY = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].fPosY - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fPosY;
-		fDiffPosZ = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].fPosZ - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fPosZ;
+		Difpos.x = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].pos.x - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].pos.x;
+		Difpos.y = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].pos.y - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].pos.y;
+		Difpos.z = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].pos.z - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].pos.z;
 
 		//向きを算出
-		fDiffRotX = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].fRotX - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fRotX;
-		fDiffRotY = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].fRotY - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fRotY;
-		fDiffRotZ = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].fRotZ - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fRotZ;
+		DiffRot.x = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].rot.x - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].rot.x;
+		DiffRot.y = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].rot.y - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].rot.y;
+		DiffRot.z = m_aInfo[m_nType].aKeyInfo[nNextKey].aKey[nCntParts].rot.z - m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].rot.z;
 
 		//位置
-		pos.x = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fPosX
-				+ fDiffPosX
+		pos.x = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].pos.x
+				+ Difpos.x
 				* ((float)m_nCounter
 				/ (float)m_aInfo[m_nType].aKeyInfo[nNextKey].nFrame);
 
-		pos.y = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fPosY
-				+ fDiffPosY
+		pos.y = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].pos.y
+				+ Difpos.y
 				* ((float)m_nCounter
 				/ (float)m_aInfo[m_nType].aKeyInfo[nNextKey].nFrame);
 
-		pos.z = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fPosZ
-				+ fDiffPosZ 
+		pos.z = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].pos.z
+				+ Difpos.z
 				* ((float)m_nCounter 
 				/ (float)m_aInfo[m_nType].aKeyInfo[nNextKey].nFrame);
 
 		//向き
-		rot.x = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fRotX
-				+ fDiffRotX 
+		rot.x = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].rot.x
+				+ DiffRot.x
 				* ((float)m_nCounter 
 				/ (float)m_aInfo[m_nType].aKeyInfo[nNextKey].nFrame);
 
-		rot.y = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fRotY
-				+ fDiffRotY 
+		rot.y = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].rot.y
+				+ DiffRot.y
 				* ((float)m_nCounter 
 				/ (float)m_aInfo[m_nType].aKeyInfo[nNextKey].nFrame);
 
-		rot.z = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].fRotZ
-				+ fDiffRotZ 
+		rot.z = m_aInfo[m_nType].aKeyInfo[m_nKey].aKey[nCntParts].rot.z
+				+ DiffRot.z
 				* ((float)m_nCounter 
 				/ (float)m_aInfo[m_nType].aKeyInfo[nNextKey].nFrame);
 
@@ -233,7 +229,7 @@ bool CMotion::IsFinish(void)
 //========================================
 void CMotion::SetInfo(int nType)
 {
-
+	m_nType = nType;
 }
 
 //========================================
@@ -242,9 +238,17 @@ void CMotion::SetInfo(int nType)
 void CMotion::Set(int nType)
 {
 	m_nType = nType;
-
-	//キーリセット
 	m_nKey = 0;
+	m_bFinish = false;
+
+	for (int nCnt = 0; nCnt < m_nNumModel; nCnt++)
+	{
+		//位置
+		m_ppModel[nCnt]->SetPosition(m_aInfo[nType].aKeyInfo[m_nKey].aKey[nCnt].pos);
+
+		//向き
+		m_ppModel[nCnt]->SetRot(m_aInfo[nType].aKeyInfo[m_nKey].aKey[nCnt].rot);
+	}
 }
 
 //========================================
@@ -519,9 +523,9 @@ void CMotion::Load(char *pPath)
 									fscanf(pFile, "%f", &m_pos.z);
 
 									//位置を設定
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].fPosX = m_pos.x;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].fPosY = m_pos.y;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].fPosZ = m_pos.z;
+									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].pos.x = m_pos.x;
+									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].pos.y = m_pos.y;
+									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].pos.z = m_pos.z;
 								}
 
 								if (strcmp(&garbage[0], "ROT") == 0)
@@ -534,9 +538,9 @@ void CMotion::Load(char *pPath)
 									fscanf(pFile, "%f", &m_rot.z);
 
 									//位置を設定
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].fRotX = m_rot.x;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].fRotY = m_rot.y;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].fRotZ = m_rot.z;
+									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].rot.x = m_rot.x;
+									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].rot.y = m_rot.y;
+									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].rot.z = m_rot.z;
 								}
 							}
 						}

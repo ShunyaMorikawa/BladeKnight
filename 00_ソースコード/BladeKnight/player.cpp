@@ -18,7 +18,7 @@
 //========================================
 //マクロ定義
 //========================================
-#define PLAYER_SPEED	(1.0f)		//プレイヤーの移動速度
+#define PLAYER_SPEED	(2.0f)		//プレイヤーの移動速度
 #define PLAYER_INERTIA	(0.3f)		//プレイヤーの慣性
 
 #define PLAYER_PATH	"data\\FILE\\player.txt"	//読み込むファイルのパス
@@ -37,6 +37,7 @@ CPlayer::CPlayer() :
 	m_dwNumMat(0),					//マテリアルの数
 	m_apNumModel(0), 				//モデル(パーツ)の総数
 	m_RotDest(0.0f, 0.0f, 0.0f),	//目的の向き
+	m_nLife(0),						// 体力
 	m_bJump(false),
 	m_bMove(false),
 	m_bWait(false)
@@ -88,6 +89,9 @@ HRESULT CPlayer::Init(void)
 	//プレイヤーの初期向き
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
+	// 体力
+	m_nLife = 10;
+
 	if (m_pMotion == nullptr)
 	{
 		//モーション生成
@@ -97,7 +101,7 @@ HRESULT CPlayer::Init(void)
 		m_pMotion->Load(PLAYER_PATH);
 
 		//待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+		m_pMotion->Set(MOTION_STANDBY);
 
 		//待機状態
 		m_bWait = true;
@@ -146,6 +150,9 @@ void CPlayer::Update(void)
 
 	//プレイヤー移動
 	Move(PLAYER_SPEED);
+
+	// プレイヤー攻撃
+	Attack();
 
 	//位置更新
 	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
@@ -241,7 +248,7 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y + (D3DX_PI * 0.25f);
+			m_RotDest.y = -rot.y - (D3DX_PI * 0.75f);
 		}
 		//左下
 		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
@@ -250,7 +257,7 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y + (-D3DX_PI * 0.25f);
+			m_RotDest.y = -rot.y + (D3DX_PI * 0.75f);
 		}
 		else
 		{//左
@@ -258,7 +265,7 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.5f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y;
+			m_RotDest.y = -rot.y + D3DX_PI;
 
 			//注視点をずらす
 			PosR - m_move;
@@ -274,7 +281,8 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (D3DX_PI * 0.75f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y + (D3DX_PI * 0.75f);
+			m_RotDest.y = -rot.y + (-D3DX_PI * 0.25f);
+
 		}
 		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 		{//右下
@@ -282,7 +290,7 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (D3DX_PI * 0.25f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y - (D3DX_PI * 0.75f);
+			m_RotDest.y = -rot.y + (D3DX_PI * 0.25f);
 		}
 		else
 		{//右
@@ -290,7 +298,7 @@ void CPlayer::Move(float fSpeed)
 			m_move.z += sinf(rot.y + (D3DX_PI * 0.5f)) * fSpeed;
 
 			//移動方向にモデルを向ける
-			m_RotDest.y = -rot.y + D3DX_PI;
+			m_RotDest.y = -rot.y;
 
 			//注視点をずらす
 			PosR + m_move;
@@ -357,19 +365,39 @@ void CPlayer::Move(float fSpeed)
 }
 
 //========================================
+// 攻撃
+//========================================
+void CPlayer::Attack()
+{
+	// CInputKeyboard型のポインタ
+	CInputKeyboard *pInputKeyboard = nullptr;
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
+
+	// CInputPad型のポインタ
+	CInputPad *pInputPad = nullptr;
+	pInputPad = CManager::GetInstance()->GetInputPad();	//コントローラーの情報取得
+
+	// Aが押された
+	if (pInputKeyboard->GetPress(DIK_J) == true || pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
+	{
+
+	}
+}
+
+//========================================
 //モーション管理
 //========================================
 void CPlayer::ManagementMotion(void)
 {
 	if (m_bWait == true)
 	{//待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+		m_pMotion->Set(MOTION_STANDBY);
 		m_bMove = false;
 	}
 
 	if (m_bMove == true)
 	{//歩きモーション
-		m_pMotion->Set(MOTIONTYPE_WALK);
+		m_pMotion->Set(MOTION_WALK);
 		m_bWait = false;
 	}
 }

@@ -66,7 +66,7 @@ private:
 
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		//モーションのポインタ
-
+	float m_fAngle;			// 目的の向き
 };
 
 #endif

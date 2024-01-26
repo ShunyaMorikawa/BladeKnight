@@ -13,6 +13,7 @@
 #include "motion.h"
 #include "model.h"
 #include "game.h"
+#include "player.h"
 
 //========================================
 //マクロ定義
@@ -27,7 +28,8 @@ CScarecrow::CScarecrow():
 	m_rot(0.0f, 0.0f, 0.0f),		// 向き
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
-	m_vtxMax(0.0f, 0.0f, 0.0f)		// 最大値
+	m_vtxMax(0.0f, 0.0f, 0.0f),		// 最大値
+	m_fAngle(0.0f)
 {
 }
 
@@ -63,10 +65,10 @@ CScarecrow *CScarecrow::Create()
 HRESULT CScarecrow::Init(void)
 {	
 	// 向き
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_rot = D3DXVECTOR3(0.0f, -1.7f, 0.0f);
 
 	// 向きの設定
-	m_RotDest = D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f);
+	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 最小値
 	m_vtxMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -100,6 +102,13 @@ HRESULT CScarecrow::Init(void)
 //========================================
 void CScarecrow::Uninit(void)
 {
+	if (m_pMotion != nullptr)
+	{//モーション破棄
+		m_pMotion->Uninit();
+		delete m_pMotion;
+		m_pMotion = nullptr;
+	}
+
 	//オブジェクト(自分自身)の破棄
 	Release();
 }
@@ -109,6 +118,25 @@ void CScarecrow::Uninit(void)
 //========================================
 void CScarecrow::Update(void)
 {
+	//目的の向き
+	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	//プレイヤーの情報取得
+	CPlayer *pPlayer = CGame::GetPlayer();
+
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	D3DXVECTOR3 posPlayer = pPlayer->GetPosition();
+
+	//プレイヤーとの角度
+	m_fAngle = atan2f(posPlayer.x - m_pos.x, posPlayer.z - m_pos.z);
+
+	//プレイヤーの方向に向ける
+	m_rot.y = m_fAngle;
+
 	if (m_pMotion != nullptr)
 	{//モーション更新
 		m_pMotion->Update();
@@ -119,6 +147,7 @@ void CScarecrow::Update(void)
 
 	//デバッグ表示
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
+	pDebugProc->Print("敵の向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 }
 
 //========================================

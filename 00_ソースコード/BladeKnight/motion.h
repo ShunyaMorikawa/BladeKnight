@@ -23,18 +23,14 @@ class CMotion
 public:
 	typedef struct 
 	{//キーの構造体
-		float fPosX;	//位置X
-		float fPosY;	//位置Y
-		float fPosZ;	//位置Z
-		float fRotX;	//向きX
-		float fRotY;	//向きY
-		float fRotZ;	//向きZ
+		D3DXVECTOR3 pos;
+		D3DXVECTOR3 rot;
 	}KEY;	//位置・向き
 
 	typedef struct
 	{//キー情報の構造体
 		int nFrame;				//再生フレーム
-		KEY aKey[MAX_MODEL];	//各モデルのキー要素
+		KEY aKey[MAX_MODEL];	//各モデルの情報
 	}KEY_INFO;		//カットシーン
 
 	typedef struct 

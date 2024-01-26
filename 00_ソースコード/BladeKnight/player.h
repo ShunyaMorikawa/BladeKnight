@@ -19,11 +19,13 @@
 class CPlayer : public CObject
 {
 public:
-	enum MOTIONTYPE
-	{//モーションの種類
-		MOTIONTYPE_NEUTRAL = 0,	//待機状態
-		MOTIONTYPE_WALK,		//歩き状態
-		MOTIONTYPE_MAX
+	enum EMotion
+	{// モーション種類
+		MOTION_STANDBY = 0,		// 待機
+		MOTION_WALK,			// 移動
+		MOTION_ATTACK,			// 攻撃
+		MOTION_BLOWAWAY,		// 吹っ飛ばし
+		MOTION_MAX
 	};
 
 	CPlayer();		//コンストラクタ
@@ -38,17 +40,22 @@ public:
 	void Draw(void);		//描画
 
 	void Move(float fSpeed);	//プレイヤーの操作
+	void Attack();
 
 	float RotNormalize(float RotN, float Rot);		//rotの正規化
 
 	void SetVertex(void);
 	void SetSize(float fWidht, float fHeight);
+
 	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }	//位置設定
 	D3DXVECTOR3 GetPosition(void) { return m_pos; }		//位置取得
+
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		//向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			//向き取得
 
 	void ManagementMotion(void);
+
+	int GetLife() { return m_nLife; }					// 体力取得
 
 private:
 	//メンバ変数
@@ -69,8 +76,9 @@ private:
 
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		//モーションのポインタ
-	int m_apNumModel;		//モデル(パーツ)の総数
 	D3DXVECTOR3 m_RotDest;	//目的の向き
+	int m_apNumModel;		//モデル(パーツ)の総数
+	int m_nLife;			// 体力
 	bool m_bJump;			//ジャンプ
 	bool m_bMove;			//移動
 	bool m_bWait;			//待機
