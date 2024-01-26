@@ -312,7 +312,7 @@ void CPlayer::Move(float fSpeed)
 		m_move.z -= sinf(rot.y) * fSpeed;
 
 		//移動方向にモデルを向ける
-		m_RotDest.y = -rot.y + (D3DX_PI * 0.5f);
+		m_RotDest.y = -rot.y - (D3DX_PI * 0.5f);
 	}
 
 	//Sが押された
@@ -322,7 +322,7 @@ void CPlayer::Move(float fSpeed)
 		m_move.z += sinf(rot.y) * fSpeed;
 
 		//移動方向にモデルを向ける
-		m_RotDest.y = -rot.y - (D3DX_PI * 0.5f);
+		m_RotDest.y = -rot.y + (D3DX_PI * 0.5f);
 	}
 
 	//位置を更新
