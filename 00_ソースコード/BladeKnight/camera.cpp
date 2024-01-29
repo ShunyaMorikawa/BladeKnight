@@ -121,7 +121,7 @@ void CCamera::SetCamera(void)
 								D3DXToRadian(75.0f),	//視野角
 								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
 								10.0f,		//Z値の最小値
-								1000.0f);	//Z値の最大値
+								40000.0f);	//Z値の最大値(描画距離)
 
 	////プロジェクションマトリックスを設定[平行投影]
 	//D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス

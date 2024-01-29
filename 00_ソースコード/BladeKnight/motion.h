@@ -51,6 +51,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	int GetType(void);
+	bool GetLoop(int nType);
 	bool IsFinish(void);
 	void SetInfo(int nType);
 	void SetModel(CModel *ppModel, int nNumModel);

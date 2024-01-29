@@ -90,10 +90,10 @@ public:
 		BUTTON_B,		//Bボタン
 		BUTTON_X,		//Xボタン
 		BUTTON_Y,		//Yボタン
-		BUTTON_L_STICK,	//Xスティック
+		BUTTON_L_STICK,	//左スティック
 		BUTTON_17,		//不明
 		BUTTON_18,		//不明
-		BUTTON_R_STICK,	//不明
+		BUTTON_R_STICK,	//右スティック
 		BUTTONSTATE_MAX
 	};
 

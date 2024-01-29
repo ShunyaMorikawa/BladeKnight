@@ -53,9 +53,10 @@ public:
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		//向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			//向き取得
 
-	void ManagementMotion(int Motion);
+	void ManagementMotion(int nMotion);
 
-	int GetMotionType();
+	int GetMotionType();	// モーションの種類取得
+	bool GetMotionLoop(int nType);	// モーションのループ
 	int GetLife() { return m_nLife; }					// 体力取得
 
 private:

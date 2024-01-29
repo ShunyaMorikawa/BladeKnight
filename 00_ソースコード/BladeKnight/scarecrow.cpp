@@ -77,7 +77,7 @@ HRESULT CScarecrow::Init(void)
 	m_vtxMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 位置設定
-	SetPosition(D3DXVECTOR3(0.0f, 50.0f, 0.0f));
+	SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//モーションのポインタ
 	m_pMotion = nullptr;

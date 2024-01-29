@@ -18,7 +18,7 @@
 //========================================
 //マクロ定義
 //========================================
-#define PLAYER_SPEED	(2.0f)		//プレイヤーの移動速度
+#define PLAYER_SPEED	(4.0f)		//プレイヤーの移動速度
 #define PLAYER_INERTIA	(0.3f)		//プレイヤーの慣性
 
 #define PLAYER_PATH	"data\\FILE\\player.txt"	//読み込むファイルのパス
@@ -99,9 +99,6 @@ HRESULT CPlayer::Init(void)
 
 		//モーション読み込み
 		m_pMotion->Load(PLAYER_PATH);
-
-		//待機モーション
-		m_pMotion->Set(MOTION_STANDBY);
 
 		//待機状態
 		m_bWait = true;
@@ -272,6 +269,8 @@ void CPlayer::Move(float fSpeed)
 
 			//注視点をずらす
 			PosR - m_move;
+
+			ManagementMotion(MOTION_WALK);
 		}
 	}
 
@@ -285,7 +284,6 @@ void CPlayer::Move(float fSpeed)
 
 			//移動方向にモデルを向ける
 			m_RotDest.y = -rot.y + (-D3DX_PI * 0.25f);
-
 		}
 		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 		{//右下
@@ -388,16 +386,52 @@ void CPlayer::Attack()
 }
 
 //========================================
-//モーション管理
+// モーション管理
 //========================================
-void CPlayer::ManagementMotion(int Motion)
+void CPlayer::ManagementMotion(int nMotion)
 {
 	//現在のモーション
 	int nNowMotion = GetMotionType();
 
+	// 前回のモーション
 	m_nOldMotion = nNowMotion;
 
+	if (GetMotionLoop(nNowMotion))
+	{//ループモーションだったら
+		switch (GetMotionType())
+		{
+		case MOTION_STANDBY:
 
+			if (nMotion != MOTION_STANDBY)
+			{// 待機モーションじゃない場合
+				// モーション設定
+				m_pMotion->Set(nMotion);
+			}
+
+			break;
+
+		default:
+			break;
+		}
+	}
+	else
+	{// ループモーションじゃなかったら
+		switch(GetMotionType())
+		{
+		case MOTION_WALK:
+		case MOTION_ATTACK:
+		case MOTION_BLOWAWAY:
+			break;
+
+			if (nMotion != MOTION_STANDBY)
+			{// 待機モーションじゃなかったら
+				m_pMotion->Set(nMotion);
+			}
+
+		default:
+			break;
+		}
+	}
 }
 
 //========================================
@@ -406,6 +440,14 @@ void CPlayer::ManagementMotion(int Motion)
 int CPlayer::GetMotionType()
 {
 	return m_pMotion->GetType();
+}
+
+//========================================
+// モーションループの取得
+//========================================
+bool CPlayer::GetMotionLoop(int nType)
+{
+	return m_pMotion->GetLoop(nType);
 }
 
 //=======================================
