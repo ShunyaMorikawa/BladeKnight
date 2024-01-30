@@ -245,17 +245,20 @@ void CMotion::SetInfo(int nType)
 //========================================
 void CMotion::Set(int nType)
 {
-	m_nType = nType;
-	m_nKey = 0;
-	m_bFinish = false;
-
-	for (int nCnt = 0; nCnt < m_nNumModel; nCnt++)
+	if (nType != m_nType)
 	{
-		//位置
-		m_ppModel[nCnt]->SetPosition(m_aInfo[nType].aKeyInfo[m_nKey].aKey[nCnt].pos);
+		m_nType = nType;
+		m_nKey = 0;
+		m_bFinish = false;
 
-		//向き
-		m_ppModel[nCnt]->SetRot(m_aInfo[nType].aKeyInfo[m_nKey].aKey[nCnt].rot);
+		for (int nCnt = 0; nCnt < m_nNumModel; nCnt++)
+		{
+			//位置
+			m_ppModel[nCnt]->SetPosition(m_aInfo[nType].aKeyInfo[m_nKey].aKey[nCnt].pos);
+
+			//向き
+			m_ppModel[nCnt]->SetRot(m_aInfo[nType].aKeyInfo[m_nKey].aKey[nCnt].rot);
+		}
 	}
 }
 
@@ -443,7 +446,8 @@ void CMotion::Load(char *pPath)
 				if (strcmp(&garbage[0], "END_MOTIONSET") == 0)
 				{//文字列がEND_PARTSSETの時
 					//パーツ数を加算
-					m_nPartsIndex++;
+					m_nNumAll++;
+					keysetCount = 0;
 
 					//抜け出す
 					break;
@@ -459,11 +463,11 @@ void CMotion::Load(char *pPath)
 
 					if (nLoop == 0)
 					{//nLoopが0の時
-						m_aInfo[m_nPartsIndex].bLoop = false;
+						m_aInfo[m_nNumAll].bLoop = false;
 					}
 					if (nLoop == 1)
 					{//nLoopが1の時
-						m_aInfo[m_nPartsIndex].bLoop = true;
+						m_aInfo[m_nNumAll].bLoop = true;
 					}
 				}
 
@@ -473,7 +477,7 @@ void CMotion::Load(char *pPath)
 					fscanf(pFile, "%s", &garbage[0]);
 
 					//親子関係設定
-					fscanf(pFile, "%d", &m_aInfo[m_nPartsIndex].nNumKey);
+					fscanf(pFile, "%d", &m_aInfo[m_nNumAll].nNumKey);
 				}
 
 				if (strcmp(&garbage[0], "KEYSET") == 0)
@@ -499,7 +503,7 @@ void CMotion::Load(char *pPath)
 							fscanf(pFile, "%s", &garbage[0]);
 
 							//フレーム数
-							fscanf(pFile, "%d", &m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].nFrame);
+							fscanf(pFile, "%d", &m_aInfo[m_nNumAll].aKeyInfo[keysetCount].nFrame);
 						}
 
 						if (strcmp(&garbage[0], "KEY") == 0)
@@ -529,9 +533,9 @@ void CMotion::Load(char *pPath)
 									fscanf(pFile, "%f", &m_pos.z);
 
 									//位置を設定
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].pos.x = m_pos.x;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].pos.y = m_pos.y;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].pos.z = m_pos.z;
+									m_aInfo[m_nNumAll].aKeyInfo[keysetCount].aKey[KeyCount].pos.x = m_pos.x;
+									m_aInfo[m_nNumAll].aKeyInfo[keysetCount].aKey[KeyCount].pos.y = m_pos.y;
+									m_aInfo[m_nNumAll].aKeyInfo[keysetCount].aKey[KeyCount].pos.z = m_pos.z;
 								}
 
 								if (strcmp(&garbage[0], "ROT") == 0)
@@ -544,9 +548,9 @@ void CMotion::Load(char *pPath)
 									fscanf(pFile, "%f", &m_rot.z);
 
 									//位置を設定
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].rot.x = m_rot.x;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].rot.y = m_rot.y;
-									m_aInfo[m_nPartsIndex].aKeyInfo[keysetCount].aKey[KeyCount].rot.z = m_rot.z;
+									m_aInfo[m_nNumAll].aKeyInfo[keysetCount].aKey[KeyCount].rot.x = m_rot.x;
+									m_aInfo[m_nNumAll].aKeyInfo[keysetCount].aKey[KeyCount].rot.y = m_rot.y;
+									m_aInfo[m_nNumAll].aKeyInfo[keysetCount].aKey[KeyCount].rot.z = m_rot.z;
 								}
 							}
 						}

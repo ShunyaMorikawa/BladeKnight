@@ -1,86 +1,94 @@
 //========================================
 //
-// チュートリアルエネミー[scarecrow.cpp]
-// Author：森川駿弥
+//シューティングアクション[player.cpp]
+//Author：森川駿弥
 //
 //========================================
-#include "boss.h"
+#include "enemy.h"
 #include "manager.h"
 #include "renderer.h"
 #include "texture.h"
-#include "camera.h"
 #include "debugproc.h"
 #include "motion.h"
 #include "model.h"
 #include "game.h"
-#include "player.h"
 
 //========================================
 //マクロ定義
 //========================================
-#define MOTION_PATH	"data\\FILE\\boss.txt"	//読み込むファイルのパス
+#define PLAYER_SPEED	(4.0f)		//プレイヤーの移動速度
+#define PLAYER_INERTIA	(0.3f)		//プレイヤーの慣性
+
+#define PLAYER_PATH	"data\\FILE\\player.txt"	//読み込むファイルのパス
 
 //========================================
-// コンストラクタ
+//コンストラクタ
 //========================================
-CBoss::CBoss() :
-	m_pos(0.0f, 0.0f, 0.0f),		// 位置
-	m_rot(0.0f, 0.0f, 0.0f),		// 向き
-	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
-	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
-	m_vtxMax(0.0f, 0.0f, 0.0f),		// 最大値
-	m_fAngle(0.0f)
+CEnemy::CEnemy() :
+	m_pTexture(nullptr),
+	m_pos(0.0f, 0.0f, 0.0f),		//位置
+	m_move(0.0f, 0.0f, 0.0f),		//移動量
+	m_rot(0.0f, 0.0f, 0.0f),		//向き
+	m_nIdxTexture(0),				//テクスチャの番号
+	m_pMesh(nullptr),				//メッシュ(頂点情報)へのポインタ
+	m_pBuffMat(nullptr),			//マテリアルへのポインタ
+	m_dwNumMat(0),					//マテリアルの数
+	m_apNumModel(0), 				//モデル(パーツ)の総数
+	m_RotDest(0.0f, 0.0f, 0.0f),	//目的の向き
+	m_nLife(0),						// 体力
+	m_bJump(false),
+	m_bMove(false),
+	m_bWait(false)
+{//値をクリア
+}
+
+//========================================
+//デストラクタ
+//========================================
+CEnemy::~CEnemy()
 {
 }
 
 //========================================
-// デストラクタ
+//プレイヤーの生成
 //========================================
-CBoss::~CBoss()
+CEnemy *CEnemy::Create(void)
 {
-}
+	//CEnemy型のポインタ
+	CEnemy *pPlayer = nullptr;
 
-//========================================
-// 生成
-//========================================
-CBoss *CBoss::Create()
-{
-	CBoss *pScarecrow = nullptr;
-
-	if (pScarecrow == nullptr)
+	if (pPlayer == nullptr)
 	{
-		// インスタンス生成
-		pScarecrow = new CBoss;
+		//プレイヤー生成
+		pPlayer = new CEnemy;
 
-		// 初期化
-		pScarecrow->Init();
+		//初期化
+		pPlayer->Init();
 	}
 
-	return pScarecrow;
+	//ポインタを返す
+	return pPlayer;
 }
 
 //========================================
-// 初期化
+//初期化
 //========================================
-HRESULT CBoss::Init(void)
+HRESULT CEnemy::Init(void)
 {
-	// 向き
-	m_rot = D3DXVECTOR3(0.0f, -1.7f, 0.0f);
-
-	// 向きの設定
-	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 最小値
-	m_vtxMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 最大値
-	m_vtxMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 位置設定
-	SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-
 	//モーションのポインタ
 	m_pMotion = nullptr;
+
+	//目的の向き
+	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	//プレイヤーの初期位置
+	SetPosition(D3DXVECTOR3(0.0f, 0.0f, -300.0f));
+
+	//プレイヤーの初期向き
+	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+	// 体力
+	m_nLife = 10;
 
 	if (m_pMotion == nullptr)
 	{
@@ -88,19 +96,20 @@ HRESULT CBoss::Init(void)
 		m_pMotion = CMotion::Create();
 
 		//モーション読み込み
-		m_pMotion->Load(MOTION_PATH);
+		m_pMotion->Load(PLAYER_PATH);
 
-		//待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+		//待機状態
+		m_bWait = true;
 	}
 
+	//成功を返す
 	return S_OK;
 }
 
 //========================================
-// 終了
+//終了
 //========================================
-void CBoss::Uninit(void)
+void CEnemy::Uninit(void)
 {
 	if (m_pMotion != nullptr)
 	{//モーション破棄
@@ -114,28 +123,25 @@ void CBoss::Uninit(void)
 }
 
 //========================================
-// 更新
+//更新
 //========================================
-void CBoss::Update(void)
+void CEnemy::Update(void)
 {
-	//目的の向き
-	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	// 現在のモーション
+	EMotion nowMotion = MOTION_STANDBY;
 
-	//プレイヤーの情報取得
-	CPlayer *pPlayer = CGame::GetPlayer();
+	//CInputKeyboard型のポインタ
+	CInputKeyboard *pInputKeyboard = nullptr;
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-	if (pPlayer == NULL)
-	{
-		return;
-	}
+	//位置取得
+	D3DXVECTOR3 pos = GetPosition();
 
-	D3DXVECTOR3 posPlayer = pPlayer->GetPosition();
+	//向き取得
+	D3DXVECTOR3 rot = GetRot();
 
-	//プレイヤーとの角度
-	m_fAngle = atan2f(posPlayer.x - m_pos.x, posPlayer.z - m_pos.z);
-
-	//プレイヤーの方向に向ける
-	m_rot.y = m_fAngle;
+	//位置更新
+	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
 
 	if (m_pMotion != nullptr)
 	{//モーション更新
@@ -146,19 +152,19 @@ void CBoss::Update(void)
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//デバッグ表示
-	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
-	pDebugProc->Print("敵の向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
+	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
+	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 }
 
 //========================================
-// 描画
+//描画
 //========================================
-void CBoss::Draw(void)
+void CEnemy::Draw(void)
 {
 	//描画
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-	//CRenderer型のポインタ
+									//CRenderer型のポインタ
 	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
@@ -185,10 +191,26 @@ void CBoss::Draw(void)
 	m_pMotion->Draw();
 }
 
+//========================================
+// モーション種類の取得
+//========================================
+int CEnemy::GetMotionType()
+{
+	return m_pMotion->GetType();
+}
+
+//========================================
+// モーションループの取得
+//========================================
+bool CEnemy::GetMotionLoop(int nType)
+{
+	return m_pMotion->GetLoop(nType);
+}
+
 //=======================================
-// rotの正規化
+//rotの正規化
 //=======================================
-float CBoss::RotNormalize(float RotN, float Rot)
+float CEnemy::RotNormalize(float RotN, float Rot)
 {
 	//角度の正規化
 	if (RotN > D3DX_PI)
@@ -221,15 +243,15 @@ float CBoss::RotNormalize(float RotN, float Rot)
 }
 
 //========================================
-// 3Dオブジェクトの生成
+//3Dオブジェクトの生成
 //========================================
-void CBoss::SetVertex(void)
+void CEnemy::SetVertex(void)
 {
 }
 
 //========================================
-// 3Dオブジェクトの生成
+//3Dオブジェクトの生成
 //========================================
-void CBoss::SetSize(float fWidht, float fHeight)
+void CEnemy::SetSize(float fWidht, float fHeight)
 {
 }

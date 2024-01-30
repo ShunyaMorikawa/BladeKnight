@@ -38,7 +38,6 @@ CPlayer::CPlayer() :
 	m_apNumModel(0), 				//モデル(パーツ)の総数
 	m_RotDest(0.0f, 0.0f, 0.0f),	//目的の向き
 	m_nLife(0),						// 体力
-	m_bJump(false),
 	m_bMove(false),
 	m_bWait(false)
 {//値をクリア
@@ -135,8 +134,8 @@ void CPlayer::Uninit(void)
 //========================================
 void CPlayer::Update(void)
 {
-	// 現在のモーション
-	EMotion nowMotion = MOTION_STANDBY;
+	// 歩き
+	m_bMove = false;
 
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
@@ -150,12 +149,6 @@ void CPlayer::Update(void)
 
 	//プレイヤー移動
 	Move(PLAYER_SPEED);
-
-	// モーション管理
-	ManagementMotion(nowMotion);
-
-	//位置更新
-	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
 
 	//カメラ追従
 	CCamera *pCampera = CManager::GetInstance()->GetCamera();
@@ -249,6 +242,9 @@ void CPlayer::Move(float fSpeed)
 
 			//移動方向にモデルを向ける
 			m_RotDest.y = -rot.y - (D3DX_PI * 0.75f);
+
+			// 歩き
+			m_bMove = true;
 		}
 		//左下
 		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
@@ -258,6 +254,9 @@ void CPlayer::Move(float fSpeed)
 
 			//移動方向にモデルを向ける
 			m_RotDest.y = -rot.y + (D3DX_PI * 0.75f);
+
+			// 歩き
+			m_bMove = true;
 		}
 		else
 		{//左
@@ -269,6 +268,9 @@ void CPlayer::Move(float fSpeed)
 
 			//注視点をずらす
 			PosR - m_move;
+
+			// 歩き
+			m_bMove = true;
 		}
 	}
 
@@ -282,6 +284,9 @@ void CPlayer::Move(float fSpeed)
 
 			//移動方向にモデルを向ける
 			m_RotDest.y = -rot.y + (-D3DX_PI * 0.25f);
+
+			// 歩き
+			m_bMove = true;
 		}
 		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 		{//右下
@@ -290,6 +295,9 @@ void CPlayer::Move(float fSpeed)
 
 			//移動方向にモデルを向ける
 			m_RotDest.y = -rot.y + (D3DX_PI * 0.25f);
+
+			// 歩き
+			m_bMove = true;
 		}
 		else
 		{//右
@@ -301,6 +309,9 @@ void CPlayer::Move(float fSpeed)
 
 			//注視点をずらす
 			PosR + m_move;
+
+			// 歩き
+			m_bMove = true;
 		}
 	}
 
@@ -312,6 +323,9 @@ void CPlayer::Move(float fSpeed)
 
 		//移動方向にモデルを向ける
 		m_RotDest.y = -rot.y - (D3DX_PI * 0.5f);
+
+		// 歩き
+		m_bMove = true;
 	}
 
 	//Sが押された
@@ -322,6 +336,9 @@ void CPlayer::Move(float fSpeed)
 
 		//移動方向にモデルを向ける
 		m_RotDest.y = -rot.y + (D3DX_PI * 0.5f);
+
+		// 歩き
+		m_bMove = true;
 	}
 
 	//位置を更新
@@ -361,75 +378,17 @@ void CPlayer::Move(float fSpeed)
 	{
 		m_rot.y += D3DX_PI * 2;
 	}
-}
 
-//========================================
-// 攻撃
-//========================================
-void CPlayer::Attack()
-{
-	// CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
-
-	// CInputPad型のポインタ
-	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInstance()->GetInputPad();	//コントローラーの情報取得
-
-	// Aが押された
-	if (pInputKeyboard->GetPress(DIK_J) == true || pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
-	{
-
-	}
-}
-
-//========================================
-// モーション管理
-//========================================
-void CPlayer::ManagementMotion(int nMotion)
-{
-	//現在のモーション
-	int nNowMotion = GetMotionType();
-
-	// 前回のモーション
-	m_nOldMotion = nNowMotion;
-
-	if (GetMotionLoop(nNowMotion))
-	{//ループモーションだったら
-		switch (GetMotionType())
-		{
-		case MOTION_STANDBY:
-
-			if (nMotion != MOTION_STANDBY)
-			{// 待機モーションじゃない場合
-				// モーション設定
-				m_pMotion->Set(nMotion);
-			}
-
-			break;
-
-		default:
-			break;
-		}
+	if (m_bMove) {
+		m_pMotion->Set(MOTION_WALK);
 	}
 	else
-	{// ループモーションじゃなかったら
-		switch(GetMotionType())
-		{
-		case MOTION_WALK:
-		case MOTION_ATTACK:
-		case MOTION_BLOWAWAY:
-			break;
+	{
+		m_pMotion->Set(MOTION_STANDBY);
 
-			if (nMotion != MOTION_STANDBY)
-			{// 待機モーションじゃなかったら
-				m_pMotion->Set(nMotion);
-			}
-
-		default:
-			break;
-		}
 	}
+	// 待機モーションにする
+	m_bWait = true;
 }
 
 //========================================

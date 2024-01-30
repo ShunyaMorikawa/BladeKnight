@@ -1,6 +1,6 @@
 //========================================
 //
-//プレイヤー処理[player.h]
+//エネミー処理[player.h]
 //Author：森川駿弥
 //
 //========================================
@@ -14,9 +14,9 @@
 #include "motion.h"
 
 //========================================
-//プレイヤークラス
+//エネミークラス
 //========================================
-class CPlayer : public CObject
+class CEnemy : public CObject
 {
 public:
 	enum EMotion
@@ -24,22 +24,19 @@ public:
 		MOTION_STANDBY = 0,		// 待機
 		MOTION_WALK,			// 移動
 		MOTION_ATTACK,			// 攻撃
-		MOTION_BLOWAWAY,		// 吹っ飛ばし
 		MOTION_MAX
 	};
 
-	CPlayer();		//コンストラクタ
-	~CPlayer();		//デストラクタ
+	CEnemy();		//コンストラクタ
+	~CEnemy();		//デストラクタ
 
 	//メンバ関数
-	static CPlayer *Create(void);	//プレイヤー生成
+	static CEnemy *Create(void);	//エネミー生成
 
 	HRESULT Init(void);		//初期化
 	void Uninit(void);		//終了
 	void Update(void);		//更新
 	void Draw(void);		//描画
-
-	void Move(float fSpeed);	//プレイヤーの操作
 
 	float RotNormalize(float RotN, float Rot);		//rotの正規化
 
@@ -79,9 +76,9 @@ private:
 	int m_apNumModel;		//モデル(パーツ)の総数
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
-	bool m_bMove;			// 移動
-	bool m_bWait;			// 待機
-	bool m_bAttack;			// 攻撃
+	bool m_bJump;			//ジャンプ
+	bool m_bMove;			//移動
+	bool m_bWait;			//待機
 };
 
 #endif
