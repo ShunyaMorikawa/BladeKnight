@@ -18,7 +18,7 @@ class CLight;
 class CPlayer;
 class CPolygon;
 class CGame_Object;
-class CScarecrow;
+class CBoss;
 
 //========================================
 //マクロ
@@ -46,17 +46,18 @@ public:
 
 	static CGame *GetGame(void) { return m_pGame; }		//ゲームマネージャーの情報
 	static CPlayer *GetPlayer(void) { return m_pPlayer; }
+
 private:
-	static CObject *m_pObject[MAX_DATA];		//オブジェクトのポインタ
-	static CObjectX *m_pObjectX;		//Xファイルオブジェクトのポインタ
-	static CObject3D *m_pObject3D;		//オブジェクト3Dのポインタ
-	static CGame *m_pGame;				//ゲームマネージャーのポインタ
-	static CLight *m_pLight;			//ライトのポインタ
-	static CPlayer *m_pPlayer;			//プレイヤーのポインタ
-	static CPolygon *m_pPolygon;		//ポリゴンのポインタ
-	static CGame_Object *CGame_Object;	//ゲーム内オブジェクト
-	static CScarecrow *m_pScarecrow;	// チュートリアルエネミーポインタ
-	bool m_bPause;						//ポーズ状態のON/OFF
+	static CObject *m_pObject[MAX_DATA];		// オブジェクトのポインタ
+	static CObjectX *m_pObjectX;		// Xファイルオブジェクトのポインタ
+	static CObject3D *m_pObject3D;		// オブジェクト3Dのポインタ
+	static CGame *m_pGame;				// ゲームマネージャーのポインタ
+	static CLight *m_pLight;			// ライトのポインタ
+	static CPlayer *m_pPlayer;			// プレイヤーのポインタ
+	static CPolygon *m_pPolygon;		// ポリゴンのポインタ
+	static CGame_Object *CGame_Object;	// ゲーム内オブジェクト
+	static CBoss *m_pBoss;				// ボスのポインタ
+	bool m_bPause;						// ポーズ状態のON/OFF
 };
 
 #endif

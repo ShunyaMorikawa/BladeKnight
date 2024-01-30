@@ -271,7 +271,7 @@ void CCamera::CameraMoveV(void)
 	CInputPad *pInputPad = nullptr;
 	pInputPad = CManager::GetInstance()->GetInputPad();			//コントローラーの情報取得
 
-	//Zキーが押された
+	//Cキーが押された
 	if (pInputKeyboard->GetPress(DIK_C) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)
 	{
 		m_rot.y += CAMV_MOVE;
@@ -282,7 +282,7 @@ void CCamera::CameraMoveV(void)
 		m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
 		m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
 	}
-	//Cキーが押された
+	//Zキーが押された
 	else if (pInputKeyboard->GetPress(DIK_Z) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) < 0)
 	{
 		m_rot.y -= CAMV_MOVE;
@@ -294,18 +294,28 @@ void CCamera::CameraMoveV(void)
 		m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
 
 	}
-	//Yキーが押された
-	if (pInputKeyboard->GetPress(DIK_Y) == true)
-	{
-		m_posV.y += CAMERA_SPEED;
-		m_posV.z += CAMERA_SPEED;
-	}
-	//Nキーが押された
-	else if (pInputKeyboard->GetPress(DIK_N) == true)
-	{
-		m_posV.y -= CAMERA_SPEED;
-		m_posV.z -= CAMERA_SPEED;
-	}
+	////Yキーが押された
+	//if (pInputKeyboard->GetPress(DIK_Y) == true)
+	//{
+	//	m_rot.x += CAMV_MOVE;
+
+	//	//角度の正規化
+	//	m_rot.x = RotNor(m_rot.x);
+
+	//	m_posV.y = m_posR.y + cosf(m_rot.x) * m_fDistance;
+	//	m_posV.z = m_posR.z + sinf(m_rot.x) * m_fDistance;
+	//}
+	////Nキーが押された
+	//else if (pInputKeyboard->GetPress(DIK_N) == true)
+	//{
+	//	m_rot.x -= CAMV_MOVE;
+
+	//	//角度の正規化
+	//	m_rot.x = RotNor(m_rot.x);
+
+	//	m_posV.y = m_posR.y + cosf(m_rot.x) * m_fDistance;
+	//	m_posV.z = m_posR.z + sinf(m_rot.x) * m_fDistance;
+	//}
 
 	//位置を更新
 	m_posV.x += m_move.x;

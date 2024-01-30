@@ -4,7 +4,7 @@
 // Author：森川駿弥
 //
 //========================================
-#include "scarecrow.h"
+#include "boss.h"
 #include "manager.h"
 #include "renderer.h"
 #include "texture.h"
@@ -23,7 +23,7 @@
 //========================================
 // コンストラクタ
 //========================================
-CScarecrow::CScarecrow():
+CBoss::CBoss() :
 	m_pos(0.0f, 0.0f, 0.0f),		// 位置
 	m_rot(0.0f, 0.0f, 0.0f),		// 向き
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
@@ -36,21 +36,21 @@ CScarecrow::CScarecrow():
 //========================================
 // デストラクタ
 //========================================
-CScarecrow::~CScarecrow()
+CBoss::~CBoss()
 {
 }
 
 //========================================
 // 生成
 //========================================
-CScarecrow *CScarecrow::Create()
+CBoss *CBoss::Create()
 {
-	CScarecrow *pScarecrow = nullptr;
+	CBoss *pScarecrow = nullptr;
 
 	if (pScarecrow == nullptr)
 	{
 		// インスタンス生成
-		pScarecrow = new CScarecrow;
+		pScarecrow = new CBoss;
 
 		// 初期化
 		pScarecrow->Init();
@@ -62,8 +62,8 @@ CScarecrow *CScarecrow::Create()
 //========================================
 // 初期化
 //========================================
-HRESULT CScarecrow::Init(void)
-{	
+HRESULT CBoss::Init(void)
+{
 	// 向き
 	m_rot = D3DXVECTOR3(0.0f, -1.7f, 0.0f);
 
@@ -100,7 +100,7 @@ HRESULT CScarecrow::Init(void)
 //========================================
 // 終了
 //========================================
-void CScarecrow::Uninit(void)
+void CBoss::Uninit(void)
 {
 	if (m_pMotion != nullptr)
 	{//モーション破棄
@@ -116,7 +116,7 @@ void CScarecrow::Uninit(void)
 //========================================
 // 更新
 //========================================
-void CScarecrow::Update(void)
+void CBoss::Update(void)
 {
 	//目的の向き
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -153,12 +153,12 @@ void CScarecrow::Update(void)
 //========================================
 // 描画
 //========================================
-void CScarecrow::Draw(void)
+void CBoss::Draw(void)
 {
 	//描画
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-	//CRenderer型のポインタ
+									//CRenderer型のポインタ
 	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
@@ -188,7 +188,7 @@ void CScarecrow::Draw(void)
 //=======================================
 // rotの正規化
 //=======================================
-float CScarecrow::RotNormalize(float RotN, float Rot)
+float CBoss::RotNormalize(float RotN, float Rot)
 {
 	//角度の正規化
 	if (RotN > D3DX_PI)
@@ -223,13 +223,13 @@ float CScarecrow::RotNormalize(float RotN, float Rot)
 //========================================
 // 3Dオブジェクトの生成
 //========================================
-void CScarecrow::SetVertex(void)
+void CBoss::SetVertex(void)
 {
 }
 
 //========================================
 // 3Dオブジェクトの生成
 //========================================
-void CScarecrow::SetSize(float fWidht, float fHeight)
+void CBoss::SetSize(float fWidht, float fHeight)
 {
 }

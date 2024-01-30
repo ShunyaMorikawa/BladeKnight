@@ -269,8 +269,6 @@ void CPlayer::Move(float fSpeed)
 
 			//’‹“_‚ğ‚¸‚ç‚·
 			PosR - m_move;
-
-			ManagementMotion(MOTION_WALK);
 		}
 	}
 

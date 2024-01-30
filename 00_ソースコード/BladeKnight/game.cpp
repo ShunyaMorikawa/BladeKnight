@@ -1,6 +1,6 @@
 //========================================
 //
-//シューティングアクション[game.cpp]
+//ゲーム内処理[game.cpp]
 //Author：森川駿弥
 //
 //========================================
@@ -15,7 +15,7 @@
 #include "player.h"
 #include "polygon.h"
 #include "gameobject.h"
-#include "scarecrow.h"
+#include "boss.h"
 
 //========================================
 //マクロ定義
@@ -32,7 +32,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 CLight *CGame::m_pLight = nullptr;			// ライトのポインタ
 CPlayer *CGame::m_pPlayer = nullptr;		// プレイヤーのポインタ
 CPolygon *CGame::m_pPolygon = nullptr;		// ポリゴンのポインタ
-CScarecrow *CGame::m_pScarecrow = nullptr;	// チュートリアルエネミーのポインタ
+CBoss *CGame::m_pBoss = nullptr;	// チュートリアルエネミーのポインタ
 
 //========================================
 //コンストラクタ
@@ -100,13 +100,13 @@ HRESULT CGame::Init(void)
 	}
 
 	// チュートリアルエネミー初期化
-	if (m_pScarecrow == nullptr)
+	if (m_pBoss == nullptr)
 	{
-		m_pScarecrow = new CScarecrow;
+		m_pBoss = new CBoss;
 	}
 
 	//チュートリアルエネミー7の初期化処理
-	if (FAILED(m_pScarecrow->Init()))
+	if (FAILED(m_pBoss->Init()))
 	{//初期化処理が失敗した場合
 		return -1;
 	}
@@ -146,10 +146,10 @@ void CGame::Uninit(void)
 		m_pPolygon = nullptr;
 	}
 
-	if (m_pScarecrow != nullptr)
+	if (m_pBoss != nullptr)
 	{// エネミー破棄
-		m_pScarecrow->Uninit();
-		m_pScarecrow = nullptr;
+		m_pBoss->Uninit();
+		m_pBoss = nullptr;
 	}
 }
 

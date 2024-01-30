@@ -436,8 +436,6 @@ void CMotion::Load(char *pPath)
 		//========================================
 		if (strcmp(&garbage[0], "MOTIONSET") == 0)
 		{//文字列がMOTIONSETの時
-			//パーツ数リセット
-
 			while (1)
 			{//END_PARTSSETが来るまで回す
 				fscanf(pFile, "%s", &garbage[0]);

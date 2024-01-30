@@ -123,7 +123,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 #ifdef _DEBUG
 	{
 		//ÉÇÅ[Éhê›íË
-		SetMode(CScene::MODE_GAME);
+		SetMode(CScene::MODE_TUTORIAL);
 	}
 #endif
 

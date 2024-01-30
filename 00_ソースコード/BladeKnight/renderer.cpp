@@ -8,7 +8,6 @@
 #include "object.h"
 #include "debugproc.h"
 #include "manager.h"
-#include "input.h"
 
 //========================================
 //コンストラクタ

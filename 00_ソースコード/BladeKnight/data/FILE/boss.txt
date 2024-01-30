@@ -14,20 +14,20 @@ NUM_MODEL = 14
 #------------------------------------------------------------------------------
 # モデルファイル名
 #------------------------------------------------------------------------------
-MODEL_FILENAME = data/model/scarecrow/00_waist.x		# [0]腰
-MODEL_FILENAME = data/model/scarecrow/01_body.x			# [1]体
-MODEL_FILENAME = data/model/scarecrow/02_head.x			# [2]頭
-MODEL_FILENAME = data/model/scarecrow/03_R_shoulder.x	# [3]右肩
-MODEL_FILENAME = data/model/scarecrow/04_R_arm.x		# [4]右腕
-MODEL_FILENAME = data/model/scarecrow/05_R_hand.x		# [5]右手
-MODEL_FILENAME = data/model/scarecrow/06_L_shoulder.x	# [6]左型
-MODEL_FILENAME = data/model/scarecrow/07_L_arm.x		# [7]左腕
-MODEL_FILENAME = data/model/scarecrow/08_L_hand.x		# [8]左手
-MODEL_FILENAME = data/model/scarecrow/09_R_thigh.x		# [9]右腿
-MODEL_FILENAME = data/model/scarecrow/10_R_leg.x		# [10]右足
-MODEL_FILENAME = data/model/scarecrow/11_L_thigh.x		# [11]左腿
-MODEL_FILENAME = data/model/scarecrow/12_L_leg.x		# [12]左足
-MODEL_FILENAME = data/model/scarecrow/13_enemysword.x	# [13]武器
+MODEL_FILENAME = data/model/boss/00_waist.x			# [0]腰
+MODEL_FILENAME = data/model/boss/01_body.x			# [1]体
+MODEL_FILENAME = data/model/boss/02_head.x			# [2]頭
+MODEL_FILENAME = data/model/boss/03_R_shoulder.x	# [3]右肩
+MODEL_FILENAME = data/model/boss/04_R_arm.x			# [4]右腕
+MODEL_FILENAME = data/model/boss/05_R_hand.x		# [5]右手
+MODEL_FILENAME = data/model/boss/06_L_shoulder.x	# [6]左型
+MODEL_FILENAME = data/model/boss/07_L_arm.x			# [7]左腕
+MODEL_FILENAME = data/model/boss/08_L_hand.x		# [8]左手
+MODEL_FILENAME = data/model/boss/09_R_thigh.x		# [9]右腿
+MODEL_FILENAME = data/model/boss/10_R_leg.x			# [10]右足
+MODEL_FILENAME = data/model/boss/11_L_thigh.x		# [11]左腿
+MODEL_FILENAME = data/model/boss/12_L_leg.x			# [12]左足
+MODEL_FILENAME = data/model/boss/13_enemysword.x	# [13]武器
 
 #------------------------------------------------------------------------------
 # キャラクター情報
