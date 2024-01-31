@@ -137,6 +137,9 @@ void CPlayer::Update(void)
 	// 歩き
 	m_bMove = false;
 
+	// 攻撃
+	m_bAttack = false;
+
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
@@ -379,16 +382,51 @@ void CPlayer::Move(float fSpeed)
 		m_rot.y += D3DX_PI * 2;
 	}
 
-	if (m_bMove) {
-		m_pMotion->Set(MOTION_WALK);
+	if (m_bMove) 
+	{// 歩きモーション
+		m_pMotion->Set(MOTIONTYPE_WALK);
 	}
 	else
-	{
-		m_pMotion->Set(MOTION_STANDBY);
+	{// 待機モーション
+		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
 
 	}
+
+	// 攻撃
+	//Attack();
+
 	// 待機モーションにする
 	m_bWait = true;
+}
+
+//========================================
+// 攻撃
+//========================================
+void CPlayer::Attack()
+{
+	// コントローラーの情報取得
+	CInputKeyboard *pInputKeyboard = nullptr;
+	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	// コントローラーの情報取得
+	CInputPad *pInputPad = nullptr;
+	pInputPad = CManager::GetInstance()->GetInputPad();
+
+	//左上
+	if (pInputKeyboard->GetPress(DIK_SPACE) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+	{
+		// 攻撃
+		m_bAttack = true;
+	}
+
+	if (m_bAttack)
+	{// 歩きモーション
+		m_pMotion->Set(MOTIONTYPE_ATTACK);
+	}
+	else
+	{// 待機モーション
+		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+	}
 }
 
 //========================================

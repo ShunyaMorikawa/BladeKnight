@@ -12,17 +12,19 @@
 #include "manager.h"
 #include "model.h"
 #include "motion.h"
+#include "enemy.h"
 
 //========================================
-// チュートリアルエネミークラス
+// ボスクラス
 //========================================
-class CBoss : public CObject
+class CBoss : public CEnemy
 {
 public:
 	enum MOTIONTYPE
 	{//モーションの種類
-		MOTIONTYPE_NEUTRAL = 0,		//待機状態
-		MOTIONTYPE_WALK,			//歩き状態
+		MOTIONTYPE_NEUTRAL = 0,		// 待機状態
+		MOTIONTYPE_WALK,			// 歩き状態
+		MOTIONTYPE_ATTACK,			// 攻撃
 		MOTIONTYPE_MAX
 	};
 
@@ -37,12 +39,12 @@ public:
 	void Update(void);		// 更新
 	void Draw(void);		// 描画
 
+	void Move(float fSpeed);
+
 	float RotNormalize(float RotN, float Rot);		// rotの正規化
 
 	void SetVertex(void);
 	void SetSize(float fWidht, float fHeight);
-	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }	// 位置設定
-	D3DXVECTOR3 GetPosition(void) { return m_pos; }		// 位置取得
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		// 向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			// 向き取得
 
@@ -57,8 +59,9 @@ private:
 	LPD3DXBUFFER m_pBuffMat;		// マテリアルへのポインタ
 	DWORD m_dwNumMat;				// マテリアルの数
 
-									//オブジェクト
-	D3DXVECTOR3 m_pos;		// 位置
+	//オブジェクト
+	D3DXVECTOR3 m_pos;		// 向き
+	D3DXVECTOR3 m_move;		// 向き
 	D3DXVECTOR3 m_rot;		// 向き
 	D3DXVECTOR3 m_vtxMin, m_vtxMax;	// モデルの最大、最小値
 
@@ -67,6 +70,8 @@ private:
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		//モーションのポインタ
 	float m_fAngle;			// 目的の向き
+	bool m_bWalk;			// 移動
+	bool m_bAttack;			// 攻撃
 };
 
 #endif

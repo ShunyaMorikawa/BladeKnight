@@ -19,12 +19,12 @@
 //マクロ定義
 //========================================
 #define MOTION_PATH	"data\\FILE\\boss.txt"	//読み込むファイルのパス
+#define ENEMY_MOVE	(1.0f)
 
 //========================================
 // コンストラクタ
 //========================================
 CBoss::CBoss() :
-	m_pos(0.0f, 0.0f, 0.0f),		// 位置
 	m_rot(0.0f, 0.0f, 0.0f),		// 向き
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
@@ -45,18 +45,18 @@ CBoss::~CBoss()
 //========================================
 CBoss *CBoss::Create()
 {
-	CBoss *pScarecrow = nullptr;
+	CBoss *pBoss = nullptr;
 
-	if (pScarecrow == nullptr)
+	if (pBoss == nullptr)
 	{
 		// インスタンス生成
-		pScarecrow = new CBoss;
+		pBoss = new CBoss;
 
 		// 初期化
-		pScarecrow->Init();
+		pBoss->Init();
 	}
 
-	return pScarecrow;
+	return pBoss;
 }
 
 //========================================
@@ -118,6 +118,12 @@ void CBoss::Uninit(void)
 //========================================
 void CBoss::Update(void)
 {
+	// 位置取得
+	D3DXVECTOR3 posEnemy = Getpos();
+
+	// 移動量取得
+	D3DXVECTOR3 moveEnemy = GetMove();
+
 	//目的の向き
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -128,14 +134,21 @@ void CBoss::Update(void)
 	{
 		return;
 	}
-
+	// プレイヤーの位置
 	D3DXVECTOR3 posPlayer = pPlayer->GetPosition();
 
 	//プレイヤーとの角度
-	m_fAngle = atan2f(posPlayer.x - m_pos.x, posPlayer.z - m_pos.z);
+	m_fAngle = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
 
 	//プレイヤーの方向に向ける
 	m_rot.y = m_fAngle;
+
+	//プレイヤー方向に移動
+	moveEnemy.x = sinf(m_rot.y) * ENEMY_MOVE;
+	moveEnemy.z = cosf(m_rot.y) * ENEMY_MOVE;
+
+	// 位置更新
+	posEnemy += moveEnemy;
 
 	if (m_pMotion != nullptr)
 	{//モーション更新
@@ -146,7 +159,8 @@ void CBoss::Update(void)
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	//デバッグ表示
-	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
+	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", posEnemy.x, posEnemy.y, posEnemy.z);
+	pDebugProc->Print("敵の移動量：%f、%f、%f\n", moveEnemy.x, moveEnemy.y, moveEnemy.z);
 	pDebugProc->Print("敵の向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 }
 
@@ -165,7 +179,7 @@ void CBoss::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
 
 	//位置取得
-	D3DXVECTOR3 pos = GetPosition();
+	D3DXVECTOR3 pos = Getpos();
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -183,6 +197,14 @@ void CBoss::Draw(void)
 
 	//モーション描画
 	m_pMotion->Draw();
+}
+
+//=======================================
+// 敵の移動
+//=======================================
+void CBoss::Move(float fSpeed)
+{
+
 }
 
 //=======================================

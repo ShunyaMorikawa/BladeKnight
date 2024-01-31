@@ -26,7 +26,6 @@
 //========================================
 CEnemy::CEnemy() :
 	m_pTexture(nullptr),
-	m_pos(0.0f, 0.0f, 0.0f),		//位置
 	m_move(0.0f, 0.0f, 0.0f),		//移動量
 	m_rot(0.0f, 0.0f, 0.0f),		//向き
 	m_nIdxTexture(0),				//テクスチャの番号
@@ -127,18 +126,15 @@ void CEnemy::Uninit(void)
 //========================================
 void CEnemy::Update(void)
 {
-	// 現在のモーション
-	EMotion nowMotion = MOTION_STANDBY;
-
 	//CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//位置取得
-	D3DXVECTOR3 pos = GetPosition();
+	D3DXVECTOR3 pos = Getpos();
 
 	//向き取得
-	D3DXVECTOR3 rot = GetRot();
+	D3DXVECTOR3 rot = Getrot();
 
 	//位置更新
 	//SetPosition(D3DXVECTOR3(pos.x += m_move.x, 0.0f, pos.z += m_move.z));
@@ -164,14 +160,14 @@ void CEnemy::Draw(void)
 	//描画
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-									//CRenderer型のポインタ
+	//CRenderer型のポインタ
 	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
 
 	//位置取得
-	D3DXVECTOR3 pos = GetPosition();
+	D3DXVECTOR3 pos = Getpos();
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -254,4 +250,24 @@ void CEnemy::SetVertex(void)
 //========================================
 void CEnemy::SetSize(float fWidht, float fHeight)
 {
+}
+
+//========================================
+//位置設定
+//========================================
+void CEnemy::SetPosition(D3DXVECTOR3 pos)
+{
+	D3DXVECTOR3 posEnemy = CObject::Getpos();
+
+	posEnemy = pos;
+}
+
+//========================================
+//向き設定
+//========================================
+void CEnemy::SetRot(D3DXVECTOR3 rot)
+{
+	D3DXVECTOR3 rotEnemy = CObject::Getrot();
+
+	rotEnemy = rot;
 }

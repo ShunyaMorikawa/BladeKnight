@@ -4,8 +4,8 @@
 //Author：森川駿弥
 //
 //========================================
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _ENEMY_H_
+#define _ENEMY_H_
 
 #include "main.h"
 #include "input.h"
@@ -19,14 +19,6 @@
 class CEnemy : public CObject
 {
 public:
-	enum EMotion
-	{// モーション種類
-		MOTION_STANDBY = 0,		// 待機
-		MOTION_WALK,			// 移動
-		MOTION_ATTACK,			// 攻撃
-		MOTION_MAX
-	};
-
 	CEnemy();		//コンストラクタ
 	~CEnemy();		//デストラクタ
 
@@ -43,11 +35,8 @@ public:
 	void SetVertex(void);
 	void SetSize(float fWidht, float fHeight);
 
-	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }	//位置設定
-	D3DXVECTOR3 GetPosition(void) { return m_pos; }		//位置取得
-
-	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		//向き設定
-	D3DXVECTOR3 GetRot(void) { return m_rot; }			//向き取得
+	void SetPosition(D3DXVECTOR3 pos);	//位置設定
+	void SetRot(D3DXVECTOR3 rot);		//向き設定
 
 	int GetMotionType();	// モーションの種類取得
 	bool GetMotionLoop(int nType);	// モーションのループ
@@ -65,7 +54,6 @@ private:
 	DWORD m_dwNumMat;				//マテリアルの数
 
 	//オブジェクト
-	D3DXVECTOR3 m_pos;		//位置
 	D3DXVECTOR3 m_move;		//移動量
 	D3DXVECTOR3 m_rot;		//向き
 	D3DXVECTOR3 m_vtxMin, m_vtxMax;	//モデルの最大、最小値

@@ -155,17 +155,8 @@ void CTutorial::Update(void)
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 	{
-		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
+		CManager::GetInstance()->SetMode(CScene::MODE_GAME);
 	}
-
-#ifdef _DEBUG
-	{
-		if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
-		{
-			CManager::GetInstance()->SetMode(CScene::MODE_GAME);
-		}
-	}
-#endif
 }
 
 //=======================================

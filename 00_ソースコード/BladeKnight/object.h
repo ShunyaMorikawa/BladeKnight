@@ -30,7 +30,6 @@ public:
 	virtual void SetVertex(void) = 0;
 	virtual void SetSize(float fWidht, float fHeight) = 0;
 	virtual void SetPosition(D3DXVECTOR3 pos) = 0;
-	virtual D3DXVECTOR3 GetPosition(void) = 0;
 
 	//メンバ関数
 	static void ReleaseAll(void);
@@ -40,15 +39,19 @@ public:
 	void BindTexture(int pTexture);				//テクスチャ割り当て
 
 	D3DXVECTOR3 Getpos(void) { return m_pos; }
+	D3DXVECTOR3 Getrot(void) { return m_rot; }
+	D3DXVECTOR3 GetMove() { return m_move; }
 protected:
 	void Release(void);
 
 private:
 	static CObject *m_apObject[MAX_DATA];
-	static int m_nNumAll;	//オブジェクト総数
-	int m_nID;				//自分自身のID
-	D3DXVECTOR3 m_pos;		//位置
-	int m_nIdxTexture;		//テクスチャの番号
+	static int m_nNumAll;	// オブジェクト総数
+	int m_nID;				// 自分自身のID
+	D3DXVECTOR3 m_pos;		// 位置
+	D3DXVECTOR3 m_rot;		// 向き
+	D3DXVECTOR3 m_move;		// 移動量
+	int m_nIdxTexture;		// テクスチャの番号
 };
 
 #endif

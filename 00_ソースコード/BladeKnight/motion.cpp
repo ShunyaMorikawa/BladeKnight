@@ -14,7 +14,7 @@
 //========================================
 CMotion::CMotion() :
 	m_nNumAll(0),		//モーションの総数
-	m_nType(0),			//種類
+	m_nType(0),			//モーション種類
 	m_nKey(0),			//現在のキー数
 	m_nCounter(0),		//フレームカウンター
 	m_bFinish(false),	//終了したかどうか
@@ -445,7 +445,7 @@ void CMotion::Load(char *pPath)
 
 				if (strcmp(&garbage[0], "END_MOTIONSET") == 0)
 				{//文字列がEND_PARTSSETの時
-					//パーツ数を加算
+					// モーションの総数を加算
 					m_nNumAll++;
 					keysetCount = 0;
 
@@ -476,7 +476,7 @@ void CMotion::Load(char *pPath)
 					//=捨てる
 					fscanf(pFile, "%s", &garbage[0]);
 
-					//親子関係設定
+					//キーの番号
 					fscanf(pFile, "%d", &m_aInfo[m_nNumAll].nNumKey);
 				}
 

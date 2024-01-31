@@ -21,11 +21,11 @@ class CPlayer : public CObject
 public:
 	enum EMotion
 	{// モーション種類
-		MOTION_STANDBY = 0,		// 待機
-		MOTION_WALK,			// 移動
-		MOTION_ATTACK,			// 攻撃
-		MOTION_BLOWAWAY,		// 吹っ飛ばし
-		MOTION_MAX
+		MOTIONTYPE_NEUTRAL = 0,		// 待機
+		MOTIONTYPE_WALK,			// 移動
+		MOTIONTYPE_ATTACK,			// 攻撃
+		MOTIONTYPE_BLOWAWAY,		// 吹っ飛ばし
+		MOTIONTYPE_MAX
 	};
 
 	CPlayer();		//コンストラクタ
@@ -39,7 +39,8 @@ public:
 	void Update(void);		//更新
 	void Draw(void);		//描画
 
-	void Move(float fSpeed);	//プレイヤーの操作
+	void Move(float fSpeed);	// 移動
+	void Attack();				// 攻撃
 
 	float RotNormalize(float RotN, float Rot);		//rotの正規化
 

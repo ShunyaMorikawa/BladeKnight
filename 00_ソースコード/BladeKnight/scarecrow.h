@@ -12,11 +12,12 @@
 #include "manager.h"
 #include "model.h"
 #include "motion.h"
+#include "enemy.h"
 
 //========================================
 // チュートリアルエネミークラス
 //========================================
-class CScarecrow : public CObject
+class CScarecrow : public CEnemy
 {
 public:
 	enum MOTIONTYPE
