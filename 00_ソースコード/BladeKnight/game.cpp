@@ -99,13 +99,13 @@ HRESULT CGame::Init(void)
 		return -1;
 	}
 
-	// チュートリアルエネミー初期化
+	// ボスの生成
 	if (m_pBoss == nullptr)
 	{
 		m_pBoss = new CBoss;
 	}
 
-	//チュートリアルエネミー7の初期化処理
+	//ボスの初期化処理
 	if (FAILED(m_pBoss->Init()))
 	{//初期化処理が失敗した場合
 		return -1;

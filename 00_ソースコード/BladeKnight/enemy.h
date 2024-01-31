@@ -22,25 +22,11 @@ public:
 	CEnemy();		//コンストラクタ
 	~CEnemy();		//デストラクタ
 
-	//メンバ関数
-	static CEnemy *Create(void);	//エネミー生成
+	virtual HRESULT Init(void) = 0;		//初期化
+	virtual void Uninit(void) = 0;		//終了
+	virtual void Update(void) = 0;		//更新
+	virtual void Draw(void) = 0;		//描画
 
-	HRESULT Init(void);		//初期化
-	void Uninit(void);		//終了
-	void Update(void);		//更新
-	void Draw(void);		//描画
-
-	float RotNormalize(float RotN, float Rot);		//rotの正規化
-
-	void SetVertex(void);
-	void SetSize(float fWidht, float fHeight);
-
-	void SetPosition(D3DXVECTOR3 pos);	//位置設定
-	void SetRot(D3DXVECTOR3 rot);		//向き設定
-
-	int GetMotionType();	// モーションの種類取得
-	bool GetMotionLoop(int nType);	// モーションのループ
-	int GetLife() { return m_nLife; }					// 体力取得
 
 private:
 	//メンバ変数

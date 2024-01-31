@@ -1,6 +1,6 @@
 //========================================
 //
-// チュートリアルエネミー[scarecrow.h]
+// ボス[boss.h]
 //Author：森川駿弥
 //
 //========================================
@@ -47,7 +47,7 @@ public:
 	void SetSize(float fWidht, float fHeight);
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		// 向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			// 向き取得
-
+	void SetPosition(D3DXVECTOR3 pos);
 private:
 	//メンバ変数
 

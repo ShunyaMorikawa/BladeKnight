@@ -18,7 +18,7 @@
 //========================================
 //マクロ定義
 //========================================
-#define MOTION_PATH	"data\\FILE\\boss.txt"	//読み込むファイルのパス
+#define MOTION_PATH	"data\\FILE\\scarecrow.txt"	//読み込むファイルのパス
 
 //========================================
 // コンストラクタ
@@ -64,8 +64,11 @@ CScarecrow *CScarecrow::Create()
 //========================================
 HRESULT CScarecrow::Init(void)
 {	
+	// 位置
+	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	// 向き
-	m_rot = D3DXVECTOR3(0.0f, -1.7f, 0.0f);
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 向きの設定
 	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

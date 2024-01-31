@@ -1,6 +1,6 @@
 //========================================
 //
-// チュートリアルエネミー[scarecrow.cpp]
+// ボス[boss.cpp]
 // Author：森川駿弥
 //
 //========================================
@@ -25,6 +25,8 @@
 // コンストラクタ
 //========================================
 CBoss::CBoss() :
+	m_move(0.0f, 0.0f, 0.0f),		// 移動量
+	m_pos(0.0f, 0.0f, 0.0f),		// 位置
 	m_rot(0.0f, 0.0f, 0.0f),		// 向き
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
@@ -64,6 +66,12 @@ CBoss *CBoss::Create()
 //========================================
 HRESULT CBoss::Init(void)
 {
+	// 移動量
+	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// 位置
+	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	// 向き
 	m_rot = D3DXVECTOR3(0.0f, -1.7f, 0.0f);
 
@@ -144,11 +152,11 @@ void CBoss::Update(void)
 	m_rot.y = m_fAngle;
 
 	//プレイヤー方向に移動
-	moveEnemy.x = sinf(m_rot.y) * ENEMY_MOVE;
-	moveEnemy.z = cosf(m_rot.y) * ENEMY_MOVE;
+	m_move.x = sinf(m_rot.y) * ENEMY_MOVE;
+	m_move.z = cosf(m_rot.y) * ENEMY_MOVE;
 
 	// 位置更新
-	posEnemy += moveEnemy;
+	m_pos += m_move;
 
 	if (m_pMotion != nullptr)
 	{//モーション更新
@@ -253,5 +261,12 @@ void CBoss::SetVertex(void)
 // 3Dオブジェクトの生成
 //========================================
 void CBoss::SetSize(float fWidht, float fHeight)
+{
+}
+
+//========================================
+// 位置設定
+//========================================
+void CBoss::SetPosition(D3DXVECTOR3 pos)
 {
 }

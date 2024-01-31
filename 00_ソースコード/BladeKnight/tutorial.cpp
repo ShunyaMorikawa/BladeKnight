@@ -5,16 +5,12 @@
 //
 //========================================
 #include "tutorial.h"
-#include "object2D.h"
-#include "objectx.h"
-#include "time.h"
 #include "manager.h"
 #include "camera.h"
 #include "input.h"
 #include "light.h"
 #include "player.h"
 #include "polygon.h"
-#include "gameobject.h"
 #include "scarecrow.h"
 
 //========================================
@@ -48,19 +44,19 @@ CTutorial::~CTutorial()
 CTutorial *CTutorial::Create(void)
 {
 	//タイトルのポインタ
-	CTutorial *pTitle = nullptr;
+	CTutorial *pTutorial = nullptr;
 
-	if (pTitle == nullptr)
+	if (pTutorial == nullptr)
 	{
 		//インスタンス生成
-		pTitle = new CTutorial;
+		pTutorial = new CTutorial;
 
 		//初期化
-		pTitle->Init();
+		pTutorial->Init();
 	}
 
 	//ポインタを返す
-	return pTitle;
+	return pTutorial;
 }
 
 //=======================================
@@ -92,13 +88,13 @@ HRESULT CTutorial::Init(void)
 		return -1;
 	}
 
-	// チュートリアルエネミー初期化
+	// チュートリアルエネミー生成
 	if (m_pScarecrow == nullptr)
 	{
 		m_pScarecrow = new CScarecrow;
 	}
 
-	//チュートリアルエネミー7の初期化処理
+	//チュートリアルエネミーの初期化処理
 	if (FAILED(m_pScarecrow->Init()))
 	{//初期化処理が失敗した場合
 		return -1;
