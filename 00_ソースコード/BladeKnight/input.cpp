@@ -10,7 +10,9 @@
 //========================================
 //静的メンバ変数
 //========================================
-LPDIRECTINPUT8 CInput::m_pInput = nullptr;			//DirectInputオブジェクトへのポインタ
+LPDIRECTINPUT8 CInput::m_pInput = nullptr;
+DIMOUSESTATE CInputMouse::m_CurrentMouseState;
+DIMOUSESTATE CInputMouse::m_PrevMouseState;
 
 //========================================
 //コンストラクタ
@@ -34,7 +36,11 @@ HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 	if (m_pInput == nullptr)
 	{
 		//DirectInputオブジェクトの生成
-		if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void **)&m_pInput, nullptr)))
+		if (FAILED(DirectInput8Create(hInstance, 
+									  DIRECTINPUT_VERSION, 
+									  IID_IDirectInput8,
+									  (void **)&m_pInput, 
+									  nullptr)))
 		{
 			return E_FAIL;
 		}
@@ -167,6 +173,119 @@ bool CInputKeyboard::GetTrigger(int nKey)
 }
 
 //========================================
+// コンストラクタ
+//========================================
+CInputMouse::CInputMouse()
+{
+}
+
+//========================================
+// デストラクタ
+//========================================
+CInputMouse::~CInputMouse()
+{
+}
+
+//========================================
+// 初期化
+//========================================
+HRESULT CInputMouse::Init(HINSTANCE hInstance, HWND hWnd)
+{
+	CInput::Init(hInstance, hWnd);
+
+	//入力デバイスの生成
+	if (FAILED(m_pInput->CreateDevice(GUID_SysMouse, &m_pDevice, nullptr)))
+	{
+		return E_FAIL;
+	}
+
+	//データフォーマットを設定
+	if (FAILED(m_pDevice->SetDataFormat(&c_dfDIMouse)))
+	{
+		return E_FAIL;
+	}
+
+	//協調モードを設定
+	if (FAILED(m_pDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)))
+	{
+		return E_FAIL;
+	}
+
+	//デバイスのアクセス権を獲得
+	m_pDevice->Acquire();
+
+	return S_OK;
+}
+
+//========================================
+// 終了
+//========================================
+void CInputMouse::Uninit(void)
+{
+	CInput::Uninit();
+}
+
+//========================================
+// 更新
+//========================================
+void CInputMouse::Update(void)
+{
+	//入力デバイスからデータを取得
+	if (SUCCEEDED(m_pDevice->GetDeviceState(sizeof(DIMOUSESTATE), &m_CurrentMouseState)))
+	{
+		// 最新のマウス情報を保存する
+		m_PrevMouseState = m_CurrentMouseState;
+
+		// マウス座標取得
+		GetCursorPos(&m_pPoint);
+	}
+	else
+	{
+		//デバイスのアクセス権を獲得
+		m_pDevice->Acquire();
+	}
+
+	// スクリーン座標をクライアント座標に変換する
+	ScreenToClient(FindWindowA("BladeKnight", nullptr), &m_pPoint);
+}
+
+//========================================
+// クリックされた判定
+//========================================
+bool CInputMouse::OnMouseDown(int MouseButton)
+{
+	if (!(m_PrevMouseState.rgbButtons[MouseButton] & 0x80)
+		&& m_CurrentMouseState.rgbButtons[MouseButton] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//========================================
+// クリックやめた判定
+//========================================
+bool CInputMouse::OnMouseUp(int MouseButton)
+{
+	if (!(m_PrevMouseState.rgbButtons[MouseButton] & 0x80)
+		&& !(m_CurrentMouseState.rgbButtons[MouseButton] & 0x80))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//========================================
+// 移動量の取得
+//========================================
+D3DXVECTOR3 CInputMouse::GetMouseVelocity()
+{
+	return D3DXVECTOR3((float)m_CurrentMouseState.lX, m_CurrentMouseState.lY, m_CurrentMouseState.lZ);
+}
+
+//========================================
 //コントローラーのコンストラクタ
 //========================================
 CInputPad::CInputPad()
@@ -227,7 +346,7 @@ void CInputPad::Update(void)
 				& aPadState[nCntPad].Gamepad.wButtons;
 
 			//パッドのリリース情報を保存
-			m_aPadStateTrigger[nCntPad].Gamepad.wButtons =
+			m_aPadStateRelease[nCntPad].Gamepad.wButtons =
 				m_aPadState[nCntPad].Gamepad.wButtons
 				& ~aPadState[nCntPad].Gamepad.wButtons;
 

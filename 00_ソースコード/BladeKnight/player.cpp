@@ -79,9 +79,6 @@ HRESULT CPlayer::Init(void)
 	//モーションのポインタ
 	m_pMotion = nullptr;
 
-	// 待機
-	m_bWait = false;
-
 	//目的の向き
 	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -103,7 +100,7 @@ HRESULT CPlayer::Init(void)
 		m_pMotion->Load(PLAYER_PATH);
 
 		//待機状態
-		m_bWait = true;
+		//m_bWait = true;
 	}
 
 	//成功を返す
@@ -143,35 +140,48 @@ void CPlayer::Update(void)
 	// 攻撃
 	m_bAttack = false;
 
-	//CInputKeyboard型のポインタ
+	// CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = nullptr;
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-	//位置取得
+	// 位置取得
 	D3DXVECTOR3 pos = GetPosition();
 
-	//向き取得
+	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
 	// プレイヤー移動
 	Move(PLAYER_SPEED);
 
 	// プレイヤー攻撃
-	//Attack();
+	Attack();
 
-	//カメラ追従
+	if (m_bMove)
+	{// 歩きモーション
+		m_pMotion->Set(MOTIONTYPE_WALK);
+	}
+	else if (m_bAttack)
+	{// 攻撃モーション
+		m_pMotion->Set(MOTIONTYPE_ATTACK);
+	}
+	else
+	{// 待機モーション
+		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+	}
+
+	// カメラ追従
 	CCamera *pCampera = CManager::GetInstance()->GetCamera();
 	pCampera->following(pos, rot);
 
 	if (m_pMotion != nullptr)
-	{//モーション更新
+	{// モーション更新
 		m_pMotion->Update();
 	}
 
-	//ポインタ
+	// ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
-	//デバッグ表示
+	// デバッグ表示
 	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 }
@@ -216,13 +226,14 @@ void CPlayer::Draw(void)
 //========================================
 void CPlayer::Move(float fSpeed)
 {
-	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
+	// キーボードの情報取得
+	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	
+	
+	// コントローラーの情報取得	
+	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
 
-	//CInputPad型のポインタ
-	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInstance()->GetInputPad();	//コントローラーの情報取得
+	// マウスの情報取得
+	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
 	//CCamera型のポインタ
 	CCamera *pCamera = nullptr;
@@ -238,7 +249,8 @@ void CPlayer::Move(float fSpeed)
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//Aが押された
-	if (pInputKeyboard->GetPress(DIK_A) == true || pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+	if (pInputKeyboard->GetPress(DIK_A) == true 
+		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{
 		//左上
 		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
@@ -384,18 +396,6 @@ void CPlayer::Move(float fSpeed)
 	{
 		m_rot.y += D3DX_PI * 2;
 	}
-
-	if (m_bMove) 
-	{// 歩きモーション
-		m_pMotion->Set(MOTIONTYPE_WALK);
-	}
-	else
-	{// 待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
-	}
-
-	// 待機モーションにする
-	m_bWait = true;
 }
 
 //========================================
@@ -411,24 +411,13 @@ void CPlayer::Attack()
 	CInputPad *pInputPad = nullptr;
 	pInputPad = CManager::GetInstance()->GetInputPad();
 
-	//左上
-	if (pInputKeyboard->GetPress(DIK_SPACE) == true || pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
+	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true || pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
 	{
 		// 攻撃
 		m_bAttack = true;
 	}
 
-	if (m_bAttack)
-	{// 攻撃モーション
-		m_pMotion->Set(MOTIONTYPE_ATTACK);
-	}
-	else
-	{// 待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
-	}
 
-	// 待機モーションにする
-	m_bWait = true;
 }
 
 //========================================

@@ -98,8 +98,8 @@ HRESULT CBoss::Init(void)
 		//モーション読み込み
 		m_pMotion->Load(MOTION_PATH);
 
-		//待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+		// 待機
+		m_bWait = true;
 	}
 
 	return S_OK;
@@ -135,6 +135,15 @@ void CBoss::Update(void)
 	//目的の向き
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
+	// 攻撃
+	m_bAttack = false;
+
+	// 突き
+	m_bThrust = false;
+
+	// 切り上げ
+	m_bRoundup = true;
+
 	//プレイヤーの情報取得
 	CPlayer *pPlayer = CGame::GetPlayer();
 
@@ -157,6 +166,23 @@ void CBoss::Update(void)
 
 	// 位置更新
 	m_pos += m_move;
+
+	//if (m_bAttack)
+	//{// 攻撃モーション
+	//	m_pMotion->Set(MOTIONTYPE_ATTACK);
+	//}
+	//else if (m_bThrust)
+	//{// 突き攻撃モーション
+	//	m_pMotion->Set(MOTIONTYPE_THRUST);
+	//}
+	if (m_bRoundup)
+	{// 切り上げモーション
+		m_pMotion->Set(MOTIONTYPE_ROUNDUP);
+	}
+	else
+	{// 待機モーション
+		m_pMotion->Set(MOTIONTYPE_WALK);
+	}
 
 	if (m_pMotion != nullptr)
 	{//モーション更新

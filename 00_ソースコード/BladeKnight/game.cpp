@@ -32,7 +32,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 CLight *CGame::m_pLight = nullptr;			// ライトのポインタ
 CPlayer *CGame::m_pPlayer = nullptr;		// プレイヤーのポインタ
 CPolygon *CGame::m_pPolygon = nullptr;		// ポリゴンのポインタ
-CBoss *CGame::m_pBoss = nullptr;	// チュートリアルエネミーのポインタ
+CBoss *CGame::m_pBoss = nullptr;			// ボスのポインタ
 
 //========================================
 //コンストラクタ

@@ -20,11 +20,12 @@
 class CBoss : public CEnemy
 {
 public:
-	enum MOTIONTYPE
-	{//モーションの種類
-		MOTIONTYPE_NEUTRAL = 0,		// 待機状態
-		MOTIONTYPE_WALK,			// 歩き状態
+	enum EMotion
+	{// モーション種類
+		MOTIONTYPE_WALK = 0,		// 移動
 		MOTIONTYPE_ATTACK,			// 攻撃
+		MOTIONTYPE_THRUST,			// 突き刺し
+		MOTIONTYPE_ROUNDUP,			// 切り上げ
 		MOTIONTYPE_MAX
 	};
 
@@ -70,8 +71,11 @@ private:
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		//モーションのポインタ
 	float m_fAngle;			// 目的の向き
-	bool m_bWalk;			// 移動
+	bool m_bMove;			// 移動
+	bool m_bWait;			// 待機
 	bool m_bAttack;			// 攻撃
+	bool m_bThrust;			// 突き
+	bool m_bRoundup;		// 切り上げ
 };
 
 #endif

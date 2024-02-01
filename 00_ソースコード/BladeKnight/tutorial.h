@@ -8,7 +8,6 @@
 #define _TUTORIAL_H_
 #include "main.h"
 #include "manager.h"
-#include "object2D.h"
 
 //========================================
 //前方宣言
@@ -45,7 +44,7 @@ private:
 	static CObject *m_pObject[MAX_DATA];		//オブジェクトのポインタ
 	static CObjectX *m_pObjectX;		//Xファイルオブジェクトのポインタ
 	static CObject3D *m_pObject3D;		//オブジェクト3Dのポインタ
-	static CTutorial *m_pTutorial;				//ゲームマネージャーのポインタ
+	static CTutorial *m_pTutorial;		//ゲームマネージャーのポインタ
 	static CLight *m_pLight;			//ライトのポインタ
 	static CPlayer *m_pPlayer;			//プレイヤーのポインタ
 	static CPolygon *m_pPolygon;		//ポリゴンのポインタ

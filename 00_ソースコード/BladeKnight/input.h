@@ -8,22 +8,20 @@
 #define _INPUT_H_
 
 #include "main.h"
-#define  DIRECTINPUT_VERSION (0x0800)   //ビルド時の警告対処用マクロ
-#include "dinput.h"   //入力処理に必要
-#include "Xinput.h"
 
 //========================================
 //ライブラリのリンク
 //========================================
-#pragma comment(lib,"dinput8.lib")  //入力処理に必要
+#pragma comment (lib,"dinput8.lib")  //入力処理に必要
 #pragma comment (lib,"xinput.lib")
+#pragma comment (lib, "dxguid.lib")
 
 //========================================
 //マクロ定義
 //========================================
 #define NUM_MAX_KEY		(256)	//キーの最大数
 #define NUM_MAX_PAD		(4)		//パッドの最大数
-//#define NUM_PAD_MAX  (13)    //パッドのボタンの最大数
+#define NUM_MAX_BUTTON	(4)		// マウスボタンの最大数
 
 //========================================
 //インプットクラス
@@ -41,7 +39,7 @@ public:
 
 protected:
 	static LPDIRECTINPUT8 m_pInput;		//DirectInputオブジェクトへのポインタ
-	LPDIRECTINPUTDEVICE8 m_pDevice;		//入力デバイス(キーボード)へのポインタ
+	LPDIRECTINPUTDEVICE8 m_pDevice;		//入力デバイスへのポインタ
 };
 
 //========================================
@@ -64,6 +62,37 @@ private:
 	//メンバ変数
 	BYTE m_aKeyState[NUM_MAX_KEY];			//キーボードのプレス情報
 	BYTE m_aKeyStateTrigger[NUM_MAX_KEY];	//キーボードのトリガー情報
+};
+
+//========================================
+// マウスクラス
+//========================================
+class CInputMouse : public CInput
+{
+public:
+	enum MouseButton
+	{// マウスボタン
+		BUTTON_L = 0,
+		BUTTON_R,
+		BUTTON_WHEEL,
+		BUTTON_MAX
+	};
+
+	CInputMouse();	// コンストラクタ
+	~CInputMouse();	// デストラクタ
+
+	//メンバ関数
+	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
+	void Uninit(void);
+	void Update(void);
+	bool OnMouseDown(int MouseButton);		// クリックされた判定
+	bool OnMouseUp(int MouseButton);		// クリックやめた判定
+	D3DXVECTOR3 GetMouseVelocity();			// 移動量取得
+
+private:
+	static DIMOUSESTATE m_CurrentMouseState;	// マウスの現在の入力情報
+	static DIMOUSESTATE m_PrevMouseState;		// マウスの一フレーム前の入力情報
+	POINT m_pPoint;		// マウス座標
 };
 
 //========================================
@@ -97,27 +126,32 @@ public:
 		BUTTONSTATE_MAX
 	};
 
-	CInputPad();	//コンストラクタ
-	~CInputPad();	//デストラクタ
+	CInputPad();	// コンストラクタ
+	~CInputPad();	// デストラクタ
 
-	//メンバ関数
+	// メンバ関数
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
 	void Uninit(void);
 	void Update(void);
-	bool GetPress(int nKey, int nPlayer) {return (m_aPadState[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false;}	//プレス情報取得
-	bool GetTrigger(int nKey, int nPlayer) { return (m_aPadStateTrigger[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	//トリガー情報取得
-	SHORT GetLStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLX; }	//LスティックのX軸プレス情報取得
-	SHORT GetLStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLY; }	//LスティックのY軸プレス情報取得
+	bool GetPress(int nKey, int nPlayer) {return (m_aPadState[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false;}				// プレス情報取得
+	bool GetTrigger(int nKey, int nPlayer) { return (m_aPadStateTrigger[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	// トリガー情報取得
+	bool GetRelease(int nKey, int nPlayer) { return (m_aPadStateRelease[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	// リリース情報取得
+	bool GetRepeat(int nKey, int nPlayer) { return (m_aPadStateRepeat[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }		// リピート情報取得
+	SHORT GetLStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLX; }			//LスティックのX軸プレス情報取得
+	SHORT GetLStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLY; }			//LスティックのY軸プレス情報取得
+
 	SHORT GetLStickXTrigger(JOYKEY Key, int nPlayer) { return m_aPadStateTrigger[nPlayer].Gamepad.sThumbLX; }	//LスティックのX軸トリガー情報取得
 	SHORT GetLStickYTrigger(JOYKEY Key, int nPlayer) { return m_aPadStateTrigger[nPlayer].Gamepad.sThumbLY; }	//LスティックのY軸トリガー情報取得
 
-	SHORT GetRStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRX; }	//RスティックのX軸プレス情報取得
-	SHORT GetRStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRY; }	//RスティックのY軸プレス情報取得
+	SHORT GetRStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRX; }			//RスティックのX軸プレス情報取得
+	SHORT GetRStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRY; }			//RスティックのY軸プレス情報取得
 
 private:
-	//メンバ変数
-	XINPUT_STATE m_aPadState[NUM_MAX_PAD];            //パッドの情報
-	XINPUT_STATE m_aPadStateTrigger[NUM_MAX_PAD];     //パッドのトリガー情報
+	// メンバ変数
+	XINPUT_STATE m_aPadState[NUM_MAX_PAD];			// パッドの情報
+	XINPUT_STATE m_aPadStateTrigger[NUM_MAX_PAD];	// パッドのトリガー情報
+	XINPUT_STATE m_aPadStateRelease[NUM_MAX_PAD];	// パッドのリリース情報
+	XINPUT_STATE m_aPadStateRepeat[NUM_MAX_PAD];	// パッドのリリース情報
 };
 
 #endif

@@ -85,9 +85,8 @@ void CCamera::Uninit(void)
 void CCamera::Update(void)
 {
 	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
+	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	
 	//CDebugProc型ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
@@ -263,16 +262,18 @@ void CCamera::Move(void)
 //=======================================
 void CCamera::CameraMoveV(void)
 {
-	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
+	// キーボードの情報取得
+	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	
+	// コントローラーの情報取得
+	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
 
-	//CInputPad型のポインタ
-	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInstance()->GetInputPad();			//コントローラーの情報取得
+	// マウスの情報取得
+	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
 	//Cキーが押された
-	if (pInputKeyboard->GetPress(DIK_C) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)
+	if (pInputKeyboard->GetPress(DIK_C) == true 
+		|| pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)
 	{
 		m_rot.y += CAMV_MOVE;
 

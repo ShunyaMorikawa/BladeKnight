@@ -20,13 +20,6 @@
 class CScarecrow : public CEnemy
 {
 public:
-	enum MOTIONTYPE
-	{//モーションの種類
-		MOTIONTYPE_NEUTRAL = 0,	//待機状態
-		MOTIONTYPE_WALK,			//歩き状態
-		MOTIONTYPE_MAX
-	};
-
 	CScarecrow();		// コンストラクタ
 	~CScarecrow();		// デストラクタ
 

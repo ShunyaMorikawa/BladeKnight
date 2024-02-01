@@ -92,9 +92,6 @@ HRESULT CScarecrow::Init(void)
 
 		//モーション読み込み
 		m_pMotion->Load(MOTION_PATH);
-
-		//待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
 	}
 
 	return S_OK;

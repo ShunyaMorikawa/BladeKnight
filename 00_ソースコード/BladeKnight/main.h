@@ -24,7 +24,6 @@
 #define FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)    
 #define FVF_VERTEX_3D	(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 #define MAX_PARTS	(15)	//プレイヤーモデル(パーツ)の最大数
-#define MAX_ENEMY	(32)	//敵の最大数
 
 //========================================
 //頂点情報[2D]の構造体を定義
