@@ -37,7 +37,7 @@ public:
 	{//モーション情報の構造体
 		bool bLoop;		//ループするかどうか
 		int nNumKey;	//キーの総数
-		KEY_INFO aKeyInfo[MAX_MODEL];	//キー情報
+		KEY_INFO aKeyInfo[MAX_MOTION];	//キー情報
 	}INFO;
 
 	CMotion();		//コンストラクタ
@@ -57,6 +57,8 @@ public:
 	void SetModel(CModel *ppModel, int nNumModel);
 	CModel **GetModel(void) { return &m_ppModel[0]; }
 
+	int GetMotionInfo();
+
 	void Load(char *pPath);
 
 private:
@@ -72,13 +74,14 @@ private:
 	int m_nPartsIndex;	//パーツの番号
 
 	CModel *m_ppModel[MAX_PARTS];	//モデルへのダブルポインタ
-	int m_nNumModel;	//モデルの総数
-	D3DXVECTOR3 m_pos;	//位置
+	int m_nNumModel;			//モデルの総数
+	D3DXVECTOR3 m_pos;			//位置
 	D3DXVECTOR3 m_motionPos;	//位置
 
-	D3DXVECTOR3 m_rot;	//向き
+	D3DXVECTOR3 m_rot;			//向き
 	D3DXVECTOR3 m_motionRot;	//向き
 
+	INFO m_Info;	// モーションの情報
 	CModel *m_pParent;				//親モデルへのポインタ
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス
 	LPD3DXMESH m_pMesh;				//メッシュ(頂点情報)へのポインタ

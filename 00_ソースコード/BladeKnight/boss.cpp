@@ -25,6 +25,7 @@
 // コンストラクタ
 //========================================
 CBoss::CBoss() :
+	m_nLife(0),
 	m_move(0.0f, 0.0f, 0.0f),		// 移動量
 	m_pos(0.0f, 0.0f, 0.0f),		// 位置
 	m_rot(0.0f, 0.0f, 0.0f),		// 向き
@@ -66,6 +67,9 @@ CBoss *CBoss::Create()
 //========================================
 HRESULT CBoss::Init(void)
 {
+	//体力
+	m_nLife = 10;
+
 	// 移動量
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -196,6 +200,7 @@ void CBoss::Update(void)
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", posEnemy.x, posEnemy.y, posEnemy.z);
 	pDebugProc->Print("敵の移動量：%f、%f、%f\n", moveEnemy.x, moveEnemy.y, moveEnemy.z);
 	pDebugProc->Print("敵の向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
+	pDebugProc->Print("敵の体力：%d\n", m_nLife);
 }
 
 //========================================

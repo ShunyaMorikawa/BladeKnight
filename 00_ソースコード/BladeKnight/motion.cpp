@@ -233,7 +233,7 @@ bool CMotion::IsFinish(void)
 }
 
 //========================================
-//モーション情報の設定
+//モーション種類の設定
 //========================================
 void CMotion::SetInfo(int nType)
 {
@@ -272,6 +272,14 @@ void CMotion::SetModel(CModel *ppModel, int nNumModel)
 
 	//パーツ番号
 	m_nNumModel++;
+}
+
+//========================================
+// モーション情報
+//========================================
+int CMotion::GetMotionInfo()
+{
+	return m_Info.nNumKey;
 }
 
 //========================================
@@ -493,6 +501,7 @@ void CMotion::Load(char *pPath)
 							//加算する
 							keysetCount++;
 							KeyCount = 0;
+
 							//抜け出す
 							break;
 						}

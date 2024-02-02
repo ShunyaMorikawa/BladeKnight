@@ -12,7 +12,7 @@
 #include "debugproc.h"
 #include "motion.h"
 #include "model.h"
-#include "game.h"
+#include "tutorial.h"
 #include "player.h"
 
 //========================================
@@ -122,7 +122,7 @@ void CScarecrow::Update(void)
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//ƒvƒŒƒCƒ„[‚Ìî•ñæ“¾
-	CPlayer *pPlayer = CGame::GetPlayer();
+	CPlayer *pPlayer = CTutorial::GetPlayer();
 
 	if (pPlayer == NULL)
 	{

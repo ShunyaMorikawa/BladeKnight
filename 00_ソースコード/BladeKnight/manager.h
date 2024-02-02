@@ -24,6 +24,7 @@ class CFade;
 class CInputPad;
 class CCamera;
 class CInputMouse;
+class CTutorial;
 
 //========================================
 //シーンクラス

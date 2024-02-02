@@ -69,7 +69,8 @@ private:
 	D3DXVECTOR3 m_RotDest;	// 目的の向き
 
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
-	CMotion *m_pMotion;		//モーションのポインタ
+	CMotion *m_pMotion;		// モーションのポインタ
+	int m_nLife;			// 体力
 	float m_fAngle;			// 目的の向き
 	bool m_bMove;			// 移動
 	bool m_bWait;			// 待機

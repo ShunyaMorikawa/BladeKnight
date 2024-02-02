@@ -27,7 +27,6 @@ public:
 	virtual void Update(void) = 0;		//XV
 	virtual void Draw(void) = 0;		//•`‰æ
 
-
 private:
 	//ƒƒ“ƒo•Ï”
 

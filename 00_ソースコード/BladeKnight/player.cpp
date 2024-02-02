@@ -99,8 +99,8 @@ HRESULT CPlayer::Init(void)
 		//モーション読み込み
 		m_pMotion->Load(PLAYER_PATH);
 
-		//待機状態
-		//m_bWait = true;
+		//待機モーション
+		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
 	}
 
 	//成功を返す
@@ -141,14 +141,17 @@ void CPlayer::Update(void)
 	m_bAttack = false;
 
 	// CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();;
 
 	// 位置取得
 	D3DXVECTOR3 pos = GetPosition();
 
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
+
+	// カメラ追従
+	CCamera *pCampera = CManager::GetInstance()->GetCamera();
+	pCampera->following(pos, rot);
 
 	// プレイヤー移動
 	Move(PLAYER_SPEED);
@@ -169,10 +172,6 @@ void CPlayer::Update(void)
 		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
 	}
 
-	// カメラ追従
-	CCamera *pCampera = CManager::GetInstance()->GetCamera();
-	pCampera->following(pos, rot);
-
 	if (m_pMotion != nullptr)
 	{// モーション更新
 		m_pMotion->Update();
@@ -184,6 +183,7 @@ void CPlayer::Update(void)
 	// デバッグ表示
 	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
+	pDebugProc->Print("プレイヤーの体力：%d\n", m_nLife);
 }
 
 //========================================
@@ -403,21 +403,21 @@ void CPlayer::Move(float fSpeed)
 //========================================
 void CPlayer::Attack()
 {
+	// キーボードの情報取得
+	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();;
+	
 	// コントローラーの情報取得
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
 
-	// コントローラーの情報取得
-	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInstance()->GetInputPad();
+	int nMotion = m_pMotion->GetType();
 
-	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true || pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
+	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true 
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
 	{
 		// 攻撃
 		m_bAttack = true;
 	}
-
-
 }
 
 //========================================

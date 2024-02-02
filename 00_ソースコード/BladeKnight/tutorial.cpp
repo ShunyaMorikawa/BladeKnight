@@ -146,10 +146,13 @@ void CTutorial::Uninit(void)
 void CTutorial::Update(void)
 {
 	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
+	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得;
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
+	// コントローラーの情報取得	
+	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
+
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
 		CManager::GetInstance()->SetMode(CScene::MODE_GAME);
 	}
