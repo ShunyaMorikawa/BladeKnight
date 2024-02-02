@@ -83,10 +83,7 @@ void CCamera::Uninit(void)
 //カメラの更新処理
 //=======================================
 void CCamera::Update(void)
-{
-	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-	
+{	
 	//CDebugProc型ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
@@ -268,12 +265,9 @@ void CCamera::CameraMoveV(void)
 	// コントローラーの情報取得
 	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
 
-	// マウスの情報取得
-	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
-
 	//Cキーが押された
 	if (pInputKeyboard->GetPress(DIK_C) == true 
-		|| pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)
+		|| pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK) > 0)
 	{
 		m_rot.y += CAMV_MOVE;
 
@@ -284,7 +278,7 @@ void CCamera::CameraMoveV(void)
 		m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
 	}
 	//Zキーが押された
-	else if (pInputKeyboard->GetPress(DIK_Z) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) < 0)
+	else if (pInputKeyboard->GetPress(DIK_Z) == true || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK) < 0)
 	{
 		m_rot.y -= CAMV_MOVE;
 

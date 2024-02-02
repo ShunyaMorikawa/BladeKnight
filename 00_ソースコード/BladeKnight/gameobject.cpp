@@ -27,7 +27,7 @@ CGameObject::~CGameObject()
 //========================================
 HRESULT CGameObject::Init(void)
 {
-	for (int nCntModel = 0; nCntModel < MAX_PARTS; nCntModel++)
+	for (int nCntModel = 0; nCntModel < GAME_OBJ; nCntModel++)
 	{//ダブルポインタの初期化
 		m_ppModel[nCntModel] = nullptr;
 	}

@@ -140,9 +140,6 @@ void CPlayer::Update(void)
 	// 攻撃
 	m_bAttack = false;
 
-	// CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();;
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPosition();
 
@@ -232,9 +229,6 @@ void CPlayer::Move(float fSpeed)
 	// コントローラーの情報取得	
 	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
 
-	// マウスの情報取得
-	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
-
 	//CCamera型のポインタ
 	CCamera *pCamera = nullptr;
 	pCamera = CManager::GetInstance()->GetCamera();
@@ -250,10 +244,10 @@ void CPlayer::Move(float fSpeed)
 
 	//Aが押された
 	if (pInputKeyboard->GetPress(DIK_A) == true 
-		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK) < 0)
 	{
 		//左上
-		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK) > 0)
 		{
 			m_move.x += cosf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
@@ -265,7 +259,7 @@ void CPlayer::Move(float fSpeed)
 			m_bMove = true;
 		}
 		//左下
-		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK) < 0)
 		{
 			m_move.x += cosf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
@@ -293,9 +287,9 @@ void CPlayer::Move(float fSpeed)
 	}
 
 	//Dが押された
-	else if (pInputKeyboard->GetPress(DIK_D) == true || pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+	else if (pInputKeyboard->GetPress(DIK_D) == true || pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK) > 0)
 	{
-		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+		if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK) > 0)
 		{//右上
 			m_move.x += cosf(rot.y + (D3DX_PI * 0.75f)) * fSpeed;
 			m_move.z += sinf(rot.y + (D3DX_PI * 0.75f)) * fSpeed;
@@ -306,7 +300,7 @@ void CPlayer::Move(float fSpeed)
 			// 歩き
 			m_bMove = true;
 		}
-		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+		else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK) < 0)
 		{//右下
 			m_move.x += cosf(rot.y + (D3DX_PI * 0.25f)) * fSpeed;
 			m_move.z += sinf(rot.y + (D3DX_PI * 0.25f)) * fSpeed;
@@ -334,7 +328,7 @@ void CPlayer::Move(float fSpeed)
 	}
 
 	//Wが押された
-	else if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+	else if (pInputKeyboard->GetPress(DIK_W) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK) > 0)
 	{
 		m_move.x -= cosf(rot.y) * fSpeed;
 		m_move.z -= sinf(rot.y) * fSpeed;
@@ -347,7 +341,7 @@ void CPlayer::Move(float fSpeed)
 	}
 
 	//Sが押された
-	else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+	else if (pInputKeyboard->GetPress(DIK_S) == true || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK) < 0)
 	{
 		m_move.x += cosf(rot.y) * fSpeed;
 		m_move.z += sinf(rot.y) * fSpeed;
@@ -408,8 +402,6 @@ void CPlayer::Attack()
 	
 	// コントローラーの情報取得
 	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
-
-	int nMotion = m_pMotion->GetType();
 
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true 
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true
