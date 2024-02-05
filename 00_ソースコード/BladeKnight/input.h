@@ -137,14 +137,12 @@ public:
 	bool GetTrigger(int nKey, int nPlayer) { return (m_aPadStateTrigger[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	// トリガー情報取得
 	bool GetRelease(int nKey, int nPlayer) { return (m_aPadStateRelease[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	// リリース情報取得
 	bool GetRepeat(int nKey, int nPlayer) { return (m_aPadStateRepeat[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }		// リピート情報取得
-	SHORT GetLStickXPress(int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLX; }			//LスティックのX軸プレス情報取得
-	SHORT GetLStickYPress(int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLY; }			//LスティックのY軸プレス情報取得
+	SHORT GetLStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLX; }	//LスティックのX軸プレス情報取得
+	SHORT GetLStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLY; }	//LスティックのY軸プレス情報取得
+	
+	SHORT GetRStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRX; }	//RスティックのX軸プレス情報取得
+	SHORT GetRStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRY; }	//RスティックのY軸プレス情報取得
 
-	SHORT GetLStickXTrigger(int nPlayer) { return m_aPadStateTrigger[nPlayer].Gamepad.sThumbLX; }	//LスティックのX軸トリガー情報取得
-	SHORT GetLStickYTrigger(int nPlayer) { return m_aPadStateTrigger[nPlayer].Gamepad.sThumbLY; }	//LスティックのY軸トリガー情報取得
-
-	SHORT GetRStickXPress(int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRX; }			//RスティックのX軸プレス情報取得
-	SHORT GetRStickYPress(int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRY; }			//RスティックのY軸プレス情報取得
 
 private:
 	// メンバ変数

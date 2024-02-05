@@ -278,18 +278,14 @@ bool CInputMouse::OnMouseUp(int MouseButton)
 }
 
 //========================================
-// 移動量の取得
-//========================================
-D3DXVECTOR3 CInputMouse::GetMouseVelocity()
-{
-	return D3DXVECTOR3((float)m_CurrentMouseState.lX, m_CurrentMouseState.lY, m_CurrentMouseState.lZ);
-}
-
-//========================================
 //コントローラーのコンストラクタ
 //========================================
 CInputPad::CInputPad()
 {
+	memset(&m_aPadState[0], 0, sizeof(m_aPadState));
+	memset(&m_aPadStateTrigger[0], 0, sizeof(m_aPadStateTrigger));
+	memset(&m_aPadStateRelease[0], 0, sizeof(m_aPadStateRelease));
+	memset(&m_aPadStateRepeat[0], 0, sizeof(m_aPadStateRepeat));
 }
 
 //========================================

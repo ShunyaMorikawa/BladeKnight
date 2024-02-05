@@ -232,4 +232,6 @@ void CScarecrow::SetVertex(void)
 //========================================
 void CScarecrow::SetSize(float fWidht, float fHeight)
 {
+	fWidht = 0.0f;
+	fHeight = 0.0f;
 }

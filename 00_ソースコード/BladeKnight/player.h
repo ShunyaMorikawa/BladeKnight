@@ -12,6 +12,7 @@
 #include "manager.h"
 #include "model.h"
 #include "motion.h"
+#include "boss.h"
 
 //========================================
 //プレイヤークラス
@@ -60,8 +61,6 @@ private:
 	//メンバ変数
 
 	//一括管理
-	LPDIRECT3DTEXTURE9 m_pTexture;	//共有テクスチャ
-	int m_nIdxTexture;				//テクスチャの番号
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス
 	LPD3DXMESH m_pMesh;				//メッシュ(頂点情報)へのポインタ
 	LPD3DXBUFFER m_pBuffMat;		//マテリアルへのポインタ
@@ -75,6 +74,7 @@ private:
 
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		//モーションのポインタ
+	CBoss *m_pBoss;			// ボスのポインタ
 	D3DXVECTOR3 m_RotDest;	//目的の向き
 	int m_apNumModel;		//モデル(パーツ)の総数
 	int m_nLife;			// 体力

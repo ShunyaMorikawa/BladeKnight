@@ -243,7 +243,7 @@ void CBoss::Draw(void)
 //=======================================
 void CBoss::Move(float fSpeed)
 {
-
+	fSpeed = 0.0f;
 }
 
 //=======================================
@@ -293,6 +293,8 @@ void CBoss::SetVertex(void)
 //========================================
 void CBoss::SetSize(float fWidht, float fHeight)
 {
+	fWidht = 0.0f;
+	fHeight = 0.0f;
 }
 
 //========================================
@@ -300,4 +302,5 @@ void CBoss::SetSize(float fWidht, float fHeight)
 //========================================
 void CBoss::SetPosition(D3DXVECTOR3 pos)
 {
+	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
