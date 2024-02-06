@@ -1,6 +1,6 @@
 //========================================
 //
-//シューティングアクション[motion.cpp]
+//モーション[motion.cpp]
 //Author：森川駿弥
 //
 //========================================
@@ -32,8 +32,7 @@ CMotion::CMotion() :
 //デストラクタ
 //========================================
 CMotion::~CMotion()
-{
-	
+{	
 }
 
 //========================================
@@ -77,7 +76,8 @@ HRESULT CMotion::Init(void)
 		m_ppModel[nCntModel] = nullptr;
 	}
 
-	m_nNumModel = 0;	//モデルの総数
+	//モデルの総数
+	m_nNumModel = 0;	
 
 	//成功を返す
 	return S_OK;
@@ -275,11 +275,11 @@ void CMotion::SetModel(CModel *ppModel, int nNumModel)
 }
 
 //========================================
-// モーション情報
+// モーション情報取得
 //========================================
 int CMotion::GetMotionInfo()
 {
-	return m_Info.nNumKey;
+	return m_Info.aKeyInfo[0].nFrame;
 }
 
 //========================================
@@ -290,6 +290,7 @@ void CMotion::Load(char *pPath)
 	//変数宣言
 	char garbage[640];		//ゴミ格納用
 	char FileName[64];		//各モデルのファイル名
+	float move = 0.0f;		//移動量
 	int nIdx = 0;			//何番目のパーツか
 	int nParent = 0;		//親子関係
 	int nNum = 0;			//読み込む番号
@@ -298,7 +299,6 @@ void CMotion::Load(char *pPath)
 	int nLoop = 0;			//ループするかしないか
 	int nNumKey = 0;		//キー数
 	int nFlame = 0;			//フレーム数
-	float move = 0.0f;		//移動量
 	int KeyCount = 0;
 
 	//キー数
@@ -500,6 +500,8 @@ void CMotion::Load(char *pPath)
 
 							//加算する
 							keysetCount++;
+
+							// カウントリセット
 							KeyCount = 0;
 
 							//抜け出す
@@ -525,7 +527,7 @@ void CMotion::Load(char *pPath)
 								if (strcmp(&garbage[0], "END_KEY") == 0)
 								{//文字列がEND_KEYの時
 
-									//加算する
+									// カウント加算する
 									KeyCount++;
 
 									//抜け出す

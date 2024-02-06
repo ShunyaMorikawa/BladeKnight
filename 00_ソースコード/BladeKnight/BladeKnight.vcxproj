@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="billboard.cpp" />
     <ClCompile Include="boss.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debugproc.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="billboard.h" />
     <ClInclude Include="boss.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="debugproc.h" />

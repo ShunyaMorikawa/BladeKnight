@@ -93,6 +93,9 @@
     <ClCompile Include="enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="billboard.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -171,6 +174,9 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

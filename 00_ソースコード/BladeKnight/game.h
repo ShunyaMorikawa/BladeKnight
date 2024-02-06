@@ -19,6 +19,7 @@ class CPlayer;
 class CPolygon;
 class CGame_Object;
 class CBoss;
+class CBillboard;
 
 //========================================
 //マクロ
@@ -57,6 +58,7 @@ private:
 	static CPolygon *m_pPolygon;		// ポリゴンのポインタ
 	static CGame_Object *CGame_Object;	// ゲーム内オブジェクト
 	static CBoss *m_pBoss;				// ボスのポインタ
+	static CBillboard *m_pBillboard;	// ビルボードのポインタ
 	bool m_bPause;						// ポーズ状態のON/OFF
 };
 

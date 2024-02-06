@@ -1,6 +1,6 @@
 //========================================
 //
-//シューティングアクション[player.cpp]
+//プレイヤー[player.cpp]
 //Author：森川駿弥
 //
 //========================================
@@ -39,6 +39,7 @@ CPlayer::CPlayer() :
 	m_bMove(false),
 	m_bWait(false)
 {//値をクリア
+	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }
 
 //========================================
@@ -132,6 +133,12 @@ void CPlayer::Update(void)
 	// 攻撃
 	m_bAttack = false;
 
+	// 薙ぎ払い
+	m_bMowingdown = false;
+
+	// 強攻撃
+	m_bStrongattack = false;
+
 	// 位置取得
 	D3DXVECTOR3 pos = GetPosition();
 
@@ -154,7 +161,7 @@ void CPlayer::Update(void)
 	}
 	else if (m_bAttack)
 	{// 攻撃モーション
-		m_pMotion->Set(MOTIONTYPE_ATTACK);
+		m_pMotion->Set(MOTIONTYPE_CUTDOWN);
 	}
 	else
 	{// 待機モーション
@@ -395,18 +402,17 @@ void CPlayer::Move(float fSpeed)
 // 攻撃
 //========================================
 void CPlayer::Attack()
-{
+{	
 	// キーボードの情報取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();;
 	
 	// コントローラーの情報取得
 	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
 
-	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true 
+	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
-	{
-		// 攻撃
+	{// 攻撃
 		m_bAttack = true;
 	}
 }

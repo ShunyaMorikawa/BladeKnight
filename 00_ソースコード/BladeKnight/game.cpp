@@ -16,11 +16,7 @@
 #include "polygon.h"
 #include "gameobject.h"
 #include "boss.h"
-
-//========================================
-//マクロ定義
-//========================================
-#define SCENE_COUNTER	(3600)	//リザルトまでの遷移時間
+#include "billboard.h"
 
 //========================================
 //静的メンバ変数
@@ -33,6 +29,7 @@ CLight *CGame::m_pLight = nullptr;			// ライトのポインタ
 CPlayer *CGame::m_pPlayer = nullptr;		// プレイヤーのポインタ
 CPolygon *CGame::m_pPolygon = nullptr;		// ポリゴンのポインタ
 CBoss *CGame::m_pBoss = nullptr;			// ボスのポインタ
+CBillboard *CGame::m_pBillboard = nullptr;	// ビルボードのポインタ
 
 //========================================
 //コンストラクタ
@@ -90,7 +87,7 @@ HRESULT CGame::Init(void)
 	//プレイヤーの生成
 	if (m_pPlayer == nullptr)
 	{
-		m_pPlayer = new CPlayer;
+		m_pPlayer = CPlayer::Create();
 	}
 
 	//プレイヤーの初期化処理
@@ -102,7 +99,7 @@ HRESULT CGame::Init(void)
 	// ボスの生成
 	if (m_pBoss == nullptr)
 	{
-		m_pBoss = new CBoss;
+		m_pBoss = CBoss::Create();
 	}
 
 	//ボスの初期化処理
@@ -111,14 +108,26 @@ HRESULT CGame::Init(void)
 		return -1;
 	}
 
-	// ポリゴンの初期化
+	// ポリゴンの生成
 	if (m_pPolygon == nullptr)
 	{
-		m_pPolygon = new CPolygon;
+		m_pPolygon = CPolygon::Create();
 	}
 
 	//ポリゴン初期化処理
 	if (FAILED(m_pPolygon->Init()))
+	{//初期化処理が失敗した場合
+		return -1;
+	}
+
+	// ビルボードの初期化
+	if (m_pBillboard == nullptr)
+	{
+		m_pBillboard = CBillboard::Create(D3DXVECTOR3(100.0f, 50.0f, 0.0f), 50.0f, 50.0f);
+	}
+
+	//ビルボード初期化処理
+	if (FAILED(m_pBillboard->Init()))
 	{//初期化処理が失敗した場合
 		return -1;
 	}
@@ -150,6 +159,12 @@ void CGame::Uninit(void)
 	{// エネミー破棄
 		m_pBoss->Uninit();
 		m_pBoss = nullptr;
+	}
+
+	if (m_pBillboard != nullptr)
+	{
+		m_pBillboard->Uninit();
+		m_pBillboard = nullptr;
 	}
 }
 

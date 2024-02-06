@@ -29,8 +29,10 @@ CEnemy::CEnemy() :
 	m_nLife(0),						// 体力
 	m_bJump(false),
 	m_bMove(false),
-	m_bWait(false)
+	m_bWait(false),
+	m_pMotion(nullptr)
 {//値をクリア
+	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }
 
 //========================================

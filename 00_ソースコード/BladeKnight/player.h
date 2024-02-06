@@ -24,7 +24,9 @@ public:
 	{// モーション種類
 		MOTIONTYPE_NEUTRAL = 0,		// 待機
 		MOTIONTYPE_WALK,			// 移動
-		MOTIONTYPE_ATTACK,			// 攻撃
+		MOTIONTYPE_CUTDOWN,			// 切り下ろし
+		MOTIONTYPE_MOWINGDOWN,		// 薙ぎ払い
+		MOTIONTYPE_STRONGATTACK,	// 強攻撃
 		MOTIONTYPE_MAX
 	};
 
@@ -53,8 +55,8 @@ public:
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		//向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			//向き取得
 
-	int GetMotionType();	// モーションの種類取得
-	bool GetMotionLoop(int nType);	// モーションのループ
+	int GetMotionType();			// モーションの種類取得
+	bool GetMotionLoop(int nType);	// モーションのループ取得
 	int GetLife() { return m_nLife; }					// 体力取得
 
 private:
@@ -82,6 +84,8 @@ private:
 	bool m_bMove;			// 移動
 	bool m_bWait;			// 待機
 	bool m_bAttack;			// 攻撃
+	bool m_bMowingdown;		// 切り下ろし
+	bool m_bStrongattack;	// 強攻撃
 };
 
 #endif

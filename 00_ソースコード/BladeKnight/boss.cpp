@@ -32,8 +32,10 @@ CBoss::CBoss() :
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
 	m_vtxMax(0.0f, 0.0f, 0.0f),		// 最大値
-	m_fAngle(0.0f)
-{
+	m_fAngle(0.0f),
+	m_pMotion(nullptr)
+{// 値クリア
+	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }
 
 //========================================

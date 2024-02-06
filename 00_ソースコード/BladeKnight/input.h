@@ -136,6 +136,7 @@ public:
 	bool GetPress(int nKey, int nPlayer) {return (m_aPadState[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false;}				// プレス情報取得
 	bool GetTrigger(int nKey, int nPlayer) { return (m_aPadStateTrigger[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	// トリガー情報取得
 	bool GetRelease(int nKey, int nPlayer) { return (m_aPadStateRelease[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }	// リリース情報取得
+	
 	bool GetRepeat(int nKey, int nPlayer) { return (m_aPadStateRepeat[nPlayer].Gamepad.wButtons & (0x01 << nKey)) ? true : false; }		// リピート情報取得
 	SHORT GetLStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLX; }	//LスティックのX軸プレス情報取得
 	SHORT GetLStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbLY; }	//LスティックのY軸プレス情報取得

@@ -217,11 +217,6 @@ MOTIONSET
 			POS = 0.00 0.00 0.00
 			ROT = 0.00 0.00 0.00
 		END_KEY
-
-		KEY	# ----- [ 14 ] -----
-			POS = 0.00 0.00 0.00
-			ROT = 0.00 0.00 0.00
-		END_KEY
 	END_KEYSET
 
 	KEYSET
@@ -292,11 +287,6 @@ MOTIONSET
 		END_KEY
 
 		KEY	# ----- [ 13 ] -----
-			POS = 0.00 0.00 0.00
-			ROT = 0.00 0.00 0.00
-		END_KEY
-
-		KEY	# ----- [ 14 ] -----
 			POS = 0.00 0.00 0.00
 			ROT = 0.00 0.00 0.00
 		END_KEY
@@ -381,11 +371,6 @@ MOTIONSET
 			POS = 0.00 0.00 0.00
 			ROT = 0.00 0.00 0.00
 		END_KEY
-
-		KEY	# ----- [ 14 ] -----
-			POS = 0.00 0.00 0.00
-			ROT = 0.00 0.00 0.00
-		END_KEY
 	END_KEYSET
 
 	KEYSET
@@ -456,11 +441,6 @@ MOTIONSET
 		END_KEY
 
 		KEY	# ----- [ 13 ] -----
-			POS = 0.00 0.00 0.00
-			ROT = 0.00 0.00 0.00
-		END_KEY
-
-		KEY	# ----- [ 14 ] -----
 			POS = 0.00 0.00 0.00
 			ROT = 0.00 0.00 0.00
 		END_KEY

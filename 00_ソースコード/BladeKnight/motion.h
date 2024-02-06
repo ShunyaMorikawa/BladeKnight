@@ -1,6 +1,6 @@
 //========================================
 //
-//シューティングアクション[motion.h]
+//モーション[motion.h]
 //Author：森川駿弥
 //
 //========================================
@@ -76,12 +76,8 @@ private:
 	CModel *m_ppModel[MAX_PARTS];	//モデルへのダブルポインタ
 	int m_nNumModel;			//モデルの総数
 	D3DXVECTOR3 m_pos;			//位置
-	D3DXVECTOR3 m_motionPos;	//位置
-
 	D3DXVECTOR3 m_rot;			//向き
-	D3DXVECTOR3 m_motionRot;	//向き
-
-	INFO m_Info;	// モーションの情報
+	INFO m_Info;					// モーションの情報
 	CModel *m_pParent;				//親モデルへのポインタ
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス
 	LPD3DXMESH m_pMesh;				//メッシュ(頂点情報)へのポインタ

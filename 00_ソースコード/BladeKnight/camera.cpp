@@ -1,6 +1,6 @@
 //=======================================
 //
-//シューティングアクション[camera.cpp]
+//カメラ[camera.cpp]
 //Author : MORIKAWA SHUNYA
 //
 //=======================================
@@ -114,10 +114,10 @@ void CCamera::SetCamera(void)
 
 	//プロジェクションマトリックスを作成[透視投影]
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
-								D3DXToRadian(75.0f),	//視野角
+								D3DXToRadian(90.0f),	//視野角
 								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
 								10.0f,		//Z値の最小値
-								40000.0f);	//Z値の最大値(描画距離)
+								4000.0f);	//Z値の最大値(描画距離)
 
 	////プロジェクションマトリックスを設定[平行投影]
 	//D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
@@ -275,9 +275,6 @@ void CCamera::CameraMoveV(void)
 
 		//角度の正規化
 		m_rot.y = RotNor(m_rot.y);
-
-		m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
-		m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
 	}
 	//Zキーが押された
 	else if (pInputKeyboard->GetPress(DIK_Z) == true
@@ -287,10 +284,6 @@ void CCamera::CameraMoveV(void)
 
 		//角度の正規化
 		m_rot.y = RotNor(m_rot.y);
-
-		m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
-		m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
-
 	}
 
 	////Yキーが押された
