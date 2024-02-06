@@ -16,11 +16,6 @@
 //=======================================
 #define BILLBOARD_TEX	"data\\TEXTURE\\LIFE.png"
 
-#define BILL_WIDTH		(40)	//ビルボードの幅
-#define BILL_HEIGHT		(40)	//ビルボードの高さ
-
-#define BULLET_SIZE     (25)    //弾のサイズ
-
 //========================================
 //静的メンバ変数
 //========================================
@@ -97,14 +92,14 @@ CBillboard *CBillboard::Create(D3DXVECTOR3 pos, float fwidth, float fheight)
 		//ビルボード生成
 		pBillboard = new CBillboard;
 
+		//初期化
+		pBillboard->Init();
+
 		//位置設定
 		pBillboard->SetPosition(pos);
 
 		//サイズ設定
 		pBillboard->SetSize(fwidth, fheight);
-
-		//初期化
-		pBillboard->Init();
 	}
 
 	//ポインタを返す
@@ -257,7 +252,7 @@ void CBillboard::BindTexture(int pTexture)
 //========================================
 //弾の頂点座標
 //========================================
-void CBillboard::SetPosVertex(void)
+void CBillboard::SetPosVertex(float size)
 {
 	//頂点情報へのポインタ
 	VERTEX_3D *pVtx;
@@ -266,10 +261,10 @@ void CBillboard::SetPosVertex(void)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(-BULLET_SIZE, BULLET_SIZE, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(BULLET_SIZE, BULLET_SIZE, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-BULLET_SIZE, -BULLET_SIZE, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(BULLET_SIZE, -BULLET_SIZE, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(-size, size, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(size, size, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-size, -size, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(size, -size, 0.0f);
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();
@@ -323,8 +318,12 @@ void CBillboard::SetSizeVertex(float fwidth, float fheight)
 //========================================
 //ビルボードエフェクトの頂点座標
 //========================================
-void CBillboard::SetEffectVertex(float fEffectsize)
+void CBillboard::SetEffectVertex(float fwidth, float fHeight)
 {
+	m_fWidth = fwidth;
+
+	m_fHeight = fHeight;
+
 	//頂点情報へのポインタ
 	VERTEX_3D *pVtx;
 
@@ -332,10 +331,10 @@ void CBillboard::SetEffectVertex(float fEffectsize)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャ座標の再設定
-	pVtx[0].pos = D3DXVECTOR3(-fEffectsize, fEffectsize, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(fEffectsize, fEffectsize, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-fEffectsize, -fEffectsize, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(fEffectsize, -fEffectsize, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(-m_fWidth, m_fHeight, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_fWidth, m_fHeight, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-m_fWidth, -m_fHeight, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_fWidth, -m_fHeight, 0.0f);
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();

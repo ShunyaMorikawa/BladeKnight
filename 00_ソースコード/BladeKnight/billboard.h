@@ -32,10 +32,10 @@ public:
 	void Draw(void);
 	void BindTexture(LPDIRECT3DTEXTURE9 pTexture);	//テクスチャ割り当て
 	void BindTexture(int pTexture);				//テクスチャ割り当て
-	void SetPosVertex(void);
+	void SetPosVertex(float size);
 	void SetVertexAnim(int Num, int Cnt);		//テクスチャアニメーション
 	void SetSizeVertex(float size, float fheight);
-	void SetEffectVertex(float fEffectsize);		//エフェクトの頂点情報
+	void SetEffectVertex(float fwidth, float fHeight);		//エフェクトの頂点情報
 	void SetMove(D3DXVECTOR3 move);
 	D3DXVECTOR3 GetMove(void);
 	void SetVertex(void);
@@ -54,8 +54,8 @@ private:
 	D3DXMATRIX m_mtxWorld;	//ワールドマトリックス
 	float m_fWidth;		//幅
 	float m_fHeight;	//高さ
-	float m_fLength;		//対角線の長さ
-	float m_fAngle;			//対角線の角度
+	float m_fLength;	//対角線の長さ
+	float m_fAngle;		//対角線の角度
 };
 
 #endif

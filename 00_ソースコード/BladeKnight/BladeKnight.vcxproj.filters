@@ -96,6 +96,9 @@
     <ClCompile Include="billboard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -177,6 +180,9 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="billboard.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

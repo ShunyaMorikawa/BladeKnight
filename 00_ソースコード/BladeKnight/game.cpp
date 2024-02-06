@@ -17,6 +17,7 @@
 #include "gameobject.h"
 #include "boss.h"
 #include "billboard.h"
+#include "effect.h"
 
 //========================================
 //静的メンバ変数
@@ -30,6 +31,7 @@ CPlayer *CGame::m_pPlayer = nullptr;		// プレイヤーのポインタ
 CPolygon *CGame::m_pPolygon = nullptr;		// ポリゴンのポインタ
 CBoss *CGame::m_pBoss = nullptr;			// ボスのポインタ
 CBillboard *CGame::m_pBillboard = nullptr;	// ビルボードのポインタ
+CEffect *CGame::m_pEffect = nullptr;		// エフェクトのポインタ
 
 //========================================
 //コンストラクタ
