@@ -37,7 +37,9 @@ CPlayer::CPlayer() :
 	m_RotDest(0.0f, 0.0f, 0.0f),	//目的の向き
 	m_nLife(0),						// 体力
 	m_bMove(false),
-	m_bWait(false)
+	m_bWait(false),
+	m_pMotion(nullptr),
+	m_pBoss(nullptr)
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }
@@ -82,10 +84,10 @@ HRESULT CPlayer::Init(void)
 	m_RotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//プレイヤーの初期位置
-	SetPosition(D3DXVECTOR3(0.0f, 0.0f, -300.0f));
+	m_pos = D3DXVECTOR3(0.0f, 0.0f, -300.0f);
 
 	//プレイヤーの初期向き
-	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 体力
 	m_nLife = 10;
@@ -99,7 +101,7 @@ HRESULT CPlayer::Init(void)
 		m_pMotion->Load(PLAYER_PATH);
 
 		//待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
 	}
 
 	//成功を返す
@@ -130,15 +132,6 @@ void CPlayer::Update(void)
 	// 歩き
 	m_bMove = false;
 
-	// 攻撃
-	m_bAttack = false;
-
-	// 薙ぎ払い
-	m_bMowingdown = false;
-
-	// 強攻撃
-	m_bStrongattack = false;
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPosition();
 
@@ -149,23 +142,25 @@ void CPlayer::Update(void)
 	CCamera *pCampera = CManager::GetInstance()->GetCamera();
 	pCampera->following(pos, rot);
 
-	// プレイヤー移動
-	Move(PLAYER_SPEED);
-
-	// プレイヤー攻撃
-	Attack();
+	// プレイヤー行動
+	Act(PLAYER_SPEED);
 
 	if (m_bMove)
 	{// 歩きモーション
-		m_pMotion->Set(MOTIONTYPE_WALK);
+		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
 	}
 	else if (m_bAttack)
-	{// 攻撃モーション
-		m_pMotion->Set(MOTIONTYPE_CUTDOWN);
+	{// 切り下ろしモーション
+		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
+
+		if (m_pMotion->IsFinish() && m_bAttack == true)
+		{
+			m_bAttack = false;
+		}
 	}
 	else
 	{// 待機モーション
-		m_pMotion->Set(MOTIONTYPE_NEUTRAL);
+		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
 	}
 
 	if (m_pMotion != nullptr)
@@ -220,7 +215,7 @@ void CPlayer::Draw(void)
 //========================================
 //プレイヤーの操作
 //========================================
-void CPlayer::Move(float fSpeed)
+void CPlayer::Act(float fSpeed)
 {
 	// キーボードの情報取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	
@@ -241,14 +236,15 @@ void CPlayer::Move(float fSpeed)
 	//目的の向き
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//Aが押された
+	// 終了したかの取得
+	bool bFinish = m_pMotion->IsFinish();
+
 	if (pInputKeyboard->GetPress(DIK_A) == true
 		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
-	{
-		//左上
+	{//Aが押された
 		if (pInputKeyboard->GetPress(DIK_W) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-		{
+		{//左上
 			m_move.x += cosf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.75f)) * fSpeed;
 
@@ -258,10 +254,9 @@ void CPlayer::Move(float fSpeed)
 			// 歩き
 			m_bMove = true;
 		}
-		//左下
 		else if (pInputKeyboard->GetPress(DIK_S) == true
 				 || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
-		{
+		{//左下
 			m_move.x += cosf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
 			m_move.z += sinf(rot.y + (-D3DX_PI * 0.25f)) * fSpeed;
 
@@ -287,10 +282,9 @@ void CPlayer::Move(float fSpeed)
 		}
 	}
 
-	//Dが押された
 	else if (pInputKeyboard->GetPress(DIK_D) == true
 			 || pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-	{
+	{//Dが押された
 		if (pInputKeyboard->GetPress(DIK_W) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0 ) > 0)
 		{//右上
@@ -331,10 +325,9 @@ void CPlayer::Move(float fSpeed)
 		}
 	}
 
-	//Wが押された
 	else if (pInputKeyboard->GetPress(DIK_W) == true
 			 || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0 ) > 0)
-	{
+	{//Wが押された
 		m_move.x -= cosf(rot.y) * fSpeed;
 		m_move.z -= sinf(rot.y) * fSpeed;
 
@@ -345,10 +338,9 @@ void CPlayer::Move(float fSpeed)
 		m_bMove = true;
 	}
 
-	//Sが押された
 	else if (pInputKeyboard->GetPress(DIK_S) == true
 			 || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
-	{
+	{//Sが押された
 		m_move.x += cosf(rot.y) * fSpeed;
 		m_move.z += sinf(rot.y) * fSpeed;
 
@@ -370,7 +362,7 @@ void CPlayer::Move(float fSpeed)
 	//目的の向き
 	DiffRot.y = m_RotDest.y - m_rot.y;
 
-	//角度の正規化
+	//向きの正規化
 	if (DiffRot.y > D3DX_PI)
 	{//3.14を超えたときに反対にする
 		DiffRot.y -= D3DX_PI * 2;
@@ -396,41 +388,15 @@ void CPlayer::Move(float fSpeed)
 	{
 		m_rot.y += D3DX_PI * 2;
 	}
-}
 
-//========================================
-// 攻撃
-//========================================
-void CPlayer::Attack()
-{	
-	// キーボードの情報取得
-	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();;
-	
-	// コントローラーの情報取得
-	CInputPad *pInputPad = CManager::GetInstance()->GetInputPad();
-
+	// 攻撃
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
-	{// 攻撃
+	{
 		m_bAttack = true;
+
 	}
-}
-
-//========================================
-// モーション種類の取得
-//========================================
-int CPlayer::GetMotionType()
-{
-	return m_pMotion->GetType();
-}
-
-//========================================
-// モーションループの取得
-//========================================
-bool CPlayer::GetMotionLoop(int nType)
-{
-	return m_pMotion->GetLoop(nType);
 }
 
 //=======================================

@@ -20,15 +20,6 @@
 class CBoss : public CEnemy
 {
 public:
-	enum EMotion
-	{// モーション種類
-		MOTIONTYPE_WALK = 0,		// 移動
-		MOTIONTYPE_ATTACK,			// 攻撃
-		MOTIONTYPE_THRUST,			// 突き刺し
-		MOTIONTYPE_ROUNDUP,			// 切り上げ
-		MOTIONTYPE_MAX
-	};
-
 	CBoss();		// コンストラクタ
 	~CBoss();		// デストラクタ
 
@@ -49,6 +40,9 @@ public:
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		// 向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			// 向き取得
 	void SetPosition(D3DXVECTOR3 pos);
+
+	int GetLife() { return m_nLife; }	//体力取得
+
 private:
 	//メンバ変数
 

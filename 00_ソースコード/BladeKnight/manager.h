@@ -72,6 +72,7 @@ private:	//他の場所でアクセスさせない
 public:
 	virtual ~CManager();	//デストラクタ
 	static CManager *GetInstance();
+
 public:
 	//メンバ関数
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow);

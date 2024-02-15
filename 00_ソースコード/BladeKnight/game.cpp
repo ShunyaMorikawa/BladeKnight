@@ -122,18 +122,6 @@ HRESULT CGame::Init(void)
 		return -1;
 	}
 
-	// ビルボードの初期化
-	if (m_pBillboard == nullptr)
-	{
-		m_pBillboard = CBillboard::Create(D3DXVECTOR3(100.0f, 50.0f, 0.0f), 50.0f, 50.0f);
-	}
-
-	//ビルボード初期化処理
-	if (FAILED(m_pBillboard->Init()))
-	{//初期化処理が失敗した場合
-		return -1;
-	}
-
 	//ポーズの状態
 	m_bPause = false;
 
@@ -161,12 +149,6 @@ void CGame::Uninit(void)
 	{// エネミー破棄
 		m_pBoss->Uninit();
 		m_pBoss = nullptr;
-	}
-
-	if (m_pBillboard != nullptr)
-	{
-		m_pBillboard->Uninit();
-		m_pBillboard = nullptr;
 	}
 }
 

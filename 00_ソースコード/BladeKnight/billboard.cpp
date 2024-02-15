@@ -10,11 +10,12 @@
 #include "renderer.h"
 #include "manager.h"
 #include "texture.h"
+#include "debugproc.h"
 
 //=======================================
 //マクロ定義
 //=======================================
-#define BILLBOARD_TEX	"data\\TEXTURE\\LIFE.png"
+#define BILLBOARD_TEX	"data\\TEXTURE\\effect000.jpg"
 
 //========================================
 //静的メンバ変数
@@ -99,7 +100,7 @@ CBillboard *CBillboard::Create(D3DXVECTOR3 pos, float fwidth, float fheight)
 		pBillboard->SetPosition(pos);
 
 		//サイズ設定
-		pBillboard->SetSize(fwidth, fheight);
+		pBillboard->SetSizeVertex(fwidth, fheight);
 	}
 
 	//ポインタを返す
@@ -182,6 +183,12 @@ void CBillboard::Uninit(void)
 //=======================================
 void CBillboard::Update(void)
 {
+	// ポインタ
+	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+	// デバッグ表示
+	pDebugProc->Print("\nビルボードの位置：%f、%f、%f\n", m_pos.x, m_pos.y, m_pos.z);
+	pDebugProc->Print("\nビルボードのサイズ：%f、%f\n", m_fLength, m_fHeight);
 }
 
 //=======================================

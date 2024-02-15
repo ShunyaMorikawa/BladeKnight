@@ -96,12 +96,6 @@ void CEffect::Update(void)
 	//更新
 	CBillboard::Update();
 
-	//弾の移動
-	D3DXVECTOR3 pos = GetPosition();
-
-	//弾の位置更新
-	pos += m_move;
-
 	//半径
 	m_fRadius += ((float)(rand() % 100) / 100.0f - 0.3f) * 5.0f;
 

@@ -6,7 +6,7 @@
 //=======================================
 
 #ifndef _EFECT_H_     //このマクロ定義が定義されていなかったら
-#define _EFECT_H_    //2連インクルード防止のマクロを定義する
+#define _EFECT_H_     //2連インクルード防止のマクロを定義する
 
 #include "main.h"
 #include "billboard.h"
@@ -45,7 +45,7 @@ private:
 	D3DXMATRIX m_g_mtxWorldEffectt;	//ワールドマトリックス
 	D3DXMATRIX m_mtxRot; 	//計算用マトリックス
 	D3DXMATRIX m_mtxTrans;
-	D3DXMATRIX m_mtxView;		//ビューマトリクス取得用
+	D3DXMATRIX m_mtxView;	//ビューマトリクス取得用
 	bool m_balpha;			//加算合成
 };
 

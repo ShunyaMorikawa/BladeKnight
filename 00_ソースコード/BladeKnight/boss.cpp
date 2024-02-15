@@ -175,19 +175,19 @@ void CBoss::Update(void)
 
 	//if (m_bAttack)
 	//{// 攻撃モーション
-	//	m_pMotion->Set(MOTIONTYPE_ATTACK);
+	//	m_pMotion->Set(CMotion::MOTIONTYPE_ATTACK);
 	//}
 	//else if (m_bThrust)
 	//{// 突き攻撃モーション
-	//	m_pMotion->Set(MOTIONTYPE_THRUST);
+	//	m_pMotion->Set(CMotion::MOTIONTYPE_THRUST);
 	//}
 	if (m_bRoundup)
 	{// 切り上げモーション
-		m_pMotion->Set(MOTIONTYPE_ROUNDUP);
+		m_pMotion->Set(CMotion::ENEMY_MOTIONTYPE_ROUNDUP);
 	}
 	else
 	{// 待機モーション
-		m_pMotion->Set(MOTIONTYPE_WALK);
+		m_pMotion->Set(CMotion::ENEMY_MOTIONTYPE_WALK);
 	}
 
 	if (m_pMotion != nullptr)
