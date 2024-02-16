@@ -186,7 +186,7 @@ void CBoss::Update(void)
 		m_pMotion->Set(CMotion::ENEMY_MOTIONTYPE_ROUNDUP);
 
 		// プレイヤーとの当たり判定
-		CollisionPlayer();
+		//CollisionPlayer();
 	}
 	else
 	{// 待機モーション

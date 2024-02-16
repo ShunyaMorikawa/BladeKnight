@@ -19,6 +19,12 @@
 class CTexture
 {
 public:
+	enum Texture
+	{// テクスチャ管理
+		TYPE_TITLE = 0,
+		TYPE_MAX
+	};
+
 	CTexture();		//コンストラクタ
 	~CTexture();	//デストラクタ
 

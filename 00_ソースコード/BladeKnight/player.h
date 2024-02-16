@@ -13,6 +13,7 @@
 #include "model.h"
 #include "motion.h"
 #include "boss.h"
+#include "scarecrow.h"
 
 //========================================
 //プレイヤークラス
@@ -69,6 +70,7 @@ private:
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		// モーションのポインタ
 	CBoss *m_pBoss;			// ボスのポインタ
+	CScarecrow *m_pScarecrow;	//チュートリアルエネミーのポインタ
 	D3DXVECTOR3 m_RotDest;	// 目的の向き
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力

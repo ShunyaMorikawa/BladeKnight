@@ -44,7 +44,8 @@ CPlayer::CPlayer() :
 	m_bMove(false),
 	m_bWait(false),
 	m_pMotion(nullptr),
-	m_pBoss(nullptr)
+	m_pBoss(nullptr),
+	m_pScarecrow(nullptr)
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }
@@ -195,7 +196,7 @@ void CPlayer::Update(void)
 	}
 
 	//チュートリアルエネミーとの当たり判定
-	CollisionScarecrow();
+	//CollisionScarecrow();
 
 	// ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -479,14 +480,11 @@ void CPlayer::CollisionScarecrow()
 	//変数宣言
 	float fLength;		//長さ
 
-	// チュートリアル用エネミーの情報取得
-	CScarecrow *pScarecrow = CTutorial::GetScarecrow();
-
 	//チュートリアル用エネミーの位置取得
-	D3DXVECTOR3 posScarecrow = pScarecrow->GetPosition();
+	D3DXVECTOR3 posScarecrow = m_pScarecrow->GetPosition();
 
 	// チュートリアル用エネミーのサイズ取得
-	float sizeScarecrow = pScarecrow->GetSize();
+	float sizeScarecrow = m_pScarecrow->GetSize();
 
 	//ベクトルを求める
 	D3DXVECTOR3 vec = posScarecrow - this->GetPosition();
