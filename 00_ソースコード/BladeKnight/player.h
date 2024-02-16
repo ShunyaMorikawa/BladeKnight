@@ -36,9 +36,12 @@ public:
 
 	void Act(float fSpeed);
 
-	float RotNormalize(float RotN, float Rot);			// rotの正規化
+	float RotNormalize(float RotN, float Rot);
+
+	void CollisionScarecrow();
 
 	int GetLife() { return m_nLife; }					// 体力取得
+	float GetSize() { return m_fSize; }					// サイズ調整
 
 	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }	// 位置設定
 	D3DXVECTOR3 GetPosition(void) { return m_pos; }		// 位置取得
@@ -64,17 +67,18 @@ private:
 	D3DXVECTOR3 m_rot;		//向き
 
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
-	CMotion *m_pMotion;		//モーションのポインタ
+	CMotion *m_pMotion;		// モーションのポインタ
 	CBoss *m_pBoss;			// ボスのポインタ
 	D3DXVECTOR3 m_RotDest;	// 目的の向き
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
+	float m_fSize;			// サイズ
 	bool m_bMove;			// 移動
 	bool m_bWait;			// 待機
-	bool m_bAttack;			// 攻撃
-	bool m_bMowingdown;		// 切り下ろし
-	bool m_bStrongattack;	// 強攻撃
+	bool m_bMowingdown;		// 攻撃
+	bool m_bCutdown;		// 切り下ろし
+	bool m_bStrongAttack;	// 強攻撃
 };
 
 #endif

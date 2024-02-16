@@ -39,9 +39,13 @@ public:
 	void SetSize(float fWidht, float fHeight);
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		// Œü‚«İ’è
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			// Œü‚«æ“¾
+
 	void SetPosition(D3DXVECTOR3 pos);
+	D3DXVECTOR3 GetPosition(void) { return m_pos; }		// ˆÊ’uæ“¾
 
 	int GetLife() { return m_nLife; }	//‘Ì—Íæ“¾
+
+	void CollisionPlayer();
 
 private:
 	//ƒƒ“ƒo•Ï”

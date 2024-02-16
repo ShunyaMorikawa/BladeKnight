@@ -162,18 +162,9 @@ void CGame::Update(void)
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
-	{
+	{// 画面遷移
 		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
 	}
-
-#ifdef _DEBUG
-	{
-		if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
-		{
-			CManager::GetInstance()->SetMode(CScene::MODE_GAME);
-		}	
-	}
-#endif
 }
 
 //========================================

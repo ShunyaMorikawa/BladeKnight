@@ -79,7 +79,7 @@ HRESULT CTutorial::Init(void)
 	//プレイヤーの生成
 	if (m_pPlayer == nullptr)
 	{
-		m_pPlayer = new CPlayer;
+		m_pPlayer = CPlayer::Create();
 	}
 
 	//プレイヤーの初期化処理
@@ -91,7 +91,7 @@ HRESULT CTutorial::Init(void)
 	// チュートリアルエネミー生成
 	if (m_pScarecrow == nullptr)
 	{
-		m_pScarecrow = new CScarecrow;
+		m_pScarecrow = CScarecrow::Create();
 	}
 
 	//チュートリアルエネミーの初期化処理
@@ -103,7 +103,7 @@ HRESULT CTutorial::Init(void)
 	// ポリゴンの初期化
 	if (m_pPolygon == nullptr)
 	{
-		m_pPolygon = new CPolygon;
+		m_pPolygon = CPolygon::Create();
 	}
 
 	//ポリゴン初期化処理

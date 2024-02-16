@@ -112,7 +112,7 @@ void CTitle::Update(void)
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{
 		// 画面遷移(フェード)
-		CManager::GetInstance()->SetMode(CScene::MODE_GAME);
+		CManager::GetInstance()->SetMode(CScene::MODE_TUTORIAL);
 	}
 }
 

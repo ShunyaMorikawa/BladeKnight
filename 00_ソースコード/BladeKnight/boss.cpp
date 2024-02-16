@@ -184,6 +184,9 @@ void CBoss::Update(void)
 	if (m_bRoundup)
 	{// 切り上げモーション
 		m_pMotion->Set(CMotion::ENEMY_MOTIONTYPE_ROUNDUP);
+
+		// プレイヤーとの当たり判定
+		CollisionPlayer();
 	}
 	else
 	{// 待機モーション
@@ -305,4 +308,33 @@ void CBoss::SetSize(float fWidht, float fHeight)
 void CBoss::SetPosition(D3DXVECTOR3 pos)
 {
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+}
+
+//========================================
+// プレイヤーとの当たり判定
+//========================================
+void CBoss::CollisionPlayer()
+{
+	//変数宣言
+	float fLength;		//長さ
+
+	//プレイヤーの情報取得
+	CPlayer *pPlayer = CGame::GetPlayer();
+
+	//プレイヤーの位置取得
+	D3DXVECTOR3 posPlayer = pPlayer->GetPosition();
+
+	// プレイヤーのサイズ取得
+	float sizePlayer = pPlayer->GetSize();
+
+	//ベクトルを求める
+	D3DXVECTOR3 vec = posPlayer - this->GetPosition();
+
+	//ベクトル代入
+	fLength = D3DXVec3Length(&vec);
+
+	if (fLength <= sizePlayer)
+	{
+
+	}
 }

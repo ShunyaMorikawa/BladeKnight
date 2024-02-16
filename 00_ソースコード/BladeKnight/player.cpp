@@ -14,28 +14,33 @@
 #include "motion.h"
 #include "model.h"
 #include "game.h"
+#include "tutorial.h"
+#include "scarecrow.h"
 
 //========================================
 //マクロ定義
 //========================================
-#define PLAYER_SPEED	(4.0f)		//プレイヤーの移動速度
-#define PLAYER_INERTIA	(0.3f)		//プレイヤーの慣性
+#define PLAYER_LIFE		(10)		// 体力
+#define PLAYER_SIZE		(50.0f)		// サイズ
+#define PLAYER_SPEED	(4.0f)		// プレイヤーの移動速度
+#define PLAYER_INERTIA	(0.3f)		// プレイヤーの慣性
 
-#define PLAYER_PATH	"data\\FILE\\player.txt"	//読み込むファイルのパス
+#define PLAYER_PATH	"data\\FILE\\player.txt"	// 読み込むファイルのパス
 
 //========================================
 //コンストラクタ
 //========================================
 CPlayer::CPlayer() : 
-	m_pos(0.0f, 0.0f, 0.0f),		//位置
-	m_move(0.0f, 0.0f, 0.0f),		//移動量
-	m_rot(0.0f, 0.0f, 0.0f),		//向き
-	m_pMesh(nullptr),				//メッシュ(頂点情報)へのポインタ
-	m_pBuffMat(nullptr),			//マテリアルへのポインタ
-	m_dwNumMat(0),					//マテリアルの数
-	m_apNumModel(0), 				//モデル(パーツ)の総数
-	m_RotDest(0.0f, 0.0f, 0.0f),	//目的の向き
+	m_pos(0.0f, 0.0f, 0.0f),		// 位置
+	m_move(0.0f, 0.0f, 0.0f),		// 移動量
+	m_rot(0.0f, 0.0f, 0.0f),		// 向き
+	m_pMesh(nullptr),				// メッシュ(頂点情報)へのポインタ
+	m_pBuffMat(nullptr),			// マテリアルへのポインタ
+	m_dwNumMat(0),					// マテリアルの数
+	m_apNumModel(0), 				// モデル(パーツ)の総数
+	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_nLife(0),						// 体力
+	m_fSize(0.0f),					// サイズ
 	m_bMove(false),
 	m_bWait(false),
 	m_pMotion(nullptr),
@@ -90,7 +95,10 @@ HRESULT CPlayer::Init(void)
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 体力
-	m_nLife = 10;
+	m_nLife = PLAYER_LIFE;
+
+	// サイズ
+	m_fSize = PLAYER_SIZE;
 
 	if (m_pMotion == nullptr)
 	{
@@ -149,13 +157,31 @@ void CPlayer::Update(void)
 	{// 歩きモーション
 		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
 	}
-	else if (m_bAttack)
+	else if (m_bCutdown)
 	{// 切り下ろしモーション
 		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
 
-		if (m_pMotion->IsFinish() && m_bAttack == true)
-		{
-			m_bAttack = false;
+		if (m_pMotion->IsFinish() && m_bCutdown == true)
+		{// モーション終了
+			m_bCutdown = false;
+		}
+	}
+	else if (m_bMowingdown)
+	{// 薙ぎ払い
+		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_MOWINGDOWN);
+
+		if (m_pMotion->IsFinish() && m_bMowingdown == true)
+		{// モーション終了
+			m_bMowingdown = false;
+		}
+	}
+	else if (m_bStrongAttack)
+	{// 強攻撃
+		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_STRONGATTACK);
+
+		if (m_pMotion->IsFinish() && m_bStrongAttack == true)
+		{// モーション終了
+			m_bStrongAttack = false;
 		}
 	}
 	else
@@ -167,6 +193,9 @@ void CPlayer::Update(void)
 	{// モーション更新
 		m_pMotion->Update();
 	}
+
+	//チュートリアルエネミーとの当たり判定
+	CollisionScarecrow();
 
 	// ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -391,11 +420,19 @@ void CPlayer::Act(float fSpeed)
 
 	// 攻撃
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
-	{
-		m_bAttack = true;
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
+	{// 切りおろし
+		m_bCutdown = true;
+	}
 
+	if (pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
+	{// 薙ぎ払い
+		m_bMowingdown = true;
+	}
+
+	if (pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
+	{// 強攻撃
+		m_bStrongAttack = true;
 	}
 }
 
@@ -432,6 +469,35 @@ float CPlayer::RotNormalize(float RotN, float Rot)
 	}
 
 	return RotN, Rot;
+}
+
+//========================================
+// チュートリアル用エネミーとの当たり判定
+//========================================
+void CPlayer::CollisionScarecrow()
+{
+	//変数宣言
+	float fLength;		//長さ
+
+	// チュートリアル用エネミーの情報取得
+	CScarecrow *pScarecrow = CTutorial::GetScarecrow();
+
+	//チュートリアル用エネミーの位置取得
+	D3DXVECTOR3 posScarecrow = pScarecrow->GetPosition();
+
+	// チュートリアル用エネミーのサイズ取得
+	float sizeScarecrow = pScarecrow->GetSize();
+
+	//ベクトルを求める
+	D3DXVECTOR3 vec = posScarecrow - this->GetPosition();
+
+	//ベクトル代入
+	fLength = D3DXVec3Length(&vec);
+
+	if (fLength <= sizeScarecrow)
+	{
+		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
+	}
 }
 
 //========================================

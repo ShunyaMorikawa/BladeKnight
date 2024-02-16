@@ -26,19 +26,25 @@ public:
 	// メンバ関数
 	static CScarecrow *Create();	// チュートリアルエネミー生成
 
-	HRESULT Init(void);		// 初期化
-	void Uninit(void);		// 終了
-	void Update(void);		// 更新
-	void Draw(void);		// 描画
+	HRESULT Init(void);
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
 
 	float RotNormalize(float RotN, float Rot);		// rotの正規化
 
-	void SetVertex(void);
-	void SetSize(float fWidht, float fHeight);
+	void CollisionPlayer();
+
+	float GetSize(void) { return m_fSize; }		//サイズ取得
+
 	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }	// 位置設定
 	D3DXVECTOR3 GetPosition(void) { return m_pos; }		// 位置取得
+
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		// 向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			// 向き取得
+
+	void SetVertex(void);
+	void SetSize(float fWidht, float fHeight);
 
 private:
 	//メンバ変数
@@ -61,6 +67,7 @@ private:
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		//モーションのポインタ
 	float m_fAngle;			// 目的の向き
+	float m_fSize;			// サイズ
 };
 
 #endif

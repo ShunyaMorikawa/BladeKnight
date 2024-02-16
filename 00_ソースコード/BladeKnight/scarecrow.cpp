@@ -64,9 +64,6 @@ CScarecrow *CScarecrow::Create()
 //========================================
 HRESULT CScarecrow::Init(void)
 {	
-	// 位置
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
 	// 向き
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -80,7 +77,10 @@ HRESULT CScarecrow::Init(void)
 	m_vtxMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 位置設定
-	SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetPosition(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
+
+	// サイズ
+	m_fSize = 100.0f;
 
 	//モーションのポインタ
 	m_pMotion = nullptr;
@@ -141,6 +141,9 @@ void CScarecrow::Update(void)
 	{//モーション更新
 		m_pMotion->Update();
 	}
+
+	// プレイヤーとの当たり判定
+	//CollisionPlayer();
 
 	//ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -218,6 +221,35 @@ float CScarecrow::RotNormalize(float RotN, float Rot)
 	}
 
 	return RotN, Rot;
+}
+
+//========================================
+// プレイヤーとの当たり判定
+//========================================
+void CScarecrow::CollisionPlayer()
+{
+	//変数宣言
+	float fLength;		//長さ
+
+	//プレイヤーの情報取得
+	CPlayer *pPlayer = CTutorial::GetPlayer();
+
+	//プレイヤーの位置取得
+	D3DXVECTOR3 posPlayer = pPlayer->GetPosition();
+
+	// プレイヤーのサイズ取得
+	float sizePlayer = pPlayer->GetSize();
+
+	//ベクトルを求める
+	D3DXVECTOR3 vec = posPlayer - this->GetPosition();
+
+	//ベクトル代入
+	fLength = D3DXVec3Length(&vec);
+
+	if (fLength <= sizePlayer)
+	{
+		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
+	}
 }
 
 //========================================

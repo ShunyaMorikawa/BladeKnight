@@ -37,8 +37,9 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	static CTutorial *GetTutorial(void) { return m_pTutorial; }		//チュートリアルの情報
-	static CPlayer *GetPlayer(void) { return m_pPlayer; }
+	static CTutorial *GetTutorial(void) { return m_pTutorial; }		// チュートリアルの情報
+	static CPlayer *GetPlayer(void) { return m_pPlayer; }			// プレイヤーの情報
+	static CScarecrow *GetScarecrow(void) { return m_pScarecrow; }	// 案山子の情報
 
 private:
 	static CObject *m_pObject[MAX_DATA];		//オブジェクトのポインタ
