@@ -25,14 +25,16 @@
 // コンストラクタ
 //========================================
 CBoss::CBoss() :
-	m_nLife(0),
 	m_move(0.0f, 0.0f, 0.0f),		// 移動量
 	m_pos(0.0f, 0.0f, 0.0f),		// 位置
 	m_rot(0.0f, 0.0f, 0.0f),		// 向き
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
 	m_vtxMax(0.0f, 0.0f, 0.0f),		// 最大値
-	m_fAngle(0.0f),
+	m_fAngle(0.0f),					// 目的の向き
+	m_fSize(0.0f),					// サイズ
+	m_nLife(0),						// 体力
+	m_nState(STATE_NONE),			// 状態
 	m_pMotion(nullptr)
 {// 値クリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
@@ -69,9 +71,6 @@ CBoss *CBoss::Create()
 //========================================
 HRESULT CBoss::Init(void)
 {
-	//体力
-	m_nLife = 10;
-
 	// 移動量
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -93,6 +92,15 @@ HRESULT CBoss::Init(void)
 	// 位置設定
 	SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
+	// サイズ
+	m_fSize = 250.0f;
+
+	// 体力
+	m_nLife = 10;
+
+	// 状態
+	m_nState = STATE_NONE;
+
 	//モーションのポインタ
 	m_pMotion = nullptr;
 
@@ -102,7 +110,7 @@ HRESULT CBoss::Init(void)
 		m_pMotion = CMotion::Create();
 
 		//モーション読み込み
-		m_pMotion->Load(MOTION_PATH);
+		m_pMotion->Load("data\\FILE\\boss.txt");
 
 		// 待機
 		m_bWait = true;
@@ -196,6 +204,12 @@ void CBoss::Update(void)
 	if (m_pMotion != nullptr)
 	{//モーション更新
 		m_pMotion->Update();
+	}
+
+	if (m_nLife <= 0)
+	{// 体力が0以下
+		// 死亡状態
+		m_nState = STATE_DEATH;
 	}
 
 	//ポインタ

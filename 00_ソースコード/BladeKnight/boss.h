@@ -20,6 +20,13 @@
 class CBoss : public CEnemy
 {
 public:
+	enum BOSSSTATE
+	{// ボスの状態
+		STATE_NONE = 0,		// 通常状態
+		STATE_DEATH,		// 死亡状態
+		STATE_MAX
+	};
+
 	CBoss();		// コンストラクタ
 	~CBoss();		// デストラクタ
 
@@ -35,8 +42,11 @@ public:
 
 	float RotNormalize(float RotN, float Rot);		// rotの正規化
 
+	float GetSize(void) { return m_fSize; }		// サイズ取得
+
 	void SetVertex(void);
 	void SetSize(float fWidht, float fHeight);
+
 	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		// 向き設定
 	D3DXVECTOR3 GetRot(void) { return m_rot; }			// 向き取得
 
@@ -69,7 +79,9 @@ private:
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		// モーションのポインタ
 	int m_nLife;			// 体力
+	int m_nState;			// ボスの状態
 	float m_fAngle;			// 目的の向き
+	float m_fSize;			// サイズ
 	bool m_bMove;			// 移動
 	bool m_bWait;			// 待機
 	bool m_bAttack;			// 攻撃

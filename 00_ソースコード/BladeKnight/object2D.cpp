@@ -348,7 +348,7 @@ void CObject2D::SetVertexMoveBg(void)
 //========================================
 //エフェクトの頂点座標
 //========================================
-void CObject2D::SetVertexEffect(float m_fRadius, D3DXCOLOR m_col)
+void CObject2D::SetVertexEffect(float radius, D3DXCOLOR col)
 {
 	//頂点情報へのポインタ
 	VERTEX_2D *pVtx;
@@ -357,16 +357,16 @@ void CObject2D::SetVertexEffect(float m_fRadius, D3DXCOLOR m_col)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標を更新
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x - m_fRadius, m_pos.y - m_fRadius, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + m_fRadius, m_pos.y - m_fRadius, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(m_pos.x - m_fRadius, m_pos.y + m_fRadius, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + m_fRadius, m_pos.y + m_fRadius, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - radius, m_pos.y - radius, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + radius, m_pos.y - radius, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - radius, m_pos.y + radius, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + radius, m_pos.y + radius, 0.0f);
 
 	//頂点カラーの設定
-	pVtx[0].col = m_col;
-	pVtx[1].col = m_col;
-	pVtx[2].col = m_col;
-	pVtx[3].col = m_col;
+	pVtx[0].col = col;
+	pVtx[1].col = col;
+	pVtx[2].col = col;
+	pVtx[3].col = col;
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();

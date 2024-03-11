@@ -29,8 +29,13 @@ CScarecrow::CScarecrow():
 	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
 	m_vtxMin(0.0f, 0.0f, 0.0f),		// 最小値
 	m_vtxMax(0.0f, 0.0f, 0.0f),		// 最大値
-	m_fAngle(0.0f)
+	m_fSize(0.0f),					// サイズ
+	m_fAngle(0.0f),					// 目的の向き
+	m_nState(STATE_NONE),			// 状態
+	m_pMotion(nullptr),				// モーションのポインタ
+	m_pBuffMat(nullptr)				// マテリアルのポインタ
 {
+	memset(&m_apModel[0], 0, sizeof(m_apModel));	// モデルのポインタ
 }
 
 //========================================
@@ -80,7 +85,10 @@ HRESULT CScarecrow::Init(void)
 	SetPosition(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
 
 	// サイズ
-	m_fSize = 100.0f;
+	m_fSize = 250.0f;
+
+	// マテリアルのポインタ
+	m_pBuffMat = nullptr;
 
 	//モーションのポインタ
 	m_pMotion = nullptr;
@@ -142,9 +150,6 @@ void CScarecrow::Update(void)
 		m_pMotion->Update();
 	}
 
-	// プレイヤーとの当たり判定
-	//CollisionPlayer();
-
 	//ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
 
@@ -184,6 +189,9 @@ void CScarecrow::Draw(void)
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
+	// マテリアル取得
+	pDevice->GetMaterial();
+
 	//モーション描画
 	m_pMotion->Draw();
 }
@@ -221,35 +229,6 @@ float CScarecrow::RotNormalize(float RotN, float Rot)
 	}
 
 	return RotN, Rot;
-}
-
-//========================================
-// プレイヤーとの当たり判定
-//========================================
-void CScarecrow::CollisionPlayer()
-{
-	//変数宣言
-	float fLength;		//長さ
-
-	//プレイヤーの情報取得
-	CPlayer *pPlayer = CTutorial::GetPlayer();
-
-	//プレイヤーの位置取得
-	D3DXVECTOR3 posPlayer = pPlayer->GetPosition();
-
-	// プレイヤーのサイズ取得
-	float sizePlayer = pPlayer->GetSize();
-
-	//ベクトルを求める
-	D3DXVECTOR3 vec = posPlayer - this->GetPosition();
-
-	//ベクトル代入
-	fLength = D3DXVec3Length(&vec);
-
-	if (fLength <= sizePlayer)
-	{
-		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
-	}
 }
 
 //========================================

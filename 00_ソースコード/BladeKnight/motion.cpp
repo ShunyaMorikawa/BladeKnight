@@ -104,7 +104,7 @@ void CMotion::Update(void)
 	D3DXVECTOR3 diffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//次の値
-	int nNextKey = (m_nKey + 1) % m_aInfo[m_nType].nNumKey;
+	int nNextKey = (m_nKey + 1) % m_aInfo[m_nType].nNumKey;;
 
 	for (int nCntParts = 0; nCntParts < m_nNumModel; nCntParts++)
 	{//パーツの最大分回す

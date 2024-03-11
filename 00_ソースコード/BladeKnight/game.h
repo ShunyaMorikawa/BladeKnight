@@ -46,8 +46,9 @@ public:
 	void Draw(void);
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
 
-	static CGame *GetGame(void) { return m_pGame; }		//ゲームマネージャーの情報
-	static CPlayer *GetPlayer(void) { return m_pPlayer; }
+	static CGame *GetGame(void) { return m_pGame; }			// ゲームマネージャーの情報
+	static CPlayer *GetPlayer(void) { return m_pPlayer; }	// プレイヤーの情報
+	static CBoss *GetBoss(void) { return m_pBoss; }			// ボスの情報
 
 private:
 	static CObject *m_pObject[MAX_DATA];		// オブジェクトのポインタ

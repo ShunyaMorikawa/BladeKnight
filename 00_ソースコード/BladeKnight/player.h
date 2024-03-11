@@ -41,6 +41,8 @@ public:
 
 	void CollisionScarecrow();
 
+	void CollisionBoss();
+
 	int GetLife() { return m_nLife; }					// 体力取得
 	float GetSize() { return m_fSize; }					// サイズ調整
 
@@ -70,7 +72,6 @@ private:
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
 	CMotion *m_pMotion;		// モーションのポインタ
 	CBoss *m_pBoss;			// ボスのポインタ
-	CScarecrow *m_pScarecrow;	//チュートリアルエネミーのポインタ
 	D3DXVECTOR3 m_RotDest;	// 目的の向き
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力

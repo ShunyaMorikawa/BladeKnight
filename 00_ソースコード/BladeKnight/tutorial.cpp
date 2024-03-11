@@ -145,7 +145,7 @@ void CTutorial::Uninit(void)
 //=======================================
 void CTutorial::Update(void)
 {
-	//CInputKeyboard型のポインタ
+	// CInputKeyboard型のポインタ
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得;
 
 	// コントローラーの情報取得	

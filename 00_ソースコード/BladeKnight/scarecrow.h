@@ -23,6 +23,13 @@ public:
 	CScarecrow();		// コンストラクタ
 	~CScarecrow();		// デストラクタ
 
+	enum STATE
+	{// 状態
+		STATE_NONE = 0,		// 通常
+		STATE_DAMAGE,		// ダメージ
+		STATE_MAX
+	};
+
 	// メンバ関数
 	static CScarecrow *Create();	// チュートリアルエネミー生成
 
@@ -33,9 +40,9 @@ public:
 
 	float RotNormalize(float RotN, float Rot);		// rotの正規化
 
-	void CollisionPlayer();
+	int GetState() { return m_nState; }			// 状態取得
 
-	float GetSize(void) { return m_fSize; }		//サイズ取得
+	float GetSize(void) { return m_fSize; }		// サイズ取得
 
 	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }	// 位置設定
 	D3DXVECTOR3 GetPosition(void) { return m_pos; }		// 位置取得
@@ -61,11 +68,12 @@ private:
 	D3DXVECTOR3 m_pos;		// 位置
 	D3DXVECTOR3 m_rot;		// 向き
 	D3DXVECTOR3 m_vtxMin, m_vtxMax;	// モデルの最大、最小値
-
 	D3DXVECTOR3 m_RotDest;	// 目的の向き
 
 	CModel *m_apModel[MAX_PARTS];	//モデルへのポインタ
-	CMotion *m_pMotion;		//モーションのポインタ
+	CMotion *m_pMotion;				// モーションのポインタ
+	LPD3DXBUFFER m_pBuffMat;		//マテリアルへのポインタ
+	int m_nState;			// 状態
 	float m_fAngle;			// 目的の向き
 	float m_fSize;			// サイズ
 };

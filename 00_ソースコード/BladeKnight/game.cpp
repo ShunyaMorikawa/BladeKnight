@@ -161,8 +161,11 @@ void CGame::Update(void)
 	CInputKeyboard *pInputKeyboard = nullptr;
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	//キーボードの情報取得
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
-	{// 画面遷移
+	int nLife = m_pBoss->GetLife();
+
+	if (nLife <= 0)
+	{// 体力が0以下
+		// 画面遷移
 		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
 	}
 }

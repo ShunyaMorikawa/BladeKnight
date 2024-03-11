@@ -16,6 +16,7 @@
 #include "game.h"
 #include "tutorial.h"
 #include "scarecrow.h"
+#include "boss.h"
 
 //========================================
 //マクロ定義
@@ -44,8 +45,7 @@ CPlayer::CPlayer() :
 	m_bMove(false),
 	m_bWait(false),
 	m_pMotion(nullptr),
-	m_pBoss(nullptr),
-	m_pScarecrow(nullptr)
+	m_pBoss(nullptr)
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }
@@ -107,7 +107,7 @@ HRESULT CPlayer::Init(void)
 		m_pMotion = CMotion::Create();
 
 		//モーション読み込み
-		m_pMotion->Load(PLAYER_PATH);
+		m_pMotion->Load("data\\FILE\\player.txt");
 
 		//待機モーション
 		m_pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
@@ -164,6 +164,9 @@ void CPlayer::Update(void)
 
 		if (m_pMotion->IsFinish() && m_bCutdown == true)
 		{// モーション終了
+			//チュートリアルエネミーとの当たり判定
+			CollisionScarecrow();
+
 			m_bCutdown = false;
 		}
 	}
@@ -194,9 +197,6 @@ void CPlayer::Update(void)
 	{// モーション更新
 		m_pMotion->Update();
 	}
-
-	//チュートリアルエネミーとの当たり判定
-	//CollisionScarecrow();
 
 	// ポインタ
 	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -267,7 +267,7 @@ void CPlayer::Act(float fSpeed)
 	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 終了したかの取得
-	bool bFinish = m_pMotion->IsFinish();
+	//bool bFinish = m_pMotion->IsFinish();
 
 	if (pInputKeyboard->GetPress(DIK_A) == true
 		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
@@ -311,7 +311,6 @@ void CPlayer::Act(float fSpeed)
 			m_bMove = true;
 		}
 	}
-
 	else if (pInputKeyboard->GetPress(DIK_D) == true
 			 || pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 	{//Dが押された
@@ -354,7 +353,6 @@ void CPlayer::Act(float fSpeed)
 			m_bMove = true;
 		}
 	}
-
 	else if (pInputKeyboard->GetPress(DIK_W) == true
 			 || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0 ) > 0)
 	{//Wが押された
@@ -363,11 +361,10 @@ void CPlayer::Act(float fSpeed)
 
 		//移動方向にモデルを向ける
 		m_RotDest.y = -rot.y - (D3DX_PI * 0.5f);
-
+		
 		// 歩き
 		m_bMove = true;
 	}
-
 	else if (pInputKeyboard->GetPress(DIK_S) == true
 			 || pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{//Sが押された
@@ -477,24 +474,66 @@ float CPlayer::RotNormalize(float RotN, float Rot)
 //========================================
 void CPlayer::CollisionScarecrow()
 {
-	//変数宣言
-	float fLength;		//長さ
+	// 長さ
+	float fLength;
 
-	//チュートリアル用エネミーの位置取得
-	D3DXVECTOR3 posScarecrow = m_pScarecrow->GetPosition();
+	// チュートリアルエネミーの情報取得
+	CScarecrow *pScarecrow = CTutorial::GetScarecrow();
+
+	// チュートリアル用エネミーの位置取得
+	D3DXVECTOR3 posScarecrow = pScarecrow->GetPosition();
 
 	// チュートリアル用エネミーのサイズ取得
-	float sizeScarecrow = m_pScarecrow->GetSize();
+	float sizeScarecrow = pScarecrow->GetSize();
 
-	//ベクトルを求める
+	// ベクトルを求める
 	D3DXVECTOR3 vec = posScarecrow - this->GetPosition();
 
-	//ベクトル代入
+	// ベクトル代入
 	fLength = D3DXVec3Length(&vec);
 
 	if (fLength <= sizeScarecrow)
-	{
-		CManager::GetInstance()->SetMode(CScene::MODE_RESULT);
+	{// 近かったら
+
+		// ポインタ
+		CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+		// デバッグ表示
+		pDebugProc->Print("\n当たってる～\n");
+	}
+}
+
+//========================================
+// ボスとの当たり判定
+//========================================
+void CPlayer::CollisionBoss()
+{
+	// 長さ
+	float fLength;
+
+	// ボスの情報取得
+	CBoss *pBoss = CGame::GetBoss();
+
+	// ボスの位置取得
+	D3DXVECTOR3 posBoss = pBoss->GetPosition();
+
+	// ボスサイズ取得
+	float sizeScarecrow = pBoss->GetSize();
+
+	// ベクトルを求める
+	D3DXVECTOR3 vec = posBoss - this->GetPosition();
+
+	// ベクトル代入
+	fLength = D3DXVec3Length(&vec);
+
+	if (fLength <= sizeScarecrow)
+	{// 近かったら
+
+		// ポインタ
+		CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+		// デバッグ表示
+		pDebugProc->Print("\n当たってる～\n");
 	}
 }
 

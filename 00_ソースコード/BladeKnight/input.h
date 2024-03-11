@@ -144,7 +144,6 @@ public:
 	SHORT GetRStickXPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRX; }	//RスティックのX軸プレス情報取得
 	SHORT GetRStickYPress(JOYKEY Key, int nPlayer) { return m_aPadState[nPlayer].Gamepad.sThumbRY; }	//RスティックのY軸プレス情報取得
 
-
 private:
 	// メンバ変数
 	XINPUT_STATE m_aPadState[NUM_MAX_PAD];			// パッドの情報
