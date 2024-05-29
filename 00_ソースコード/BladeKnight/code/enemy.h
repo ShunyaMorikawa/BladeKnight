@@ -28,7 +28,10 @@ public:
 	void Update(void);		//XV
 	void Draw(void);		//•`‰æ
 	void Hit(int nLife);
-	void DestMove();
+	void NockBack();
+	void Motion();
+	void Attack();
+	void CollisionPlayer(int nDamage);
 
 	int GetLife() { return m_nLife; }			// ‘Ì—Íæ“¾
 
@@ -38,6 +41,9 @@ private:
 	//ƒƒ“ƒo•Ï”
 	int m_nLife;			// ‘Ì—Í
 	float m_fRadius;		// ”¼Œa
+
+	bool m_bWalk;
+	bool m_bAttack;
 };
 
 #endif

@@ -15,8 +15,8 @@
 //=======================================
 namespace USEFUL
 {// •Ö—˜ŠÖ”
-	//	Œü‚«‚Ì³‹K‰»
-	void NormalizeRot(float fRot);
+	//	Œü‚«‚ÆŠp“x‚Ì³‹K‰»
+	void NormalizeRotAngle(float& fRotAngle);
 
 }
 

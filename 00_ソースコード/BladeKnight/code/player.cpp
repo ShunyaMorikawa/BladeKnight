@@ -374,9 +374,6 @@ void CPlayer::Attack()
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
-
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
 	{// 切りおろし
@@ -509,7 +506,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 	// 敵の情報取得
 	CEnemy* pEnemy = CGame::GetInstance()->GetEnemy();
 
-	// プレイヤーの位置
+	// 敵の位置
 	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
 	D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
 
@@ -553,11 +550,30 @@ void CPlayer::NockBack()
 	// 飛ばされる向き
 	float angle = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
 
+	// 位置更新
 	moveEnemy.x = sinf(angle) * -NOCKBACK;
 	moveEnemy.z = cosf(angle) * -NOCKBACK;
 
-	// ノックバック
 	moveEnemy.y = 25.0f;
 
 	pEnemy->SetMove(moveEnemy);
+}
+
+//========================================
+// ヒット処理
+//========================================
+void CPlayer::Hit(int nLife)
+{
+	D3DXVECTOR3 pos = GetPos();
+
+	// 体力減らす
+	m_nLife -= nLife;
+
+	if (m_nLife <= 0)
+	{
+		Uninit();
+
+		// パーティクル生成
+		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
+	}
 }

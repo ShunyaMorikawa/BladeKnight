@@ -34,6 +34,7 @@ public:
 	void Motion();
 	void CollisionEnemy(int nDamage);
 	void NockBack();
+	void Hit(int nLife);
 
 	//ƒƒ“ƒoŠÖ”
 	static CPlayer *Create(std::string pfile);

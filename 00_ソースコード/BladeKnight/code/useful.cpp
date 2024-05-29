@@ -10,17 +10,17 @@
 //=======================================
 // ³‹K‰»
 //=======================================
-void USEFUL::NormalizeRot(float Rot)
+void USEFUL::NormalizeRotAngle(float& fRotAngle)
 {
 	//Œü‚«‚Ì³‹K‰»
-	if (Rot > D3DX_PI)
+	if (fRotAngle > D3DX_PI)
 	{//3.14‚ð’´‚¦‚½‚Æ‚«‚É”½‘Î‚É‚·‚é
-		Rot -= D3DX_PI * 2.0f;
+		fRotAngle -= D3DX_PI * 2.0f;
 	}
 
 	//-3.14‚ð’´‚¦‚½‚Æ‚«‚É”½‘Î‚É‚·‚é
-	if (Rot < -D3DX_PI)
+	if (fRotAngle < -D3DX_PI)
 	{
-		Rot += D3DX_PI * 2.0f;
+		fRotAngle += D3DX_PI * 2.0f;
 	}
 }
