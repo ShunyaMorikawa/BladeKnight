@@ -23,10 +23,10 @@ public:
 	// メンバ関数
 	static CEnemy* Create(std::string pfile);
 	HRESULT Init(void) { return S_OK; }		// 純粋仮想
-	HRESULT Init(std::string pfile);		// 初期化
-	void Uninit(void);		//終了
-	void Update(void);		//更新
-	void Draw(void);		//描画
+	HRESULT Init(std::string pfile);
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
 	void Hit(int nLife);
 	void NockBack();
 	void Motion();

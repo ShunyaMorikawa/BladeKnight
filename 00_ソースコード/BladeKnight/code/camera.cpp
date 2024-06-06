@@ -112,7 +112,7 @@ void CCamera::SetCamera(void)
 
 	//プロジェクションマトリックスを作成[透視投影]
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
-								D3DXToRadian(90.0f),	//視野角
+								D3DXToRadian(100.0f),	//視野角
 								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
 								10.0f,		//Z値の最小値
 								4000.0f);	//Z値の最大値(描画距離)

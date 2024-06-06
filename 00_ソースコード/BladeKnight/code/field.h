@@ -1,6 +1,6 @@
 //========================================
 //
-//シューティングアクション[polygon.h]
+//フィールド[field.h]
 //Author：森川駿弥
 //
 //========================================
@@ -29,7 +29,6 @@ public:
 private:
 	//メンバ変数
 	static 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ
-	CObject3D *m_pObj3D;
 };
 
 #endif

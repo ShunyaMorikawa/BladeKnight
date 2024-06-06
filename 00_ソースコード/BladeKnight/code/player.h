@@ -7,12 +7,12 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
-#include "main.h"
-#include "model.h"
-#include "motion.h"
-#include "effect.h"
-#include "bullet.h"
 #include "character.h"
+
+class CModel;
+class CMotion;
+class CEffect;
+class CGauge;
 
 //========================================
 //プレイヤークラス
@@ -25,10 +25,10 @@ public:
 
 	// メンバ関数
 	HRESULT Init() { return S_OK; }		//純粋仮想
-	HRESULT Init(std::string pfile);	//初期化
-	void Uninit();		//終了
-	void Update();		//更新
-	void Draw();		//描画
+	HRESULT Init(std::string pfile);
+	void Uninit();
+	void Update();
+	void Draw();
 	void Act(float fSpeed);
 	void Attack();
 	void Motion();
@@ -36,7 +36,10 @@ public:
 	void NockBack();
 	void Hit(int nLife);
 
-	//メンバ関数
+	float GetRadius() { return m_fRadius; }		// 半径取得
+
+	int GetLife() { return m_nLife; }
+
 	static CPlayer *Create(std::string pfile);
 
 private:
@@ -56,7 +59,8 @@ private:
 	bool m_bStrongAttack;	// 強攻撃
 
 	CEffect *m_pEffect;				// エフェクトのポインタ
-	CModel *m_apModel[MAX_PARTS];	// モデルへのポインタ
+	CModel *m_apModel[MAX_PARTS];	// モデルのダブルポインタ
+	CGauge* m_pGauge;			// ゲージのポインタ
 };
 
 #endif

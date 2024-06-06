@@ -41,13 +41,13 @@ void Mypartcile_Func::WALK_PARTICLE()
 		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		// ˆÚ“®—Ê‚ÌŠî€’l
-		float StandardMove = 9.0f + (rand() % 10) * 0.9f;
+		float StandardMove = 1.0f + (rand() % 10) * 0.9f;
 
 		// ”¼Œa‚ÌŠî€’l
 		float StandardRadius = 9.0f + (rand() % 50) * 0.9f;
 
 		// ‘å‚«‚³
-		move.z = sinf((rand() % 629 - 314) / 10.0f) * StandardMove;
+		move.x = sinf((rand() % 629 - 314) / 10.0f) * StandardMove;
 
 		CEffect::Create(POS, move, col, StandardRadius, life, false);
 	}

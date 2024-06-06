@@ -63,14 +63,11 @@ HRESULT CField::Init(void)
 	//テクスチャのポインタ
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
-	if (m_pObj3D == nullptr)
-	{
-		//CObject2Dのポインタ
-		m_pObj3D = CObject3D::Create();
+	// 継承の初期化
+	CObject3D::Init();
 
-		//テクスチャ割り当て
-		m_pObj3D->BindTexture(pTexture->Regist(POLYGON_TEX));
-	}
+	//テクスチャ割り当て
+	BindTexture(pTexture->Regist(POLYGON_TEX));
 
 	return S_OK;
 }

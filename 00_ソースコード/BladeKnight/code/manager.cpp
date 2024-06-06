@@ -128,6 +128,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	//テクスチャ生成
 	m_pTexture = new CTexture;
+	m_pTexture->Load();
 
 	if (m_pFade == nullptr)
 	{

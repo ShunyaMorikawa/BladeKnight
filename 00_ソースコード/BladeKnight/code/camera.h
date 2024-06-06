@@ -32,8 +32,10 @@ public:
 	D3DXVECTOR3 GetRot(void);				//位置取得
 	D3DXVECTOR3 GetPosV(void);				//視点の取得
 	D3DXVECTOR3 GetPosR(void);				//注視点の取得
+	D3DXVECTOR3 GetVecU() { return m_vecU; }
 
 private:
+
 	//メンバ変数
 	D3DXMATRIX m_mtxProjection;		//プロジェクションマトリックス
 	D3DXMATRIX m_mtxView;			//ビューマトリックス

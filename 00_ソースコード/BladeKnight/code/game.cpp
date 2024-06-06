@@ -20,6 +20,14 @@
 CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 
 //========================================
+// 名前空間
+//========================================
+namespace
+{
+	int TransitionTime = 120;
+}
+
+//========================================
 //コンストラクタ
 //========================================
 CGame::CGame() : 
@@ -91,13 +99,16 @@ void CGame::Update(void)
 	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	// 敵の体力取得
-	int nLife = m_pEnemy->GetLife();
+	int EnemyLife = m_pEnemy->GetLife();
 
-	if (nLife < 0)
-	{
+	// プレイヤーの体力取得
+	int PlayerLife = m_pPlayer->GetLife();
+
+	if (EnemyLife <= 0 || PlayerLife <= 0)
+	{// 敵かプレイヤーの体力が0以下になったら
 		m_nTransition++;
 
-		if (m_nTransition >= 120)
+		if (m_nTransition >= TransitionTime)
 		{
 			// 画面遷移(フェード)
 			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);

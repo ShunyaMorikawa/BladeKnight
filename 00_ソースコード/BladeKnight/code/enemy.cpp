@@ -15,6 +15,7 @@
 #include "player.h"
 #include "game.h"
 #include "useful.h"
+#include "effect.h"
 
 //========================================
 //名前空間
@@ -22,10 +23,10 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
-	const float SPEED = 5.0f;		// 速度
+	const float SPEED = 0.3f;		// 速度
 	const float GRAVITY = 2.0f;		// 重力
 	const float INERTIA = 0.1f;		// 慣性
-	const float RADIUS = 150.0f;	// 半径
+	const float RADIUS = 200.0f;	// 半径
 	const float NOCKBACK = 50.0f;	// ノックバック値
 }
 
@@ -73,7 +74,7 @@ HRESULT CEnemy::Init(std::string pfile)
 	CCharacter::Init(pfile);
 
 	// 位置設定
-	SetPos(D3DXVECTOR3(0.0f, 0.0f, -300.0f));
+	SetPos(D3DXVECTOR3(0.0f, 0.0f, -500.0f));
 
 	// 向き設定
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -133,15 +134,15 @@ void CEnemy::Update(void)
 	RotDest.y = atan2f(pos.x - posPlayer.x, pos.z - posPlayer.z);
 
 	// プレイヤー方向に移動
-	move.x = sinf(rot.y + D3DX_PI);
-	move.z = cosf(rot.y + D3DX_PI);
+	move.x += sinf(rot.y + D3DX_PI) * SPEED;
+	move.z += cosf(rot.y + D3DX_PI) * SPEED;
 
 	// 位置を更新
 	pos += move;
 
 	// 移動量を更新(減衰させる)
-	move.x += (0.0f + move.x) * INERTIA;
-	move.z += (0.0f + move.z) * INERTIA;
+	move.x += (0.0f - move.x) * INERTIA;
+	move.z += (0.0f - move.z) * INERTIA;
 
 	//目的の向き
 	DiffRot.y = RotDest.y - rot.y;
@@ -176,8 +177,12 @@ void CEnemy::Update(void)
 	// 目的の向き設定
 	SetRotDest(RotDest);
 
+	Attack();
+
 	// モーション管理
 	Motion();
+
+	CollisionPlayer(1);
 
 	// ポインタ
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -201,9 +206,6 @@ void CEnemy::Draw(void)
 void CEnemy::Hit(int nLife)
 {
 	D3DXVECTOR3 pos = GetPos();
-
-	// ノックバック
-	NockBack();
 
 	// 体力減らす
 	m_nLife -= nLife;
@@ -238,9 +240,9 @@ void CEnemy::NockBack()
 	// 位置更新
 	movePlayer.x = sinf(angle) * -NOCKBACK;
 	movePlayer.z = cosf(angle) * -NOCKBACK;
-
 	movePlayer.y = 25.0f;
 
+	// 移動量設定
 	pPlayer->SetMove(movePlayer);
 }
 
@@ -277,6 +279,14 @@ void CEnemy::Motion()
 //========================================
 void CEnemy::Attack()
 {
+	// キーボードの情報取得
+	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	if (pInputKeyboard->GetTrigger(DIK_R))
+	{
+		m_bAttack = true;
+	}
+
 	//if (fLength <= radiusEnemy + fRadius)
 	//{// 切りおろし
 	//	m_bAttack = true;
@@ -317,49 +327,33 @@ void CEnemy::CollisionPlayer(int nDamage)
 	D3DXVECTOR3 pos = D3DXVECTOR3(posWeapon._41, posWeapon._42, posWeapon._43);
 
 #ifdef _DEBUG
-
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	D3DXCOLOR col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);	// 色
-
-	// 半径の基準値
-	float StandardRadius = 25.0f;
-
-	int nLife = 10;
-
 	// エフェクト生成
-	CEffect::Create(pos, move, col, StandardRadius, nLife, true);
+	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 100.0f, 10, true);
+	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 25.0f, 10, true);
 #endif
-
-	// 長さ
-	float fLength;
 
 	// プレイヤーの半径
 	float fRadius = RADIUS;
 
 	// 敵の情報取得
-	CEnemy* pEnemy = CGame::GetInstance()->GetEnemy();
+	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();
 
 	// プレイヤーの位置
-	D3DXVECTOR3 posPlayer = pEnemy->GetPos();
-	D3DXVECTOR3 movePlayer = pEnemy->GetMove();
+	D3DXVECTOR3 posPlayer = pPlayer->GetPos();
+	D3DXVECTOR3 movePlayer = pPlayer->GetMove();
 
 	// 半径
-	float radiusEnemy = pEnemy->GetRadius();
-
-#ifdef _DEBUG
-	CEffect::Create(posEnemy, move, col, radiusEnemy, nLife, true);
-#endif
+	float radiusEnemy = pPlayer->GetRadius();
 
 	// ベクトルを求める
 	D3DXVECTOR3 vec = posEnemy - pos;
 
 	// ベクトル代入
-	fLength = D3DXVec3Length(&vec);
+	float fLength = D3DXVec3Length(&vec);
 
 	if (fLength <= radiusEnemy + fRadius)
 	{// ヒット
-		pEnemy->Hit(nDamage);
+		pPlayer->Hit(nDamage);
 
 		// ノックバック
 		NockBack();

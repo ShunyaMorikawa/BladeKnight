@@ -34,8 +34,6 @@ public:
 	int GetMotionType() { return m_pMotion->GetType(); }				// モーションの種類取得
 	bool GetMotionLoop(int nType) { return m_pMotion->IsLoop(nType); }	// モーションのループ取得
 
-	float RotNormalize(float RotN, float Rot);
-
 	CMotion* GetMotion() { return m_pMotion; }	// モーション情報取得
 
 	// 目的の向きの設定と取得

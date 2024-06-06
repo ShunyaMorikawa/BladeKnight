@@ -21,6 +21,7 @@ class CTitle;
 class CField;
 class CEnemy;
 class CFade;
+class CGauge;
 
 //========================================
 //É}ÉNÉç

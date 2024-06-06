@@ -29,8 +29,8 @@ public:
 	void Update(void);		//更新
 	void Draw(void);		//描画
 	static CObject2D *Create();		//オブジェクトの生成
-	void SetVertex(void);			//頂点情報
 	void SetSize(float fWidht, float fHeight);	//大きさ
+	virtual void SetVertex(void);			//頂点情報
 
 	void BindTexture(int pTexture);				//テクスチャ割り当て
 	void SetVertexAnim(int Num, int Cnt);		//テクスチャアニメーション
@@ -45,11 +45,13 @@ public:
 	void SetCol(D3DXCOLOR col) { m_col = col; }	// 色設定
 	D3DXCOLOR GetCol() { return m_col; }			// 色取得
 
+	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_pVtxBuff; }		// 頂点情報の取得
+
 private:
 	//メンバ変数
 	int m_nIdxTexture;		//テクスチャの番号
 	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff;		//頂点情報を格納
-	D3DXCOLOR m_col;        //色
+	D3DXCOLOR m_col;		//色
 	float m_fLength;		//対角線の長さ
 	float m_fAngle;			//対角線の角度
 	int m_nCounterAnim;     //アニメーションカウンター

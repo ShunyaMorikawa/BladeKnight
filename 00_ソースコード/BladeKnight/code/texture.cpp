@@ -58,6 +58,17 @@ HRESULT CTexture::Load(void)
 	//	}
 	//}
 
+
+	//デバイスの取得
+	CRenderer* pRenderer = CManager::GetInstance()->GetRenderer();
+	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
+
+	//指定のテクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\NULL.png", &m_apTexture[0]);
+
+	//総数をカウントアップ
+	m_nNumAll++;
+
 	return S_OK;
 }
 

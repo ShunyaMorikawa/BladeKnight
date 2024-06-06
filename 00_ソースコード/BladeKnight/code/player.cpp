@@ -14,6 +14,12 @@
 #include "game.h"
 #include "particle.h"
 #include "enemy.h"
+#include "useful.h"
+#include "gauge.h"
+#include "main.h"
+#include "model.h"
+#include "motion.h"
+#include "effect.h"
 
 //========================================
 //名前空間
@@ -79,6 +85,9 @@ HRESULT CPlayer::Init(std::string pfile)
 	// 体力
 	m_nLife = LIFE;
 
+	// ゲージ生成
+	m_pGauge = CGauge::Create(m_nLife);
+
 	return S_OK;
 }
 
@@ -118,12 +127,13 @@ void CPlayer::Update(void)
 	// プレイヤー行動
 	Act(SPEED);
 
-	//if (pInputKeyboard->GetTrigger(DIK_SPACE) == true)
-	//{// 弾の生成
-	//	CBullet::Create(D3DXVECTOR3(pos),		// 位置
-	//		D3DXVECTOR3(0.0f, 0.0f, -30.0f),	// 移動量 
-	//		60);	// 体力
-	//}
+	if (pInputKeyboard->GetTrigger(DIK_F1))
+	{
+		Hit(1);
+	}
+
+
+	m_pGauge->SetLife(m_nLife);
 
 	// デバッグ表示の情報取得
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -158,8 +168,7 @@ void CPlayer::Act(float fSpeed)
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	//CCamera型のポインタ
-	CCamera* pCamera = nullptr;
-	pCamera = CManager::GetInstance()->GetCamera();
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();;
 
 	// カメラの向き取得
 	D3DXVECTOR3 Camrot = pCamera->GetRot();
@@ -317,32 +326,14 @@ void CPlayer::Act(float fSpeed)
 	//目的の向き
 	DiffRot.y = RotDest.y - rot.y;
 
-	//向きの正規化
-	if (DiffRot.y > D3DX_PI)
-	{//3.14を超えたときに反対にする
-		DiffRot.y -= D3DX_PI * 2;
-	}
-
-	//-3.14を超えたときに反対にする
-	if (DiffRot.y < -D3DX_PI)
-	{
-		DiffRot.y += D3DX_PI * 2;
-	}
+	// 向きの正規化
+	USEFUL::NormalizeRotAngle(DiffRot.y);
 
 	//Diffに補正係数をかける
 	rot.y += DiffRot.y * 0.1f;
 
-	//角度の正規化
-	if (rot.y > D3DX_PI)
-	{//3.14を超えたときに反対にする
-		rot.y -= D3DX_PI * 2;
-	}
-
-	//-3.14を超えたときに反対にする
-	if (rot.y < -D3DX_PI)
-	{
-		rot.y += D3DX_PI * 2;
-	}
+	// 角度の正規化
+	USEFUL::NormalizeRotAngle(rot.y);
 
 	// 位置設定
 	SetPos(pos);
@@ -361,6 +352,8 @@ void CPlayer::Act(float fSpeed)
 
 	// モーション
 	Motion();
+
+	CollisionEnemy(1);
 }
 
 //========================================
@@ -373,6 +366,9 @@ void CPlayer::Attack()
 
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
+
+	// 移動量取得
+	D3DXVECTOR3 move = GetMove();
 
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
@@ -469,7 +465,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 	// モデルのオフセット取得
 	CModel *pModelOffset = pMotion->GetModel(13);
 
-	// モデルのマトリックス
+	// モデルのマトリックス取得
 	D3DXMATRIX MtxModel = pModelOffset->GetMtxWorld();
 
 	// 位置取得
@@ -483,18 +479,8 @@ void CPlayer::CollisionEnemy(int nDamage)
 	D3DXVECTOR3 pos = D3DXVECTOR3(posWeapon._41, posWeapon._42, posWeapon._43);
 
 #ifdef _DEBUG
-
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	D3DXCOLOR col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);	// 色
-
-	// 半径の基準値
-	float StandardRadius = 25.0f;
-
-	int nLife = 10;
-
 	// エフェクト生成
-	CEffect::Create(pos, move, col, StandardRadius, nLife, true);
+	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 40.0f, 1, true);
 #endif
 
 	// 長さ
@@ -506,15 +492,17 @@ void CPlayer::CollisionEnemy(int nDamage)
 	// 敵の情報取得
 	CEnemy* pEnemy = CGame::GetInstance()->GetEnemy();
 
-	// 敵の位置
+	// 位置取得
 	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
+
+	// 移動量取得
 	D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
 
 	// 半径
 	float radiusEnemy = pEnemy->GetRadius();
 
 #ifdef _DEBUG
-	CEffect::Create(posEnemy, move, col, radiusEnemy, nLife, true);
+	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), radiusEnemy, 1, true);
 #endif
 
 	// ベクトルを求める
@@ -569,11 +557,12 @@ void CPlayer::Hit(int nLife)
 	// 体力減らす
 	m_nLife -= nLife;
 
+	// パーティクル生成
+	Myparticle::Create(Myparticle::TYPE_DEATH, pos);
+
 	if (m_nLife <= 0)
 	{
 		Uninit();
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
 	}
 }
