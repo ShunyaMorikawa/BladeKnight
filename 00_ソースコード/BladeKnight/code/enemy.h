@@ -10,6 +10,7 @@
 #include "main.h"
 #include "manager.h"
 #include "character.h"
+#include "gauge.h"
 
 //========================================
 //エネミークラス
@@ -39,11 +40,13 @@ public:
 
 private:
 	//メンバ変数
-	int m_nLife;			// 体力
-	float m_fRadius;		// 半径
+	int m_nLife;		// 体力
+	float m_fRadius;	// 半径
 
-	bool m_bWalk;
-	bool m_bAttack;
+	bool m_bWalk;		// 移動判定
+	bool m_bAttack;		// 攻撃判定
+
+	CGauge* m_pGauge;	// ゲージのポインタ
 };
 
 #endif

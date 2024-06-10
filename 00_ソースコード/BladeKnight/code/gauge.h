@@ -21,17 +21,23 @@ public:
 	//メンバ関数
 	static CGauge* Create(int nMaxLife);
 
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
-	void SetVertex(void);
+	HRESULT Init();
+	void Uninit();
+	void Update();
+	void Draw();
+	void SetVertex();
+	void SetSize(float fWidht, float fHeight);
 	void SetLife(int nLife) { m_nLife = nLife; }
 
 private:
 	//メンバ変数
 	int m_nMaxLife;		// 体力の最大値
 	int m_nLife;		// 現在の体力
+
+	float m_fLength;		//対角線の長さ
+	float m_fAngle;			//対角線の角度
+	float m_aTexU;			//テクスチャのU値
+
 	static 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ
 };
 

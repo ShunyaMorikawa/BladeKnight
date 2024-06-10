@@ -60,7 +60,7 @@ private:
 
 	CEffect *m_pEffect;				// エフェクトのポインタ
 	CModel *m_apModel[MAX_PARTS];	// モデルのダブルポインタ
-	CGauge* m_pGauge;			// ゲージのポインタ
+	CGauge* m_pGauge;				// ゲージのポインタ
 };
 
 #endif

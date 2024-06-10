@@ -38,6 +38,10 @@ namespace
 //========================================
 CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
 {//値をクリア
+
+	m_pEffect = nullptr;			// エフェクトのポインタ
+	m_pGauge = nullptr;				// ゲージのポインタ
+	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
 //========================================
@@ -73,6 +77,9 @@ CPlayer *CPlayer::Create(std::string pfile)
 //========================================
 HRESULT CPlayer::Init(std::string pfile)
 {
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// キャラの初期化
 	CCharacter::Init(pfile);
 
@@ -87,6 +94,15 @@ HRESULT CPlayer::Init(std::string pfile)
 
 	// ゲージ生成
 	m_pGauge = CGauge::Create(m_nLife);
+
+	// 位置設定
+	m_pGauge->SetPos(D3DXVECTOR3(50.0f, 600.0f, 0.0f));
+
+	// サイズ設定
+	m_pGauge->SetSize(50.0f, 50.0f);
+
+	// テクスチャ設定
+	m_pGauge->BindTexture(pTexture->Regist("data\\texture\\gauge.png"));
 
 	return S_OK;
 }
@@ -132,7 +148,7 @@ void CPlayer::Update(void)
 		Hit(1);
 	}
 
-
+	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
 
 	// デバッグ表示の情報取得
@@ -353,6 +369,7 @@ void CPlayer::Act(float fSpeed)
 	// モーション
 	Motion();
 
+	// 敵との当たり判定
 	CollisionEnemy(1);
 }
 

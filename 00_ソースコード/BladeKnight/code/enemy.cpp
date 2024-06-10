@@ -37,7 +37,8 @@ CEnemy::CEnemy() :
 	m_nLife(0),
 	m_fRadius(0.0f),
 	m_bWalk(false),
-	m_bAttack(false)
+	m_bAttack(false),
+	m_pGauge(nullptr)
 {//値をクリア
 }
 
@@ -70,6 +71,9 @@ CEnemy* CEnemy::Create(std::string pfile)
 //========================================
 HRESULT CEnemy::Init(std::string pfile)
 {
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// キャラの初期化
 	CCharacter::Init(pfile);
 
@@ -85,9 +89,17 @@ HRESULT CEnemy::Init(std::string pfile)
 	// 半径
 	m_fRadius = RADIUS;
 
-#ifdef _DEBUG
-	m_nLife = 50;
-#endif
+	// ゲージ生成
+	m_pGauge = CGauge::Create(m_nLife);
+
+	// 位置設定
+	m_pGauge->SetPos(D3DXVECTOR3(600.0f, 25.0f, 0.0f));
+
+	// サイズ設定
+	m_pGauge->SetSize(50.0f, 50.0f);
+
+	// テクスチャ設定
+	m_pGauge->BindTexture(pTexture->Regist("data\\texture\\gauge.png"));
 
 	return S_OK;
 }
@@ -99,6 +111,8 @@ void CEnemy::Uninit(void)
 {
 	// 終了
 	CCharacter::Uninit();
+
+	m_pGauge = nullptr;
 }
 
 //========================================
@@ -165,6 +179,9 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 
+	// ゲージに体力設定
+	m_pGauge->SetLife(m_nLife);
+
 	// 位置設定
 	SetPos(pos);
 
@@ -177,11 +194,13 @@ void CEnemy::Update(void)
 	// 目的の向き設定
 	SetRotDest(RotDest);
 
+	// 攻撃
 	Attack();
 
 	// モーション管理
 	Motion();
 
+	// プレイヤーとの当たり判定
 	CollisionPlayer(1);
 
 	// ポインタ
@@ -209,6 +228,9 @@ void CEnemy::Hit(int nLife)
 
 	// 体力減らす
 	m_nLife -= nLife;
+
+	// ゲージに体力設定
+	m_pGauge->SetLife(m_nLife);
 
 	if (m_nLife <= 0)
 	{

@@ -35,9 +35,6 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife)
 	//CBullet型のポインタ
 	CBullet* pEffect = nullptr;
 
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	if (pEffect == nullptr)
 	{//nullptrの時
 		//インスタンス生成
@@ -49,9 +46,6 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife)
 
 		//初期化
 		pEffect->Init();
-
-		//テクスチャ割り当て
-		pEffect->BindTexture(pTexture->Regist("data\\texture\\effect004.png"));
 	}
 
 	//ポインタを返す
@@ -63,11 +57,16 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife)
 //===========================================
 HRESULT CBullet::Init(void)
 {
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	//初期化
 	CBillboard::Init();
 
 	// サイズ設定
 	SetSize(150.0f, 150.0f);
+
+	BindTexture(pTexture->Regist("data\\texture\\effect004.png"));
 
 	//成功を返す
 	return S_OK;
