@@ -13,6 +13,7 @@
 #include "game.h"
 #include "enemy.h"
 #include "player.h"
+#include "particle.h"
 
 //===========================================
 //コンストラクタ
@@ -97,6 +98,11 @@ void CBullet::Update(void)
 	// 位置更新
 	pos += move;
 
+	if (m_nLife % 2 == 0)
+	{
+		Myparticle::Create(Myparticle::TYPE::TYPE_BULLET, pos);
+	}
+
 	// 位置設定
 	SetPos(pos);
 
@@ -137,7 +143,7 @@ void CBullet::Draw(void)
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	//描画
-	CBillboard::Draw();
+	//CBillboard::Draw();
 
 	//αブレンディングを元に戻す
 	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);

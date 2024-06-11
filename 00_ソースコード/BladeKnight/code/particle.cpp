@@ -49,7 +49,7 @@ void Mypartcile_Func::WALK_PARTICLE()
 		// 大きさ
 		move.x = sinf((rand() % 629 - 314) / 10.0f) * StandardMove;
 
-		CEffect::Create(POS, move, col, StandardRadius, life, false);
+		CEffect::Create(POS, move, col, StandardRadius, life, false, CEffect::TYPE::TYPE_BLACK);
 	}
 }
 
@@ -77,6 +77,81 @@ void Mypartcile_Func::DEATH_PARTICLE()
 		move.y = sinf((rand() % 629 - 314) / 150.0f) * StandardMove;
 
 		// エフェクト生成
-		CEffect::Create(POS, move, col, StandardRadius, life, true);
+		CEffect::Create(POS, move, col, StandardRadius, life, true, CEffect::TYPE::TYPE_NORMAL);
 	}
+}
+
+//==========================================================================
+// 弾
+//==========================================================================
+void Mypartcile_Func::BULLET_PARTICLE()
+{
+	int life = 25;		// 寿命
+	float radius;
+	D3DXCOLOR col;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 move;
+	CEffect* pEffect = nullptr;
+
+
+	//=============================
+	// 赤色
+	//=============================
+	// 移動量
+	float fMove = (float)(rand() % 20) / 10 + 1.0f;		//移動量
+	float fMoveY = (float)(rand() % 61 - 30) / 100;	//移動量
+
+	//移動量の設定
+	move.x = sinf((float)(rand() % 629 - 314) / 100.0f) * fMove;
+	move.y = sinf((float)(rand() % 314) / 100.0f) * fMoveY;
+	move.z = cosf((float)(rand() % 629 - 314) / 100.0f) * fMove;
+
+	//位置ブレ
+	pos = POS;
+	pos += move * 0.3f;
+
+	// 半径
+	radius = 160.0f + (rand() % 101 - 50) * 0.1f;
+
+	// 色
+	col = D3DXCOLOR(
+		0.9f + (rand() % 11) * 0.01f,
+		0.0f,
+		0.0f,
+		0.8f);
+
+	// エフェクト生成
+	pEffect = CEffect::Create(pos, move, col, radius, life, true, CEffect::TYPE::TYPE_SMOKE);
+	pEffect->SetAddSizeValue(-2.0f + ((rand() % 21 - 10) * 0.1f));
+
+
+	//=============================
+	// 黄色
+	//=============================
+	// 移動量
+	fMove = (float)(rand() % 20) / 10 + 1.0f;	//移動量
+	fMoveY = (float)(rand() % 61 - 30) / 100;	//移動量
+
+	//移動量の設定
+	move.x = sinf((float)(rand() % 629 - 314) / 100.0f) * fMove;
+	move.y = sinf((float)(rand() % 314) / 100.0f) * fMoveY;
+	move.z = cosf((float)(rand() % 629 - 314) / 100.0f) * fMove;
+
+	//位置ブレ
+	pos = POS;
+	pos += move * 0.3f;
+
+	// 炎
+	radius = 120.0f + (rand() % 101 - 50) * 0.1f;
+
+	// 色
+	col = D3DXCOLOR(
+		0.8f + (rand() % 11) * 0.01f,
+		0.5f,
+		0.1f,
+		0.5f);
+
+	// エフェクト生成
+	pEffect = CEffect::Create(pos, move, col, radius, life, true, CEffect::TYPE::TYPE_SMOKE);
+	pEffect->SetAddSizeValue(-2.0f + ((rand() % 21 - 10) * 0.1f));
 }

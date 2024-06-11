@@ -17,6 +17,7 @@ namespace Mypartcile_Func
 {
 	void WALK_PARTICLE();
 	void DEATH_PARTICLE();
+	void BULLET_PARTICLE();	// íe
 }
 
 //===========================================
@@ -28,6 +29,7 @@ namespace Myparticle
 	{// óÒã≠ÇÃéÌóﬁ
 		TYPE_WALK = 0,		// ï‡Ç¢ÇΩéû
 		TYPE_DEATH,			// éÄñSÇµÇΩéû
+		TYPE_BULLET,		// íeÇÃéû
 		TYPE_MAX
 	};
 
@@ -39,6 +41,7 @@ namespace Myparticle
 	{
 		&Mypartcile_Func::WALK_PARTICLE,
 		&Mypartcile_Func::DEATH_PARTICLE,
+		&Mypartcile_Func::BULLET_PARTICLE,	// íe
 	};
 
 	// ê∂ê¨

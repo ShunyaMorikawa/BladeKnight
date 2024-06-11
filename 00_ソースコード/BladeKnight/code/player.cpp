@@ -497,7 +497,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 
 #ifdef _DEBUG
 	// エフェクト生成
-	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 40.0f, 1, true);
+	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 40.0f, 1, true, CEffect::TYPE::TYPE_NORMAL);
 #endif
 
 	// 長さ
@@ -519,7 +519,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 	float radiusEnemy = pEnemy->GetRadius();
 
 #ifdef _DEBUG
-	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), radiusEnemy, 1, true);
+	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), radiusEnemy, 1, true, CEffect::TYPE::TYPE_NORMAL);
 #endif
 
 	// ベクトルを求める

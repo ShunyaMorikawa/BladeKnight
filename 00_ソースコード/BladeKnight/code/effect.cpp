@@ -11,6 +11,27 @@
 #include "renderer.h"
 #include "texture.h"
 
+//==========================================================================
+// 定数定義
+//==========================================================================
+namespace
+{
+	const std::string TEXTURE[CEffect::TYPE::TYPE_MAX] =
+	{
+		"data\\TEXTURE\\effect\\effect000.jpg",		// 通常
+		"data\\TEXTURE\\effect\\effect_point01.tga",	// 点
+		"data\\TEXTURE\\effect\\smoke_05.tga",			// 煙
+		"data\\TEXTURE\\effect\\smoke_05.tga",			// 黒煙
+		"data\\TEXTURE\\effect\\effect000.png",			// 黒
+		"data\\TEXTURE\\effect\\effect001.png",			// 十字
+		"data\\TEXTURE\\effect\\Star01.png",			// 十字
+		"data\\TEXTURE\\effect\\thunder_02.tga",		// 雷
+		"",												// NULL
+	};
+}
+int CEffect::m_TexIdx[TYPE::TYPE_MAX] = {};	// テクスチャインデックス
+bool CEffect::m_bTexLoad = false;			// テクスチャの読み込み判定
+
 //===========================================
 //コンストラクタ
 //===========================================
@@ -19,6 +40,7 @@ CEffect::CEffect(int nPriority) : CBillboard(nPriority)
 	m_aEffect.nLife = 0;		// 寿命(表示時間)
 	m_aEffect.nFirstLife = 0;	// 初期寿命
 	m_aEffect.balpha = false;	// 加算合成
+	m_fAddSizeValue = 0.0f;		// サイズ加算量
 }
 
 //===========================================
@@ -31,13 +53,13 @@ CEffect::~CEffect()
 //===========================================
 //生成
 //===========================================
-CEffect *CEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXCOLOR col, float fRadius, int nLife, bool balpha)
+CEffect *CEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXCOLOR col, float fRadius, int nLife, bool balpha, TYPE type)
 {
+	// テクスチャ読み込み
+	if (!m_bTexLoad) TexLoad();
+
 	//CEffect型のポインタ
 	CEffect *pEffect = nullptr;
-
-	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	if (pEffect == nullptr)
 	{//nullptrの時
@@ -51,11 +73,13 @@ CEffect *CEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXCOLOR col, float
 		pEffect->m_aEffect.nLife = nLife;
 		pEffect->m_aEffect.balpha = balpha;
 
+		pEffect->m_aEffect.fFirstAlpha = col.a;
+
 		//初期化
 		pEffect->Init();
 
 		//テクスチャ割り当て
-		pEffect->BindTexture(pTexture->Regist("data\\texture\\effect000.png"));
+		pEffect->BindTexture(m_TexIdx[type]);
 	}
 
 	//ポインタを返す
@@ -75,6 +99,22 @@ HRESULT CEffect::Init(void)
 
 	//成功を返す
 	return S_OK;
+}
+
+//===========================================
+//テクスチャ読み込み
+//===========================================
+void CEffect::TexLoad()
+{
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	for (int i = 0; i < TYPE::TYPE_MAX; i++)
+	{
+		m_TexIdx[i] = pTexture->Regist(TEXTURE[i]);
+	}
+
+	m_bTexLoad = true;
 }
 
 //===========================================
@@ -99,7 +139,7 @@ void CEffect::Update(void)
 	CBillboard::Update();
 
 	//α値(消える速度)
-	col.a = 0.1f;
+	col.a = m_aEffect.fFirstAlpha * ((float)m_aEffect.nLife / (float)m_aEffect.nFirstLife);
 
 	// 色設定
 	SetCol(col);
@@ -110,6 +150,9 @@ void CEffect::Update(void)
 	// 位置設定
 	SetPos(pos);
 
+	// リサイズ
+	Resize();
+
 	//体力減算
 	m_aEffect.nLife--;
 
@@ -118,6 +161,16 @@ void CEffect::Update(void)
 		//破棄する
 		Uninit();
 	}
+}
+
+//===========================================
+// リサイズ
+//===========================================
+void CEffect::Resize()
+{
+	float radius = GetSize();
+	radius += m_fAddSizeValue;
+	SetSize(radius, radius);
 }
 
 //===========================================
