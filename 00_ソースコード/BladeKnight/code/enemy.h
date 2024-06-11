@@ -41,6 +41,8 @@ public:
 private:
 	//メンバ変数
 	int m_nLife;		// 体力
+	int m_nCnt;			// カウント
+
 	float m_fRadius;	// 半径
 
 	bool m_bWalk;		// 移動判定

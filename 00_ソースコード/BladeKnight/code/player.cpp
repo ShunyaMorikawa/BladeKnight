@@ -210,9 +210,6 @@ void CPlayer::Act(float fSpeed)
 		if (pInputKeyboard->GetPress(DIK_W) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 		{//左上
-			//移動方向にモデルを向ける
-			RotDest.y = -D3DX_PI * 0.25f;
-
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -221,13 +218,13 @@ void CPlayer::Act(float fSpeed)
 
 			move.x += sinf(Camrot.y + D3DX_PI * 0.75f) * fSpeed;
 			move.z += cosf(Camrot.y + D3DX_PI * 0.75f) * fSpeed;
+
+			//移動方向にモデルを向ける
+			RotDest.y = Camrot.y - D3DX_PI * 0.25f;
 		}
 		else if (pInputKeyboard->GetPress(DIK_S) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 		{//左下
-			//移動方向にモデルを向ける
-			RotDest.y = -D3DX_PI * 0.75f;
-
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -236,12 +233,12 @@ void CPlayer::Act(float fSpeed)
 
 			move.x += sinf(Camrot.y + D3DX_PI * 0.25f) * fSpeed;
 			move.z += cosf(Camrot.y + D3DX_PI * 0.25f) * fSpeed;
+
+			//移動方向にモデルを向ける
+			RotDest.y = Camrot.y - D3DX_PI * 0.75f;
 		}
 		else
 		{//左
-			//移動方向にモデルを向ける
-			RotDest.y = -D3DX_PI * 0.5f;
-
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -250,6 +247,9 @@ void CPlayer::Act(float fSpeed)
 
 			move.x += sinf(Camrot.y + D3DX_PI * 0.5f) * fSpeed;
 			move.z += cosf(Camrot.y + D3DX_PI * 0.5f) * fSpeed;
+
+			//移動方向にモデルを向ける
+			RotDest.y = Camrot.y - D3DX_PI * 0.5f;
 		}
 	}
 	else if (pInputKeyboard->GetPress(DIK_D) == true
@@ -258,9 +258,6 @@ void CPlayer::Act(float fSpeed)
 		if (pInputKeyboard->GetPress(DIK_W) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 		{//右上
-			//移動方向にモデルを向ける
-			RotDest.y = D3DX_PI * 0.25f;
-
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -269,13 +266,13 @@ void CPlayer::Act(float fSpeed)
 
 			move.x += sinf(Camrot.y + -D3DX_PI * 0.75f) * fSpeed;
 			move.z += cosf(Camrot.y + -D3DX_PI * 0.75f) * fSpeed;
+
+			//移動方向にモデルを向ける
+			RotDest.y = Camrot.y + D3DX_PI * 0.25f;
 		}
 		else if (pInputKeyboard->GetPress(DIK_S) == true
 			|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 		{//右下
-			//移動方向にモデルを向ける
-			RotDest.y = D3DX_PI * 0.75f;
-
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -284,12 +281,12 @@ void CPlayer::Act(float fSpeed)
 
 			move.x += sinf(Camrot.y + -D3DX_PI * 0.25f) * fSpeed;
 			move.z += cosf(Camrot.y + -D3DX_PI * 0.25f) * fSpeed;
+
+			//移動方向にモデルを向ける
+			RotDest.y = Camrot.y + D3DX_PI * 0.75f;
 		}
 		else
 		{//右
-			//移動方向にモデルを向ける
-			RotDest.y = D3DX_PI * 0.5f;
-
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -298,14 +295,14 @@ void CPlayer::Act(float fSpeed)
 
 			move.x += sinf(Camrot.y + -D3DX_PI * 0.5f) * fSpeed;
 			move.z += cosf(Camrot.y + -D3DX_PI * 0.5f) * fSpeed;
+
+			//移動方向にモデルを向ける
+			RotDest.y = Camrot.y + D3DX_PI * 0.5f;
 		}
 	}
 	else if (pInputKeyboard->GetPress(DIK_W) == true
 		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 	{//Wが押された
-		//移動方向にモデルを向ける
-		RotDest.y = 0.0f;
-
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -314,13 +311,13 @@ void CPlayer::Act(float fSpeed)
 
 		move.x += sinf(Camrot.y + D3DX_PI) * fSpeed;
 		move.z += cosf(Camrot.y + D3DX_PI) * fSpeed;
+
+		//移動方向にモデルを向ける
+		RotDest.y = Camrot.y;
 	}
 	else if (pInputKeyboard->GetPress(DIK_S) == true
 		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{//Sが押された
-		//移動方向にモデルを向ける
-		RotDest.y = D3DX_PI;
-
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
@@ -329,6 +326,9 @@ void CPlayer::Act(float fSpeed)
 
 		move.x += sinf(Camrot.y + D3DX_PI * 0.0f) * fSpeed;
 		move.z += cosf(Camrot.y + D3DX_PI * 0.0f) * fSpeed;
+
+		//移動方向にモデルを向ける
+		RotDest.y = Camrot.y + D3DX_PI;
 	}
 
 	//位置を更新
@@ -398,7 +398,7 @@ void CPlayer::Attack()
 
 	if (pInputKeyboard->GetTrigger(DIK_E) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
-	{// 切りおろし
+	{// 横薙ぎ
 		m_bMowingdown = true;
 
 		// 敵との当たり判定
@@ -406,8 +406,8 @@ void CPlayer::Attack()
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_Q) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
-	{// 切りおろし
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
+	{// 強攻撃
 		m_bStrongAttack = true;
 
 		// 敵との当たり判定

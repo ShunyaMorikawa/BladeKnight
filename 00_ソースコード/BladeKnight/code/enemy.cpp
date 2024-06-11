@@ -16,6 +16,7 @@
 #include "game.h"
 #include "useful.h"
 #include "effect.h"
+#include "bullet.h"
 
 //========================================
 //名前空間
@@ -23,6 +24,7 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
+	const float BULLETMOVE = 10.0f;	// 弾の移動量
 	const float SPEED = 0.3f;		// 速度
 	const float GRAVITY = 2.0f;		// 重力
 	const float INERTIA = 0.1f;		// 慣性
@@ -88,6 +90,8 @@ HRESULT CEnemy::Init(std::string pfile)
 
 	// 半径
 	m_fRadius = RADIUS;
+
+	m_nCnt = 0;
 
 	// ゲージ生成
 	m_pGauge = CGauge::Create(m_nLife);
@@ -179,6 +183,28 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 
+	m_nCnt++;
+
+	if (m_nCnt >= 120)
+	{
+		int max = 8;
+
+		for (int n = 0; n < max; n++)
+		{// 弾を8方向に飛ばす
+			float fAngle = D3DX_PI * 2.0f / max;
+			fAngle *= n;
+
+			D3DXVECTOR3 bulletmove;
+			bulletmove.x = sinf(fAngle) * BULLETMOVE;
+			bulletmove.y = 0.0f;
+			bulletmove.z = cosf(fAngle) * BULLETMOVE;
+
+			// 弾の生成
+			CBullet::Create(pos, bulletmove, 300);
+		}
+		m_nCnt = 0;
+	}
+
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
 
@@ -203,7 +229,7 @@ void CEnemy::Update(void)
 	// プレイヤーとの当たり判定
 	CollisionPlayer(1);
 
-	// ポインタ
+	// デバッグ表示
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);

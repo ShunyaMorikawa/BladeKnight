@@ -39,6 +39,7 @@ public:
 
 private:
 	//メンバ変数
+	bool m_bTrans;				// 遷移するかどうか
 	FADE m_State;				//フェードの状態
 	CScene::MODE m_modeNext;	//次の画面(モード)
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	//頂点バッファへのポインタ

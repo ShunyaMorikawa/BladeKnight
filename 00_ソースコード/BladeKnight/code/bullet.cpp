@@ -12,6 +12,7 @@
 #include "texture.h"
 #include "game.h"
 #include "enemy.h"
+#include "player.h"
 
 //===========================================
 //コンストラクタ
@@ -66,7 +67,7 @@ HRESULT CBullet::Init(void)
 	// サイズ設定
 	SetSize(150.0f, 150.0f);
 
-	BindTexture(pTexture->Regist("data\\texture\\effect004.png"));
+	BindTexture(pTexture->Regist("data\\texture\\effect000.png"));
 
 	//成功を返す
 	return S_OK;
@@ -109,7 +110,7 @@ void CBullet::Update(void)
 	}
 
 	// 敵との当たり判定
-	CollisionEnemy(pos);
+	CollisionPlayer(pos);
 }
 
 //===========================================
@@ -154,7 +155,7 @@ void CBullet::Draw(void)
 }
 
 //===========================================
-//当たり判定
+// 敵との当たり判定
 //===========================================
 void CBullet::CollisionEnemy(D3DXVECTOR3 pos)
 {
@@ -183,5 +184,39 @@ void CBullet::CollisionEnemy(D3DXVECTOR3 pos)
 		Uninit();
 
 		pEnemy->Hit(1);
+	}
+}
+
+//===========================================
+// プレイヤーとの当たり判定
+//===========================================
+void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
+{
+	// 長さ
+	float fLength;
+
+	float fRadius = GetSize();
+
+	// 敵の情報取得
+	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();
+
+	// プレイヤーの位置
+	D3DXVECTOR3 posPlayer = pPlayer->GetPos();
+
+	// 半径
+	float radiusPlayer = pPlayer->GetRadius();
+
+	// ベクトルを求める
+	D3DXVECTOR3 vec = posPlayer - pos;
+
+	//ベクトル代入
+	fLength = D3DXVec3Length(&vec);
+
+	if (fLength <= radiusPlayer + fRadius)
+	{// プレイヤーに当たった
+		Uninit();
+
+		// 体力消費
+		pPlayer->Hit(1);
 	}
 }

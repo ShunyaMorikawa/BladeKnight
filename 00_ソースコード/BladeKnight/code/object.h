@@ -48,7 +48,6 @@ public:
 	D3DXVECTOR3 GetRot(void);
 
 	void Delete(void);
-	static CObject *GetObject(int nPriority, int nIdx);
 	void BindTexture(int pTexture);				//テクスチャ割り当て
 
 	void SetDrawFrag(bool bDraw);		// 描画するかしないか

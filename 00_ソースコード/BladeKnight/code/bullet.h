@@ -35,7 +35,7 @@ public:
 	void Draw(void);
 
 	void CollisionEnemy(D3DXVECTOR3 pos);
-	void Hit(int nLife);
+	void CollisionPlayer(D3DXVECTOR3 pos);
 
 private:
 	//ƒƒ“ƒo•Ï”

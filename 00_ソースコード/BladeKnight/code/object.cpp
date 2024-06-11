@@ -31,6 +31,7 @@ CObject::CObject(int nPriority)
 		m_pPrev = nullptr;	//前
 		m_pCurrent[nPriority] = this;	//自身を代入
 		m_bRelease = false;	//終了フラグ
+		m_bDrawFrag = false;
 	}
 	else if (m_pTop[nPriority] != nullptr && m_pCurrent[nPriority] != nullptr)
 	{
@@ -83,16 +84,11 @@ void CObject::ReleaseAll(void)
 				
 				// 次
 				Now = Next;
-
-				//if (Next != nullptr)
-				//{
-				//	// 前回をnullptrにする
-				//	Next->m_pPrev = nullptr;
-				//}
 			}
 		}
 	}
 
+	// すべて削除
 	DeleteAll();
 }
 
@@ -244,12 +240,6 @@ void CObject::DeleteAll(void)
 
 				//Nextを代入
 				Now = Next;
-
-				//if (Next != nullptr)
-				//{
-				//	// 前回をnullptrにする
-				//	Next->m_pPrev = nullptr;
-				//}
 			}
 		}
 	}

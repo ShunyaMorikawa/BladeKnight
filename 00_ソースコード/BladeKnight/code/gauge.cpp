@@ -169,4 +169,3 @@ void CGauge::SetVertex()
 	SetPos(pos);
 	SetRot(rot);
 }
-

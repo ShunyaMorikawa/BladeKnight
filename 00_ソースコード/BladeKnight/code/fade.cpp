@@ -132,11 +132,20 @@ void CFade::Draw()
 //=======================================
 void CFade::SetFade(CScene::MODE modenext)
 {
-	// ó‘Ôİ’è
-	m_State = FADE_OUT;
+	// Fæ“¾
+	D3DXCOLOR col = m_pObject2D->GetCol();
 
-	// Ÿ‚Ì‰æ–Ê
-	m_modeNext = modenext;
+	if (m_State != FADE_OUT)
+	{
+		// ó‘Ôİ’è
+		m_State = FADE_OUT;
+
+		// Ÿ‚Ì‰æ–Ê
+		m_modeNext = modenext;
+
+		// •s“§–¾ƒ|ƒŠƒSƒ“
+		col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 }
 
 //=======================================
