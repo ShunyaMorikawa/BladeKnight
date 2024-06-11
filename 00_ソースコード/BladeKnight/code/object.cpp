@@ -150,7 +150,6 @@ void CObject::UpdateAll(void)
 					if (pNow->m_bDrawFrag != true)
 					{
 						// æ“ª‚Ìíœ
-						// 3‚Î‚ñ‚ß‚Å‚µ‚Ê
 						pNow->Delete();
 					}
 					else

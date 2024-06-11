@@ -312,6 +312,11 @@ CScene* CScene::Create(int nMode)
 		pScene = CTitle::Create();
 		break;
 
+	case MODE_TUTORIAL:
+		// チュートリアル生成
+		pScene = CTutorial::Create();
+		break;
+
 	case MODE_GAME:
 		//タイトルシーン生成
 		pScene = CGame::Create();

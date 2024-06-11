@@ -12,6 +12,14 @@
 //========================================
 //前方宣言
 //========================================
+class CObjectX;
+class CObject3D;
+class CLight;
+class CPlayer;
+class CIdxMeshField;
+class CField;
+class CFade;
+class CGauge;
 class CObject2D;
 
 //========================================
@@ -32,7 +40,12 @@ public:
 	void Draw(void);
 
 private:
-	CObject2D* m_pObj2D;
+	CObjectX* m_pObjectX;		// Xファイルオブジェクトのポインタ
+	CPlayer* m_pPlayer;			// プレイヤーのポインタ
+	CIdxMeshField* m_pIdxMesh;	// メッシュフィールドのポインタ
+	CField* m_pField;			// ポリゴンのポインタ
+	CFade* m_pFade;				// フェードのポインタ
+	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 };
 
 #endif

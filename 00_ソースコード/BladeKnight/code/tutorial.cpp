@@ -6,8 +6,10 @@
 //========================================
 #include "tutorial.h"
 #include "manager.h"
-#include "input.h"
-#include "object2D.h"
+#include "player.h"
+#include "field.h"
+#include "bullet.h"
+#include "fade.h"
 #include "texture.h"
 
 //========================================
@@ -39,9 +41,6 @@ CTutorial* CTutorial::Create(void)
 	//インスタンス生成
 	pTutorial = new CTutorial;
 
-	//初期化
-	pTutorial->Init();
-
 	//ポインタを返す
 	return pTutorial;
 }
@@ -54,26 +53,23 @@ HRESULT CTutorial::Init(void)
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
-	if (m_pObj2D == nullptr)
-	{
-		//CObject2Dのポインタ
-		m_pObj2D = CObject2D::Create();
+	// プレイヤー生成
+	m_pPlayer = CPlayer::Create("data//FILE//player.txt");
 
-		//位置取得
-		D3DXVECTOR3 pos = m_pObj2D->GetPos();
+	// フィールド生成
+	m_pField = CField::Create();
 
-		//頂点情報
-		m_pObj2D->SetSize(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f);
+	m_pObj2D = CObject2D::Create();
 
-		//ポリゴンの位置
-		pos = (D3DXVECTOR3(640.0f, 360.0f, 0.0f));
+	// 位置設定
+	m_pObj2D->SetPos(D3DXVECTOR3(1000.0f, 200.0f, 0.0f));
 
-		//位置設定
-		m_pObj2D->SetPos(pos);
+	// サイズ設定
+	m_pObj2D->SetSize(300.0f, 350.0f);
 
-		//テクスチャ割り当て
-		m_pObj2D->BindTexture(pTexture->Regist("data\\TEXTURE\\tutorial.png"));
-	}
+	// テクスチャ設定
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide.png"));
+
 
 	//成功を返す
 	return S_OK;
@@ -84,11 +80,6 @@ HRESULT CTutorial::Init(void)
 //=======================================
 void CTutorial::Uninit(void)
 {
-	if (m_pObj2D != nullptr)
-	{
-		m_pObj2D->Uninit();
-		m_pObj2D = nullptr;
-	}
 }
 
 //=======================================
@@ -107,7 +98,7 @@ void CTutorial::Update(void)
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{
 		// 画面遷移(フェード)
-		CManager::GetInstance()->SetMode(CScene::MODE_GAME);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
 	}
 }
 

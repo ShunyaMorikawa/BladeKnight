@@ -334,14 +334,6 @@ void CEnemy::Attack()
 	{
 		m_bAttack = true;
 	}
-
-	//if (fLength <= radiusEnemy + fRadius)
-	//{// Ø‚è‚¨‚ë‚µ
-	//	m_bAttack = true;
-
-	//	// “G‚Æ‚Ì“–‚½‚è”»’è
-	//	CollisionPlayer(1);
-	//}
 }
 
 //========================================

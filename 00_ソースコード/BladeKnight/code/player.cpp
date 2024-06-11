@@ -84,7 +84,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	CCharacter::Init(pfile);
 
 	// 位置設定
-	SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
 
 	// 向き設定
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -370,7 +370,7 @@ void CPlayer::Act(float fSpeed)
 	Motion();
 
 	// 敵との当たり判定
-	CollisionEnemy(1);
+	//CollisionEnemy(1);
 }
 
 //========================================
@@ -384,16 +384,22 @@ void CPlayer::Attack()
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
+	// モード取得
+	int nMode = CManager::GetInstance()->GetMode();
+
 	// 移動量取得
 	D3DXVECTOR3 move = GetMove();
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true
+	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
 	{// 切りおろし
 		m_bCutdown = true;
 
-		// 敵との当たり判定
-		CollisionEnemy(1);
+		if (nMode == CScene::MODE_GAME)
+		{
+			// 敵との当たり判定
+			CollisionEnemy(1);
+		}
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_E) == true
@@ -401,8 +407,12 @@ void CPlayer::Attack()
 	{// 横薙ぎ
 		m_bMowingdown = true;
 
-		// 敵との当たり判定
-		CollisionEnemy(2);
+		if (nMode == CScene::MODE_GAME)
+		{
+			// 敵との当たり判定
+			CollisionEnemy(2);
+
+		}
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_Q) == true
@@ -410,8 +420,11 @@ void CPlayer::Attack()
 	{// 強攻撃
 		m_bStrongAttack = true;
 
-		// 敵との当たり判定
-		CollisionEnemy(3);
+		if (nMode == CScene::MODE_GAME)
+		{
+			// 敵との当たり判定
+			CollisionEnemy(3);
+		}
 	}
 }
 
@@ -574,12 +587,14 @@ void CPlayer::Hit(int nLife)
 	// 体力減らす
 	m_nLife -= nLife;
 
+	// ゲージに体力設定
+	m_pGauge->SetLife(m_nLife);
+
 	// パーティクル生成
 	Myparticle::Create(Myparticle::TYPE_DEATH, pos);
 
 	if (m_nLife <= 0)
 	{
 		Uninit();
-
 	}
 }

@@ -17,7 +17,6 @@ class CObject3D;
 class CLight;
 class CPlayer;
 class CIdxMeshField;
-class CTitle;
 class CField;
 class CEnemy;
 class CFade;

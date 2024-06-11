@@ -102,7 +102,7 @@ void CTitle::Update(void)
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 	{
 		// 画面遷移(フェード)
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TUTORIAL);
 	}
 }
 
