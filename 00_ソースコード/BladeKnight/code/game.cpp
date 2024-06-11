@@ -117,10 +117,12 @@ void CGame::Update(void)
 		}
 	}
 
+#ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 	{// ƒQ[ƒ€‰æ–Ê‚É‘JˆÚ
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 	}
+#endif
 }
 
 //========================================

@@ -387,7 +387,7 @@ void CPlayer::Attack()
 	// ˆÚ“®—Êæ“¾
 	D3DXVECTOR3 move = GetMove();
 
-	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
 	{// Ø‚è‚¨‚ë‚µ
 		m_bCutdown = true;
