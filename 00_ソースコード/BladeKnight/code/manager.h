@@ -91,6 +91,8 @@ public:
 	CCamera *GetCamera(void) { return m_pCamera; }
 	CFade* GetFade() { return m_pFade; }
 
+	bool bResult();
+
 private:
 	static CManager *m_pManager;
 
@@ -98,6 +100,9 @@ private:
 	int m_nCnt;		//自動遷移カウンター
 	int m_state;	//状態変更
 	int m_NowScene;	//現在のシーン
+
+	bool m_bResult;
+
 	CRenderer *m_pRenderer;				// レンダラーのポインタ
 	CInputKeyboard *m_pInputKeyboard;	// キーボードのポインタ
 	CInputPad *m_pInputPad;		// コントローラーのポインタ

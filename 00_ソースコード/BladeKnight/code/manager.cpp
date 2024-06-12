@@ -281,6 +281,14 @@ void CManager::SetMode(CScene::MODE mode)
 }
 
 //========================================
+// 勝敗判定
+//========================================
+bool CManager::bResult()
+{
+	return m_bResult;
+}
+
+//========================================
 //コンストラクタ
 //========================================
 CScene::CScene() : 
@@ -318,7 +326,7 @@ CScene* CScene::Create(int nMode)
 		break;
 
 	case MODE_GAME:
-		//タイトルシーン生成
+		// ゲームシーン生成
 		pScene = CGame::Create();
 		break;
 

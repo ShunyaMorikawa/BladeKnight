@@ -20,6 +20,7 @@
 #include "model.h"
 #include "motion.h"
 #include "effect.h"
+#include "object2D.h"
 
 //========================================
 //名前空間
@@ -373,7 +374,7 @@ void CPlayer::Act(float fSpeed)
 	Motion();
 
 	// 敵との当たり判定
-	//CollisionEnemy(1);
+	//CollisionEnemy(1);5
 }
 
 //========================================
@@ -398,11 +399,8 @@ void CPlayer::Attack()
 	{// 切りおろし
 		m_bCutdown = true;
 
-		if (nMode == CScene::MODE_GAME)
-		{
-			// 敵との当たり判定
-			CollisionEnemy(1);
-		}
+		// 敵との当たり判定
+		CollisionEnemy(1);
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_E) == true
@@ -410,24 +408,17 @@ void CPlayer::Attack()
 	{// 横薙ぎ
 		m_bMowingdown = true;
 
-		if (nMode == CScene::MODE_GAME)
-		{
-			// 敵との当たり判定
-			CollisionEnemy(2);
-
-		}
+		// 敵との当たり判定
+		CollisionEnemy(2);
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_Q) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
 	{// 強攻撃
 		m_bStrongAttack = true;
 
-		if (nMode == CScene::MODE_GAME)
-		{
-			// 敵との当たり判定
-			CollisionEnemy(3);
-		}
+		// 敵との当たり判定
+		CollisionEnemy(3);
 	}
 }
 
@@ -513,7 +504,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 
 #ifdef _DEBUG
 	// エフェクト生成
-	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 40.0f, 1, true, CEffect::TYPE::TYPE_NORMAL);
+	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 100.0f, 1, true, CEffect::TYPE::TYPE_NORMAL);
 #endif
 
 	// 長さ
@@ -525,31 +516,34 @@ void CPlayer::CollisionEnemy(int nDamage)
 	// 敵の情報取得
 	CEnemy* pEnemy = CGame::GetInstance()->GetEnemy();
 
-	// 位置取得
-	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
+	if (pEnemy != nullptr)
+	{
+		// 位置取得
+		D3DXVECTOR3 posEnemy = pEnemy->GetPos();
 
-	// 移動量取得
-	D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
+		// 移動量取得
+		D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
 
-	// 半径
-	float radiusEnemy = pEnemy->GetRadius();
+		// 半径
+		float radiusEnemy = pEnemy->GetRadius();
 
 #ifdef _DEBUG
 	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), radiusEnemy, 1, true, CEffect::TYPE::TYPE_NORMAL);
 #endif
 
-	// ベクトルを求める
-	D3DXVECTOR3 vec = posEnemy - pos;
+		// ベクトルを求める
+		D3DXVECTOR3 vec = posEnemy - pos;
 
-	// ベクトル代入
-	fLength = D3DXVec3Length(&vec);
+		// ベクトル代入
+		fLength = D3DXVec3Length(&vec);
 
-	if (fLength <= radiusEnemy + fRadius)
-	{// ヒット
-		pEnemy->Hit(nDamage);
+		if (fLength <= radiusEnemy + fRadius)
+		{// ヒット
+			pEnemy->Hit(nDamage);
 
-		// ノックバック
-		NockBack();
+			// ノックバック
+			NockBack();
+		}
 	}
 }
 
@@ -587,6 +581,9 @@ void CPlayer::Hit(int nLife)
 {
 	D3DXVECTOR3 pos = GetPos();
 
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// 体力減らす
 	m_nLife -= nLife;
 
@@ -599,5 +596,15 @@ void CPlayer::Hit(int nLife)
 	if (m_nLife <= 0)
 	{
 		Uninit();
+
+		CObject2D* pObje2D = CObject2D::Create();
+
+		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 00.0f));
+
+		// サイズ設定
+		pObje2D->SetSize(1280.0f, 200.0f);
+
+		// 勝敗テクスチャ
+		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
 	}
 }

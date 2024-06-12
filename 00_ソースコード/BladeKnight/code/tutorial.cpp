@@ -54,7 +54,7 @@ HRESULT CTutorial::Init(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// プレイヤー生成
-	m_pPlayer = CPlayer::Create("data//FILE//player.txt");
+	m_pPlayer = CPlayer::Create("data\\FILE\\player.txt");
 
 	// フィールド生成
 	m_pField = CField::Create();
@@ -93,8 +93,7 @@ void CTutorial::Update(void)
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
+		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);

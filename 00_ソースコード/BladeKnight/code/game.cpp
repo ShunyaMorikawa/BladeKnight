@@ -24,7 +24,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 //========================================
 namespace
 {
-	int TransitionTime = 120;
+	const int TransitionTime = 120;
 }
 
 //========================================
@@ -108,7 +108,7 @@ void CGame::Update(void)
 		if (m_nTransition >= TransitionTime)
 		{
 			// 画面遷移(フェード)
-			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);
+			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 
 			m_nTransition = 0;
 		}

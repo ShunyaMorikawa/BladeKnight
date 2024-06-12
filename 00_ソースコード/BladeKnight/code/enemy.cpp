@@ -24,12 +24,15 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
+	const int ATTACKCOUNTER = 180;	// 攻撃するまでの時間
+	const int MAXDIRECTION = 8;		// 弾を飛ばす最大方向
 	const float BULLETMOVE = 10.0f;	// 弾の移動量
 	const float SPEED = 0.3f;		// 速度
 	const float GRAVITY = 2.0f;		// 重力
 	const float INERTIA = 0.1f;		// 慣性
 	const float RADIUS = 200.0f;	// 半径
 	const float NOCKBACK = 50.0f;	// ノックバック値
+
 }
 
 //========================================
@@ -186,11 +189,17 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 
+	int nMode = CManager::GetInstance()->GetMode();
+	
+	// カウント加算
 	m_nCnt++;
 
-	if (m_nCnt >= 120)
+	if (m_nCnt >= ATTACKCOUNTER)
 	{
-		int max = 8;
+		// 弾を飛ばす最大方向
+		int max = MAXDIRECTION;
+
+		m_bAttack = true;
 
 		for (int n = 0; n < max; n++)
 		{// 弾を8方向に飛ばす
@@ -223,19 +232,17 @@ void CEnemy::Update(void)
 	// 目的の向き設定
 	SetRotDest(RotDest);
 
-	// 攻撃
-	Attack();
-
 	// モーション管理
 	Motion();
 
 	// プレイヤーとの当たり判定
-	CollisionPlayer(1);
+	//CollisionPlayer(1);
 
 	// デバッグ表示
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
+	pDebugProc->Print("敵の移動量：%f、%f、%f\n", move.x, move.y, move.z);
 	pDebugProc->Print("敵の体力：%d\n", m_nLife);
 }
 
@@ -255,6 +262,9 @@ void CEnemy::Hit(int nLife)
 {
 	D3DXVECTOR3 pos = GetPos();
 
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// 体力減らす
 	m_nLife -= nLife;
 
@@ -267,6 +277,16 @@ void CEnemy::Hit(int nLife)
 
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
+
+		CObject2D* pObje2D = CObject2D::Create();
+
+		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 00.0f));
+
+		// サイズ設定
+		pObje2D->SetSize(1280.0f, 200.0f);
+
+		// 勝敗テクスチャ
+		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));
 	}
 }
 
@@ -305,6 +325,12 @@ void CEnemy::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	// 移動量取得
+	D3DXVECTOR3 move = GetMove();
+
 	if (m_bWalk)
 	{// 歩きモーション
 		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_WALK);
@@ -313,30 +339,26 @@ void CEnemy::Motion()
 	{// 切り下ろしモーション
 		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_ATTACK);
 
+		m_bWalk = false;
+
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 		if (pMotion->IsFinish() && m_bAttack == true)
 		{// モーション終了
 			m_bAttack = false;
 		}
+	}
+	else
+	{
+		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_WALK);
 	}
 
 	if (pMotion != nullptr)
 	{// モーション更新
 		pMotion->Update();
 	}
-}
 
-//========================================
-// 攻撃
-//========================================
-void CEnemy::Attack()
-{
-	// キーボードの情報取得
-	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	if (pInputKeyboard->GetTrigger(DIK_R))
-	{
-		m_bAttack = true;
-	}
+	SetMove(move);
 }
 
 //========================================
@@ -377,7 +399,6 @@ void CEnemy::CollisionPlayer(int nDamage)
 
 	// プレイヤーの半径
 	float fRadius = RADIUS;
-
 
 	// 敵の情報取得
 	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();

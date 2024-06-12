@@ -92,14 +92,13 @@ void CTitle::Uninit(void)
 void CTitle::Update(void)
 {
 	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
+	CInputKeyboard *pInputKeyboard = pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	
 	//CInputPad型のポインタ
-	CInputPad *pInputPad = nullptr;
-	pInputPad = CManager::GetInstance()->GetInputPad();
-
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
+	CInputPad *pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
+	
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
+		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TUTORIAL);
