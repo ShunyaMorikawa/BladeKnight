@@ -33,8 +33,8 @@ void Myparticle::Create(TYPE nType, D3DXVECTOR3 pos)
 void Mypartcile_Func::WALK_PARTICLE()
 {
 	int life = 60;		// õ–½
-	D3DXCOLOR col = D3DXCOLOR(1.0f, 0.7f, 0.6f, 1.0f);	// F
-	const int max = 10;		// Å‘å”
+	D3DXCOLOR col = D3DXCOLOR(0.4f, 0.2f, 0.0f, 0.2f);	// F
+	const int max = 5;		// Å‘å”
 
 	for (int i = 0; i < max; i++)
 	{
@@ -44,10 +44,10 @@ void Mypartcile_Func::WALK_PARTICLE()
 		float StandardMove = 1.0f + (rand() % 10) * 0.9f;
 
 		// ”¼Œa‚ÌŠî€’l
-		float StandardRadius = 9.0f + (rand() % 50) * 0.9f;
+		float StandardRadius = 1.0f + (rand() % 50) * 0.9f;
 
 		// ‘å‚«‚³
-		move.x = sinf((rand() % 629 - 314) / 10.0f) * StandardMove;
+		move.x = sinf((rand() % 629 - 314) / 5.0f) * StandardMove;
 
 		CEffect::Create(POS, move, col, StandardRadius, life, false, CEffect::TYPE::TYPE_BLACK);
 	}

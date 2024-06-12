@@ -275,7 +275,7 @@ void CPlayer::Act(float fSpeed)
 			RotDest.y = Camrot.y + D3DX_PI * 0.25f;
 		}
 		else if (pInputKeyboard->GetPress(DIK_S) == true
-			|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+			|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 		{//右下
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);

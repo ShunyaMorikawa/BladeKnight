@@ -98,6 +98,7 @@ void CTitle::Update(void)
 	CInputPad *pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
 	
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
+		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
 		// 画面遷移(フェード)
