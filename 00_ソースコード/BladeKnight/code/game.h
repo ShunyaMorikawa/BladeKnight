@@ -45,10 +45,12 @@ public:
 	void Draw(void);
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
 
+	void SetPlayer(CPlayer* pPlayer);
 	CPlayer *GetPlayer() { return m_pPlayer; }	// プレイヤーの取得
+	CPlayer **GetPlayerPtr() { return &m_pPlayer; }	// プレイヤーの取得
 	CEnemy* GetEnemy() { return m_pEnemy; }		// 敵の情報取得
 	static CGame *GetInstance(void);		// ゲームマネージャーの情報
-
+	
 private:
 	static CGame *m_pGame;				// ゲームマネージャーのポインタ
 

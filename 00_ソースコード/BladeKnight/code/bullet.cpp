@@ -206,6 +206,11 @@ void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
 	// 敵の情報取得
 	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();
 
+	if (pPlayer == nullptr)
+	{
+		return;
+	}
+
 	// プレイヤーの位置
 	D3DXVECTOR3 posPlayer = pPlayer->GetPos();
 

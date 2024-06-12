@@ -70,7 +70,7 @@ HRESULT CGame::Init(void)
 	m_pField = CField::Create();
 
 	// エネミー生成
-	m_pEnemy = CEnemy::Create("data//FILE//boss.txt");
+	m_pEnemy = CEnemy::Create("data//FILE//motion.txt");
 
 	// 遷移時間
 	m_nTransition = 0;
@@ -101,10 +101,7 @@ void CGame::Update(void)
 	// 敵の体力取得
 	int EnemyLife = m_pEnemy->GetLife();
 
-	// プレイヤーの体力取得
-	int PlayerLife = m_pPlayer->GetLife();
-
-	if (EnemyLife <= 0 || PlayerLife <= 0)
+	if (EnemyLife <= 0 || m_pPlayer == nullptr)
 	{// 敵かプレイヤーの体力が0以下になったら
 		m_nTransition++;
 
@@ -130,6 +127,14 @@ void CGame::Update(void)
 //========================================
 void CGame::Draw(void)
 {
+}
+
+//========================================
+//設定
+//========================================
+void CGame::SetPlayer(CPlayer* pPlayer)
+{
+	m_pPlayer = pPlayer;
 }
 
 //========================================

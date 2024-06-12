@@ -145,11 +145,14 @@ void CEnemy::Update(void)
 	// プレイヤー情報の取得
 	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();
 
-	// 位置取得
-	D3DXVECTOR3 posPlayer = pPlayer->GetPos();
+	if (pPlayer != nullptr)
+	{
+		// 位置取得
+		D3DXVECTOR3 posPlayer = pPlayer->GetPos();
 
-	// プレイヤーとの角度
-	RotDest.y = atan2f(pos.x - posPlayer.x, pos.z - posPlayer.z);
+		// プレイヤーとの角度
+		RotDest.y = atan2f(pos.x - posPlayer.x, pos.z - posPlayer.z);
+	}
 
 	// プレイヤー方向に移動
 	move.x += sinf(rot.y + D3DX_PI) * SPEED;
@@ -268,7 +271,7 @@ void CEnemy::Hit(int nLife)
 }
 
 //========================================
-// ヒット処理
+// ノックバック
 //========================================
 void CEnemy::NockBack()
 {
@@ -304,11 +307,11 @@ void CEnemy::Motion()
 
 	if (m_bWalk)
 	{// 歩きモーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
+		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_WALK);
 	}
 	else if (m_bAttack)
 	{// 切り下ろしモーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
+		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_ATTACK);
 
 		if (pMotion->IsFinish() && m_bAttack == true)
 		{// モーション終了
@@ -375,27 +378,31 @@ void CEnemy::CollisionPlayer(int nDamage)
 	// プレイヤーの半径
 	float fRadius = RADIUS;
 
+
 	// 敵の情報取得
 	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();
 
-	// プレイヤーの位置
-	D3DXVECTOR3 posPlayer = pPlayer->GetPos();
-	D3DXVECTOR3 movePlayer = pPlayer->GetMove();
+	if (pPlayer != nullptr)
+	{
+		// プレイヤーの位置
+		D3DXVECTOR3 posPlayer = pPlayer->GetPos();
+		D3DXVECTOR3 movePlayer = pPlayer->GetMove();
 
-	// 半径
-	float radiusEnemy = pPlayer->GetRadius();
+		// 半径
+		float radiusEnemy = pPlayer->GetRadius();
 
-	// ベクトルを求める
-	D3DXVECTOR3 vec = posEnemy - pos;
+		// ベクトルを求める
+		D3DXVECTOR3 vec = posEnemy - pos;
 
-	// ベクトル代入
-	float fLength = D3DXVec3Length(&vec);
+		// ベクトル代入
+		float fLength = D3DXVec3Length(&vec);
 
-	if (fLength <= radiusEnemy + fRadius)
-	{// ヒット
-		pPlayer->Hit(nDamage);
+		if (fLength <= radiusEnemy + fRadius)
+		{// ヒット
+			pPlayer->Hit(nDamage);
 
-		// ノックバック
-		NockBack();
+			// ノックバック
+			NockBack();
+		}
 	}
 }

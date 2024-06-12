@@ -112,6 +112,9 @@ HRESULT CPlayer::Init(std::string pfile)
 //========================================
 void CPlayer::Uninit(void)
 {
+	// “G‚Ìî•ñæ“¾
+	CGame::GetInstance()->SetPlayer(nullptr);
+
 	// I—¹
 	CCharacter::Uninit();
 }

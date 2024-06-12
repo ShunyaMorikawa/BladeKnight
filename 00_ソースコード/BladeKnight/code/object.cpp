@@ -121,9 +121,7 @@ void CObject::UpdateAll(void)
 				// ŽŸ
 				Now = pNext;
 			}
-		}
-
-		
+		}		
 	}
 
 	for (int nCntPri = 0; nCntPri < NUM_PRIORITY; nCntPri++)

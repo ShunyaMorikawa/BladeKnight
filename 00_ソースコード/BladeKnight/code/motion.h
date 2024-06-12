@@ -36,8 +36,6 @@ public:
 	{// エネミーモーション種類
 		ENEMY_MOTIONTYPE_WALK = 0,	// 移動
 		ENEMY_MOTIONTYPE_ATTACK,	// 攻撃
-		ENEMY_MOTIONTYPE_THRUST,	// 突き刺し
-		ENEMY_MOTIONTYPE_ROUNDUP,	// 切り上げ
 		ENEMY_MOTIONTYPE_MAX
 	};
 

@@ -70,7 +70,6 @@ HRESULT CTutorial::Init(void)
 	// テクスチャ設定
 	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide.png"));
 
-
 	//成功を返す
 	return S_OK;
 }
