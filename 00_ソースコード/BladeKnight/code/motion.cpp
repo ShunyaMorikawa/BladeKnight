@@ -253,7 +253,7 @@ void CMotion::SetModel(CModel *ppModel, int nNumModel)
 void CMotion::Load(std::string pfile)
 {
 	//変数宣言
-	char garbage[640];		// ゴミ格納用
+	char garbage[640];		// 不要文字格納用
 	char FileName[64];		// 各モデルのファイル名
 	float move = 0.0f;		// 移動量
 	int nIdx = 0;			// 何番目のパーツか
@@ -262,7 +262,7 @@ void CMotion::Load(std::string pfile)
 	int nMotion = 0;		// 何番目のモーションか
 	int nCntKey = 0;		// 何個目のキーか
 	int nLoop = 0;			// ループするかしないか
-	int KeyCount = 0;
+	int KeyCount = 0;		// モーションのキー数
 
 	//FILEのポインタ
 	FILE *pFile = nullptr;
@@ -498,10 +498,10 @@ void CMotion::Load(std::string pfile)
 									fscanf(pFile, "%f", &m_pos.y);
 									fscanf(pFile, "%f", &m_pos.z);
 
+									KEY* pKey = &m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount];
+
 									//位置を設定
-									m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount].pos.x = m_pos.x;
-									m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount].pos.y = m_pos.y;
-									m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount].pos.z = m_pos.z;
+									pKey->pos = m_pos;
 								}
 
 								if (strcmp(&garbage[0], "ROT") == 0)
@@ -513,10 +513,10 @@ void CMotion::Load(std::string pfile)
 									fscanf(pFile, "%f", &m_rot.y);
 									fscanf(pFile, "%f", &m_rot.z);
 
+									KEY* pKey = &m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount];
+
 									//向きを設定
-									m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount].rot.x = m_rot.x;
-									m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount].rot.y = m_rot.y;
-									m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].aKey[KeyCount].rot.z = m_rot.z;
+									pKey->rot = m_rot;
 								}
 							}
 						}

@@ -255,6 +255,7 @@ void CObject2D::SetVertexAnim(int Num, int Cnt)
 //========================================
 void CObject2D::SetPosVertex(void)
 {
+	// 位置・向き
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
 
@@ -362,6 +363,7 @@ void CObject2D::SetVertexEffect(float radius, D3DXCOLOR col)
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();
 
+	// 位置・向き設定
 	SetPos(pos);
 	SetRot(rot);
 }

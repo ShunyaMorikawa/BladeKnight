@@ -19,6 +19,14 @@
 class CCharacter : public CObject
 {
 public:
+	enum STATE
+	{// キャラクターの状態
+		STATE_NONE = 0,
+		STATE_NORMAL,		// 通常
+		STATE_DEATH,		// 死亡
+		STATE_MAX
+	};
+
 	CCharacter(int nPriority = 4);		//コンストラクタ
 	~CCharacter();		//デストラクタ
 
@@ -29,8 +37,6 @@ public:
 	void Update(void);		//更新
 	void Draw(void);		//描画
 
-	void CollisonCircle();
-
 	int GetMotionType() { return m_pMotion->GetType(); }				// モーションの種類取得
 	bool GetMotionLoop(int nType) { return m_pMotion->IsLoop(nType); }	// モーションのループ取得
 
@@ -39,6 +45,9 @@ public:
 	// 目的の向きの設定と取得
 	void SetRotDest(D3DXVECTOR3 RotDest) { m_RotDest = RotDest; }
 	D3DXVECTOR3 GetRotDest() { return m_RotDest; }
+
+	// 状態取得
+	int GetState() { return m_nState; }
 
 private:
 	//メンバ変数
@@ -51,11 +60,13 @@ private:
 
 	D3DXVECTOR3 m_vtxMin, m_vtxMax;	// モデルの最大、最小値
 
-	CModel *m_apModel[MAX_PARTS];	// モデルへのポインタ
-	CMotion *m_pMotion;		// モーションのポインタ
+	CModel* m_apModel[MAX_PARTS];	// モデルへのポインタ
+	CMotion* m_pMotion;		// モーションのポインタ
 	D3DXVECTOR3 m_RotDest;	// 目的の向き
+
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nOldMotion;		// 前回のモーション
+	int m_nState;			// 現在の状態
 
 	bool m_bJump;			//ジャンプ
 	bool m_bMove;			//移動

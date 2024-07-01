@@ -37,6 +37,8 @@ public:
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
 
+	static CEnemy* GetInstance() { return m_pEnemy; }
+
 private:
 	//メンバ変数
 	int m_nLife;		// 体力
@@ -48,6 +50,8 @@ private:
 	bool m_bAttack;		// 攻撃判定
 
 	CGauge* m_pGauge;	// ゲージのポインタ
+
+	static CEnemy* m_pEnemy;	// 自身のポインタ
 };
 
 #endif

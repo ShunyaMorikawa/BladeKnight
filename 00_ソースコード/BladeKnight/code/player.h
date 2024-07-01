@@ -9,6 +9,9 @@
 
 #include "character.h"
 
+//========================================
+// 前方宣言
+//========================================
 class CModel;
 class CMotion;
 class CEffect;
@@ -24,6 +27,8 @@ public:
 	~CPlayer();		//デストラクタ
 
 	// メンバ関数
+	static CPlayer* Create(std::string pfile);
+
 	HRESULT Init() { return S_OK; }		//純粋仮想
 	HRESULT Init(std::string pfile);
 	void Uninit();
@@ -38,9 +43,11 @@ public:
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
 
-	int GetLife() { return m_nLife; }
+	int GetLife() { return m_nLife; }		// 体力取得
 
-	static CPlayer *Create(std::string pfile);
+	void CollisionField();
+
+	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
 	//メンバ変数
@@ -59,8 +66,10 @@ private:
 	bool m_bStrongAttack;	// 強攻撃
 
 	CEffect *m_pEffect;				// エフェクトのポインタ
-	CModel *m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ
+	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
+
+	static CPlayer* m_pPlayer;		// 自身のポインタ
 };
 
 #endif

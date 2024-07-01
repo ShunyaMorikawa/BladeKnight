@@ -45,10 +45,6 @@ public:
 	void Draw(void);
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
 
-	void SetPlayer(CPlayer* pPlayer);
-	CPlayer *GetPlayer() { return m_pPlayer; }	// プレイヤーの取得
-	CPlayer **GetPlayerPtr() { return &m_pPlayer; }	// プレイヤーの取得
-	CEnemy* GetEnemy() { return m_pEnemy; }		// 敵の情報取得
 	static CGame *GetInstance(void);		// ゲームマネージャーの情報
 	
 private:
@@ -59,10 +55,8 @@ private:
 	bool m_bPause;				// ポーズ状態のON/OFF
 
 	CObjectX *m_pObjectX;		// Xファイルオブジェクトのポインタ
-	CPlayer *m_pPlayer;			// プレイヤーのポインタ
 	CIdxMeshField *m_pIdxMesh;	// メッシュフィールドのポインタ
 	CField *m_pField;			// ポリゴンのポインタ
-	CEnemy* m_pEnemy;			// 敵のポインタ
 	CFade* m_pFade;				// フェードのポインタ
 };
 

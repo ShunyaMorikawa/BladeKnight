@@ -171,7 +171,7 @@ void CBullet::CollisionEnemy(D3DXVECTOR3 pos)
 	float fRadius = GetSize();
 
 	// “G‚Ìî•ñŽæ“¾
-	CEnemy *pEnemy = CGame::GetInstance()->GetEnemy();
+	CEnemy *pEnemy = CEnemy::GetInstance();
 
 	// ƒvƒŒƒCƒ„[‚ÌˆÊ’u
 	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
@@ -204,7 +204,7 @@ void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
 	float fRadius = GetSize();
 
 	// “G‚Ìî•ñŽæ“¾
-	CPlayer* pPlayer = CGame::GetInstance()->GetPlayer();
+	CPlayer* pPlayer = CPlayer::GetInstance();
 
 	if (pPlayer == nullptr)
 	{

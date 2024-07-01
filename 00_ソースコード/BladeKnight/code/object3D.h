@@ -11,7 +11,7 @@
 #include "object.h"
 
 //========================================
-//オブジェクト3Dクラス
+// オブジェクト3Dクラス
 //========================================
 class CObject3D : public CObject
 {
@@ -36,6 +36,8 @@ public:
 	void SetVerTexBillboard(void);
 	void Collision(void);
 	void MeshVertex(void);
+
+	float GetField();
 
 private:
 	//メンバ変数

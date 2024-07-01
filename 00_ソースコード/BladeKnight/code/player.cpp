@@ -21,18 +21,25 @@
 #include "motion.h"
 #include "effect.h"
 #include "object2D.h"
+#include "object3D.h"
 
 //========================================
-//名前空間
+// 定数定義
 //========================================
 namespace
 {
-	const int LIFE = 10;			// 体力
-	const float NOCKBACK = 50.0f;	// ノックバック値
-	const float SPEED = 4.0f;		// 速度
-	const float INERTIA = 0.3f;		// 慣性
-	const float RADIUS = 50.0f;		// 半径
+const int LIFE = 10;			// 体力
+const float NOCKBACK = 50.0f;	// ノックバック値
+const float SPEED = 4.0f;		// 速度
+const float INERTIA = 0.3f;		// 慣性
+const float RADIUS = 50.0f;		// 半径
+const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
 }
+
+//========================================
+// 静的メンバ変数
+//========================================
+CPlayer* CPlayer::m_pPlayer = nullptr;
 
 //========================================
 //コンストラクタ
@@ -57,20 +64,17 @@ CPlayer::~CPlayer()
 //========================================
 CPlayer *CPlayer::Create(std::string pfile)
 {
-	//CPlayer型のポインタ
-	CPlayer *pPlayer = nullptr;
-
-	if (pPlayer == nullptr)
+	if (m_pPlayer == nullptr)
 	{
 		//プレイヤー生成
-		pPlayer = new CPlayer;
+		m_pPlayer = new CPlayer;
 
 		//初期化
-		pPlayer->Init(pfile);
+		m_pPlayer->Init(pfile);
 	}
 
 	//ポインタを返す
-	return pPlayer;
+	return m_pPlayer;
 }
 
 //========================================
@@ -102,7 +106,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	// サイズ設定
 	m_pGauge->SetSize(50.0f, 50.0f);
 
-	// テクスチャ設定
+	// ゲージテクスチャ設定
 	m_pGauge->BindTexture(pTexture->Regist("data\\texture\\gauge.png"));
 
 	return S_OK;
@@ -113,11 +117,10 @@ HRESULT CPlayer::Init(std::string pfile)
 //========================================
 void CPlayer::Uninit(void)
 {
-	// 敵の情報取得
-	CGame::GetInstance()->SetPlayer(nullptr);
-
 	// 終了
 	CCharacter::Uninit();
+
+	m_pPlayer = nullptr;
 }
 
 //========================================
@@ -147,10 +150,12 @@ void CPlayer::Update(void)
 	// プレイヤー行動
 	Act(SPEED);
 
-	if (pInputKeyboard->GetTrigger(DIK_F1))
-	{
+#ifdef _DEBUG
+	if (pInputKeyboard->GetPress(DIK_F1))
+	{// 体力減算
 		Hit(1);
 	}
+#endif
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
@@ -372,9 +377,6 @@ void CPlayer::Act(float fSpeed)
 
 	// モーション
 	Motion();
-
-	// 敵との当たり判定
-	//CollisionEnemy(1);5
 }
 
 //========================================
@@ -492,9 +494,6 @@ void CPlayer::CollisionEnemy(int nDamage)
 	// モデルのマトリックス取得
 	D3DXMATRIX MtxModel = pModelOffset->GetMtxWorld();
 
-	// 位置取得
-	D3DXVECTOR3 posPlayer = GetPos();
-
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, 0.0f, 150.0f, 0.0f);
 	D3DXMatrixMultiply(&posWeapon, &mtxTrans, &MtxModel);
@@ -514,7 +513,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 	float fRadius = RADIUS;
 
 	// 敵の情報取得
-	CEnemy* pEnemy = CGame::GetInstance()->GetEnemy();
+	CEnemy* pEnemy = CEnemy::GetInstance();
 
 	if (pEnemy != nullptr)
 	{
@@ -553,25 +552,28 @@ void CPlayer::CollisionEnemy(int nDamage)
 void CPlayer::NockBack()
 {
 	// 敵の情報取得
-	CEnemy* pEnemy = CGame::GetInstance()->GetEnemy();
+	CEnemy* pEnemy = CEnemy::GetInstance();
 
 	// 位置取得
 	D3DXVECTOR3 posPlayer = GetPos();
 
-	// 敵の位置と移動量
-	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
-	D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
+	if (pEnemy != nullptr)
+	{
+		// 敵の位置と移動量
+		D3DXVECTOR3 posEnemy = pEnemy->GetPos();
+		D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
 
-	// 飛ばされる向き
-	float angle = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
+		// 飛ばされる向き
+		float angle = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
 
-	// 位置更新
-	moveEnemy.x = sinf(angle) * -NOCKBACK;
-	moveEnemy.z = cosf(angle) * -NOCKBACK;
+		// 位置更新
+		moveEnemy.x = sinf(angle) * -NOCKBACK;
+		moveEnemy.z = cosf(angle) * -NOCKBACK;
 
-	moveEnemy.y = 25.0f;
+		moveEnemy.y = 25.0f;
 
-	pEnemy->SetMove(moveEnemy);
+		pEnemy->SetMove(moveEnemy);
+	}
 }
 
 //========================================
@@ -595,16 +597,51 @@ void CPlayer::Hit(int nLife)
 
 	if (m_nLife <= 0)
 	{
+		// 終了
 		Uninit();
 
+		// 生成
 		CObject2D* pObje2D = CObject2D::Create();
 
-		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 00.0f));
+		// 位置設定
+		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
 		// サイズ設定
 		pObje2D->SetSize(1280.0f, 200.0f);
 
-		// 勝敗テクスチャ
+		// 敗北テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
+	}
+}
+
+//========================================
+// フィールド外に行かないよう
+//========================================
+void CPlayer::CollisionField()
+{
+	// 位置・移動量取得
+	D3DXVECTOR3 posPlayer = GetPos();
+	D3DXVECTOR3 movePlayer = GetMove();
+
+	if (posPlayer.x > FIELD_LIMIT)
+	{
+		posPlayer.x = FIELD_LIMIT;
+		movePlayer.x = 0.0f;
+	}
+	else if (posPlayer.x < -FIELD_LIMIT)
+	{
+		posPlayer.x = -FIELD_LIMIT;
+		movePlayer.x = 0.0f;
+
+	}
+	if (posPlayer.z > FIELD_LIMIT)
+	{
+		posPlayer.z = FIELD_LIMIT;
+		movePlayer.z = 0.0f;
+	}
+	else if (posPlayer.z < -FIELD_LIMIT)
+	{
+		posPlayer.z = -FIELD_LIMIT;
+		movePlayer.z = 0.0f;
 	}
 }

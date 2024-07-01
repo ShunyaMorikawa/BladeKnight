@@ -39,8 +39,8 @@ namespace Myparticle
 	// ä÷êîÉäÉXÉgñº
 	static TYPE_FUNC ParticleList[] =
 	{
-		&Mypartcile_Func::WALK_PARTICLE,
-		&Mypartcile_Func::DEATH_PARTICLE,
+		&Mypartcile_Func::WALK_PARTICLE,	// ï‡çséû
+		&Mypartcile_Func::DEATH_PARTICLE,	// éÄñSéû
 		&Mypartcile_Func::BULLET_PARTICLE,	// íe
 	};
 

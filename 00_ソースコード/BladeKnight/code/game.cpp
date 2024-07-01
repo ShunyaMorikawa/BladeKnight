@@ -24,7 +24,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 //========================================
 namespace
 {
-	const int TransitionTime = 120;
+	const int TRANSITIONTIME = 120;
 }
 
 //========================================
@@ -32,8 +32,13 @@ namespace
 //========================================
 CGame::CGame() : 
 	m_bPause(false),
-	m_nTransition(0)
+	m_nTransition(0),
+	m_pObjectX(nullptr),
+	m_pIdxMesh(nullptr),
+	m_pField(nullptr),
+	m_pFade(nullptr)
 {
+	m_pGame = nullptr;
 }
 
 //========================================
@@ -64,13 +69,13 @@ CGame *CGame::Create(void)
 HRESULT CGame::Init(void)
 {
 	// プレイヤー生成
-	m_pPlayer = CPlayer::Create("data//FILE//player.txt");
+	CPlayer::Create("data//FILE//player.txt");
 
 	// フィールド生成
 	m_pField = CField::Create();
 
 	// エネミー生成
-	m_pEnemy = CEnemy::Create("data//FILE//motion.txt");
+	CEnemy::Create("data//FILE//motion.txt");
 
 	// 遷移時間
 	m_nTransition = 0;
@@ -95,22 +100,33 @@ void CGame::Uninit(void)
 void CGame::Update(void)
 {
 	// CInputKeyboard型のポインタ
-	CInputKeyboard* pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	
+	// プレイヤーの情報取得
+	CPlayer* pPlayer = CPlayer::GetInstance();
 
-	// 敵の体力取得
-	int EnemyLife = m_pEnemy->GetLife();
+	// 敵の情報取得
+	CEnemy* pEnemy = CEnemy::GetInstance();
 
-	if (EnemyLife <= 0 || m_pPlayer == nullptr)
-	{// 敵かプレイヤーの体力が0以下になったら
-		m_nTransition++;
+	if (pEnemy != nullptr && pPlayer != nullptr)
+	{
+		// プレイヤーの体力取得
+		int PlayerLife = pPlayer->GetLife();
 
-		if (m_nTransition >= TransitionTime)
-		{
-			// 画面遷移(フェード)
-			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+		// 敵の体力取得
+		int EnemyLife = pEnemy->GetLife();
 
-			m_nTransition = 0;
+		if (EnemyLife <= 0 || PlayerLife <= 0)
+		{// 敵かプレイヤーの体力が0以下になったら
+			m_nTransition++;
+
+			if (m_nTransition >= TRANSITIONTIME)
+			{
+				// 画面遷移(フェード)
+				CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+
+				m_nTransition = 0;
+			}
 		}
 	}
 
@@ -127,14 +143,6 @@ void CGame::Update(void)
 //========================================
 void CGame::Draw(void)
 {
-}
-
-//========================================
-//設定
-//========================================
-void CGame::SetPlayer(CPlayer* pPlayer)
-{
-	m_pPlayer = pPlayer;
 }
 
 //========================================

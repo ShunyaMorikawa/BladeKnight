@@ -10,11 +10,6 @@
 #include "texture.h"
 
 //========================================
-//マクロ定義
-//========================================
-#define POLYGON_TEX		"data\\texture\\soil.jpg"
-
-//========================================
 //静的メンバ変数
 //========================================
 LPDIRECT3DTEXTURE9 CField::m_pTexture = nullptr;
@@ -40,19 +35,19 @@ CField::~CField()
 CField *CField::Create(void)
 {
 	//CPlayer型のポインタ
-	CField *pPolygon = nullptr;
+	CField *pField = nullptr;
 
-	if (pPolygon == nullptr)
+	if (pField == nullptr)
 	{
 		//プレイヤー生成
-		pPolygon = new CField;
+		pField = new CField;
 
 		//初期化
-		pPolygon->Init();
+		pField->Init();
 	}
 
 	//ポインタを返す
-	return pPolygon;
+	return pField;
 }
 
 //========================================
@@ -67,7 +62,7 @@ HRESULT CField::Init(void)
 	CObject3D::Init();
 
 	//テクスチャ割り当て
-	BindTexture(pTexture->Regist(POLYGON_TEX));
+	BindTexture(pTexture->Regist("data\\texture\\soil.jpg"));
 
 	return S_OK;
 }
