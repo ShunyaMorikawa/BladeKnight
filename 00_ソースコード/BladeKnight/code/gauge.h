@@ -12,9 +12,17 @@
 //========================================
 //ゲージクラス
 //========================================
-class CGauge : public CObject2D
+class CGauge : public CObject
 {
 public:
+	enum Gauge
+	{//	ゲージ列挙
+		TYPE_BASE = 0,		// 下地
+		TYPE_MAIN,		// ゲージ
+		TYPE_FRAME,		// 枠線
+		TYPE_MAX
+	};
+
 	CGauge(int nPriority = 7);		//コンストラクタ
 	~CGauge();	//デストラクタ
 
@@ -38,7 +46,8 @@ private:
 	float m_fAngle;			//対角線の角度
 	float m_aTexU;			//テクスチャのU値
 
-	static 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ
+	CObject2D* m_p2D[TYPE_MAX];		// オブジェクト2Dのポインタ
+	static 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャのポインタ
 };
 
 #endif

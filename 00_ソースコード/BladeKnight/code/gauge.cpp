@@ -14,19 +14,26 @@
 //========================================
 namespace
 {
-	float LENGTH = 640.0f;		// ゲージの長さ
+	const float LENGTH = 640.0f;		// ゲージの長さ
+	const char* GAUGETEX[] =
+	{// 読み込むテクスチャ
+		"",
+		"data\\texture\\gauge.png",
+		"data\\texture\\frame.png"
+	};
 }
 
 //========================================
 // コンストラクタ
 //========================================
-CGauge::CGauge(int nPriority) : CObject2D(nPriority)
+CGauge::CGauge(int nPriority) : CObject(nPriority)
 {
 	m_nMaxLife = 0;			// 体力の最大値
 	m_nLife = 0;			// 現在の体力
 	m_fLength = 0.0f;		// 対角線の長さ
 	m_fAngle = 0.0f;		// 対角線の角度
 	m_aTexU = 0.0f;			// テクスチャのU値
+	memset(m_p2D, 0, sizeof(m_p2D));	// オブジェクト2Dポインタ
 }
 
 //========================================
@@ -67,14 +74,21 @@ HRESULT CGauge::Init()
 	// テクスチャ座標の初期化(U値)
 	m_aTexU = 0.0f;
 
-	// 継承クラスの初期化
-	CObject2D::Init();
+	for (int i = 0; i < CGauge::TYPE_MAX; i++)
+	{
+		if (m_p2D[i] == nullptr)
+		{
+			m_p2D[i] = CObject2D::Create();
+
+			m_p2D[i]->BindTexture(pTexture->Regist(GAUGETEX[i]));
+		}
+	}
 
 	// 頂点情報の設定
 	SetVertex();
 
-	// 位置設定
-	CObject2D::SetPos(pos);
+	//頂点カラーの設定
+	m_p2D[CGauge::TYPE_BASE]->SetCol(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.3f));
 
 	return S_OK;
 }
@@ -84,8 +98,8 @@ HRESULT CGauge::Init()
 //========================================
 void CGauge::Uninit()
 {
-	// 継承クラスの終了
-	CObject2D::Uninit();
+	// 自身の終了
+	Release();
 }
 
 //========================================
@@ -93,8 +107,21 @@ void CGauge::Uninit()
 //========================================
 void CGauge::Update()
 {
-	// 継承クラスの更新
-	CObject2D::Update();
+	for (int i = 0; i < CGauge::TYPE_MAX; i++)
+	{
+		// 2Dの更新
+		if (m_p2D[i] != nullptr)
+		{
+			m_p2D[i]->Update();
+
+		}
+	}
+
+	//頂点情報
+	SetVertex();
+
+	//テクスチャ座標の更新(U値)
+	m_aTexU += 0.002f;
 }
 
 //========================================
@@ -102,8 +129,13 @@ void CGauge::Update()
 //========================================
 void CGauge::Draw()
 {
-	// 継承クラスの描画
-	CObject2D::Draw();
+	for (int i = 0; i < CGauge::TYPE_MAX; i++)
+	{
+		if (m_p2D[i] != nullptr)
+		{// 2Dの描画
+			m_p2D[i]->Draw();
+		}
+	}
 }
 
 //========================================
@@ -117,6 +149,8 @@ void CGauge::SetSize(float fWidht, float fHeight)
 	//対角線の向き(横、縦)
 	m_fAngle = atan2f(fWidht, fHeight);
 
+	//m_p2D[Gauge::TYPE_BASE]->SetSize();
+
 	//頂点情報
 	SetVertex();
 }
@@ -126,37 +160,61 @@ void CGauge::SetSize(float fWidht, float fHeight)
 //========================================
 void CGauge::SetVertex()
 {
-	CObject2D::SetVertex();
-
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
-	D3DXCOLOR col = GetCol();
+
+	// 体力の比率
+	float ratio = (float)m_nLife / (float)m_nMaxLife;
+
+	for (int i = 0; i < CGauge::TYPE_MAX; i++)
+	{
+		// 2Dの頂点情報設定
+		m_p2D[i]->SetVertex();
+
+		D3DXCOLOR col = m_p2D[i]->GetCol();
+
+		// 頂点情報の取得
+		LPDIRECT3DVERTEXBUFFER9 Vertex = m_p2D[i]->GetVtxBuff();
+
+		//頂点情報へのポインタ
+		VERTEX_2D* pVtx;
+
+		//頂点バッファをロックし、頂点情報へのポインタを取得
+		Vertex->Lock(0, 0, (void**)&pVtx, 0);
+
+		switch (i)
+		{
+		case TYPE_MAIN:
+			// 頂点座標の設定
+			pVtx[0].pos = pos + D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			pVtx[1].pos = pos + D3DXVECTOR3(LENGTH * ratio, 0.0f, 0.0f);
+			pVtx[2].pos = pos + D3DXVECTOR3(0.0f, m_fLength, 0.0f);
+			pVtx[3].pos = pos + D3DXVECTOR3(LENGTH * ratio, m_fLength, 0.0f);
+			break;
+
+		default:
+			// 頂点座標の設定
+			pVtx[0].pos = pos + D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			pVtx[1].pos = pos + D3DXVECTOR3(LENGTH, 0.0f, 0.0f);
+			pVtx[2].pos = pos + D3DXVECTOR3(0.0f, m_fLength, 0.0f);
+			pVtx[3].pos = pos + D3DXVECTOR3(LENGTH, m_fLength, 0.0f);
+			break;
+		}
+
+		// 位置・向き設定
+		SetPos(pos);
+		SetRot(rot);
+	}
+
 
 	// 頂点情報の取得
-	LPDIRECT3DVERTEXBUFFER9 Vertex = GetVtxBuff();
+	LPDIRECT3DVERTEXBUFFER9 Vertex = m_p2D[CGauge::TYPE_MAIN]->GetVtxBuff();
 
 	//頂点情報へのポインタ
 	VERTEX_2D* pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	Vertex->Lock(0, 0, (void**)&pVtx, 0);
-
-	// 体力の比率
-	float ratio = (float)m_nLife / (float)m_nMaxLife;
-
-	pVtx[0].pos = pos + D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[1].pos = pos + D3DXVECTOR3(LENGTH * ratio, 0.0f, 0.0f);
-	pVtx[2].pos = pos + D3DXVECTOR3(0.0f, m_fLength, 0.0f);
-	pVtx[3].pos = pos + D3DXVECTOR3(LENGTH * ratio, m_fLength, 0.0f);
-
-	//頂点カラーの設定
-	pVtx[0].col = col;
-	pVtx[1].col = col;
-	pVtx[2].col = col;
-	pVtx[3].col = col;
-
-	//テクスチャ座標の更新(U値)
-	m_aTexU += 0.002f;
 
 	pVtx[0].tex = D3DXVECTOR2(m_aTexU, 0.0f);
 	pVtx[1].tex = D3DXVECTOR2(m_aTexU + ratio, 0.0f);
@@ -165,7 +223,4 @@ void CGauge::SetVertex()
 
 	//頂点バッファをアンロック
 	Vertex->Unlock();
-
-	SetPos(pos);
-	SetRot(rot);
 }

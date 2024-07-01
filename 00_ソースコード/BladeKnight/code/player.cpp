@@ -340,13 +340,14 @@ void CPlayer::Act(float fSpeed)
 		RotDest.y = Camrot.y + D3DX_PI;
 	}
 
-	//位置を更新
-	pos.x += move.x;
-	pos.z += move.z;
+	if (m_bMove)
+	{//位置を更新
+		pos += move;
 
-	//移動量を更新(減衰させる)
-	move.x += (0.0f - move.x) * INERTIA;
-	move.z += (0.0f - move.z) * INERTIA;
+		//移動量を更新(減衰させる)
+		move.x += (0.0f - move.x) * INERTIA;
+		move.z += (0.0f - move.z) * INERTIA;
+	}
 
 	//目的の向き
 	DiffRot.y = RotDest.y - rot.y;
@@ -401,6 +402,8 @@ void CPlayer::Attack()
 	{// 切りおろし
 		m_bCutdown = true;
 
+		m_bMove = false;
+
 		// 敵との当たり判定
 		CollisionEnemy(1);
 	}
@@ -410,6 +413,8 @@ void CPlayer::Attack()
 	{// 横薙ぎ
 		m_bMowingdown = true;
 
+		m_bMove = false;
+
 		// 敵との当たり判定
 		CollisionEnemy(2);
 	}
@@ -418,6 +423,8 @@ void CPlayer::Attack()
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
 	{// 強攻撃
 		m_bStrongAttack = true;
+
+		m_bMove = false;
 
 		// 敵との当たり判定
 		CollisionEnemy(3);
