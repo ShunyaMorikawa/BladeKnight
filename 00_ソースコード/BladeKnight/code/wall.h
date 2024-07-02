@@ -1,6 +1,6 @@
 //========================================
 //
-// フィールド[field.h]
+// ウォール[wall.h]
 // Author：森川駿弥
 //
 //========================================
@@ -10,16 +10,16 @@
 #include "object3D.h"
 
 //========================================
-//ポリゴンクラス
+// ウォールクラス
 //========================================
-class CField : public CObject3D
+class CWall : public CObject3D
 {
 public:
-	CField(int nPriority = 0);		//コンストラクタ
-	~CField();	//デストラクタ
+	CWall(int nPriority = 0);		//コンストラクタ
+	~CWall();	//デストラクタ
 
 	//メンバ関数
-	static CField*Create(void);	//ポリゴン生成
+	static CWall* Create(void);	//ポリゴン生成
 
 	HRESULT Init(void);		//初期化
 	void Uninit(void);		//終了

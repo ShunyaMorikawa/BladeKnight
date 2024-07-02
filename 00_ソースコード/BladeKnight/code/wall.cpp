@@ -1,10 +1,10 @@
 //========================================
 //
-// フィールド[field.cpp]
+// ウォール[wall.cpp]
 // Author：森川駿弥
 //
 //========================================
-#include "field.h"
+#include "wall.h"
 #include "manager.h"
 #include "renderer.h"
 #include "texture.h"
@@ -12,12 +12,12 @@
 //========================================
 //静的メンバ変数
 //========================================
-LPDIRECT3DTEXTURE9 CField::m_pTexture = nullptr;
+LPDIRECT3DTEXTURE9 CWall::m_pTexture = nullptr;
 
 //========================================
 //コンストラクタ
 //========================================
-CField::CField(int nPriority) :
+CWall::CWall(int nPriority) :
 	CObject3D(nPriority)
 {
 }
@@ -25,32 +25,32 @@ CField::CField(int nPriority) :
 //========================================
 //デストラクタ
 //========================================
-CField::~CField()
+CWall::~CWall()
 {
 }
 
 //========================================
 //ポリゴン生成
 //========================================
-CField* CField::Create(void)
+CWall* CWall::Create(void)
 {
 	//CPlayer型のポインタ
-	CField* pField = new CField;;
+	CWall* pWall = new CWall;
 
 	//初期化
-	pField->Init();
+	pWall->Init();
 
 	//ポインタを返す
-	return pField;
+	return pWall;
 }
 
 //========================================
 //初期化
 //========================================
-HRESULT CField::Init(void)
+HRESULT CWall::Init(void)
 {
 	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// 継承の初期化
 	CObject3D::Init();
@@ -64,21 +64,21 @@ HRESULT CField::Init(void)
 //========================================
 //終了
 //========================================
-void CField::Uninit(void)
+void CWall::Uninit(void)
 {
 }
 
 //========================================
 //更新
 //========================================
-void CField::Update(void)
+void CWall::Update(void)
 {
 }
 
 //========================================
 //描画
 //========================================
-void CField::Draw(void)
+void CWall::Draw(void)
 {
 	//描画
 	CObject3D::Draw();

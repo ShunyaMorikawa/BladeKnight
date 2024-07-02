@@ -53,6 +53,7 @@
     <ClCompile Include="code\title.cpp" />
     <ClCompile Include="code\tutorial.cpp" />
     <ClCompile Include="code\useful.cpp" />
+    <ClCompile Include="code\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="code\title.h" />
     <ClInclude Include="code\tutorial.h" />
     <ClInclude Include="code\useful.h" />
+    <ClInclude Include="code\wall.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FDD75E34-57FB-4524-AE5F-2A21822473DE}</ProjectGuid>
