@@ -11,6 +11,7 @@
 #include "bullet.h"
 #include "fade.h"
 #include "texture.h"
+#include "wall.h"
 
 //========================================
 //静的メンバ変数
@@ -59,6 +60,13 @@ HRESULT CTutorial::Init(void)
 	// フィールド生成
 	m_pField = CField::Create();
 
+	// 壁生成
+	CWall::Create(D3DXVECTOR3(0.0f, 0.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, 0.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
+
+	// インスタンス生成
 	m_pObj2D = CObject2D::Create();
 
 	// 位置設定

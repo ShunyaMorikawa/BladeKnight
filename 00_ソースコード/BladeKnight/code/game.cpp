@@ -14,6 +14,7 @@
 #include "enemy.h"
 #include "fade.h"
 #include "wall.h"
+#include "mapobject.h"
 
 //========================================
 //静的メンバ変数
@@ -84,6 +85,8 @@ HRESULT CGame::Init(void)
 	CWall::Create(D3DXVECTOR3(4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
 	CWall::Create(D3DXVECTOR3(-4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
 
+	// マップオブジェクト生成
+	//CMapObject::Create();
 
 	// 遷移時間
 	m_nTransition = 0;
