@@ -1,6 +1,6 @@
 //=======================================
 //
-// 便利関数[useful.h]
+// 便利関数、便利定数[useful.h]
 // Author　:　MORIKAWA SHUNYA
 //
 //=======================================
@@ -11,13 +11,36 @@
 #include "main.h"
 
 //=======================================
-// 名前空間
+// 関数定義
 //=======================================
 namespace USEFUL
 {// 便利関数
+
 	//	向きと角度の正規化
 	void NormalizeRotAngle(float& fRotAngle);
+	inline bool CollisionCircle(D3DXVECTOR3 pos, float fSize)
+	{
+		D3DXVECTOR3 vec;
+		D3DXVec3Normalize(&vec, &pos);
 
+		//対角線の長さ(横、縦)
+		float fLength = sqrtf(pos.x * pos.x + pos.z * pos.z);
+
+		if (fLength >= fSize)
+		{// アリーナのサイズ超えたら
+			return true;
+		}
+
+		return false;
+	}
+}
+
+//=======================================
+// 定数定義
+//=======================================
+namespace Constance
+{
+	const float ARENA_SIZE = 2250.0f;	// 闘技場のサイズ
 }
 
 #endif

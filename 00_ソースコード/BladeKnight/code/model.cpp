@@ -1,7 +1,7 @@
 //========================================
 //
-//モデル[model.cpp]
-//Author：森川駿弥
+//　モデル[model.cpp]
+//　Author：森川駿弥
 //
 //========================================
 #include "model.h"
@@ -12,7 +12,6 @@
 //コンストラクタ
 //========================================
 CModel::CModel() : 
-	m_pTexture(nullptr),		//共有テクスチャ
 	m_pMesh(nullptr),			//メッシュ(頂点情報)へのポインタ
 	m_pBuffMat(nullptr),		//マテリアルへのポインタ
 	m_dwNumMat(NULL),			//マテリアルの数
@@ -20,7 +19,7 @@ CModel::CModel() :
 	m_rot(0.0f, 0.0f, 0.0f),	//向き
 	m_pParent(nullptr)			//親モデルへのポインタ
 {
-	
+	m_pTexture.clear();			//共有テクスチャ
 }
 
 //========================================
@@ -72,6 +71,9 @@ HRESULT CModel::Init(const char *pFilename)
 	//向きの設定
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
+	// 階層
+	m_nType = CModel::TYPE_HIERARCHY;
+
 	//Xファイルの読み込み
 	D3DXLoadMeshFromX(pFilename,
 		D3DXMESH_SYSTEMMEM,
@@ -89,10 +91,22 @@ HRESULT CModel::Init(const char *pFilename)
 	{
 		if (pMat[nCntTex].pTextureFilename != nullptr)
 		{//テクスチャファイル名が存在する
-		 //テクスチャの読み込み
-			D3DXCreateTextureFromFile(pDevice, pMat[nCntTex].pTextureFilename, &m_pTexture);
+
+			LPDIRECT3DTEXTURE9 pTex = nullptr;
+
+			//テクスチャの読み込み
+			D3DXCreateTextureFromFile(pDevice, pMat[nCntTex].pTextureFilename, &pTex);
+
+			// 最期に追加
+			m_pTexture.push_back(pTex);
 		}
+		else
+		{// 存在しないとき
+			m_pTexture.push_back(nullptr);
+		}
+
 	}
+
 	//成功を返す
 	return S_OK;
 }
@@ -115,12 +129,19 @@ void CModel::Uninit(void)
 		m_pBuffMat->Release();
 		m_pBuffMat = nullptr;
 	}
-	//テクスチャの破棄
-	if (m_pTexture != nullptr)
+
+	for (int i = 0; i < (int)m_pTexture.size(); i++)
 	{
-		m_pTexture->Release();
-		m_pTexture = nullptr;
+		//テクスチャの破棄
+		if (m_pTexture[i] != nullptr)
+		{
+			m_pTexture[i]->Release();
+			m_pTexture[i] = nullptr;
+		}
 	}
+
+	// 全クリア
+	m_pTexture.clear();
 }
 
 //========================================
@@ -165,8 +186,15 @@ void CModel::Draw(void)
 	}
 	else
 	{//親が存在しない
-		//現在(最新)のマトリックスを取得する{ = プレイヤーのマトリックス}
-		pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
+		if (m_nType == TYPE_HIERARCHY)
+		{// 階層モデルか階層じゃないか
+			//現在(最新)のマトリックスを取得する{ = プレイヤーのマトリックス}
+			pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
+		}
+		else
+		{
+			D3DXMatrixIdentity(&mtxParent);
+		}
 	}
 
 	//親のマトリックスと掛け合わせる
@@ -187,7 +215,7 @@ void CModel::Draw(void)
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
 		//テクスチャの設定
-		pDevice->SetTexture(0, m_pTexture); //テクスチャを使用してないときはnullptr
+		pDevice->SetTexture(0, m_pTexture[nCntMat]); //テクスチャを使用してないときはnullptr
 
 		//モデル(パーツ)の描画
 		m_pMesh->DrawSubset(nCntMat);

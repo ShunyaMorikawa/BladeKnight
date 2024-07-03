@@ -38,7 +38,8 @@ CGame::CGame() :
 	m_pObjectX(nullptr),
 	m_pIdxMesh(nullptr),
 	m_pField(nullptr),
-	m_pFade(nullptr)
+	m_pFade(nullptr),
+	m_pMobj(nullptr)
 {
 	m_pGame = nullptr;
 }
@@ -80,13 +81,13 @@ HRESULT CGame::Init(void)
 	CEnemy::Create("data//FILE//motion.txt");
 
 	// 壁生成
-	CWall::Create(D3DXVECTOR3(0.0f, 0.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	CWall::Create(D3DXVECTOR3(0.0f, 0.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
-	CWall::Create(D3DXVECTOR3(4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
-	CWall::Create(D3DXVECTOR3(-4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
 
 	// マップオブジェクト生成
-	//CMapObject::Create();
+	m_pMobj = CMapObject::Create();
 
 	// 遷移時間
 	m_nTransition = 0;

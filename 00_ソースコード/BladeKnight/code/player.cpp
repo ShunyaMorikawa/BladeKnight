@@ -379,7 +379,11 @@ void CPlayer::Act(float fSpeed)
 	// モーション
 	Motion();
 
+	// フィールドとの当たり判定
 	CollisionField();
+
+	// 闘技場との当たり判定
+	CollisionCircle();
 }
 
 //========================================
@@ -657,4 +661,23 @@ void CPlayer::CollisionField()
 	// 位置・移動量設定
 	SetPos(posPlayer);
 	SetMove(movePlayer);
+}
+
+//========================================
+// 闘技場との判定
+//========================================
+void CPlayer::CollisionCircle()
+{
+	// プレイヤー位置
+	D3DXVECTOR3 posPlayer = GetPos();
+	D3DXVECTOR3 vec;
+	D3DXVec3Normalize(&vec, &posPlayer);
+
+	if (USEFUL::CollisionCircle(posPlayer, Constance::ARENA_SIZE))
+	{// 闘技場に当たったら
+		posPlayer = vec * Constance::ARENA_SIZE;
+	}
+
+	// 位置設定
+	SetPos(posPlayer);
 }

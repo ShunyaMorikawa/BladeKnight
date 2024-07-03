@@ -16,5 +16,6 @@
 #include <iostream>
 #include <string.h>
 #include <time.h>
+#include <vector>
 
 #endif // _PRECOMPILE_H_

@@ -1,7 +1,7 @@
 //========================================
 //
-//ƒQ[ƒW[gauge.h]
-//AuthorFXìx–í
+// ƒQ[ƒW[gauge.h]
+// AuthorFXìx–í
 //
 //========================================
 #include "gauge.h"
@@ -88,7 +88,7 @@ HRESULT CGauge::Init()
 	SetVertex();
 
 	//’¸“_ƒJƒ‰[‚ÌÝ’è
-	m_p2D[CGauge::TYPE_BASE]->SetCol(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.3f));
+	m_p2D[CGauge::TYPE_BASE]->SetCol(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
 
 	return S_OK;
 }

@@ -15,6 +15,13 @@
 class CModel
 {
 public:
+	enum HIERARCHY
+	{// 階層持ってるか
+		TYPE_HIERARCHY = 0,
+		TYPE_NOT_HIERARCHY,
+		TYPE_MAX
+	};
+
 	CModel();		//コンストラクタ
 	~CModel();		//デストラクタ
 
@@ -48,20 +55,24 @@ public:
 	void SetRotate(D3DXVECTOR3 rot);
 	D3DXVECTOR3 GetRotate(void);
 
+	// 階層
+	void SetType(HIERARCHY type) { m_nType = type; }
+
 private:
 	//メンバ変数
-	LPDIRECT3DTEXTURE9 m_pTexture;	//共有テクスチャ
+	HIERARCHY m_nType;
+
+	std::vector<LPDIRECT3DTEXTURE9> m_pTexture;	//共有テクスチャ
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス
 	LPD3DXMESH m_pMesh;				//メッシュ(頂点情報)へのポインタ
 	LPD3DXBUFFER m_pBuffMat;		//マテリアルへのポインタ
 	DWORD m_dwNumMat;				//マテリアルの数
-	D3DXVECTOR3 m_pos;	//位置
-	D3DXVECTOR3 m_rot;	//向き
-	CModel *m_pParent;	//親モデルへのポインタ
+	D3DXVECTOR3 m_pos;				//位置
+	D3DXVECTOR3 m_rot;				//向き
+	CModel *m_pParent;				//親モデルへのポインタ
 
 	D3DXVECTOR3 m_setPos;
 	D3DXVECTOR3 m_setRot;
-
 };
 
 #endif

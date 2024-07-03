@@ -56,12 +56,10 @@ HRESULT CMapObject::Init(void)
 
 	if (m_pModel == nullptr)
 	{
-		m_pModel = new CModel;
-	}
+		m_pModel = CModel::Create(OBJECT_PASS);
 
-	if (m_pModel != nullptr)
-	{
-		m_pModel->Init(OBJECT_PASS);
+		// ŠK‘w
+		m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 	}
 
 	return S_OK;
@@ -88,7 +86,7 @@ void CMapObject::Uninit(void)
 void CMapObject::Update(void)
 {
 	if (m_pModel != nullptr)
-	{
+	{// ƒ‚ƒfƒ‹‚ÌXV
 		m_pModel->Update();
 	}
 }
@@ -99,7 +97,7 @@ void CMapObject::Update(void)
 void CMapObject::Draw(void)
 {
 	if (m_pModel != nullptr)
-	{
+	{// ƒ‚ƒfƒ‹‚Ì•`‰æ
 		m_pModel->Draw();
 	}
 }

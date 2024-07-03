@@ -32,6 +32,7 @@ public:
 	void NockBack();
 	void Motion();
 	void CollisionPlayer(int nDamage);
+	void CollisionCircle();
 
 	int GetLife() { return m_nLife; }			// �̗͎擾
 

@@ -47,6 +47,8 @@ public:
 
 	void CollisionField();
 
+	void CollisionCircle();
+
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:

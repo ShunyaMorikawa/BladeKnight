@@ -14,6 +14,7 @@
 #include "enemy.h"
 #include "player.h"
 #include "particle.h"
+#include "useful.h"
 
 //===========================================
 //コンストラクタ
@@ -117,6 +118,9 @@ void CBullet::Update(void)
 
 	// 敵との当たり判定
 	CollisionPlayer(pos);
+
+	// 闘技場との当たり判定
+	CollisionCircle();
 }
 
 //===========================================
@@ -230,4 +234,23 @@ void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
 		// 体力消費
 		pPlayer->Hit(1);
 	}
+}
+
+//===========================================
+// 闘技場との当たり判定
+//===========================================
+void CBullet::CollisionCircle()
+{
+	// プレイヤー位置
+	D3DXVECTOR3 posBullet = GetPos();
+	D3DXVECTOR3 vec;
+	D3DXVec3Normalize(&vec, &posBullet);
+
+	if (USEFUL::CollisionCircle(posBullet, Constance::ARENA_SIZE))
+	{// 闘技場に当たったら
+		Uninit();
+	}
+
+	// 位置設定
+	SetPos(posBullet);
 }

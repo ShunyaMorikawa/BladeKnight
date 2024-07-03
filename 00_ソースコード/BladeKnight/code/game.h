@@ -22,6 +22,7 @@ class CEnemy;
 class CFade;
 class CGauge;
 class CWall;
+class CMapObject;
 
 //========================================
 // 定数定義
@@ -62,6 +63,7 @@ private:
 	CIdxMeshField *m_pIdxMesh;	// メッシュフィールドのポインタ
 	CField *m_pField;			// ポリゴンのポインタ
 	CFade* m_pFade;				// フェードのポインタ
+	CMapObject* m_pMobj;		// マップオブジェクトのポインタ
 };
 
 #endif

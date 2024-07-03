@@ -17,6 +17,7 @@
 #include "useful.h"
 #include "effect.h"
 #include "bullet.h"
+#include "useful.h"
 
 //========================================
 //名前空間
@@ -234,6 +235,9 @@ void CEnemy::Update(void)
 	// モーション管理
 	Motion();
 
+	// 闘技場との当たり判定
+	CollisionCircle();
+
 	// デバッグ表示
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
@@ -437,4 +441,23 @@ void CEnemy::CollisionPlayer(int nDamage)
 			NockBack();
 		}
 	}
+}
+
+//========================================
+// 闘技場との当たり判定
+//========================================
+void CEnemy::CollisionCircle()
+{
+	// プレイヤー位置
+	D3DXVECTOR3 posEnemy = GetPos();
+	D3DXVECTOR3 vec;
+	D3DXVec3Normalize(&vec, &posEnemy);
+
+	if (USEFUL::CollisionCircle(posEnemy, Constance::ARENA_SIZE))
+	{// 闘技場に当たったら
+		posEnemy = vec * Constance::ARENA_SIZE;
+	}
+
+	// 位置設定
+	SetPos(posEnemy);
 }

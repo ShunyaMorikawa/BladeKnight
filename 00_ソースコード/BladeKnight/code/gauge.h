@@ -18,7 +18,7 @@ class CGauge : public CObject
 public:
 	enum Gauge
 	{//	ゲージ列挙
-		TYPE_BASE = 0,		// 下地
+		TYPE_BASE = 0,	// 下地
 		TYPE_MAIN,		// ゲージ
 		TYPE_FRAME,		// 枠線
 		TYPE_MAX

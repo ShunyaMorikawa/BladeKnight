@@ -36,6 +36,7 @@ public:
 
 	void CollisionEnemy(D3DXVECTOR3 pos);
 	void CollisionPlayer(D3DXVECTOR3 pos);
+	void CollisionCircle();
 
 private:
 	//ƒƒ“ƒo•Ï”
