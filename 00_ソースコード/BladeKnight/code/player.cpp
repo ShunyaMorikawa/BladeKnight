@@ -378,6 +378,8 @@ void CPlayer::Act(float fSpeed)
 
 	// モーション
 	Motion();
+
+	CollisionField();
 }
 
 //========================================
@@ -651,4 +653,8 @@ void CPlayer::CollisionField()
 		posPlayer.z = -FIELD_LIMIT;
 		movePlayer.z = 0.0f;
 	}
+
+	// 位置・移動量設定
+	SetPos(posPlayer);
+	SetMove(movePlayer);
 }

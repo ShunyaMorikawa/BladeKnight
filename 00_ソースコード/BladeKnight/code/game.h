@@ -21,11 +21,15 @@ class CField;
 class CEnemy;
 class CFade;
 class CGauge;
+class CWall;
 
 //========================================
-//マクロ
+// 定数定義
 //========================================
-#define MAX_ITEM	(256)	//アイテムの最大数
+namespace
+{
+const int ITEM_MAX = 256;	// アイテムの最大数
+}
 
 //========================================
 //ゲームクラス
@@ -48,7 +52,7 @@ public:
 	static CGame *GetInstance(void);		// ゲームマネージャーの情報
 	
 private:
-	static CGame *m_pGame;				// ゲームマネージャーのポインタ
+	static CGame *m_pGame;					// ゲームマネージャーのポインタ
 
 	int m_nTransition;
 

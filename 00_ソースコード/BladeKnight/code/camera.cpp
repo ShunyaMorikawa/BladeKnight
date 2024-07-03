@@ -51,7 +51,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init(void)
 {
 	//視点
-	m_posV = D3DXVECTOR3(0.0f, 500.0f, -1000.0f);
+	m_posV = D3DXVECTOR3(0.0f, 400.0f, -1000.0f);
 
 	//注視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -118,7 +118,7 @@ void CCamera::SetCamera(void)
 								D3DXToRadian(100.0f),	//視野角
 								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
 								10.0f,		//Z値の最小値
-								4000.0f);	//Z値の最大値(描画距離)
+								400000.0f);	//Z値の最大値(描画距離)
 
 	////プロジェクションマトリックスを設定[平行投影]
 	//D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス

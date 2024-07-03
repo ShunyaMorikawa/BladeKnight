@@ -6,6 +6,7 @@
 //========================================
 #ifndef _GAUGE_H_
 #define _GAUGE_H_
+
 #include "main.h"
 #include "object2D.h"
 

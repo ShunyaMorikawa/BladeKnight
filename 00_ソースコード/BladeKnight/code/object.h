@@ -46,9 +46,9 @@ public:
 	// 向きの設定と取得
 	void SetRot(D3DXVECTOR3 rot);
 	D3DXVECTOR3 GetRot(void);
-
+	
 	void Delete(void);
-	void BindTexture(int pTexture);				//テクスチャ割り当て
+	void BindTexture(int pTexture);		//テクスチャ割り当て
 
 	void SetDrawFrag(bool bDraw);		// 描画するかしないか
 

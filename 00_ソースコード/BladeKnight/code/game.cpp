@@ -13,6 +13,7 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "fade.h"
+#include "wall.h"
 
 //========================================
 //静的メンバ変数
@@ -76,6 +77,13 @@ HRESULT CGame::Init(void)
 
 	// エネミー生成
 	CEnemy::Create("data//FILE//motion.txt");
+
+	// 壁生成
+	CWall::Create(D3DXVECTOR3(0.0f, 0.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, 0.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
+
 
 	// 遷移時間
 	m_nTransition = 0;

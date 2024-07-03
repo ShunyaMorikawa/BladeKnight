@@ -58,6 +58,7 @@ HRESULT CField::Init(void)
 	//テクスチャ割り当て
 	BindTexture(pTexture->Regist("data\\texture\\soil.jpg"));
 
+
 	return S_OK;
 }
 
@@ -66,6 +67,8 @@ HRESULT CField::Init(void)
 //========================================
 void CField::Uninit(void)
 {
+	// 継承の初期化
+	CObject3D::Uninit();
 }
 
 //========================================
@@ -73,6 +76,8 @@ void CField::Uninit(void)
 //========================================
 void CField::Update(void)
 {
+	// 継承の初期化
+	CObject3D::Update();
 }
 
 //========================================

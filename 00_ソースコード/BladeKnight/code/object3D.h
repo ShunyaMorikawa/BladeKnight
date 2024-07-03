@@ -28,16 +28,16 @@ public:
 	void BindTexture(int pTexture);	//テクスチャ割り当て
 
 	void SetVertex(void);
-	void SetSize(float fWidht, float fHeight);
-	void SetPosition(D3DXVECTOR3 pos);
-	D3DXVECTOR3 GetPosition(void) { return m_pos; }
+	void SetSize(float fWidth, float fHeight);
 
-	void SetVertex3D(void);
+	virtual void SetVertex3D(void);
 	void SetVerTexBillboard(void);
 	void Collision(void);
 	void MeshVertex(void);
 
 	float GetField();
+
+	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_pVtxBuff; }		// 頂点情報の取得
 
 private:
 	//メンバ変数
@@ -45,9 +45,6 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	//頂点情報へのポインタ
 	D3DXMATRIX m_mtxWorld;				//ワールドマトリックス
 	LPDIRECT3DINDEXBUFFER9 m_pIdxBuff;		 //インデックスバッファへのポインタ
-
-	D3DXVECTOR3 m_pos;	//位置
-	D3DXVECTOR3 m_rot;	//向き
 
 	int m_nIdxTexture;		//テクスチャの番号
 };
