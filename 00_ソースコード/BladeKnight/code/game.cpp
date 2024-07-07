@@ -124,33 +124,24 @@ void CGame::Update(void)
 {
 	// CInputKeyboard型のポインタ
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-	
+
 	// プレイヤーの情報取得
 	CPlayer* pPlayer = CPlayer::GetInstance();
 
 	// 敵の情報取得
 	CEnemy* pEnemy = CEnemy::GetInstance();
 
-	if (pEnemy != nullptr && pPlayer != nullptr)
-	{
-		// プレイヤーの体力取得
-		int PlayerLife = pPlayer->GetLife();
+	if (pEnemy == nullptr || pPlayer == nullptr)
+	{// 敵かプレイヤーの体力が0以下になったら
+		m_nTransition++;
 
-		// 敵の体力取得
-		int EnemyLife = pEnemy->GetLife();
+		if (m_nTransition > TRANSITIONTIME ||
+			pInputKeyboard->GetTrigger(DIK_RETURN))
+		{
+			// 画面遷移(フェード)
+			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 
-		if (EnemyLife <= 0 || PlayerLife <= 0)
-		{// 敵かプレイヤーの体力が0以下になったら
-			m_nTransition++;
-
-			if (m_nTransition > TRANSITIONTIME ||
-				pInputKeyboard->GetTrigger(DIK_RETURN))
-			{
-				// 画面遷移(フェード)
-				CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
-
-				m_nTransition = 0;
-			}
+			m_nTransition = 0;
 		}
 	}
 
@@ -166,6 +157,7 @@ void CGame::Update(void)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 	}
 #endif
+
 }
 
 //========================================
