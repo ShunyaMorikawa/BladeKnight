@@ -21,6 +21,7 @@ class CField;
 class CFade;
 class CGauge;
 class CObject2D;
+class CMapObject;
 
 //========================================
 //チュートリアルクラス
@@ -45,6 +46,7 @@ private:
 	CIdxMeshField* m_pIdxMesh;	// メッシュフィールドのポインタ
 	CField* m_pField;			// ポリゴンのポインタ
 	CFade* m_pFade;				// フェードのポインタ
+	CMapObject* m_pMobj;		// マップオブジェクトのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 };
 

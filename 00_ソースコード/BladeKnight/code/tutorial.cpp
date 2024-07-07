@@ -12,6 +12,8 @@
 #include "fade.h"
 #include "texture.h"
 #include "wall.h"
+#include "mapobject.h"
+#include "sound.h"
 
 //========================================
 //静的メンバ変数
@@ -66,6 +68,9 @@ HRESULT CTutorial::Init(void)
 	CWall::Create(D3DXVECTOR3(4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
 	CWall::Create(D3DXVECTOR3(-4000.0f, 0.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
+	// マップオブジェクト生成
+	m_pMobj = CMapObject::Create();
+
 	// インスタンス生成
 	m_pObj2D = CObject2D::Create();
 
@@ -77,6 +82,15 @@ HRESULT CTutorial::Init(void)
 
 	// テクスチャ設定
 	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide.png"));
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop(CSound::SOUND_LABEL_BGM_TITLE);
+
+	// サウンド再生
+	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TUTORIAL);
 
 	//成功を返す
 	return S_OK;
@@ -100,11 +114,18 @@ void CTutorial::Update(void)
 	//CInputPad情報取得
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
+	int i = 0;
+
+	i++;
+
+	if (pInputKeyboard->GetTrigger(DIK_RETURN)||
+		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) ||
+		i >= 180)
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
+
+		i = 0;
 	}
 }
 

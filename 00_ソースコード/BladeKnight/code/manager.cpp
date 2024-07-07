@@ -15,6 +15,7 @@
 #include "tutorial.h"
 #include "game.h"
 #include "fade.h"
+#include "sound.h"
 
 //========================================
 //静的メンバ変数
@@ -27,7 +28,18 @@ CManager *CManager::m_pManager = nullptr;
 CManager::CManager(void) : 
 	m_nCnt(0),	//自動遷移のカウンター
 	m_state(0),	//状態変更
-	m_NowScene(CScene::MODE_NONE)	//現在のシーン
+	m_NowScene(CScene::MODE_NONE),	//現在のシーン
+	m_pRenderer(nullptr),				// レンダラーのポインタ
+	m_pInputKeyboard(nullptr),
+	m_pInputPad(nullptr),
+	m_pInputMouse(nullptr),
+	m_pScene(nullptr),
+	m_pDebugProc(nullptr),
+	m_pTexture(nullptr),
+	m_pCamera(nullptr),
+	m_pLight(nullptr),
+	m_pFade(nullptr),
+	m_pSound(nullptr)
 {//値クリア
 }
 
@@ -125,6 +137,17 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		}
 	}
 
+	if (m_pSound == nullptr)
+	{
+		m_pSound = new CSound;
+
+		if (FAILED(m_pSound->Init(hWnd)))
+		{// 初期化失敗
+			return -1;
+		}
+
+	}
+
 	//テクスチャ生成
 	m_pTexture = new CTexture;
 	m_pTexture->Load();
@@ -193,10 +216,17 @@ void CManager::Uninit(void)
 	}
 
 	if (m_pFade != nullptr)
-	{// フィールド終了
+	{// フェード終了
 		m_pFade->Uninit();
 		delete m_pFade;
 		m_pFade = nullptr;
+	}
+
+	if (m_pSound != nullptr)
+	{// サウンド終了
+		m_pSound->Uninit();
+		delete m_pSound;
+		m_pSound = nullptr;
 	}
 }
 

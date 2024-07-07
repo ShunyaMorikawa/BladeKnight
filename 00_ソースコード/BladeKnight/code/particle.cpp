@@ -32,8 +32,8 @@ void Myparticle::Create(TYPE nType, D3DXVECTOR3 pos)
 //=======================================
 void Mypartcile_Func::WALK_PARTICLE()
 {
-	int life = 60;		// 寿命
-	D3DXCOLOR col = D3DXCOLOR(0.4f, 0.2f, 0.0f, 0.2f);	// 色
+	int life = 30;		// 寿命
+	D3DXCOLOR col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 0.6f);	// 色
 	const int max = 5;		// 最大数
 
 	for (int i = 0; i < max; i++)
@@ -41,15 +41,16 @@ void Mypartcile_Func::WALK_PARTICLE()
 		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		// 移動量の基準値
-		float StandardMove = 1.0f + (rand() % 10) * 0.9f;
+		float StandardMove = 1.0f + (rand() % 10) * 0.1f;
 
 		// 半径の基準値
-		float StandardRadius = 1.0f + (rand() % 50) * 0.9f;
+		float StandardRadius = 10.0f + (rand() % 50) * 0.9f;
 
 		// 大きさ
 		move.x = sinf((rand() % 629 - 314) / 5.0f) * StandardMove;
+		move.z = sinf((rand() % 629 - 314) / 5.0f) * StandardMove;
 
-		CEffect::Create(POS, move, col, StandardRadius, life, false, CEffect::TYPE::TYPE_BLACK);
+		CEffect::Create(POS, move, col, StandardRadius, life, false, CEffect::TYPE::TYPE_SMOKEBLACK);
 	}
 }
 
@@ -99,7 +100,7 @@ void Mypartcile_Func::BULLET_PARTICLE()
 	//=============================
 	// 移動量
 	float fMove = (float)(rand() % 20) / 10 + 1.0f;		//移動量
-	float fMoveY = (float)(rand() % 61 - 30) / 100;	//移動量
+	float fMoveY = (float)(rand() % 61 - 30) / 100;		//移動量
 
 	//移動量の設定
 	move.x = sinf((float)(rand() % 629 - 314) / 100.0f) * fMove;

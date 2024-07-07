@@ -15,6 +15,8 @@
 #include "fade.h"
 #include "wall.h"
 #include "mapobject.h"
+#include "sound.h"
+#include "debugproc.h"
 
 //========================================
 //静的メンバ変数
@@ -95,6 +97,15 @@ HRESULT CGame::Init(void)
 	//ポーズの状態
 	m_bPause = false;
 
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop(CSound::SOUND_LABEL_BGM_TUTORIAL);
+
+	// サウンド再生
+	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_GAME);
+
 	return S_OK;
 }
 
@@ -132,7 +143,8 @@ void CGame::Update(void)
 		{// 敵かプレイヤーの体力が0以下になったら
 			m_nTransition++;
 
-			if (m_nTransition >= TRANSITIONTIME)
+			if (m_nTransition > TRANSITIONTIME ||
+				pInputKeyboard->GetTrigger(DIK_RETURN))
 			{
 				// 画面遷移(フェード)
 				CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
@@ -142,8 +154,14 @@ void CGame::Update(void)
 		}
 	}
 
+	// デバッグ表示の情報取得
+	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+	// デバッグ表示
+	pDebugProc->Print("\nカウンター：%d\n", m_nTransition);
+
 #ifdef _DEBUG
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
+	if (pInputKeyboard->GetTrigger(DIK_F2) == true)
 	{// ゲーム画面に遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 	}

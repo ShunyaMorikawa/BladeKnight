@@ -8,6 +8,7 @@
 #include "texture.h"
 #include "input.h"
 #include "fade.h"
+#include "sound.h"
 
 //=======================================
 //マクロ定義
@@ -73,7 +74,17 @@ HRESULT CTitle::Init(void)
 
 		//テクスチャ割り当て
 		pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
+
 	}
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop();
+
+	// サウンド再生
+	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TITLE);
 
 	//成功を返す
 	return S_OK;
@@ -97,10 +108,15 @@ void CTitle::Update(void)
 	//CInputPad型のポインタ
 	CInputPad *pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
 	
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_ENTER);
+
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TUTORIAL);
 	}

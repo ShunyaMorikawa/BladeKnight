@@ -365,4 +365,3 @@ HRESULT CSound::ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, D
 
 	return S_OK;
 }
-

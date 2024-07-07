@@ -12,6 +12,7 @@
 #include "xaudio2.h"	//サウンド処理に必要
 #include "dinput.h"		//入力処理に必要
 #include "Xinput.h"
+#include "time.h"
 #include <stdio.h>
 #include <iostream>
 #include <string.h>

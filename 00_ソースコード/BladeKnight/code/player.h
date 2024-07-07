@@ -57,6 +57,8 @@ private:
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
+	int m_WalkCounter;		// 歩行時のカウンター
+	int m_nCounter;
 
 	float m_fRadius;		// 半径
 

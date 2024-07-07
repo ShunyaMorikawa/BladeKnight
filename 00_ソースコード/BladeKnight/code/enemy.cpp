@@ -18,6 +18,8 @@
 #include "effect.h"
 #include "bullet.h"
 #include "useful.h"
+#include "sound.h"
+#include "fade.h"
 
 //========================================
 //名前空間
@@ -122,6 +124,11 @@ void CEnemy::Uninit(void)
 	// 終了
 	CCharacter::Uninit();
 
+	if (m_pEnemy != nullptr)
+	{
+		m_pEnemy = nullptr;
+	}
+
 	m_pGauge = nullptr;
 }
 
@@ -211,8 +218,14 @@ void CEnemy::Update(void)
 			bulletmove.z = cosf(fAngle) * BULLETMOVE;
 
 			// 弾の生成
-			CBullet::Create(pos, bulletmove, 300);
+			CBullet::Create(pos, bulletmove, 120);
 		}
+
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_BULLET);
 
 		m_nCnt = 0;
 	}
@@ -260,6 +273,12 @@ void CEnemy::Draw(void)
 //========================================
 void CEnemy::Hit(int nLife)
 {
+	//CInputKeyboard情報取得
+	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	//CInputPad情報取得
+	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
+
 	D3DXVECTOR3 pos = GetPos();
 
 	//テクスチャのポインタ
@@ -267,6 +286,10 @@ void CEnemy::Hit(int nLife)
 
 	// 状態取得
 	int nState = GetState();
+
+	int nCount = 0;
+
+	nCount++;
 
 	// 体力減らす
 	m_nLife -= nLife;
@@ -285,6 +308,9 @@ void CEnemy::Hit(int nLife)
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
 
+		// 終了
+		Uninit();
+
 		// 生成
 		CObject2D* pObje2D = CObject2D::Create();
 
@@ -297,8 +323,24 @@ void CEnemy::Hit(int nLife)
 		// 勝利テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));
 	
-		// 終了
-		Uninit();
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
+		// サウンド停止
+		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_WIN);
+
+		//if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
+		//	pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true ||
+		//	nCount >= 120)
+		//{
+		//	// 画面遷移(フェード)
+		//	CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+
+		//	nCount = 0;
+		//}
 	}
 }
 
