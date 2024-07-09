@@ -331,16 +331,6 @@ void CEnemy::Hit(int nLife)
 
 		// サウンド再生
 		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_WIN);
-
-		//if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
-		//	pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true ||
-		//	nCount >= 120)
-		//{
-		//	// 画面遷移(フェード)
-		//	CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
-
-		//	nCount = 0;
-		//}
 	}
 }
 

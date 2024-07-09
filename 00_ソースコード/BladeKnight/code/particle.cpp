@@ -59,7 +59,7 @@ void Mypartcile_Func::WALK_PARTICLE()
 //=======================================
 void Mypartcile_Func::DEATH_PARTICLE()
 {
-	int life = 60;		// 寿命
+	int life = 30;		// 寿命
 	D3DXCOLOR col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);	// 色
 	const int max = 32;		// 最大数
 
@@ -68,14 +68,15 @@ void Mypartcile_Func::DEATH_PARTICLE()
 		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		// 移動量の基準値
-		float StandardMove = 9.0f + (rand() % 100) * 0.1f;
+		float StandardMove = 5.0f + (rand() % 100) * 0.1f;
 
 		// 半径の基準値
 		float StandardRadius = 9.0f + (rand() % 100) * 0.9f;
 
 		// 大きさ
 		move.x = sinf((rand() % 629 - 314) / 100.0f) * StandardMove;
-		move.y = sinf((rand() % 629 - 314) / 150.0f) * StandardMove;
+		move.y = sinf((rand() % 629 - 314) / 100.0f) * StandardMove;
+		move.z = sinf((rand() % 629 - 314) / 150.0f) * StandardMove;
 
 		// エフェクト生成
 		CEffect::Create(POS, move, col, StandardRadius, life, true, CEffect::TYPE::TYPE_NORMAL);

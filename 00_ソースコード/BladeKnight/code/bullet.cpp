@@ -249,6 +249,9 @@ void CBullet::CollisionCircle()
 	if (USEFUL::CollisionCircle(posBullet, Constance::ARENA_SIZE))
 	{// 闘技場に当たったら
 		Uninit();
+
+		// パーティクル生成
+		Myparticle::Create(Myparticle::TYPE_DEATH, posBullet);
 	}
 
 	// 位置設定
