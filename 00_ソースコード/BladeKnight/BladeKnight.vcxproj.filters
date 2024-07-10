@@ -138,6 +138,9 @@
     <ClCompile Include="code\particle.cpp">
       <Filter>effect</Filter>
     </ClCompile>
+    <ClCompile Include="code\boss.cpp">
+      <Filter>character\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\bullet.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="code\particle.h">
       <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="code\boss.h">
+      <Filter>character\enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
