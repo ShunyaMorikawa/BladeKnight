@@ -20,6 +20,7 @@
 #include "useful.h"
 #include "sound.h"
 #include "fade.h"
+#include "gauge.h"
 
 //========================================
 //–¼‘O‹óŠÔ

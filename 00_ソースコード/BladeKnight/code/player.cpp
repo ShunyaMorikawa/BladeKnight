@@ -627,9 +627,9 @@ void CPlayer::NockBack()
 		// ˆÊ’uXV
 		moveEnemy.x = sinf(angle) * -NOCKBACK;
 		moveEnemy.z = cosf(angle) * -NOCKBACK;
-
 		moveEnemy.y = 25.0f;
 
+		// ˆÚ“®—ÊÝ’è
 		pEnemy->SetMove(moveEnemy);
 	}
 }

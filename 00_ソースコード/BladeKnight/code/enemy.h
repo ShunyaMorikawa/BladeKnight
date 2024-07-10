@@ -1,16 +1,20 @@
 //========================================
 //
-//敵関連[enemy.h]
-//Author：森川駿弥
+// 敵の処理[enemy.h]
+// Author：森川駿弥
 //
 //========================================
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
 
-#include "main.h"
-#include "manager.h"
 #include "character.h"
-#include "gauge.h"
+//========================================
+// 前方宣言
+//========================================
+class CModel;
+class CMotion;
+class CEffect;
+class CGauge;
 
 //========================================
 //エネミークラス

@@ -68,7 +68,7 @@ private:
 	bool m_bCutdown;		// 切り下ろし
 	bool m_bStrongAttack;	// 強攻撃
 
-	CEffect *m_pEffect;				// エフェクトのポインタ
+	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 
