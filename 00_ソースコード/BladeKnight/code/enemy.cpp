@@ -1,7 +1,7 @@
 //========================================
 //
-//“GŠÖ˜A[enemy.cpp]
-//AuthorFXìx–í
+// “G‚Ìˆ—[enemy.cpp]
+// AuthorFXìx–í
 //
 //========================================
 #include "enemy.h"
@@ -99,8 +99,6 @@ HRESULT CEnemy::Init(std::string pfile)
 	// ”¼Œa
 	m_fRadius = RADIUS;
 
-	m_nCnt = 0;
-
 	// ƒQ[ƒW¶¬
 	m_pGauge = CGauge::Create(m_nLife);
 
@@ -109,9 +107,6 @@ HRESULT CEnemy::Init(std::string pfile)
 
 	// ƒTƒCƒYÝ’è
 	m_pGauge->SetSize(50.0f, 50.0f);
-
-	// ƒQ[ƒWƒeƒNƒXƒ`ƒƒ
-	m_pGauge->BindTexture(pTexture->Regist("data\\texture\\gauge.png"));
 
 	return S_OK;
 }
@@ -129,7 +124,10 @@ void CEnemy::Uninit(void)
 		m_pEnemy = nullptr;
 	}
 
-	m_pGauge = nullptr;
+	if (m_pGauge != nullptr)
+	{
+		m_pGauge = nullptr;
+	}
 }
 
 //========================================

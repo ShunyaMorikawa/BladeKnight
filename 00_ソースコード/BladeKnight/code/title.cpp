@@ -20,6 +20,7 @@
 //=======================================
 CTitle::CTitle(int nPriority)
 {
+	m_pObj2D = nullptr;
 }
 
 //=======================================
@@ -55,26 +56,25 @@ HRESULT CTitle::Init(void)
 	//テクスチャのポインタ
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
-	if (pObj2D == nullptr)
+	if (m_pObj2D == nullptr)
 	{
 		//CObject2Dのポインタ
-		pObj2D = CObject2D::Create();
+		m_pObj2D = CObject2D::Create();
 
 		//位置取得
-		D3DXVECTOR3 pos = pObj2D->GetPos();
+		D3DXVECTOR3 pos = m_pObj2D->GetPos();
 
 		//頂点情報
-		pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//ポリゴンの位置
 		pos = (D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
 		//位置設定
-		pObj2D->SetPos(pos);
+		m_pObj2D->SetPos(pos);
 
 		//テクスチャ割り当て
-		pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
-
+		m_pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
 	}
 
 	// サウンド情報取得

@@ -29,7 +29,7 @@ public:
 	void Draw(void);
 
 private:
-	CObject2D* pObj2D = nullptr;
+	CObject2D* m_pObj2D;
 };
 
 #endif

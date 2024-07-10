@@ -10,7 +10,7 @@
 #include "manager.h"
 
 //========================================
-// 名前空間
+// 定数定義
 //========================================
 namespace
 {
@@ -149,8 +149,6 @@ void CGauge::SetSize(float fWidht, float fHeight)
 	//対角線の向き(横、縦)
 	m_fAngle = atan2f(fWidht, fHeight);
 
-	//m_p2D[Gauge::TYPE_BASE]->SetSize();
-
 	//頂点情報
 	SetVertex();
 }
@@ -184,7 +182,7 @@ void CGauge::SetVertex()
 
 		switch (i)
 		{
-		case TYPE_MAIN:
+		case TYPE_GAUGE:
 			// 頂点座標の設定
 			pVtx[0].pos = pos + D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			pVtx[1].pos = pos + D3DXVECTOR3(LENGTH * ratio, 0.0f, 0.0f);
@@ -206,9 +204,8 @@ void CGauge::SetVertex()
 		SetRot(rot);
 	}
 
-
 	// 頂点情報の取得
-	LPDIRECT3DVERTEXBUFFER9 Vertex = m_p2D[CGauge::TYPE_MAIN]->GetVtxBuff();
+	LPDIRECT3DVERTEXBUFFER9 Vertex = m_p2D[CGauge::TYPE_GAUGE]->GetVtxBuff();
 
 	//頂点情報へのポインタ
 	VERTEX_2D* pVtx;

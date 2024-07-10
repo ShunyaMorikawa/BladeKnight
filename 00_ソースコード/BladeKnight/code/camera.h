@@ -28,6 +28,7 @@ public:
 	void CameraMoveV(void);
 	float RotNor(float RotN);
 	void following(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
+	void TitleCamera();
 
 	D3DXVECTOR3 GetRot(void);				//ˆÊ’uŽæ“¾
 	D3DXVECTOR3 GetPosV(void);				//Ž‹“_‚ÌŽæ“¾

@@ -53,9 +53,9 @@ public:
 	static CGame *GetInstance(void);		// ゲームマネージャーの情報
 	
 private:
-	static CGame *m_pGame;					// ゲームマネージャーのポインタ
+	static CGame *m_pGame;		// ゲームマネージャーのポインタ
 
-	int m_nTransition;
+	int m_nTransition;			// 加算
 
 	bool m_bPause;				// ポーズ状態のON/OFF
 

@@ -24,11 +24,11 @@
 CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 
 //========================================
-// 名前空間
+// 定数定義
 //========================================
 namespace
 {
-	const int TRANSITIONTIME = 120;
+	const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 }
 
 //========================================
@@ -82,7 +82,7 @@ HRESULT CGame::Init(void)
 	// エネミー生成
 	CEnemy::Create("data//FILE//motion.txt");
 
-	// 壁生成
+	// 4方向に壁生成
 	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
 	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
 	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
@@ -174,7 +174,6 @@ CGame *CGame::GetInstance(void)
 {
 	if (m_pGame == nullptr)
 	{//インスタンス生成
-
 		return m_pGame = new CGame;
 	}
 	else

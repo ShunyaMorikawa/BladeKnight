@@ -19,7 +19,7 @@ public:
 	enum Gauge
 	{//	ゲージ列挙
 		TYPE_BASE = 0,	// 下地
-		TYPE_MAIN,		// ゲージ
+		TYPE_GAUGE,		// ゲージ
 		TYPE_FRAME,		// 枠線
 		TYPE_MAX
 	};

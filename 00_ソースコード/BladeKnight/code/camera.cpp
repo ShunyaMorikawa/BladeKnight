@@ -382,6 +382,30 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 }
 
 //=======================================
+// タイトル用カメラ
+//=======================================
+void CCamera::TitleCamera()
+{
+	m_rot.y += 0.005f;
+
+	//3.14を超えたときに反対にする
+	if (m_rot.y > D3DX_PI)
+	{
+		m_rot.y -= D3DX_PI * 2;
+	}
+
+	//-3.14を超えたときに反対にする
+	if (m_rot.y < -D3DX_PI)
+	{
+		m_rot.y += D3DX_PI * 2;
+	}
+
+	// 始点の設定
+	m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
+	m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
+}
+
+//=======================================
 //向きの取得
 //=======================================
 D3DXVECTOR3 CCamera::GetRot(void)

@@ -49,7 +49,6 @@ CPlayer* CPlayer::m_pPlayer = nullptr;
 CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
 {//値をクリア
 	m_WalkCounter = 0;
-	m_nCounter = 0;
 	m_pEffect = nullptr;			// エフェクトのポインタ
 	m_pGauge = nullptr;				// ゲージのポインタ
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
@@ -100,8 +99,6 @@ HRESULT CPlayer::Init(std::string pfile)
 	// 歩行時のカウンター
 	m_WalkCounter = 0;
 
-	m_nCounter = 0;
-
 	// 体力
 	m_nLife = LIFE;
 
@@ -114,9 +111,6 @@ HRESULT CPlayer::Init(std::string pfile)
 	// サイズ設定
 	m_pGauge->SetSize(50.0f, 50.0f);
 
-	// ゲージテクスチャ設定
-	m_pGauge->BindTexture(pTexture->Regist("data\\texture\\gauge.png"));
-
 	return S_OK;
 }
 
@@ -128,7 +122,15 @@ void CPlayer::Uninit(void)
 	// 終了
 	CCharacter::Uninit();
 
-	m_pPlayer = nullptr;
+	if (m_pPlayer != nullptr)
+	{
+		m_pPlayer = nullptr;
+	}
+
+	if (m_pGauge != nullptr)
+	{
+		m_pGauge = nullptr;
+	}
 }
 
 //========================================
@@ -187,17 +189,6 @@ void CPlayer::Update(void)
 
 		// 敗北テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
-
-		m_nCounter++;
-
-		if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
-			pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
-		{
-			// 画面遷移(フェード)
-			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
-
-			m_nCounter = 0;
-		}
 
 		// サウンド停止
 		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
