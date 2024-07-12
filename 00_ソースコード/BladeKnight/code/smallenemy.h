@@ -14,15 +14,21 @@
 //========================================
 class CSmallEnemy : CEnemy
 {
+public:
 	// コンストラクタ・デストラクタ
 	CSmallEnemy();
 	~CSmallEnemy();
 
+	// メンバ関数
 	HRESULT Init();
 	void Uninit();
 	void Update();
 	void Draw();
 
+	static CSmallEnemy* Create();
+
+private:
+	// メンバ変数
 };
 
 #endif

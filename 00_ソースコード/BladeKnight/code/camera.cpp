@@ -9,6 +9,7 @@
 #include "manager.h"
 #include "input.h"
 #include "debugproc.h"
+#include "useful.h"
 
 //=======================================
 // 定数定義
@@ -51,7 +52,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init(void)
 {
 	//視点
-	m_posV = D3DXVECTOR3(0.0f, 400.0f, -1000.0f);
+	m_posV = D3DXVECTOR3(0.0f, 375.0f, -1000.0f);
 
 	//注視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -90,6 +91,9 @@ void CCamera::Update(void)
 
 	//視点の移動
 	CameraMoveV();
+
+	// 闘技場との判定
+	CollisionArena();
 
 #ifdef _DEBUG
 	//デバッグ表示
@@ -355,8 +359,11 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	//視点
 	D3DXVECTOR3 VDiff;
 
+	m_rot.y = rot.y;
+
 	//注視点
-	m_RDest = D3DXVECTOR3(pos.x + -sinf(rot.y) 
+	m_RDest = D3DXVECTOR3(
+		pos.x + -sinf(rot.y) 
 		* CAMR, 
 		pos.y, 
 		pos.z + -cosf(rot.y) * 25.0f);
@@ -403,6 +410,21 @@ void CCamera::TitleCamera()
 	// 始点の設定
 	m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
 	m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
+}
+
+//=======================================
+// 闘技場との判定
+//=======================================
+void CCamera::CollisionArena()
+{
+	D3DXVECTOR3 vec;
+	D3DXVec3Normalize(&vec, &m_posV);
+
+	if (USEFUL::CollisionCircle(m_posV, Constance::ARENA_SIZE))
+	{// 闘技場に当たったら
+		m_posV.x = vec.x * Constance::ARENA_SIZE;
+		m_posV.z = vec.z * Constance::ARENA_SIZE;
+	}
 }
 
 //=======================================

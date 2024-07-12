@@ -1,7 +1,7 @@
 //========================================
 //
-//プレイヤー[player.cpp]
-//Author：森川駿弥
+// プレイヤー[player.cpp]
+// Author：森川駿弥
 //
 //========================================
 #include "player.h"
@@ -51,6 +51,7 @@ CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
 	m_WalkCounter = 0;
 	m_pEffect = nullptr;			// エフェクトのポインタ
 	m_pGauge = nullptr;				// ゲージのポインタ
+	m_IsLock = false;
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -153,10 +154,6 @@ void CPlayer::Update(void)
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
-	// カメラ追従
-	CCamera* pCampera = CManager::GetInstance()->GetCamera();
-	pCampera->following(pos, rot);
-
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
@@ -199,6 +196,13 @@ void CPlayer::Update(void)
 		// 終了
 		Uninit();
 	}
+
+	if (pInputKeyboard->GetTrigger(DIK_R))
+	{
+		m_IsLock = m_IsLock ? false : true;
+	}
+
+	LockOn();
 
 	// デバッグ表示の情報取得
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
@@ -710,4 +714,48 @@ void CPlayer::CollisionCircle()
 
 	// 位置設定
 	SetPos(posPlayer);
+}
+
+//========================================
+// ロックオン
+//========================================
+void CPlayer::LockOn()
+{
+	// カメラの情報取得
+	CCamera* pCampera = CManager::GetInstance()->GetCamera();
+
+	if (pCampera == nullptr)
+	{
+		return;
+	}
+
+	// 敵の情報取得
+	CEnemy* pEnemy = CEnemy::GetInstance();
+
+	if (pEnemy == nullptr)
+	{
+		D3DXVECTOR3 rot = pCampera->GetRot();
+
+		pCampera->following(GetPos(), D3DXVECTOR3(0.0f, rot.y, 0.0f));
+
+		return;
+	}
+
+	// プレイヤー・敵の位置
+	D3DXVECTOR3 posPlayer = GetPos();
+	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
+
+	// プレイヤーとの角度
+	float RotDest = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
+
+	if (m_IsLock)
+	{// 敵の方向に向く
+		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, RotDest, 0.0f));
+	}
+	else
+	{// 追従
+		D3DXVECTOR3 rot = pCampera->GetRot();
+
+		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, rot.y, 0.0f));
+	}
 }

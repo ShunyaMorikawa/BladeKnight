@@ -29,6 +29,7 @@ public:
 	float RotNor(float RotN);
 	void following(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 	void TitleCamera();
+	void CollisionArena();
 
 	D3DXVECTOR3 GetRot(void);				//ˆÊ’uŽæ“¾
 	D3DXVECTOR3 GetPosV(void);				//Ž‹“_‚ÌŽæ“¾

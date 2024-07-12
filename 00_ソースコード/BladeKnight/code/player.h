@@ -49,6 +49,8 @@ public:
 
 	void CollisionCircle();
 
+	void LockOn();
+
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
@@ -67,6 +69,7 @@ private:
 	bool m_bMowingdown;		// 攻撃
 	bool m_bCutdown;		// 切り下ろし
 	bool m_bStrongAttack;	// 強攻撃
+	bool m_IsLock;			// ロックオンフラグ
 
 	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ

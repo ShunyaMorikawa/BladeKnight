@@ -293,8 +293,7 @@ void CManager::Draw(void)
 //モード設定
 //========================================
 void CManager::SetMode(CScene::MODE mode)
-{
-	
+{	
 	if (m_pScene != nullptr)
 	{//モード破棄
 		m_pScene->Uninit();
