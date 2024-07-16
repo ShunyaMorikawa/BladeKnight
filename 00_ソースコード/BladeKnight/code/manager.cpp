@@ -338,6 +338,9 @@ CScene::~CScene()
 //========================================
 CScene* CScene::Create(int nMode)
 {
+	//CCamera型のポインタ
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();;
+
 	//CSceneのポインタ
 	CScene* pScene = nullptr;
 
@@ -363,6 +366,8 @@ CScene* CScene::Create(int nMode)
 	if (pScene != nullptr)
 	{
 		pScene->Init();
+
+		pCamera->Init();
 	}
 
 	//ポインタを返す

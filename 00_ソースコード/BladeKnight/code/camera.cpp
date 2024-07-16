@@ -35,6 +35,8 @@ CCamera::CCamera()
 	m_vecU = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//上方向ベクトル
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量
+	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_fDistance = 0.0f;							//距離
 }
 
@@ -62,6 +64,10 @@ HRESULT CCamera::Init(void)
 
 	//向き
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//プレイヤーとカメラの距離
 	m_fDistance = CAM_DISDTANCE;
@@ -245,13 +251,9 @@ void CCamera::Move(void)
 	}
 
 	//位置を更新
-	m_posV.x += m_move.x;
-	m_posV.y += m_move.y;
-	m_posV.z += m_move.z;
+	m_posV += m_move;
 
-	m_posR.x += m_move.x;
-	m_posR.y += m_move.y;
-	m_posR.z += m_move.z;
+	m_posR += m_move;
 
 	//移動量を更新(減衰させる)
 	m_move.x += (0.0f - m_move.x) * MOVEFAST;
@@ -315,13 +317,9 @@ void CCamera::CameraMoveV(void)
 	//}
 
 	//位置を更新
-	m_posV.x += m_move.x;
-	m_posV.y += m_move.y;
-	m_posV.z += m_move.z;
+	m_posV += m_move;
 
-	m_posR.x += m_move.x;
-	m_posR.y += m_move.y;
-	m_posR.z += m_move.z;
+	m_posR += m_move;
 
 	//移動量を更新(減衰させる)
 	m_move.x += (0.0f - m_move.x) * MOVEFAST;

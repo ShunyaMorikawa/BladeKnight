@@ -131,9 +131,6 @@ void CObject::UpdateAll(void)
 
 		while (1)
 		{
-			// I—¹ƒtƒ‰ƒO
-			//pNow->m_bRelease;
-
 			if (pNow == nullptr)
 			{
 				break;
