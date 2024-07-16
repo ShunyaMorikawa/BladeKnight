@@ -15,10 +15,6 @@
 #include "mapobject.h"
 #include "sound.h"
 
-//========================================
-//静的メンバ変数
-//========================================
-
 //=======================================
 //コンストラクタ
 //=======================================
@@ -114,18 +110,11 @@ void CTutorial::Update(void)
 	//CInputPad情報取得
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
-	int i = 0;
-
-	i++;
-
 	if (pInputKeyboard->GetTrigger(DIK_RETURN)||
-		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) ||
-		i >= 180)
+		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
-
-		i = 0;
 	}
 }
 

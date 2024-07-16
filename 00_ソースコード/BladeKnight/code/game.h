@@ -13,6 +13,7 @@
 //前方宣言
 //========================================
 class CObjectX;
+class CObject2D;
 class CObject3D;
 class CLight;
 class CPlayer;
@@ -64,6 +65,7 @@ private:
 	CField *m_pField;			// ポリゴンのポインタ
 	CFade* m_pFade;				// フェードのポインタ
 	CMapObject* m_pMobj;		// マップオブジェクトのポインタ
+	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 };
 
 #endif

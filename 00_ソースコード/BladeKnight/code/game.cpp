@@ -17,6 +17,7 @@
 #include "mapobject.h"
 #include "sound.h"
 #include "debugproc.h"
+#include "texture.h"
 
 //========================================
 //静的メンバ変数
@@ -41,7 +42,8 @@ CGame::CGame() :
 	m_pIdxMesh(nullptr),
 	m_pField(nullptr),
 	m_pFade(nullptr),
-	m_pMobj(nullptr)
+	m_pMobj(nullptr),
+	m_pObj2D(nullptr)
 {
 	m_pGame = nullptr;
 }
@@ -73,6 +75,9 @@ CGame *CGame::Create(void)
 //========================================
 HRESULT CGame::Init(void)
 {
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// プレイヤー生成
 	CPlayer::Create("data//FILE//player.txt");
 
@@ -97,6 +102,18 @@ HRESULT CGame::Init(void)
 	//ポーズの状態
 	m_bPause = false;
 
+	// インスタンス生成
+	m_pObj2D = CObject2D::Create();
+
+	// 位置設定
+	m_pObj2D->SetPos(D3DXVECTOR3(1100.0f, 300.0f, 0.0f));
+
+	// サイズ設定
+	m_pObj2D->SetSize(300.0f, 350.0f);
+
+	// テクスチャ設定
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide.png"));
+
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
@@ -114,6 +131,12 @@ HRESULT CGame::Init(void)
 //========================================
 void CGame::Uninit(void)
 {
+	if(m_pObj2D != nullptr)
+	{
+		m_pObj2D->Uninit();
+		m_pObj2D = nullptr;
+	}
+
 	m_pGame = nullptr;
 }
 

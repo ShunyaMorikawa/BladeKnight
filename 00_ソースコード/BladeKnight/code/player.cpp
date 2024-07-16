@@ -197,7 +197,8 @@ void CPlayer::Update(void)
 		Uninit();
 	}
 
-	if (pInputKeyboard->GetTrigger(DIK_R))
+	if (pInputKeyboard->GetTrigger(DIK_R) ||
+		pInputPad->GetTrigger(CInputPad::BUTTON_PUSHING_R, 0))
 	{
 		m_IsLock = m_IsLock ? false : true;
 	}
