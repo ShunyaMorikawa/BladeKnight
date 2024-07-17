@@ -130,6 +130,7 @@ void CPlayer::Uninit(void)
 
 	if (m_pGauge != nullptr)
 	{
+		m_pGauge->Uninit();
 		m_pGauge = nullptr;
 	}
 }

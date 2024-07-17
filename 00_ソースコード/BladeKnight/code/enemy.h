@@ -8,6 +8,7 @@
 #define _ENEMY_H_
 
 #include "character.h"
+
 //========================================
 // ‘O•ûéŒ¾
 //========================================
@@ -42,7 +43,7 @@ public:
 
 	float GetRadius() { return m_fRadius; }		// ”¼Œaæ“¾
 
-	static CEnemy* GetInstance() { return m_pEnemy; }
+	static CEnemy* GetInstance() { return m_pEnemy; }	// “G‚Ìî•ñæ“¾
 
 private:
 	//ƒƒ“ƒo•Ï”

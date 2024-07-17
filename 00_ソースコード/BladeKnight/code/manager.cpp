@@ -139,6 +139,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	if (m_pSound == nullptr)
 	{
+		// インスタンス生成
 		m_pSound = new CSound;
 
 		if (FAILED(m_pSound->Init(hWnd)))
@@ -154,6 +155,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	if (m_pFade == nullptr)
 	{
+		// フェード生成・設定
 		m_pFade = CFade::Create(CScene::MODE_TITLE);
 		m_pFade->SetFade(CScene::MODE_TITLE);
 	}
@@ -362,11 +364,12 @@ CScene* CScene::Create(int nMode)
 		break;
 	}
 
-	// シーンの初期化
 	if (pScene != nullptr)
 	{
+		// シーンの初期化
 		pScene->Init();
 
+		// カメラの初期化
 		pCamera->Init();
 	}
 

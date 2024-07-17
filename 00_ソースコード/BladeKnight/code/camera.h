@@ -47,8 +47,8 @@ private:
 	D3DXVECTOR3 m_vecU;		//上方向ベクトル
 	D3DXVECTOR3 m_rot;		//向き
 	D3DXVECTOR3 m_move;		//移動量
-	D3DXVECTOR3 m_VDest;	//視点
-	D3DXVECTOR3 m_RDest;	//注視点
+	D3DXVECTOR3 m_VDest;	//目的の視点
+	D3DXVECTOR3 m_RDest;	//目的の注視点
 	float m_fDistance;		//距離
 };
 
