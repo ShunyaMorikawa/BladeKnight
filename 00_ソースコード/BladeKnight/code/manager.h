@@ -102,7 +102,7 @@ private:
 	int m_state;	//状態変更
 	int m_NowScene;	//現在のシーン
 
-	bool m_bResult;
+	bool m_IsResult;
 
 	CRenderer *m_pRenderer;				// レンダラーのポインタ
 	CInputKeyboard *m_pInputKeyboard;	// キーボードのポインタ

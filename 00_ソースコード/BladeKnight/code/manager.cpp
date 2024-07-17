@@ -315,7 +315,7 @@ void CManager::SetMode(CScene::MODE mode)
 //========================================
 bool CManager::bResult()
 {
-	return m_bResult;
+	return m_IsResult;
 }
 
 //========================================
@@ -340,7 +340,7 @@ CScene::~CScene()
 //========================================
 CScene* CScene::Create(int nMode)
 {
-	//CCamera型のポインタ
+	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();;
 
 	//CSceneのポインタ
