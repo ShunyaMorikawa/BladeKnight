@@ -24,6 +24,8 @@
 #include "object3D.h"
 #include "sound.h"
 #include "fade.h"
+#include "texture.h"
+#include "rockonMarker.h"
 
 //========================================
 // 定数定義
@@ -52,6 +54,7 @@ CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
 	m_pEffect = nullptr;			// エフェクトのポインタ
 	m_pGauge = nullptr;				// ゲージのポインタ
 	m_IsLock = false;
+	m_pMarker = nullptr;
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -146,6 +149,15 @@ void CPlayer::Update(void)
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
+	//テクスチャの情報取得
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// 敵の情報取得
+	CEnemy* pEnemy = CEnemy::GetInstance();
+
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -154,9 +166,6 @@ void CPlayer::Update(void)
 
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
-
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// プレイヤー行動
 	Act(SPEED);
@@ -170,9 +179,6 @@ void CPlayer::Update(void)
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
-
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	if (m_nLife <= 0)
 	{
@@ -200,8 +206,25 @@ void CPlayer::Update(void)
 
 	if (pInputKeyboard->GetTrigger(DIK_R) ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_PUSHING_R, 0))
-	{
+	{// ロックオン
 		m_IsLock = m_IsLock ? false : true;
+
+		if (m_IsLock)
+		{
+			if (m_pMarker == nullptr)
+			{
+				// マーカー生成
+				m_pMarker = CRockonMarker::Create(true);
+			}
+		}
+		else
+		{
+			if (m_pMarker != nullptr)
+			{// 終了
+				m_pMarker->Uninit();
+				m_pMarker = nullptr;
+			}
+		}
 	}
 
 	LockOn();
@@ -359,8 +382,6 @@ void CPlayer::Act(float fSpeed)
 	else if (pInputKeyboard->GetPress(DIK_S) == true
 		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{//Sが押された
-		
-
 		// 歩き
 		m_bMove = true;
 
@@ -547,7 +568,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 	CMotion* pMotion = GetMotion();
 
 	// モデルのオフセット取得
-	CModel *pModelOffset = pMotion->GetModel(13);
+	CModel* pModelOffset = pMotion->GetModel(13);
 
 	// モデルのマトリックス取得
 	D3DXMATRIX MtxModel = pModelOffset->GetMtxWorld();
@@ -651,6 +672,7 @@ void CPlayer::Hit(int nLife)
 	// サウンド再生
 	pSound->PlaySoundA(CSound::SOUND_LABEL_SE_HIT);
 
+	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
 	// 体力減らす
@@ -726,16 +748,23 @@ void CPlayer::LockOn()
 	// カメラの情報取得
 	CCamera* pCampera = CManager::GetInstance()->GetCamera();
 
+	// 敵の情報取得
+	CEnemy* pEnemy = CEnemy::GetInstance();
+
+	// オブジェクト2Dの情報
+	
+
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	if (pCampera == nullptr)
 	{
 		return;
 	}
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	if (pEnemy == nullptr)
 	{
+		// プレイヤーにカメラを追従させる
 		D3DXVECTOR3 rot = pCampera->GetRot();
 
 		pCampera->following(GetPos(), D3DXVECTOR3(0.0f, rot.y, 0.0f));
@@ -753,11 +782,15 @@ void CPlayer::LockOn()
 	if (m_IsLock)
 	{// 敵の方向に向く
 		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, RotDest, 0.0f));
+
+		D3DXVECTOR3 setpos = posEnemy;
+		setpos.y += 225.0f;
+
+		m_pMarker->SetPos(setpos);
 	}
 	else
 	{// 追従
 		D3DXVECTOR3 rot = pCampera->GetRot();
-
 		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, rot.y, 0.0f));
 	}
 }

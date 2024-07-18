@@ -189,18 +189,3 @@ void CGame::Update(void)
 void CGame::Draw(void)
 {
 }
-
-//========================================
-// シングルトン
-//========================================
-CGame *CGame::GetInstance(void)
-{
-	if (m_pGame == nullptr)
-	{//インスタンス生成
-		return m_pGame = new CGame;
-	}
-	else
-	{//ポインタを返す
-		return m_pGame;
-	}
-}

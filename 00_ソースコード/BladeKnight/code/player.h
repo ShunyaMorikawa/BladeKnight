@@ -16,6 +16,7 @@ class CModel;
 class CMotion;
 class CEffect;
 class CGauge;
+class CRockonMarker;
 
 //========================================
 //プレイヤークラス
@@ -43,7 +44,7 @@ public:
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
 
-	int GetLife() { return m_nLife; }		// 体力取得
+	int GetLife() { return m_nLife; }			// 体力取得
 
 	void CollisionField();
 
@@ -63,9 +64,9 @@ private:
 
 	float m_fRadius;		// 半径
 
-	bool m_bJump;			//ジャンプ
-	bool m_bMove;			//移動
-	bool m_bWait;			//待機
+	bool m_bJump;			// ジャンプ
+	bool m_bMove;			// 移動
+	bool m_bWait;			// 待機
 	bool m_bMowingdown;		// 攻撃
 	bool m_bCutdown;		// 切り下ろし
 	bool m_bStrongAttack;	// 強攻撃
@@ -74,6 +75,7 @@ private:
 	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
+	CRockonMarker* m_pMarker;		// ロックオンマーカーのポインタ
 
 	static CPlayer* m_pPlayer;		// 自身のポインタ
 };

@@ -144,6 +144,9 @@
     <ClCompile Include="code\smallenemy.cpp">
       <Filter>character\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="code\rockonMarker.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\bullet.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="code\smallenemy.h">
       <Filter>character\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="code\rockonMarker.h">
+      <Filter>object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,12 @@
 //=======================================
 //
 // 便利関数、便利定数[useful.h]
-// Author　:　MORIKAWA SHUNYA
+// Author:森川駿弥
 //
 //=======================================
 
-#ifndef _CONVENIENCE_H_     //このマクロ定義が定義されていなかったら
-#define _CONVENIENCE_H_     //2連インクルード防止のマクロを定義する
+#ifndef _USEFUL_H_     //このマクロ定義が定義されていなかったら
+#define _USEFUL_H_     //2連インクルード防止のマクロを定義する
 
 #include "main.h"
 
@@ -16,8 +16,10 @@
 namespace USEFUL
 {// 便利関数
 
-	//	向きと角度の正規化
+	// 向きと角度の正規化
 	void NormalizeRotAngle(float& fRotAngle);
+
+	// 円の判定
 	inline bool CollisionCircle(D3DXVECTOR3 pos, float fSize)
 	{
 		D3DXVECTOR3 vec;
@@ -27,7 +29,7 @@ namespace USEFUL
 		float fLength = sqrtf(pos.x * pos.x + pos.z * pos.z);
 
 		if (fLength >= fSize)
-		{// アリーナのサイズ超えたら
+		{// サイズ超えたら
 			return true;
 		}
 
@@ -39,7 +41,7 @@ namespace USEFUL
 // 定数定義
 //=======================================
 namespace Constance
-{
+{// 便利定数
 	const float ARENA_SIZE = 2250.0f;	// 闘技場のサイズ
 }
 
