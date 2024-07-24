@@ -25,7 +25,7 @@
 #include "sound.h"
 #include "fade.h"
 #include "texture.h"
-#include "rockonMarker.h"
+#include "lockonMarker.h"
 
 //========================================
 // 定数定義
@@ -38,6 +38,7 @@ const float SPEED = 4.0f;		// 速度
 const float INERTIA = 0.3f;		// 慣性
 const float RADIUS = 50.0f;		// 半径
 const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
+const float MARKERPOS = 200.0f;	// ロックオンマーカーの位置
 }
 
 //========================================
@@ -206,27 +207,27 @@ void CPlayer::Update(void)
 
 	if (pInputKeyboard->GetTrigger(DIK_R) ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_PUSHING_R, 0))
-	{// ロックオン
+	{
 		m_IsLock = m_IsLock ? false : true;
 
 		if (m_IsLock)
 		{
 			if (m_pMarker == nullptr)
-			{
-				// マーカー生成
-				m_pMarker = CRockonMarker::Create(true);
+			{// マーカー生成
+				m_pMarker = CLockonMarker::Create(true);
 			}
 		}
 		else
 		{
 			if (m_pMarker != nullptr)
-			{// 終了
+			{// マーカー削除
 				m_pMarker->Uninit();
 				m_pMarker = nullptr;
 			}
 		}
 	}
 
+	// ロックオン
 	LockOn();
 
 	// デバッグ表示の情報取得
@@ -262,7 +263,7 @@ void CPlayer::Act(float fSpeed)
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	//CCamera型のポインタ
-	CCamera* pCamera = CManager::GetInstance()->GetCamera();;
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	// カメラの向き取得
 	D3DXVECTOR3 Camrot = pCamera->GetRot();
@@ -407,10 +408,8 @@ void CPlayer::Act(float fSpeed)
 			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
-			// サウンド情報取得
-			CSound* pSound = CManager::GetInstance()->GetSound();
-
 			// サウンド再生
+			CSound* pSound = CManager::GetInstance()->GetSound();
 			pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 		}
 	}
@@ -784,7 +783,7 @@ void CPlayer::LockOn()
 		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, RotDest, 0.0f));
 
 		D3DXVECTOR3 setpos = posEnemy;
-		setpos.y += 225.0f;
+		setpos.y += MARKERPOS;
 
 		m_pMarker->SetPos(setpos);
 	}

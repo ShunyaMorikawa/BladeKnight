@@ -5,22 +5,22 @@
 //
 //=======================================
 
-#ifndef _ROCKONMARKER_H_     //このマクロ定義が定義されていなかったら
-#define _ROCKONMARKER_H_     //2連インクルード防止のマクロを定義する
+#ifndef _LOCKONMARKER_H_     //このマクロ定義が定義されていなかったら
+#define _LOCKONMARKER_H_     //2連インクルード防止のマクロを定義する
 
 #include "billboard.h"
 
 //===========================================
 //エフェクトクラス
 //===========================================
-class CRockonMarker : public CBillboard
+class CLockonMarker : public CBillboard
 {
 public:
-	CRockonMarker(int nPriority = 5);		//コンストラクタ
-	~CRockonMarker();		//デストラクタ
+	CLockonMarker(int nPriority = 5);		//コンストラクタ
+	~CLockonMarker();		//デストラクタ
 
 	//メンバ関数
-	static CRockonMarker* Create(bool alpha);
+	static CLockonMarker* Create(bool alpha);
 
 	HRESULT Init(bool alpha);
 	void Uninit(void);

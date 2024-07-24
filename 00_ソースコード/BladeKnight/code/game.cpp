@@ -29,7 +29,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 //========================================
 namespace
 {
-	const int TRANSITIONTIME = 180;		// 遷移するまでの時間
+const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 }
 
 //========================================
@@ -40,9 +40,7 @@ CGame::CGame() :
 	m_nTransition(0),
 	m_pObjectX(nullptr),
 	m_pIdxMesh(nullptr),
-	m_pField(nullptr),
 	m_pFade(nullptr),
-	m_pMobj(nullptr),
 	m_pObj2D(nullptr)
 {
 	m_pGame = nullptr;
@@ -82,7 +80,7 @@ HRESULT CGame::Init(void)
 	CPlayer::Create("data//FILE//player.txt");
 
 	// フィールド生成
-	m_pField = CField::Create();
+	CField::Create();
 
 	// エネミー生成
 	CEnemy::Create("data//FILE//motion.txt");
@@ -94,7 +92,7 @@ HRESULT CGame::Init(void)
 	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
 
 	// マップオブジェクト生成
-	m_pMobj = CMapObject::Create();
+	CMapObject::Create();
 
 	// 遷移時間
 	m_nTransition = 0;

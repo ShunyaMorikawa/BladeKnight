@@ -5,7 +5,7 @@
 //
 //=======================================
 
-#include "rockonMarker.h"      //作成したeffect.hをインクルードする
+#include "lockonMarker.h"      //作成したeffect.hをインクルードする
 #include "debugproc.h"
 #include "manager.h"
 #include "renderer.h"
@@ -16,36 +16,36 @@
 //===========================================
 namespace
 {
-const float MARKERSIZE = 25.0f;		// マーカーのサイズ
-const std::string TEXTURE = "data\\TEXTURE\\effect\\effect000.jpg";	// マーカーのテクスチャ
+const float MARKERSIZE = 90.0f;		// マーカーのサイズ
+const std::string TEXTURE = "data\\TEXTURE\\rockon_point2.png";	// マーカーのテクスチャ
 }
 
 //===========================================
 //コンストラクタ
 //===========================================
-CRockonMarker::CRockonMarker(int nPriority) : CBillboard(nPriority)
+CLockonMarker::CLockonMarker(int nPriority) : CBillboard(nPriority)
 {
 }
 
 //===========================================
 //デストラクタ
 //===========================================
-CRockonMarker::~CRockonMarker()
+CLockonMarker::~CLockonMarker()
 {
 }
 
 //===========================================
 //生成
 //===========================================
-CRockonMarker *CRockonMarker::Create(bool alpha)
+CLockonMarker *CLockonMarker::Create(bool alpha)
 {
-	//CRockonMarker型のポインタ
-	CRockonMarker *pRockonMarker = nullptr;
+	//CLockonMarker型のポインタ
+	CLockonMarker *pRockonMarker = nullptr;
 
 	if (pRockonMarker == nullptr)
 	{//nullptrの時
 		//インスタンス生成
-		pRockonMarker = new CRockonMarker;
+		pRockonMarker = new CLockonMarker;
 
 		//初期化
 		pRockonMarker->Init(alpha);
@@ -58,7 +58,7 @@ CRockonMarker *CRockonMarker::Create(bool alpha)
 //===========================================
 //初期化処理
 //===========================================
-HRESULT CRockonMarker::Init(bool alpha)
+HRESULT CLockonMarker::Init(bool alpha)
 {
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
@@ -81,7 +81,7 @@ HRESULT CRockonMarker::Init(bool alpha)
 //===========================================
 //終了処理
 //===========================================
-void CRockonMarker::Uninit(void)
+void CLockonMarker::Uninit(void)
 {
 	//終了
 	CBillboard::Uninit();
@@ -90,7 +90,7 @@ void CRockonMarker::Uninit(void)
 //===========================================
 //更新処理
 //===========================================
-void CRockonMarker::Update(void)
+void CLockonMarker::Update(void)
 {
 	//更新
 	CBillboard::Update();
@@ -99,7 +99,7 @@ void CRockonMarker::Update(void)
 //===========================================
 //描画処理
 //===========================================
-void CRockonMarker::Draw(void)
+void CLockonMarker::Draw(void)
 {
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 

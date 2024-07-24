@@ -16,7 +16,7 @@ class CModel;
 class CMotion;
 class CEffect;
 class CGauge;
-class CRockonMarker;
+class CLockonMarker;
 
 //========================================
 //プレイヤークラス
@@ -75,7 +75,7 @@ private:
 	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
-	CRockonMarker* m_pMarker;		// ロックオンマーカーのポインタ
+	CLockonMarker* m_pMarker;		// ロックオンマーカーのポインタ
 
 	static CPlayer* m_pPlayer;		// 自身のポインタ
 };

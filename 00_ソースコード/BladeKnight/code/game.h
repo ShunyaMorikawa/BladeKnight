@@ -62,9 +62,7 @@ private:
 
 	CObjectX *m_pObjectX;		// Xファイルオブジェクトのポインタ
 	CIdxMeshField *m_pIdxMesh;	// メッシュフィールドのポインタ
-	CField *m_pField;			// ポリゴンのポインタ
 	CFade* m_pFade;				// フェードのポインタ
-	CMapObject* m_pMobj;		// マップオブジェクトのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 };
 
