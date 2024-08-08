@@ -49,6 +49,7 @@ private:
 	//メンバ変数
 	int m_nLife;		// 体力
 	int m_nCnt;			// カウント
+	int m_nState;		// 状態
 
 	float m_fRadius;	// 半径
 

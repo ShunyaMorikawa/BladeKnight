@@ -5,7 +5,7 @@
 //
 //=======================================
 
-#include "lockonMarker.h"      //作成したeffect.hをインクルードする
+#include "lockonMarker.h"
 #include "debugproc.h"
 #include "manager.h"
 #include "renderer.h"

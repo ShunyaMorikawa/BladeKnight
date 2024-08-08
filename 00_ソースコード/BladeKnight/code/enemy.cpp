@@ -27,15 +27,15 @@
 //========================================
 namespace
 {
-	const int LIFE = 10;			// 体力
-	const int ATTACKCOUNTER = 180;	// 攻撃するまでの時間
-	const int MAXDIRECTION = 8;		// 弾を飛ばす最大方向
-	const float BULLETMOVE = 10.0f;	// 弾の移動量
-	const float SPEED = 0.3f;		// 速度
-	const float GRAVITY = 2.0f;		// 重力
-	const float INERTIA = 0.1f;		// 慣性
-	const float RADIUS = 200.0f;	// 半径
-	const float NOCKBACK = 50.0f;	// ノックバック値
+const int LIFE = 10;			// 体力
+const int ATTACKCOUNTER = 180;	// 攻撃するまでの時間
+const int MAXDIRECTION = 8;		// 弾を飛ばす最大方向
+const float BULLETMOVE = 10.0f;	// 弾の移動量
+const float SPEED = 0.3f;		// 速度
+const float GRAVITY = 2.0f;		// 重力
+const float INERTIA = 0.1f;		// 慣性
+const float RADIUS = 200.0f;	// 半径
+const float NOCKBACK = 50.0f;	// ノックバック値
 }
 
 //========================================
@@ -49,6 +49,7 @@ CEnemy* CEnemy::m_pEnemy = nullptr;
 CEnemy::CEnemy() : 
 	m_nLife(0),
 	m_fRadius(0.0f),
+	m_nState(STATE_NORMAL),
 	m_bWalk(false),
 	m_bAttack(false),
 	m_pGauge(nullptr)
@@ -250,6 +251,14 @@ void CEnemy::Update(void)
 	// 闘技場との当たり判定
 	CollisionCircle();
 
+	switch (m_nState)
+	{
+	case STATE_NORMAL:
+		break;
+	default:
+		break;
+	}
+
 	// デバッグ表示
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
@@ -285,10 +294,6 @@ void CEnemy::Hit(int nLife)
 
 	// 状態取得
 	int nState = GetState();
-
-	int nCount = 0;
-
-	nCount++;
 
 	// 体力減らす
 	m_nLife -= nLife;

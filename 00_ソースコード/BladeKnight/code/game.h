@@ -56,7 +56,7 @@ public:
 private:
 	static CGame *m_pGame;		// ゲームマネージャーのポインタ
 
-	int m_nTransition;			// 加算
+	int m_nTransition;			// カウンター
 
 	bool m_bPause;				// ポーズ状態のON/OFF
 

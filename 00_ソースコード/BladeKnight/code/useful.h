@@ -42,7 +42,7 @@ namespace USEFUL
 //=======================================
 namespace Constance
 {// 便利定数
-	const float ARENA_SIZE = 2250.0f;	// 闘技場のサイズ
+const float ARENA_SIZE = 2250.0f;	// 闘技場のサイズ
 }
 
 #endif

@@ -16,13 +16,13 @@
 //=======================================
 namespace
 {
-	const float CAMERA_SPEED = 1.5f;	// カメラの移動速度
-	const float MOVEFAST = 0.2f;		// カメラの慣性
-	const float CAMR = 25.0f;			// 注視点の距離
-	const float CAMV_MOVE = 0.03f;		// 視点の移動速度
-	const float CAM_DISDTANCE = 400.0f;	// カメラとプレイヤーの距離
-	const float CAM_R_INERTIA = 0.2f;	// 注視点の慣性
-	const float CAM_V_INERTIA = 0.2f;	// 視点の慣性
+const float CAMERA_SPEED = 1.5f;	// カメラの移動速度
+const float MOVEFAST = 0.2f;		// カメラの慣性
+const float CAMR = 25.0f;			// 注視点の距離
+const float CAMV_MOVE = 0.03f;		// 視点の移動速度
+const float CAM_DISDTANCE = 400.0f;	// カメラとの距離
+const float CAM_R_INERTIA = 0.2f;	// 注視点の慣性
+const float CAM_V_INERTIA = 0.2f;	// 視点の慣性
 }
 
 //=======================================
@@ -151,114 +151,6 @@ void CCamera::SetCamera(void)
 
 	//ビューマトリックスの設定
 	pDevice->SetTransform(D3DTS_VIEW, &m_mtxView);
-}
-
-//=======================================
-//カメラの移動
-//=======================================
-void CCamera::Move(void)
-{
-	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = nullptr;
-	pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	//Aキーが押された
-	if (pInputKeyboard->GetPress(DIK_A) == true)
-	{
-		if (pInputKeyboard->GetPress(DIK_W) == true)
-		{//左上
-			m_posV.x += cosf(m_rot.y + (-D3DX_PI * 0.75f)) * CAMERA_SPEED;
-			m_posV.z += sinf(m_rot.y + (-D3DX_PI * 0.75f)) * CAMERA_SPEED;
-
-			m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-			m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-		}
-		else if (pInputKeyboard->GetPress(DIK_S) == true)
-		{//左下
-			m_posV.x += cosf(m_rot.y + (-D3DX_PI * 0.25f)) * CAMERA_SPEED;
-			m_posV.z += sinf(m_rot.y + (-D3DX_PI * 0.25f)) * CAMERA_SPEED;
-
-			m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-			m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-		}
-		else
-		{//左
-			m_posV.x += cosf(m_rot.y + (-D3DX_PI * 0.5f)) * CAMERA_SPEED;
-			m_posV.z += sinf(m_rot.y + (-D3DX_PI * 0.5f)) * CAMERA_SPEED;
-
-			m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-			m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-		}
-	}
-	//Dキーが押された
-	else if (pInputKeyboard->GetPress(DIK_D) == true)
-	{
-		if (pInputKeyboard->GetPress(DIK_W) == true)
-		{//右上
-			m_posV.x += cosf(m_rot.y + (D3DX_PI * 0.75f)) * CAMERA_SPEED;
-			m_posV.z += sinf(m_rot.y + (D3DX_PI * 0.75f)) * CAMERA_SPEED;
-
-			m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-			m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-		}
-		else if (pInputKeyboard->GetPress(DIK_S) == true)
-		{//右下
-			m_posV.x += cosf(m_rot.y + (D3DX_PI * 0.25f)) * CAMERA_SPEED;
-			m_posV.z += sinf(m_rot.y + (D3DX_PI * 0.25f)) * CAMERA_SPEED;
-
-			m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-			m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-		}
-		else
-		{//右
-			m_posV.x += cosf(m_rot.y + (+D3DX_PI * 0.5f)) * CAMERA_SPEED;
-			m_posV.z += sinf(m_rot.y + (+D3DX_PI * 0.5f)) * CAMERA_SPEED;
-
-			m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-			m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-		}
-	}
-	//Wキーが押された
-	else if (pInputKeyboard->GetPress(DIK_W) == true)
-	{
-		m_posV.x -= cosf(m_rot.y) * CAMERA_SPEED;
-		m_posV.z -= sinf(m_rot.y) * CAMERA_SPEED;
-
-		m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-		m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-	}
-	//Sキーが押された
-	else if (pInputKeyboard->GetPress(DIK_S) == true)
-	{
-		m_posV.x += cosf(m_rot.y) * CAMERA_SPEED;
-		m_posV.z += sinf(m_rot.y) * CAMERA_SPEED;
-
-		m_posR.x = m_posV.x - cosf(m_rot.y) * m_fDistance;
-		m_posR.z = m_posV.z - sinf(m_rot.y) * m_fDistance;
-	}
-
-	//Yキーが押された
-	if (pInputKeyboard->GetPress(DIK_Y) == true)
-	{
-		m_posV.y += CAMERA_SPEED;
-		m_posV.z += CAMERA_SPEED;
-	}
-	//Nキーが押された
-	else if (pInputKeyboard->GetPress(DIK_N) == true)
-	{
-		m_posV.y -= CAMERA_SPEED;
-		m_posV.z -= CAMERA_SPEED;
-	}
-
-	//位置を更新
-	m_posV += m_move;
-
-	m_posR += m_move;
-
-	//移動量を更新(減衰させる)
-	m_move.x += (0.0f - m_move.x) * MOVEFAST;
-	m_move.y += (0.0f - m_move.y) * MOVEFAST;
-	m_move.z += (0.0f - m_move.z) * MOVEFAST;
 }
 
 //=======================================
@@ -406,8 +298,8 @@ void CCamera::TitleCamera()
 	}
 
 	// 始点の設定
-	m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
-	m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
+	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
+	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
 }
 
 //=======================================

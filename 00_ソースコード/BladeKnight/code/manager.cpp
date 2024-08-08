@@ -1,6 +1,6 @@
 //========================================
 //
-// 管理manager.cp]
+// 管理[manager.cpp]
 // Author：森川駿弥
 //
 //========================================
@@ -179,7 +179,6 @@ void CManager::Uninit(void)
 	//オブジェクトの破棄
 	CObject::ReleaseAll();
 	
-	//レンダラーの破棄
 	if (m_pRenderer != nullptr)
 	{//レンダラーの終了
 		m_pRenderer->Uninit();
@@ -212,8 +211,6 @@ void CManager::Uninit(void)
 	{//テクスチャ破棄
 		m_pTexture->Unload();
 		delete m_pTexture;
-
-		//nullptrにする
 		m_pTexture = nullptr;
 	}
 
@@ -239,7 +236,6 @@ void CManager::Update(void)
 {
 	if (m_pRenderer != nullptr)
 	{//g_pRendererがnullptrの時
-		//更新処理
 		m_pRenderer->Update();
 	}
 	
@@ -269,7 +265,7 @@ void CManager::Update(void)
 	}
 
 	if (m_pCamera != nullptr)
-	{// フェード更新
+	{// カメラ更新
 		m_pCamera->Update();
 	}
 }

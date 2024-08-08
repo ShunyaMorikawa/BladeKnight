@@ -29,7 +29,7 @@ public:
 
 private:
 	// ƒƒ“ƒo•Ï”
-	bool m_bAlpha;
+	bool m_bAlpha;		// ‰ÁZ‡¬
 };
 
 #endif

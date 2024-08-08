@@ -38,7 +38,7 @@ const float SPEED = 4.0f;		// 速度
 const float INERTIA = 0.3f;		// 慣性
 const float RADIUS = 50.0f;		// 半径
 const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
-const float MARKERPOS = 200.0f;	// ロックオンマーカーの位置
+const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
 }
 
 //========================================
@@ -176,6 +176,11 @@ void CPlayer::Update(void)
 	{// 体力減算
 		Hit(1);
 	}
+
+	if (pInputKeyboard->GetPress(DIK_F3))
+	{// 体力減算
+		Hit(LIFE);
+	}
 #endif
 
 	// ゲージに体力設定
@@ -289,8 +294,6 @@ void CPlayer::Act(float fSpeed)
 		if (pInputKeyboard->GetPress(DIK_W) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 		{//左上
-
-			// 歩き
 			m_bMove = true;
 
 			move.x += sinf(Camrot.y + D3DX_PI * 0.75f) * fSpeed;
@@ -302,8 +305,6 @@ void CPlayer::Act(float fSpeed)
 		else if (pInputKeyboard->GetPress(DIK_S) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 		{//左下
-
-			// 歩き
 			m_bMove = true;
 
 			move.x += sinf(Camrot.y + D3DX_PI * 0.25f) * fSpeed;
@@ -314,8 +315,6 @@ void CPlayer::Act(float fSpeed)
 		}
 		else
 		{//左
-
-			// 歩き
 			m_bMove = true;
 
 			move.x += sinf(Camrot.y + D3DX_PI * 0.5f) * fSpeed;
@@ -331,8 +330,6 @@ void CPlayer::Act(float fSpeed)
 		if (pInputKeyboard->GetPress(DIK_W) == true
 			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 		{//右上
-
-			// 歩き
 			m_bMove = true;
 
 			move.x += sinf(Camrot.y + -D3DX_PI * 0.75f) * fSpeed;
@@ -344,8 +341,6 @@ void CPlayer::Act(float fSpeed)
 		else if (pInputKeyboard->GetPress(DIK_S) == true
 			|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 		{//右下
-
-			// 歩き
 			m_bMove = true;
 
 			move.x += sinf(Camrot.y + -D3DX_PI * 0.25f) * fSpeed;
@@ -356,8 +351,6 @@ void CPlayer::Act(float fSpeed)
 		}
 		else
 		{//右
-
-			// 歩き
 			m_bMove = true;
 
 			move.x += sinf(Camrot.y + -D3DX_PI * 0.5f) * fSpeed;
@@ -370,8 +363,6 @@ void CPlayer::Act(float fSpeed)
 	else if (pInputKeyboard->GetPress(DIK_W) == true
 		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 	{//Wが押された
-
-		// 歩き
 		m_bMove = true;
 
 		move.x += sinf(Camrot.y + D3DX_PI) * fSpeed;
@@ -383,7 +374,6 @@ void CPlayer::Act(float fSpeed)
 	else if (pInputKeyboard->GetPress(DIK_S) == true
 		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{//Sが押された
-		// 歩き
 		m_bMove = true;
 
 		move.x += sinf(Camrot.y + D3DX_PI * 0.0f) * fSpeed;
@@ -613,6 +603,9 @@ void CPlayer::CollisionEnemy(int nDamage)
 
 		// ベクトル代入
 		fLength = D3DXVec3Length(&vec);
+
+		// 無敵時間
+		int Invincible = 0;
 
 		if (fLength <= radiusEnemy + fRadius)
 		{// ヒット

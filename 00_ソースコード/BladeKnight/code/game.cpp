@@ -5,7 +5,6 @@
 //
 //========================================
 #include "game.h"
-#include "manager.h"
 #include "camera.h"
 #include "input.h"
 #include "player.h"
@@ -110,7 +109,7 @@ HRESULT CGame::Init(void)
 	m_pObj2D->SetSize(300.0f, 350.0f);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide.png"));
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide_game.png"));
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();

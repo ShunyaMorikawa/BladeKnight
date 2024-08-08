@@ -14,8 +14,8 @@
 //========================================
 namespace
 {
-	const float LENGTH = 640.0f;		// ゲージの長さ
-	const char* GAUGETEX[] =
+const float LENGTH = 640.0f;		// ゲージの長さ
+const char* GAUGETEX[] =
 	{// 読み込むテクスチャ
 		"",
 		"data\\texture\\gauge.png",
@@ -77,7 +77,7 @@ HRESULT CGauge::Init()
 	for (int i = 0; i < CGauge::TYPE_MAX; i++)
 	{
 		if (m_p2D[i] == nullptr)
-		{
+		{// 種類分回す
 			m_p2D[i] = CObject2D::Create();
 
 			m_p2D[i]->BindTexture(pTexture->Regist(GAUGETEX[i]));
@@ -87,7 +87,7 @@ HRESULT CGauge::Init()
 	// 頂点情報の設定
 	SetVertex();
 
-	//頂点カラーの設定
+	// 頂点カラーの設定
 	m_p2D[CGauge::TYPE_BASE]->SetCol(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
 
 	return S_OK;
@@ -113,14 +113,13 @@ void CGauge::Update()
 		if (m_p2D[i] != nullptr)
 		{
 			m_p2D[i]->Update();
-
 		}
 	}
 
-	//頂点情報
+	// 頂点情報
 	SetVertex();
 
-	//テクスチャ座標の更新(U値)
+	// テクスチャ座標の更新(U値)
 	m_aTexU += 0.002f;
 }
 
@@ -143,13 +142,13 @@ void CGauge::Draw()
 //========================================
 void CGauge::SetSize(float fWidht, float fHeight)
 {
-	//対角線の長さ(横、縦)
+	// 対角線の長さ(横、縦)
 	m_fLength = sqrtf(fWidht * fWidht + fHeight * fHeight) * 0.5f;
 
-	//対角線の向き(横、縦)
+	// 対角線の向き(横、縦)
 	m_fAngle = atan2f(fWidht, fHeight);
 
-	//頂点情報
+	// 頂点情報
 	SetVertex();
 }
 
@@ -174,10 +173,10 @@ void CGauge::SetVertex()
 		// 頂点情報の取得
 		LPDIRECT3DVERTEXBUFFER9 Vertex = m_p2D[i]->GetVtxBuff();
 
-		//頂点情報へのポインタ
+		// 頂点情報へのポインタ
 		VERTEX_2D* pVtx;
 
-		//頂点バッファをロックし、頂点情報へのポインタを取得
+		// 頂点バッファをロックし、頂点情報へのポインタを取得
 		Vertex->Lock(0, 0, (void**)&pVtx, 0);
 
 		switch (i)
@@ -207,10 +206,10 @@ void CGauge::SetVertex()
 	// 頂点情報の取得
 	LPDIRECT3DVERTEXBUFFER9 Vertex = m_p2D[CGauge::TYPE_GAUGE]->GetVtxBuff();
 
-	//頂点情報へのポインタ
+	// 頂点情報へのポインタ
 	VERTEX_2D* pVtx;
 
-	//頂点バッファをロックし、頂点情報へのポインタを取得
+	// 頂点バッファをロックし、頂点情報へのポインタを取得
 	Vertex->Lock(0, 0, (void**)&pVtx, 0);
 
 	pVtx[0].tex = D3DXVECTOR2(m_aTexU, 0.0f);
@@ -218,6 +217,6 @@ void CGauge::SetVertex()
 	pVtx[2].tex = D3DXVECTOR2(m_aTexU, 1.0f);
 	pVtx[3].tex = D3DXVECTOR2(m_aTexU + ratio, 1.0f);
 
-	//頂点バッファをアンロック
+	// 頂点バッファをアンロック
 	Vertex->Unlock();
 }

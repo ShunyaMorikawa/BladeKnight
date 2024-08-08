@@ -77,7 +77,7 @@ HRESULT CTutorial::Init(void)
 	m_pObj2D->SetSize(300.0f, 350.0f);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide.png"));
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide_tutorial.png"));
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();

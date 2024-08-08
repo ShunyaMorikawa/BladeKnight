@@ -24,7 +24,6 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void SetCamera(void);
-	void Move(void);
 	void CameraMoveV(void);
 	float RotNor(float RotN);
 	void following(D3DXVECTOR3 pos, D3DXVECTOR3 rot);

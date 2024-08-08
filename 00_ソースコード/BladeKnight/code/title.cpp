@@ -9,6 +9,7 @@
 #include "input.h"
 #include "fade.h"
 #include "sound.h"
+#include "camera.h"
 
 //=======================================
 //マクロ定義
@@ -110,6 +111,12 @@ void CTitle::Update(void)
 	
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// カメラの情報取得
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
+
+	// タイトルカメラ
+	pCamera->TitleCamera();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||

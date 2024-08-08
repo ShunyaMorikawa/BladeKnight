@@ -23,6 +23,7 @@ public:
 	{// キャラクターの状態
 		STATE_NONE = 0,
 		STATE_NORMAL,		// 通常
+		STATE_DAMAGE,		// ダメージ
 		STATE_DEATH,		// 死亡
 		STATE_MAX
 	};
