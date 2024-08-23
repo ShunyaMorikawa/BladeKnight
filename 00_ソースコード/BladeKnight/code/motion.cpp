@@ -212,6 +212,11 @@ void CMotion::SetInfo(int nType)
 //========================================
 void CMotion::Set(int nType)
 {
+	if (!m_aInfo[m_nType].bLoop && !m_bFinish)
+	{
+		return;
+	}
+
 	if (nType != m_nType)
 	{// åªç›ÇÃÉÇÅ[ÉVÉáÉìÇ∆à·Ç¡ÇΩÇÁ
 		m_nType = nType;

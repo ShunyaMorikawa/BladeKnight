@@ -288,6 +288,8 @@ void CPlayer::Act(float fSpeed)
 	// 目的の向き取得
 	D3DXVECTOR3 RotDest = GetRotDest();
 
+
+
 	if (pInputKeyboard->GetPress(DIK_A) == true
 		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{//Aが押された
@@ -508,28 +510,19 @@ void CPlayer::Motion()
 	{// 切り下ろしモーション
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
 
-		if (pMotion->IsFinish() && m_bCutdown == true)
-		{// モーション終了
-			m_bCutdown = false;
-		}
+		m_bCutdown = false;
 	}
 	else if (m_bMowingdown)
 	{// 薙ぎ払い
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_MOWINGDOWN);
 
-		if (pMotion->IsFinish() && m_bMowingdown == true)
-		{// モーション終了
-			m_bMowingdown = false;
-		}
+		m_bMowingdown = false;
 	}
 	else if (m_bStrongAttack)
 	{// 強攻撃
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_STRONGATTACK);
 
-		if (pMotion->IsFinish() && m_bStrongAttack == true)
-		{// モーション終了
-			m_bStrongAttack = false;
-		}
+		m_bStrongAttack = false;
 	}
 	else
 	{// 待機モーション
@@ -597,7 +590,6 @@ void CPlayer::CollisionEnemy(int nDamage)
 #ifdef _DEBUG
 	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), radiusEnemy, 1, true, CEffect::TYPE::TYPE_NORMAL);
 #endif
-
 		// ベクトルを求める
 		D3DXVECTOR3 vec = posEnemy - pos;
 
@@ -743,9 +735,6 @@ void CPlayer::LockOn()
 	// 敵の情報取得
 	CEnemy* pEnemy = CEnemy::GetInstance();
 
-	// オブジェクト2Dの情報
-	
-
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
@@ -775,9 +764,9 @@ void CPlayer::LockOn()
 	{// 敵の方向に向く
 		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, RotDest, 0.0f));
 
+		// マーカーの位置設定
 		D3DXVECTOR3 setpos = posEnemy;
 		setpos.y += MARKERPOS;
-
 		m_pMarker->SetPos(setpos);
 	}
 	else

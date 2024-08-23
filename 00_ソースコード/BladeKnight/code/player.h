@@ -24,6 +24,16 @@ class CLockonMarker;
 class CPlayer : public CCharacter
 {
 public:
+	// 状態
+	enum PLAYERSTATE
+	{// プレイヤーの状態
+		STATE_NONE = 0,
+		STATE_NORMAL,		// 通常
+		STATE_DAMAGE,		// ダメージ
+		STATE_DETAH,		// 死亡
+		STATE_MAX
+	};
+
 	CPlayer(int nPriority = 4);		//コンストラクタ
 	~CPlayer();		//デストラクタ
 
