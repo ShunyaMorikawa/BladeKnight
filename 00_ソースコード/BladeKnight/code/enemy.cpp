@@ -30,6 +30,7 @@ namespace
 const int LIFE = 10;			// 体力
 const int ATTACKCOUNTER = 180;	// 攻撃するまでの時間
 const int MAXDIRECTION = 8;		// 弾を飛ばす最大方向
+const int BULLETLIFE = 120;		// 弾の寿命
 const float BULLETMOVE = 10.0f;	// 弾の移動量
 const float SPEED = 0.3f;		// 速度
 const float GRAVITY = 2.0f;		// 重力
@@ -221,7 +222,7 @@ void CEnemy::Update(void)
 			bulletmove.z = cosf(fAngle) * BULLETMOVE;
 
 			// 弾の生成
-			CBullet::Create(pos, bulletmove, 120);
+			CBullet::Create(pos, bulletmove, BULLETLIFE);
 		}
 
 		// サウンド情報取得
@@ -333,7 +334,7 @@ void CEnemy::Hit(int nLife)
 		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 00.0f));
 
 		// サイズ設定
-		pObje2D->SetSize(1280.0f, 200.0f);
+		pObje2D->SetSize(SCREEN_WIDTH, 200.0f);
 
 		// 勝利テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));
