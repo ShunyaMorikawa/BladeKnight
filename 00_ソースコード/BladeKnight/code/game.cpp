@@ -177,7 +177,6 @@ void CGame::Update(void)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 	}
 #endif
-
 }
 
 //========================================

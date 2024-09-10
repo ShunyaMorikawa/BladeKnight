@@ -216,7 +216,7 @@ void CPlayer::Update(void)
 		m_IsLock = m_IsLock ? false : true;
 
 		if (m_IsLock)
-		{
+		{// ロックオン
 			if (m_pMarker == nullptr)
 			{// マーカー生成
 				m_pMarker = CLockonMarker::Create(true);
@@ -287,8 +287,6 @@ void CPlayer::Act(float fSpeed)
 
 	// 目的の向き取得
 	D3DXVECTOR3 RotDest = GetRotDest();
-
-
 
 	if (pInputKeyboard->GetPress(DIK_A) == true
 		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
@@ -396,8 +394,7 @@ void CPlayer::Act(float fSpeed)
 		m_WalkCounter = (m_WalkCounter + 1) % 20;
 
 		if (m_WalkCounter == 0)
-		{
-			// パーティクル生成
+		{// 一定間隔でパーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
 			// サウンド再生
@@ -436,11 +433,11 @@ void CPlayer::Act(float fSpeed)
 	// モーション
 	Motion();
 
-	// フィールドとの当たり判定
+	// フィールドとの判定
 	CollisionField();
 
 	// 闘技場との当たり判定
-	CollisionCircle();
+	CollisionArena();
 }
 
 //========================================
@@ -708,7 +705,7 @@ void CPlayer::CollisionField()
 //========================================
 // 闘技場との判定
 //========================================
-void CPlayer::CollisionCircle()
+void CPlayer::CollisionArena()
 {
 	// プレイヤー位置
 	D3DXVECTOR3 posPlayer = GetPos();
@@ -747,8 +744,13 @@ void CPlayer::LockOn()
 	{
 		// プレイヤーにカメラを追従させる
 		D3DXVECTOR3 rot = pCampera->GetRot();
-
 		pCampera->following(GetPos(), D3DXVECTOR3(0.0f, rot.y, 0.0f));
+
+		if (m_pMarker != nullptr)
+		{// マーカー削除
+			m_pMarker->Uninit();
+			m_pMarker = nullptr;
+		}
 
 		return;
 	}

@@ -58,7 +58,7 @@ public:
 
 	void CollisionField();
 
-	void CollisionCircle();
+	void CollisionArena();
 
 	void LockOn();
 

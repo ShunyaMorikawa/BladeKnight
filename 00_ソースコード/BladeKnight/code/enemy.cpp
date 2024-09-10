@@ -158,6 +158,9 @@ void CEnemy::Update(void)
 	// プレイヤー情報の取得
 	CPlayer* pPlayer = CPlayer::GetInstance();
 
+	// キーボードの情報取得
+	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
 	if (pPlayer != nullptr)
 	{
 		// 位置取得
@@ -259,12 +262,20 @@ void CEnemy::Update(void)
 		break;
 	}
 
+#ifdef _DEBUG
+	if (pInputKeyboard->GetPress(DIK_F4))
+	{// 体力減算
+		Hit(LIFE);
+	}
+#endif
+
 	// デバッグ表示
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	pDebugProc->Print("敵の移動量：%f、%f、%f\n", move.x, move.y, move.z);
 	pDebugProc->Print("敵の体力：%d\n", m_nLife);
+	pDebugProc->Print("F4で敵の体力0\n");
 }
 
 //========================================
