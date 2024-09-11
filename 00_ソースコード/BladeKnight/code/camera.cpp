@@ -18,13 +18,14 @@ namespace
 {
 const float CAMERA_POS_Y = 375.0f;		// カメラのY座標の初期位置
 const float CAMERA_POS_Z = -1000.0f;	// カメラのZ座標の初期位置
-const float CAMERA_DISDTANCE = 400.0f;	// カメラとの距離
+const float CAMERA_DISTANCE = 400.0f;	// カメラとの距離
 const float CAMERA_SPEED = 1.5f;		// カメラの移動速度
 const float CMAERA_INERTIA = 0.2f;		// カメラの慣性
 const float CAMERA_R_DISTANCE = 25.0f;	// 注視点の距離
 const float CAMERA_V_MOVE = 0.03f;		// 視点の移動速度
 const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
 const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
+const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
 }
 
 //=======================================
@@ -67,12 +68,12 @@ HRESULT CCamera::Init(void)
 	//向き
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
+	// 目的の視点・注視点
 	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
 	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//プレイヤーとカメラの距離
-	m_fDistance = CAMERA_DISDTANCE;
+	m_fDistance = CAMERA_DISTANCE;
 
 	// 視点・注視点
 	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
@@ -188,29 +189,6 @@ void CCamera::CameraMoveV(void)
 		m_rot.y = RotNor(m_rot.y);
 	}
 
-	////Yキーが押された
-	//if (pInputKeyboard->GetPress(DIK_Y) == true)
-	//{
-	//	m_rot.x += CAMV_MOVE;
-
-	//	//角度の正規化
-	//	m_rot.x = RotNor(m_rot.x);
-
-	//	m_posV.y = m_posR.y + cosf(m_rot.x) * m_fDistance;
-	//	m_posV.z = m_posR.z + sinf(m_rot.x) * m_fDistance;
-	//}
-	////Nキーが押された
-	//else if (pInputKeyboard->GetPress(DIK_N) == true)
-	//{
-	//	m_rot.x -= CAMV_MOVE;
-
-	//	//角度の正規化
-	//	m_rot.x = RotNor(m_rot.x);
-
-	//	m_posV.y = m_posR.y + cosf(m_rot.x) * m_fDistance;
-	//	m_posV.z = m_posR.z + sinf(m_rot.x) * m_fDistance;
-	//}
-
 	//位置を更新
 	m_posV += m_move;
 
@@ -286,25 +264,23 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //=======================================
 void CCamera::TitleCamera()
 {
-	//視点
-	m_posV = D3DXVECTOR3(0.0f, 500.0f, -1000.0f);
+	m_rot.y += 0.005f;
 
-	//注視点
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//3.14を超えたときに反対にする
+	if (m_rot.y > D3DX_PI)
+	{
+		m_rot.y -= D3DX_PI * 2;
+	}
 
-	//上方向ベクトル
-	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	//-3.14を超えたときに反対にする
+	if (m_rot.y < -D3DX_PI)
+	{
+		m_rot.y += D3DX_PI * 2;
+	}
 
-	//向き
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_fDistance = 500.0f;
 
-	// 目的の視点
-	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 目的の中視点
-	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 視点・注視点
+	// 視点
 	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
 	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
 }
