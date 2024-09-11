@@ -16,13 +16,15 @@
 //=======================================
 namespace
 {
-const float CAMERA_SPEED = 1.5f;	// カメラの移動速度
-const float MOVEFAST = 0.2f;		// カメラの慣性
-const float CAMR = 25.0f;			// 注視点の距離
-const float CAMV_MOVE = 0.03f;		// 視点の移動速度
-const float CAM_DISDTANCE = 400.0f;	// カメラとの距離
-const float CAM_R_INERTIA = 0.2f;	// 注視点の慣性
-const float CAM_V_INERTIA = 0.2f;	// 視点の慣性
+const float CAMERA_POS_Y = 375.0f;		// カメラのY座標の初期位置
+const float CAMERA_POS_Z = -1000.0f;	// カメラのZ座標の初期位置
+const float CAMERA_DISDTANCE = 400.0f;	// カメラとの距離
+const float CAMERA_SPEED = 1.5f;		// カメラの移動速度
+const float CMAERA_INERTIA = 0.2f;		// カメラの慣性
+const float CAMERA_R_DISTANCE = 25.0f;	// 注視点の距離
+const float CAMERA_V_MOVE = 0.03f;		// 視点の移動速度
+const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
+const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
 }
 
 //=======================================
@@ -54,7 +56,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init(void)
 {
 	//視点
-	m_posV = D3DXVECTOR3(0.0f, 375.0f, -1000.0f);
+	m_posV = D3DXVECTOR3(0.0f, CAMERA_POS_Y, CAMERA_POS_Z);
 
 	//注視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -70,10 +72,11 @@ HRESULT CCamera::Init(void)
 	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//プレイヤーとカメラの距離
-	m_fDistance = CAM_DISDTANCE;
+	m_fDistance = CAMERA_DISDTANCE;
 
-	m_posV.x = m_posR.x + cosf(m_rot.y) * m_fDistance;
-	m_posV.z = m_posR.z + sinf(m_rot.y) * m_fDistance;
+	// 視点・注視点
+	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
+	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
 
 	//成功を返す
 	return S_OK;
@@ -170,7 +173,7 @@ void CCamera::CameraMoveV(void)
 	if (pInputKeyboard->GetPress(DIK_C) == true
 		|| pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) > 0)
 	{
-		m_rot.y += CAMV_MOVE;
+		m_rot.y += CAMERA_V_MOVE;
 
 		//角度の正規化
 		m_rot.y = RotNor(m_rot.y);
@@ -179,7 +182,7 @@ void CCamera::CameraMoveV(void)
 	else if (pInputKeyboard->GetPress(DIK_Z) == true
 			 || pInputPad->GetRStickXPress(CInputPad::BUTTON_R_STICK, 0) < 0)
 	{
-		m_rot.y -= CAMV_MOVE;
+		m_rot.y -= CAMERA_V_MOVE;
 
 		//角度の正規化
 		m_rot.y = RotNor(m_rot.y);
@@ -214,9 +217,9 @@ void CCamera::CameraMoveV(void)
 	m_posR += m_move;
 
 	//移動量を更新(減衰させる)
-	m_move.x += (0.0f - m_move.x) * MOVEFAST;
-	m_move.y += (0.0f - m_move.y) * MOVEFAST;
-	m_move.z += (0.0f - m_move.z) * MOVEFAST;
+	m_move.x += (0.0f - m_move.x) * CMAERA_INERTIA;
+	m_move.y += (0.0f - m_move.y) * CMAERA_INERTIA;
+	m_move.z += (0.0f - m_move.z) * CMAERA_INERTIA;
 }
 
 //=======================================
@@ -254,7 +257,7 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	//注視点
 	m_RDest = D3DXVECTOR3(
 		pos.x + -sinf(rot.y) 
-		* CAMR, 
+		* CAMERA_R_DISTANCE,
 		pos.y, 
 		pos.z + -cosf(rot.y) * 25.0f);
 
@@ -267,7 +270,7 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 		m_RDest.z - m_posR.z);
 
 	//注視点の慣性
-	m_posR += Diff * CAM_R_INERTIA;
+	m_posR += Diff * CAMERA_R_INERTIA;
 
 	//視点
 	VDiff = D3DXVECTOR3(m_VDest.x - m_posV.x, 
@@ -275,7 +278,7 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 		m_VDest.z - m_posV.z);
 
 	//視点の慣性
-	m_posV += VDiff * CAM_V_INERTIA;
+	m_posV += VDiff * CAMERA_V_INERTIA;
 }
 
 //=======================================
@@ -283,21 +286,25 @@ void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //=======================================
 void CCamera::TitleCamera()
 {
-	m_rot.y += 0.005f;
+	//視点
+	m_posV = D3DXVECTOR3(0.0f, 500.0f, -1000.0f);
 
-	//3.14を超えたときに反対にする
-	if (m_rot.y > D3DX_PI)
-	{
-		m_rot.y -= D3DX_PI * 2;
-	}
+	//注視点
+	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//-3.14を超えたときに反対にする
-	if (m_rot.y < -D3DX_PI)
-	{
-		m_rot.y += D3DX_PI * 2;
-	}
+	//上方向ベクトル
+	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-	// 始点の設定
+	//向き
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// 目的の視点
+	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// 目的の中視点
+	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// 視点・注視点
 	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
 	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
 }

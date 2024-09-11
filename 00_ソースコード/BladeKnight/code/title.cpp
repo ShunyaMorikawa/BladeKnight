@@ -10,6 +10,9 @@
 #include "fade.h"
 #include "sound.h"
 #include "camera.h"
+#include "field.h"
+#include "mapobject.h"
+#include "wall.h"
 
 //=======================================
 //マクロ定義
@@ -54,32 +57,49 @@ CTitle* CTitle::Create(void)
 //=======================================
 HRESULT CTitle::Init(void)
 {
+	// カメラの情報取得
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
+
 	//テクスチャのポインタ
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
+	pCamera->Init();
+
 	if (m_pObj2D == nullptr)
 	{
-		//CObject2Dのポインタ
-		m_pObj2D = CObject2D::Create();
+		////CObject2Dのポインタ
+		//m_pObj2D = CObject2D::Create();
 
-		//位置取得
-		D3DXVECTOR3 pos = m_pObj2D->GetPos();
+		////位置取得
+		//D3DXVECTOR3 pos = m_pObj2D->GetPos();
 
-		//頂点情報
-		m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		////頂点情報
+		//m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		//ポリゴンの位置
-		pos = (D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
+		////ポリゴンの位置
+		//pos = (D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
-		//位置設定
-		m_pObj2D->SetPos(pos);
+		////位置設定
+		//m_pObj2D->SetPos(pos);
 
-		//テクスチャ割り当て
-		m_pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
+		////テクスチャ割り当て
+		//m_pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
 	}
 
+	// マップオブジェクト生成
+	CMapObject::Create();
+
+	// フィールド生成
+	CField::Create();
+	
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// 4方向に壁生成
+	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
 	// サウンド停止
 	pSound->Stop();
