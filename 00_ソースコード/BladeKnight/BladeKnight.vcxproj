@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\billboard.cpp" />
-    <ClCompile Include="code\boss.cpp" />
     <ClCompile Include="code\bullet.cpp" />
     <ClCompile Include="code\camera.cpp" />
     <ClCompile Include="code\character.cpp" />
@@ -51,7 +50,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="code\renderer.cpp" />
-    <ClCompile Include="code\smallenemy.cpp" />
     <ClCompile Include="code\sound.cpp" />
     <ClCompile Include="code\texture.cpp" />
     <ClCompile Include="code\title.cpp" />
@@ -61,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h" />
-    <ClInclude Include="code\boss.h" />
     <ClInclude Include="code\bullet.h" />
     <ClInclude Include="code\camera.h" />
     <ClInclude Include="code\character.h" />
@@ -89,7 +86,6 @@
     <ClInclude Include="code\player.h" />
     <ClInclude Include="code\precompile.h" />
     <ClInclude Include="code\renderer.h" />
-    <ClInclude Include="code\smallenemy.h" />
     <ClInclude Include="code\sound.h" />
     <ClInclude Include="code\texture.h" />
     <ClInclude Include="code\title.h" />

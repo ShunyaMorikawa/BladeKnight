@@ -10,11 +10,14 @@
 #include "object2D.h"
 #include "manager.h"
 
-//========================================
-//マクロ定義
-//========================================
-#define CLASS_NAME		"WindowClass"		//ウィンドウクラスの名前
-#define WINDOW_NAME		"BladeKnight"			//ウィンドウの名前
+//=======================================
+// 定数定義
+//=======================================
+namespace
+{
+const char* CLASS_NAME = "WindowClass";	// ライトの最大数
+const char* WINDOW_NAME = "BladeKnight";	// ライトの最大数
+}
 
 //========================================
 //プロトタイプ宣言

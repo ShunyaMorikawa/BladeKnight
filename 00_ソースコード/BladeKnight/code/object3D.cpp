@@ -14,9 +14,9 @@
 //========================================
 namespace
 {
-	const float FIELD_SIZE = 4000.0f;		// フィールドのサイズ
-	const float BILLBOARD_WIDTH = 40.0f;	// ビルボードの幅
-	const float BILLBOARD_HEIGHT = 40.0f;	// ビルボードの高さ
+const float FIELD_SIZE = 4000.0f;		// フィールドのサイズ
+const float BILLBOARD_WIDTH = 40.0f;	// ビルボードの幅
+const float BILLBOARD_HEIGHT = 40.0f;	// ビルボードの高さ
 }
 
 //========================================

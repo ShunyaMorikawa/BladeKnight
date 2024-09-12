@@ -138,12 +138,6 @@
     <ClCompile Include="code\particle.cpp">
       <Filter>effect</Filter>
     </ClCompile>
-    <ClCompile Include="code\boss.cpp">
-      <Filter>character\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="code\smallenemy.cpp">
-      <Filter>character\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="code\lockonMarker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -247,12 +241,6 @@
     </ClInclude>
     <ClInclude Include="code\particle.h">
       <Filter>effect</Filter>
-    </ClInclude>
-    <ClInclude Include="code\boss.h">
-      <Filter>character\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="code\smallenemy.h">
-      <Filter>character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="code\lockonMarker.h">
       <Filter>ソース ファイル</Filter>

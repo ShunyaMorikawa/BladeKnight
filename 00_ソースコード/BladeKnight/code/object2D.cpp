@@ -12,12 +12,15 @@
 #include "texture.h"
 
 //========================================
-//マクロ定義
+// 定数定義
 //========================================
-#define NUM_PLACE		(8)			//スコアの桁数
-#define SCORE_WIDTH		(20.0f)		//スコアのサイズ
-#define SCORE_HEIGHT	(20.0f)		//スコアのサイズ
-#define SCORE_SPACE		(40.0f)		//スコアの桁数毎の間隔
+namespace
+{
+const int NUM_PLACE = 8;	// スコアの桁数
+const float SCORE_WIDTH = 20.0f;	// スコアの幅
+const float SCORE_HEIGHT = 20.0f;	// スコアの高さ
+const float SCORE_SPACE = 40.0f;	// スコアの桁数毎の間隔
+}
 
 //========================================
 //コンストラクタ

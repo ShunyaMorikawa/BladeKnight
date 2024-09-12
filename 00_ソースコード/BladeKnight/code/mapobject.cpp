@@ -14,7 +14,7 @@
 //========================================
 namespace
 {
-	const char* OBJECT_PASS = "data\\MODEL\\stage\\tougijo_001.x";	// マップオブジェクトのパス
+const char* OBJECT_PASS = "data\\MODEL\\stage\\tougijo_001.x";	// マップオブジェクトのパス
 }
 
 //========================================
