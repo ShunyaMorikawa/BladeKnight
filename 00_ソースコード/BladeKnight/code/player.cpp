@@ -51,11 +51,22 @@ CPlayer* CPlayer::m_pPlayer = nullptr;
 //========================================
 CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
 {//値をクリア
-	m_WalkCounter = 0;
-	m_pEffect = nullptr;			// エフェクトのポインタ
-	m_pGauge = nullptr;				// ゲージのポインタ
-	m_IsLock = false;
-	m_pMarker = nullptr;
+	m_apNumModel = 0;		// モデルの総数
+	m_nLife = 0;			// 体力
+	m_nOldMotion = 0;		// 前回のモーション
+	m_WalkCounter = 0;		// 歩行時エフェクト出す用のカウンター
+	m_nState = STATE_NONE;	// 状態
+	m_fRadius = 0.0f;		// 半径
+	m_bJump  = false;		// ノックバック
+	m_bMove = false;		// 移動
+	m_bWait = false;		// 待機
+	m_bMowingdown = false;	// 攻撃
+	m_bCutdown = false;		// 切り下げ
+	m_bStrongAttack = false;	// 強攻撃
+	m_IsLock = false;		// ロックオン
+	m_pEffect = nullptr;	// エフェクトのポインタ
+	m_pGauge = nullptr;		// ゲージのポインタ
+	m_pMarker = nullptr;	// ロックオンマーカー表示
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -94,6 +105,9 @@ HRESULT CPlayer::Init(std::string pfile)
 
 	// キャラの初期化
 	CCharacter::Init(pfile);
+
+	// プレイヤー状態の初期化
+	m_nState = STATE_NORMAL;
 
 	// 位置設定
 	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
@@ -168,8 +182,11 @@ void CPlayer::Update(void)
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
-	// プレイヤー行動
-	Act(SPEED);
+	if (CScene::MODE_TITLE)
+	{
+		// プレイヤー行動
+		Act(SPEED);
+	}
 
 #ifdef _DEBUG
 	if (pInputKeyboard->GetPress(DIK_F1))

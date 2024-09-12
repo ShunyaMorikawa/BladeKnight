@@ -13,6 +13,7 @@
 #include "field.h"
 #include "mapobject.h"
 #include "wall.h"
+#include "player.h"
 
 //========================================
 // 定数定義
@@ -70,24 +71,10 @@ HRESULT CTitle::Init(void)
 
 	if (m_pObj2D == nullptr)
 	{
-		////CObject2Dのポインタ
-		//m_pObj2D = CObject2D::Create();
-
-		////位置取得
-		//D3DXVECTOR3 pos = m_pObj2D->GetPos();
-
-		////頂点情報
-		//m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-		////ポリゴンの位置
-		//pos = (D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
-
-		////位置設定
-		//m_pObj2D->SetPos(pos);
-
-		////テクスチャ割り当て
-		//m_pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
 	}
+
+	// プレイヤー生成
+	CPlayer::Create("data//FILE//player.txt");
 
 	// マップオブジェクト生成
 	CMapObject::Create();

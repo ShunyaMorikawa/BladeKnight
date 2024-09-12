@@ -468,12 +468,11 @@ void CEnemy::CollisionPlayer(int nDamage)
 
 	if (pPlayer != nullptr)
 	{
-		// プレイヤーの位置
+		// プレイヤーの位置・移動量・半径・状態取得
 		D3DXVECTOR3 posPlayer = pPlayer->GetPos();
 		D3DXVECTOR3 movePlayer = pPlayer->GetMove();
-
-		// 半径
 		float radiusEnemy = pPlayer->GetRadius();
+		int statePlayer = pPlayer->GetState();
 
 		// ベクトルを求める
 		D3DXVECTOR3 vec = posEnemy - pos;

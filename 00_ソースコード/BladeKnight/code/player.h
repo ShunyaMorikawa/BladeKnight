@@ -56,6 +56,8 @@ public:
 
 	int GetLife() { return m_nLife; }			// 体力取得
 
+	int GetState() { return m_nState; }			// 状態取得
+
 	void CollisionField();
 
 	void CollisionArena();
@@ -71,6 +73,8 @@ private:
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
 	int m_WalkCounter;		// 歩行時のカウンター
+
+	int m_nState;			// 状態
 
 	float m_fRadius;		// 半径
 
