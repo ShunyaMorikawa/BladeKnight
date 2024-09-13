@@ -27,7 +27,7 @@
 //========================================
 namespace
 {
-const int LIFE = 10;			// 体力
+const int LIFE = 20;			// 体力
 const int ATTACKCOUNTER = 180;	// 攻撃するまでの時間
 const int MAXDIRECTION = 8;		// 弾を飛ばす最大方向
 const int BULLETLIFE = 120;		// 弾の寿命
@@ -486,6 +486,11 @@ void CEnemy::CollisionPlayer(int nDamage)
 
 			// ノックバック
 			NockBack();
+		}
+
+		if (statePlayer == CPlayer::STATE_DAMAGE)
+		{// ダメージ状態の時
+			int nCnt = 0;
 		}
 	}
 }
