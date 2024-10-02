@@ -17,7 +17,7 @@
 //========================================
 namespace
 {
-const char* BILLBOARD_TEX = "data\\TEXTURE\\effect000.jpg";	// マップオブジェクトのパス
+	const char* BILLBOARD_TEX = "data\\TEXTURE\\effect000.jpg";	// マップオブジェクトのパス
 }
 
 //=======================================

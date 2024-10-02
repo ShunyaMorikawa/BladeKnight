@@ -14,13 +14,13 @@
 //========================================
 namespace
 {
-const char* OBJECT_PASS = "data\\MODEL\\stage\\tougijo_001.x";	// マップオブジェクトのパス
+	const char* OBJECT_PASS = "data\\MODEL\\stage\\tougijo_001.x";	// マップオブジェクトのパス
 }
 
 //========================================
 // コンストラクタ
 //========================================
-CMapObject::CMapObject(int nPriority) : CObject(nPriority),
+CMapObject::CMapObject() :
 m_pModel	(nullptr)	// モデルのポインタ
 {
 }

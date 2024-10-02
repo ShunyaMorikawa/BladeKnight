@@ -14,8 +14,8 @@
 //========================================
 namespace
 {
-const float LENGTH = 640.0f;		// ゲージの長さ
-const char* GAUGETEX[] =
+	const float LENGTH = 640.0f;		// ゲージの長さ
+	const char* GAUGETEX[] =
 	{// 読み込むテクスチャ
 		"",
 		"data\\texture\\gauge.png",
@@ -27,8 +27,8 @@ const char* GAUGETEX[] =
 // コンストラクタ
 //========================================
 CGauge::CGauge(int nPriority) : CObject(nPriority),
-m_nMaxLife	(0.0f),	// 体力の最大値
-m_nLife		(0.0f),	// 現在の体力
+m_nMaxLife	(0),	// 体力の最大値
+m_nLife		(0),	// 現在の体力
 m_fLength	(0.0f),	// 対角線の長さ
 m_fAngle	(0.0f),	// 対角線の角度
 m_aTexU		(0.0f)	// テクスチャのU値
@@ -138,13 +138,13 @@ void CGauge::Draw()
 //========================================
 // サイズ設定
 //========================================
-void CGauge::SetSize(float fWidht, float fHeight)
+void CGauge::SetSize(float fWidth, float fHeight)
 {
 	// 対角線の長さ(横、縦)
-	m_fLength = sqrtf(fWidht * fWidht + fHeight * fHeight) * 0.5f;
+	m_fLength = sqrtf(fWidth * fWidth + fHeight * fHeight) * 0.5f;
 
 	// 対角線の向き(横、縦)
-	m_fAngle = atan2f(fWidht, fHeight);
+	m_fAngle = atan2f(fWidth, fHeight);
 
 	// 頂点情報
 	SetVertex();

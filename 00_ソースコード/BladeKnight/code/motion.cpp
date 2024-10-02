@@ -10,6 +10,15 @@
 #include "manager.h"
 
 //========================================
+// 名前空間
+//========================================
+namespace
+{
+	const char  = 640;	// 各モデルのファイル名
+	const char FILE_NAME = 64;	// 各モデルのファイル名
+}
+
+//========================================
 //コンストラクタ
 //========================================
 CMotion::CMotion() :
@@ -258,16 +267,16 @@ void CMotion::SetModel(CModel *ppModel, int nNumModel)
 void CMotion::Load(std::string pfile)
 {
 	//変数宣言
-	char garbage[640];		// 不要文字格納用
-	char FileName[64];		// 各モデルのファイル名
-	float move = 0.0f;		// 移動量
-	int nIdx = 0;			// 何番目のパーツか
-	int nParent = 0;		// 親子関係
-	int nNum = 0;			// 読み込む番号
-	int nMotion = 0;		// 何番目のモーションか
-	int nCntKey = 0;		// 何個目のキーか
-	int nLoop = 0;			// ループするかしないか
-	int KeyCount = 0;		// モーションのキー数
+	char garbage[640];			// 不要文字格納用
+	char FileName[FILE_NAME];	// 各モデルのファイル名
+	float move = 0.0f;			// 移動量
+	int nIdx = 0;				// 何番目のパーツか
+	int nParent = 0;			// 親子関係
+	int nNum = 0;				// 読み込む番号
+	int nMotion = 0;			// 何番目のモーションか
+	int nCntKey = 0;			// 何個目のキーか
+	int nLoop = 0;				// ループするかしないか
+	int KeyCount = 0;			// モーションのキー数
 
 	//FILEのポインタ
 	FILE *pFile = nullptr;

@@ -16,8 +16,8 @@
 //===========================================
 namespace
 {
-const float MARKERSIZE = 90.0f;		// マーカーのサイズ
-const std::string TEXTURE = "data\\TEXTURE\\rockon_point2.png";	// マーカーのテクスチャ
+	const float MARKERSIZE = 90.0f;		// マーカーのサイズ
+	const std::string TEXTURE = "data\\TEXTURE\\rockon_point2.png";	// マーカーのテクスチャ
 }
 
 //===========================================

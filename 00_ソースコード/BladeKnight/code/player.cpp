@@ -32,13 +32,21 @@
 //========================================
 namespace
 {
-const int LIFE = 10;			// 体力
-const float NOCKBACK = 50.0f;	// ノックバック値
-const float SPEED = 4.0f;		// 速度
-const float INERTIA = 0.3f;		// 慣性
-const float RADIUS = 50.0f;		// 半径
-const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
-const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
+	const int LIFE = 10;			// 体力
+	
+	const float NOCKBACK = 50.0f;	// ノックバック値
+	const float SPEED = 4.0f;		// 速度
+	const float INERTIA = 0.3f;		// 慣性
+	const float RADIUS = 50.0f;		// 半径
+	const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
+	const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
+	const float GAUGE_WIDTH = 50.0f;	// ゲージの幅
+	const float GAUGE_HEIGHT = 50.0f;	// ゲージの高さ
+	
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
+	
+	const D3DXVECTOR3 GAUGE_POS = { 50.0f, 600.0f, 0.0f };	// ゲージの位置
 }
 
 //========================================
@@ -110,10 +118,10 @@ HRESULT CPlayer::Init(std::string pfile)
 	m_nState = STATE_NORMAL;
 
 	// 位置設定
-	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
+	SetPos(INITIAL_POS);
 
 	// 向き設定
-	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetRot(INITIAL_ROT);
 
 	// 歩行時のカウンター
 	m_WalkCounter = 0;
@@ -122,16 +130,16 @@ HRESULT CPlayer::Init(std::string pfile)
 	m_nLife = LIFE;
 
 	// 半径
-	m_fRadius = 0.0f;
+	m_fRadius = RADIUS;
 
 	// ゲージ生成
 	m_pGauge = CGauge::Create(m_nLife);
 
 	// 位置設定
-	m_pGauge->SetPos(D3DXVECTOR3(50.0f, 600.0f, 0.0f));
+	m_pGauge->SetPos(GAUGE_POS);
 
 	// サイズ設定
-	m_pGauge->SetSize(50.0f, 50.0f);
+	m_pGauge->SetSize(GAUGE_WIDTH, GAUGE_HEIGHT);
 
 	return S_OK;
 }
@@ -141,13 +149,15 @@ HRESULT CPlayer::Init(std::string pfile)
 //========================================
 void CPlayer::Uninit(void)
 {
+	if (m_pGauge != nullptr)
+	{// ゲージが使用されていた場合
+		m_pGauge->Uninit();
+		m_pGauge = nullptr;
+	}
+
 	// 終了
 	CCharacter::Uninit();
-
 	m_pPlayer = nullptr;
-
-	m_pGauge->Uninit();
-	m_pGauge = nullptr;
 }
 
 //========================================
@@ -581,7 +591,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 #endif
 
 	// 長さ
-	float fLength;
+	float fLength = 0.0f;
 
 	// プレイヤーの半径
 	float fRadius = RADIUS;
@@ -812,6 +822,21 @@ void CPlayer::LockOn()
 		return;
 	}
 
+	// 敵の方を向く
+	Turn();
+}
+
+//========================================
+// 敵の方に向く
+//========================================
+void CPlayer::Turn()
+{
+	// カメラの情報取得
+	CCamera* pCampera = CManager::GetInstance()->GetCamera();
+
+	// 敵の情報取得
+	CEnemy* pEnemy = CEnemy::GetInstance();
+
 	// プレイヤー・敵の位置
 	D3DXVECTOR3 posPlayer = GetPos();
 	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
@@ -833,4 +858,5 @@ void CPlayer::LockOn()
 		D3DXVECTOR3 rot = pCampera->GetRot();
 		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, rot.y, 0.0f));
 	}
+
 }

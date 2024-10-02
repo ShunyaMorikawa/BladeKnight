@@ -17,7 +17,7 @@
 class CBillboard : public CObject
 {
 public:
-	CBillboard(int nPriority = 5);	//コンストラクタ
+	CBillboard(int nPriority = 3);	//コンストラクタ
 	~CBillboard();	//デストラクタ
 
 	//メンバ関数

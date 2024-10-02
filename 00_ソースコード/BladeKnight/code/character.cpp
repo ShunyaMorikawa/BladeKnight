@@ -18,7 +18,7 @@
 //========================================
 namespace
 {
-const float CHARACTER_INERTIA = 0.3f;	// キャラクターの慣性
+	const float CHARACTER_INERTIA = 0.3f;	// キャラクターの慣性
 }
 
 //========================================

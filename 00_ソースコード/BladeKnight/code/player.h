@@ -65,6 +65,7 @@ public:
 	void CollisionEnemy(D3DXVECTOR3 pos);
 
 	void LockOn();
+	void Turn();
 
 	static CPlayer* GetInstance() { return m_pPlayer; }
 

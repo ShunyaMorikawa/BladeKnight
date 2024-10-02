@@ -14,7 +14,7 @@
 //========================================
 namespace
 {
-const char* IDXMESHFIELD_TEX = "data\\TEXTURE\\block001.jpg";	// エフェクトの最大数
+	const char* IDXMESHFIELD_TEX = "data\\TEXTURE\\block001.jpg";	// エフェクトの最大数
 }
 
 //=======================================

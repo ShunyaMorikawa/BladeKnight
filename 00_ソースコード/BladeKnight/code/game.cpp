@@ -17,6 +17,7 @@
 #include "sound.h"
 #include "debugproc.h"
 #include "texture.h"
+#include "useful.h"
 
 //========================================
 //静的メンバ変数
@@ -28,7 +29,12 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 //========================================
 namespace
 {
-const int TRANSITIONTIME = 180;		// 遷移するまでの時間
+	const int TRANSITIONTIME = 180;		// 遷移するまでの時間
+	
+	const float GUIDE_WIDTH = 300.0f;	// ガイドの幅
+	const float GUIDE_HEIGHT = 350.0f;	// ガイドの高さ
+	
+	const D3DXVECTOR3 GUIDE_POS = { 1100.0f, 300.0f, 0.0f };	// ガイドの位置
 }
 
 //========================================
@@ -85,10 +91,10 @@ HRESULT CGame::Init(void)
 	CEnemy::Create("data//FILE//motion.txt");
 
 	// 4方向に壁生成
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
-	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
-	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, -Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
 	// マップオブジェクト生成
 	CMapObject::Create();
@@ -103,10 +109,10 @@ HRESULT CGame::Init(void)
 	m_pObj2D = CObject2D::Create();
 
 	// 位置設定
-	m_pObj2D->SetPos(D3DXVECTOR3(1100.0f, 300.0f, 0.0f));
+	m_pObj2D->SetPos(GUIDE_POS);
 
 	// サイズ設定
-	m_pObj2D->SetSize(300.0f, 350.0f);
+	m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
 
 	// テクスチャ設定
 	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide_game.png"));

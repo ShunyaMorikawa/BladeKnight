@@ -16,10 +16,10 @@
 //========================================
 namespace
 {
-const int NUM_PLACE = 8;	// スコアの桁数
-const float SCORE_WIDTH = 20.0f;	// スコアの幅
-const float SCORE_HEIGHT = 20.0f;	// スコアの高さ
-const float SCORE_SPACE = 40.0f;	// スコアの桁数毎の間隔
+	const int NUM_PLACE = 8;			// スコアの桁数
+	const float SCORE_WIDTH = 20.0f;	// スコアの幅
+	const float SCORE_HEIGHT = 20.0f;	// スコアの高さ
+	const float SCORE_SPACE = 40.0f;	// スコアの桁数毎の間隔
 }
 
 //========================================

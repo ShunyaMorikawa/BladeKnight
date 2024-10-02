@@ -14,13 +14,14 @@
 #include "mapobject.h"
 #include "wall.h"
 #include "player.h"
+#include "useful.h"
 
 //========================================
 // 定数定義
 //========================================
 namespace
 {
-const char* TITLE_TEX = "data\\TEXTURE\\title.png";	// タイトルテクスチャのパス
+	const char* TITLE_TEX = "data\\TEXTURE\\title.png";	// タイトルテクスチャのパス
 }
 
 //=======================================
@@ -67,6 +68,7 @@ HRESULT CTitle::Init(void)
 	//テクスチャのポインタ
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
+	// カメラの初期化
 	pCamera->Init();
 
 	if (m_pObj2D == nullptr)
@@ -86,10 +88,10 @@ HRESULT CTitle::Init(void)
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// 4方向に壁生成
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
-	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
-	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, -Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
 	// サウンド停止
 	pSound->Stop();

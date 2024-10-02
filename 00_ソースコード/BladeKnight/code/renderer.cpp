@@ -16,7 +16,6 @@
 CRenderer::CRenderer() : 
 m_pD3D			(nullptr),	// Direct3Dオブジェクトへのポインタ
 m_pD3DDevice	(nullptr)	// Direct3Dデバイスへのポインタ
-
 {
 }
 

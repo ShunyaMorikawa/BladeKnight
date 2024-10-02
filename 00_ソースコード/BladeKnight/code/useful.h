@@ -43,6 +43,8 @@ namespace USEFUL
 namespace Constance
 {// •Ö—˜’è”
 const float ARENA_SIZE = 2250.0f;	// “¬‹Zê‚ÌƒTƒCƒY
+const float WALL_POS = 4000.0f;	// •Ç
+const float WALL_POS_Y = 2000.0f;	// •Ç
 }
 
 #endif

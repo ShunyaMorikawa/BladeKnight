@@ -13,8 +13,8 @@
 //========================================
 namespace
 {
-const int MAX_OBJ = 256;	// オブジェクトの最大数
-const int NUM_PRIORITY = 8;	// 優先順位の総数
+	const int MAX_OBJ = 256;	// オブジェクトの最大数
+	const int NUM_PRIORITY = 8;	// 優先順位の総数
 }
 
 //========================================

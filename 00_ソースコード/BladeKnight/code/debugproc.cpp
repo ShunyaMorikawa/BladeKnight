@@ -20,7 +20,7 @@ LPD3DXFONT CDebugProc::m_pFont = nullptr;	// デバッグフォントへのポインタ
 //========================================
 namespace
 {
-const int MAX_FLOATNUM = 2;	// 小数点以下の表示桁数
+	const int MAX_FLOATNUM = 2;	// 小数点以下の表示桁数
 }
 
 //==========================================================

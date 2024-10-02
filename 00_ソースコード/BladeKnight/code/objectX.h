@@ -15,10 +15,10 @@
 //========================================
 namespace
 {
-const int MAX_OBJX = 160;		// オブジェクトXの最大数
-const int MAX_GARBAGE = 900;	// 不要文字読み込む
-const int OBJ_DETA = 83;		// オブジェクトの読み込む数
-const char* CHARACTER_INERTIA = "data\\FILE\\Object.txt";	// キャラクターの慣性
+	const int MAX_OBJX = 160;		// オブジェクトXの最大数
+	const int MAX_GARBAGE = 900;	// 不要文字読み込む
+	const int OBJ_DETA = 83;		// オブジェクトの読み込む数
+	const char* CHARACTER_INERTIA = "data\\FILE\\Object.txt";	// キャラクターの慣性
 }
 
 //=======================================

@@ -21,9 +21,9 @@
 //**********************************************************
 namespace
 {
-const int NUM_MAX_KEY = 256;	// キーの最大数
-const int NUM_MAX_PAD = 4;		// コントローラーの最大数
-const int NUM_MAX_BUTTON = 4;	// マウスボタンの最大数
+	const int NUM_MAX_KEY = 256;	// キーの最大数
+	const int NUM_MAX_PAD = 4;		// コントローラーの最大数
+	const int NUM_MAX_BUTTON = 4;	// マウスボタンの最大数
 }
 
 //========================================

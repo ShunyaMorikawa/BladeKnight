@@ -16,7 +16,7 @@
 class CMapObject : public CObject
 {
 public:
-	CMapObject(int nPriority = 7);		//コンストラクタ
+	CMapObject();		//コンストラクタ
 	~CMapObject();	//デストラクタ
 
 	//メンバ関数
