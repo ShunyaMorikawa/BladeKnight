@@ -17,9 +17,8 @@ LPDIRECT3DTEXTURE9 CWall::m_pTexture = nullptr;
 //========================================
 // コンストラクタ
 //========================================
-CWall::CWall(int nPriority) :
-	CObject3D(nPriority),
-	m_aTexU(0.0f)
+CWall::CWall(int nPriority) : CObject3D(nPriority),
+m_aTexU		(0.0f)	// テクスチャのU値
 {
 }
 

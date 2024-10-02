@@ -32,31 +32,37 @@ public:
 	void Draw(void);		//描画
 
 	static CModel *Create(const char *pFilename);	//オブジェクト生成
-	void SetParent(CModel *pModel);	//親
-	D3DXMATRIX GetMtxWorld(void);	//ワールドマトリックスの取得
+
+	// 親モデルの設定
+	void SetParent(CModel* pModel) { m_pParent = pModel; }
+
+	// ワールドマトリックスの取得
+	D3DXMATRIX GetMtxWorld(void) { return m_mtxWorld; }	
+
+	// 位置設定・取得
+	void SetPos(const D3DXVECTOR3& pos) { m_pos = pos; }
+	D3DXVECTOR3 GetPos(void) { return m_pos; }
+
+	// 向き
+	void SetRot(const D3DXVECTOR3& rot) { m_rot = rot; }
+	D3DXVECTOR3 GetRot(void) { return m_rot; }
+
+	// 位置
+	void SetPosition(const D3DXVECTOR3& pos) { m_setPos = pos; }
+	D3DXVECTOR3 GetPosition(void) { return m_setPos; }
+
+	// モーション時の向きの設定と取得
+	void SetRotate(const D3DXVECTOR3& rot) { m_setRot = rot; }
+	D3DXVECTOR3 GetRotate(void) { return m_setRot; }
+
+	// 番号設定
+	void SetIndex(CModel* pModel) { m_pParent = pModel; }
+
+	// 階層設定
+	void SetType(HIERARCHY type) { m_nType = type; }
 
 	void SetVertex(void);
 	void SetSize(float fWidht, float fHeight);
-	void SetPosition(D3DXVECTOR3 pos);
-	D3DXVECTOR3 GetPosition(void);
-
-	//向き
-	void SetRot(D3DXVECTOR3 pos);
-	D3DXVECTOR3 GetRot(void);
-
-	//番号
-	void SetIndex(CModel *pModel);
-
-	//位置
-	void SetPos(D3DXVECTOR3 pos);
-	D3DXVECTOR3 GetPos(void);
-
-	//向き
-	void SetRotate(D3DXVECTOR3 rot);
-	D3DXVECTOR3 GetRotate(void);
-
-	// 階層
-	void SetType(HIERARCHY type) { m_nType = type; }
 
 private:
 	//メンバ変数
@@ -71,8 +77,8 @@ private:
 	D3DXVECTOR3 m_rot;				//向き
 	CModel *m_pParent;				//親モデルへのポインタ
 
-	D3DXVECTOR3 m_setPos;
-	D3DXVECTOR3 m_setRot;
+	D3DXVECTOR3 m_setPos;			// モーション時のモデルの位置
+	D3DXVECTOR3 m_setRot;			// モーション時のモデルの向き
 };
 
 #endif

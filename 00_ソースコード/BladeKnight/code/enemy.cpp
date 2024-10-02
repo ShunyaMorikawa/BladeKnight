@@ -47,13 +47,13 @@ CEnemy* CEnemy::m_pEnemy = nullptr;
 //========================================
 //コンストラクタ
 //========================================
-CEnemy::CEnemy() : 
-	m_nLife(0),
-	m_fRadius(0.0f),
-	m_nState(STATE_NORMAL),
-	m_bWalk(false),
-	m_bAttack(false),
-	m_pGauge(nullptr)
+CEnemy::CEnemy(int nPriority) : CCharacter(nPriority),
+m_nLife		(0),			// 体力
+m_fRadius	(0.0f),			// 半径
+m_nState	(STATE_NORMAL),	// 状態
+m_bWalk		(false),		// 歩き
+m_bAttack	(false),		// 攻撃
+m_pGauge	(nullptr)		// ゲージ
 {//値をクリア
 }
 
@@ -122,15 +122,10 @@ void CEnemy::Uninit(void)
 	// 終了
 	CCharacter::Uninit();
 
-	if (m_pEnemy != nullptr)
-	{
-		m_pEnemy = nullptr;
-	}
+	m_pEnemy = nullptr;
 
-	if (m_pGauge != nullptr)
-	{
-		m_pGauge = nullptr;
-	}
+	m_pGauge->Uninit();
+	m_pGauge = nullptr;
 }
 
 //========================================

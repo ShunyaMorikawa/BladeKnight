@@ -26,13 +26,13 @@ const char* GAUGETEX[] =
 //========================================
 // コンストラクタ
 //========================================
-CGauge::CGauge(int nPriority) : CObject(nPriority)
+CGauge::CGauge(int nPriority) : CObject(nPriority),
+m_nMaxLife	(0.0f),	// 体力の最大値
+m_nLife		(0.0f),	// 現在の体力
+m_fLength	(0.0f),	// 対角線の長さ
+m_fAngle	(0.0f),	// 対角線の角度
+m_aTexU		(0.0f)	// テクスチャのU値
 {
-	m_nMaxLife = 0;			// 体力の最大値
-	m_nLife = 0;			// 現在の体力
-	m_fLength = 0.0f;		// 対角線の長さ
-	m_fAngle = 0.0f;		// 対角線の角度
-	m_aTexU = 0.0f;			// テクスチャのU値
 	memset(m_p2D, 0, sizeof(m_p2D));	// オブジェクト2Dポインタ
 }
 
@@ -65,8 +65,6 @@ HRESULT CGauge::Init()
 {
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-	D3DXVECTOR3 pos = GetPos();
 
 	// 体力の初期値
 	m_nLife = m_nMaxLife;

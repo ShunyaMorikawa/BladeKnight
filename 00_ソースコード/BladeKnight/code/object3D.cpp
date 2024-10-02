@@ -22,11 +22,10 @@ const float BILLBOARD_HEIGHT = 40.0f;	// ビルボードの高さ
 //========================================
 //コンストラクタ
 //========================================
-CObject3D::CObject3D(int nPriority) :
-	CObject(nPriority)
+CObject3D::CObject3D(int nPriority) :CObject(nPriority),
+m_pTexture		(nullptr),		// テクスチャへのポインタ
+m_pVtxBuff		(nullptr)		// 頂点情報へのポインタ
 {
-	m_pTexture = nullptr;		// テクスチャへのポインタ
-	m_pVtxBuff = nullptr;		// 頂点情報へのポインタ
 	m_mtxWorld;					// ワールドマトリックス
 }
 
@@ -208,33 +207,6 @@ void CObject3D::SetVertex3D(void)
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();
-}
-
-//========================================
-//起伏の当たり判定
-//========================================
-void CObject3D::Collision(void)
-{
-	//D3DXVECTOR3 vec1, vec2, nor;
-
-	//float fHeight;		//求める高さ
-
-	//if ()
-	//{
-	//	//外積
-	//	D3DXVec3Cross(&nor, &vec1, &vec2);
-
-	//	//法線を正規化する
-	//	D3DXVec3Normalize(&nor, &nor);
-
-	//	//内積
-	//	(pos.x - vtx0.x) * nor.x + (fHeight - vtx0.y) * nor.y + (pos.z - vtx0.z) * nor.z = 0.0f;
-
-	//	if (nor.y != 0.0f)
-	//	{
-	//		fHeight;
-	//	}
-	//}
 }
 
 //========================================

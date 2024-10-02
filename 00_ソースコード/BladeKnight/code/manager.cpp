@@ -26,20 +26,20 @@ CManager *CManager::m_pManager = nullptr;
 //コンストラクタ
 //========================================
 CManager::CManager(void) : 
-	m_nCnt(0),	//自動遷移のカウンター
-	m_state(0),	//状態変更
-	m_NowScene(CScene::MODE_NONE),	//現在のシーン
-	m_pRenderer(nullptr),				// レンダラーのポインタ
-	m_pInputKeyboard(nullptr),
-	m_pInputPad(nullptr),
-	m_pInputMouse(nullptr),
-	m_pScene(nullptr),
-	m_pDebugProc(nullptr),
-	m_pTexture(nullptr),
-	m_pCamera(nullptr),
-	m_pLight(nullptr),
-	m_pFade(nullptr),
-	m_pSound(nullptr)
+m_nCnt				(0),	//自動遷移のカウンター
+m_state				(0),	//状態変更
+m_NowScene			(CScene::MODE_NONE),	//現在のシーン
+m_pRenderer			(nullptr),	// レンダラーのポインタ
+m_pInputKeyboard	(nullptr),	// キーボード
+m_pInputPad			(nullptr),	// パッド
+m_pInputMouse		(nullptr),	// マウス
+m_pScene			(nullptr),	// シーン
+m_pDebugProc		(nullptr),	// デバッグ表示
+m_pTexture			(nullptr),	// テクスチャ
+m_pCamera			(nullptr),	// カメラ
+m_pLight			(nullptr),	// ライト
+m_pFade				(nullptr),	// フェード
+m_pSound			(nullptr)	// サウンド
 {//値クリア
 }
 

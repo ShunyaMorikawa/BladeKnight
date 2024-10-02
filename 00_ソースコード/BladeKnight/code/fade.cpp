@@ -10,10 +10,10 @@
 //コンストラクタ
 //=======================================
 CFade::CFade() :
-	m_State(FADE_NONE),					// 何もしない状態
-	m_modeNext(CScene::MODE_TITLE),		// タイトル
-	m_pVtxBuff(nullptr), 
-	m_pObject2D(nullptr)
+m_State		(FADE_NONE),			// 何もしない状態
+m_modeNext	(CScene::MODE_TITLE),	// タイトル
+m_pVtxBuff	(nullptr),				// 頂点バッファのポインタ
+m_pObject2D	(nullptr)				// オブジェクト2Dのポインタ
 {//値クリア
 }
 

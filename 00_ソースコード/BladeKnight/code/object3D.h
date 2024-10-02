@@ -32,7 +32,6 @@ public:
 
 	virtual void SetVertex3D(void);
 	void SetVerTexBillboard(void);
-	void Collision(void);
 	void MeshVertex(void);
 
 	float GetField();

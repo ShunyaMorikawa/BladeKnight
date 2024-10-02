@@ -13,18 +13,18 @@
 //コンストラクタ
 //========================================
 CMotion::CMotion() :
-	m_pParent(nullptr),	// 親モデルのポインタ
-	m_nNumAll(0),		// モーションの総数
-	m_nType(0),			// モーション種類
-	m_nKey(0),			// 現在のキー数
-	m_nCounter(0),		// フレームカウンター
-	m_bFinish(true),	// 終了したかどうか
-	m_nNumModel(0),		// モデルの総数
-	m_nNumMotion(0),	// 現在のモーション
-	m_nNumParts(0),		// パーツ数
-	m_nPartsIndex(0),	// パーツ番号
-	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+m_pParent		(nullptr),	// 親モデルのポインタ
+m_nNumAll		(0),		// モーションの総数
+m_nType			(0),		// モーション種類
+m_nKey			(0),		// 現在のキー数
+m_nCounter		(0),		// フレームカウンター
+m_bFinish		(true),		// 終了したかどうか
+m_nNumModel		(0),		// モデルの総数
+m_nNumMotion	(0),		// 現在のモーション
+m_nNumParts		(0),		// パーツ数
+m_nPartsIndex	(0),		// パーツ番号
+m_pos			(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
+m_rot			(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {//値クリア
 	memset(&m_aInfo[0], 0, sizeof(m_aInfo));		//モーション情報
 	memset(&m_ppModel[0], 0, sizeof(m_ppModel));	//モデル情報

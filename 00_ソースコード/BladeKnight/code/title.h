@@ -17,7 +17,7 @@
 class CTitle : public CScene
 {
 public:
-	CTitle(int nPriority = 3);	//コンストラクタ
+	CTitle();	//コンストラクタ
 	~CTitle();	//デストラクタ
 
 	//メンバ関数

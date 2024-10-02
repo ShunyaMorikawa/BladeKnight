@@ -49,24 +49,24 @@ CPlayer* CPlayer::m_pPlayer = nullptr;
 //========================================
 //コンストラクタ
 //========================================
-CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
+CPlayer::CPlayer(int nPriority) : CCharacter(nPriority),
+m_apNumModel	(0),			// モデルの総数
+m_nLife			(0),			// 体力
+m_nOldMotion	(0),			// 前回のモーション
+m_WalkCounter	(0),			// 歩行時エフェクト出す用のカウンター
+m_nState		(STATE_NONE),	// 状態
+m_fRadius		(0.0f),			// 半径
+m_bJump			(false),		// ジャンプフラグ
+m_bMove			(false),		// 移動
+m_bWait			(false),		// 待機
+m_bMowingdown	(false),		// 攻撃
+m_bCutdown		(false),		// 切り下げ
+m_bStrongAttack	(false),		// 強攻撃
+m_IsLock		(false),		// ロックオン
+m_pEffect		(nullptr),		// エフェクトのポインタ
+m_pGauge		(nullptr),		// ゲージのポインタ
+m_pMarker		(nullptr)		// ロックオンマーカー表示
 {//値をクリア
-	m_apNumModel = 0;		// モデルの総数
-	m_nLife = 0;			// 体力
-	m_nOldMotion = 0;		// 前回のモーション
-	m_WalkCounter = 0;		// 歩行時エフェクト出す用のカウンター
-	m_nState = STATE_NONE;	// 状態
-	m_fRadius = 0.0f;		// 半径
-	m_bJump  = false;		// ノックバック
-	m_bMove = false;		// 移動
-	m_bWait = false;		// 待機
-	m_bMowingdown = false;	// 攻撃
-	m_bCutdown = false;		// 切り下げ
-	m_bStrongAttack = false;	// 強攻撃
-	m_IsLock = false;		// ロックオン
-	m_pEffect = nullptr;	// エフェクトのポインタ
-	m_pGauge = nullptr;		// ゲージのポインタ
-	m_pMarker = nullptr;	// ロックオンマーカー表示
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -121,6 +121,9 @@ HRESULT CPlayer::Init(std::string pfile)
 	// 体力
 	m_nLife = LIFE;
 
+	// 半径
+	m_fRadius = 0.0f;
+
 	// ゲージ生成
 	m_pGauge = CGauge::Create(m_nLife);
 
@@ -141,16 +144,10 @@ void CPlayer::Uninit(void)
 	// 終了
 	CCharacter::Uninit();
 
-	if (m_pPlayer != nullptr)
-	{
-		m_pPlayer = nullptr;
-	}
+	m_pPlayer = nullptr;
 
-	if (m_pGauge != nullptr)
-	{
-		m_pGauge->Uninit();
-		m_pGauge = nullptr;
-	}
+	m_pGauge->Uninit();
+	m_pGauge = nullptr;
 }
 
 //========================================
@@ -182,11 +179,8 @@ void CPlayer::Update(void)
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
-	if (CScene::MODE_TITLE)
-	{
-		// プレイヤー行動
-		Act(SPEED);
-	}
+	// プレイヤー行動
+	Act(SPEED);
 
 #ifdef _DEBUG
 	if (pInputKeyboard->GetPress(DIK_F1))
@@ -249,6 +243,9 @@ void CPlayer::Update(void)
 		}
 	}
 
+	// 敵との判定
+	CollisionEnemy(pos);
+
 	// ロックオン
 	LockOn();
 
@@ -267,6 +264,7 @@ void CPlayer::Update(void)
 //========================================
 void CPlayer::Draw(void)
 {
+	// 描画
 	CCharacter::Draw();
 }
 
@@ -411,7 +409,8 @@ void CPlayer::Act(float fSpeed)
 		m_WalkCounter = (m_WalkCounter + 1) % 20;
 
 		if (m_WalkCounter == 0)
-		{// 一定間隔でパーティクル生成
+		{
+			// パーティクル生成
 			Myparticle::Create(Myparticle::TYPE_WALK, pos);
 
 			// サウンド再生
@@ -736,6 +735,47 @@ void CPlayer::CollisionArena()
 
 	// 位置設定
 	SetPos(posPlayer);
+}
+
+//========================================
+// 敵との判定
+//========================================
+void CPlayer::CollisionEnemy(D3DXVECTOR3 pos)
+{
+	// 長さ
+	float fLength;
+
+	// プレイヤーの半径取得
+	float fRadius = GetRadius();
+
+	// プレイヤー位置
+	D3DXVECTOR3 posPlayer = GetPos();
+
+	// 敵の情報取得
+	CEnemy* pEnemy = CEnemy::GetInstance();
+
+	if (pEnemy == nullptr)
+	{
+		return;
+	}
+
+	// プレイヤーの位置
+	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
+
+	// 半径
+	float radiusPlayer = pEnemy->GetRadius();
+
+	// ベクトルを求める
+	D3DXVECTOR3 vec = posEnemy - pos;
+
+	//ベクトル代入
+	fLength = D3DXVec3Length(&vec);
+
+	if (fLength <= radiusPlayer + fRadius)
+	{// 敵に当たった
+		// 位置設定
+		SetPos(posPlayer);
+	}
 }
 
 //========================================

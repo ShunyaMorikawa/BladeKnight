@@ -17,8 +17,7 @@ LPDIRECT3DTEXTURE9 CField::m_pTexture = nullptr;
 //========================================
 //コンストラクタ
 //========================================
-CField::CField(int nPriority) :
-	CObject3D(nPriority)
+CField::CField(int nPriority) : CObject3D(nPriority)
 {
 }
 

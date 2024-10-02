@@ -54,6 +54,7 @@ public:
 
 	HRESULT CheckChunk(HANDLE hFile, DWORD format, DWORD *pChunkSize, DWORD *pChunkDataPosition);
 	HRESULT ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset);
+
 private:
 	//メンバ変数
 	IXAudio2 *m_pXAudio2;								// XAudio2オブジェクトへのインターフェイス

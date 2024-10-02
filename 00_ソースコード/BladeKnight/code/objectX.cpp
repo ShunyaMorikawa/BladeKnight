@@ -11,16 +11,15 @@
 //========================================
 //コンストラクタ
 //========================================
-CObjectX::CObjectX(int nPriority) :
-		CObject(nPriority),
-		m_pTexture(nullptr),						//テクスチャへのポインタ
-		m_pMesh(nullptr),							//メッシュ(頂点情報)へのポインタ
-		m_pBuffMat(nullptr),						//マテリアルへのポインタ
-		m_dwNumMat(0),								//マテリアルの数
-		m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),		//位置
-		m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),		//向き
-		m_vtxMin(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	//モデルの最小値
-		m_vtxMax(D3DXVECTOR3(0.0f, 0.0f, 0.0f))		//モデルの最大値											
+CObjectX::CObjectX(int nPriority) : CObject(nPriority),
+m_pTexture		(nullptr),	// テクスチャへのポインタ
+m_pMesh			(nullptr),	// メッシュ(頂点情報)へのポインタ
+m_pBuffMat		(nullptr),	// マテリアルへのポインタ
+m_dwNumMat		(0),		// マテリアルの数
+m_pos			(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	//位置
+m_rot			(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	//向き
+m_vtxMin		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	//モデルの最小値
+m_vtxMax		(D3DXVECTOR3(0.0f, 0.0f, 0.0f))		//モデルの最大値											
 {
 }
 

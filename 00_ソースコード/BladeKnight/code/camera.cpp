@@ -31,16 +31,16 @@ const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
 //=======================================
 //コンストラクタ
 //=======================================
-CCamera::CCamera()
+CCamera::CCamera() : 
+m_posV		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 視点
+m_posR		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 注視点
+m_vecU		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 上方向ベクトル
+m_rot		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 向き
+m_move		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 移動量
+m_VDest		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 目的の視点
+m_RDest		(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),	// 目的の注視点
+m_fDistance	(0.0f)								// 距離
 {
-	m_posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//視点
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//注視点
-	m_vecU = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//上方向ベクトル
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
-	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量
-	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_fDistance = 0.0f;							//距離
 }
 
 //=======================================

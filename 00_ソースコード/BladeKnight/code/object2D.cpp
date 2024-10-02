@@ -25,17 +25,15 @@ const float SCORE_SPACE = 40.0f;	// スコアの桁数毎の間隔
 //========================================
 //コンストラクタ
 //========================================
-CObject2D::CObject2D(int nPriority) :
-	CObject(nPriority),
-	m_col(1.0f, 1.0f, 1.0f, 1.0f),	//色
-	m_fLength(0.0f),		//対角線の長さ
-	m_fAngle(0.0f),			//対角線の角度
-	m_nCounterAnim(0),		//アニメーションカウンター
-	m_nPatternAnim(0),		//アニメーションパターンNo
-	m_pVtxBuff(nullptr),	//頂点情報を格納
-	m_nIdxTexture(0)		//テクスチャの番号
+CObject2D::CObject2D(int nPriority) : CObject(nPriority),
+m_col				(1.0f, 1.0f, 1.0f, 1.0f),	//色
+m_fLength			(0.0f),		// 対角線の長さ
+m_fAngle			(0.0f),		// 対角線の角度
+m_nCounterAnim		(0),		// アニメーションカウンター
+m_nPatternAnim		(0),		// アニメーションパターンNo
+m_pVtxBuff			(nullptr),	// 頂点情報を格納
+m_nIdxTexture		(0)			// テクスチャの番号
 {//値クリア
-
 }
 
 //========================================

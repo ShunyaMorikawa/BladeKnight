@@ -23,10 +23,9 @@ const std::string TEXTURE = "data\\TEXTURE\\rockon_point2.png";	// ƒ}[ƒJ[‚Ìƒeƒ
 //===========================================
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //===========================================
-CLockonMarker::CLockonMarker(int nPriority) : CBillboard(nPriority)
+CLockonMarker::CLockonMarker(int nPriority) : CBillboard(nPriority),
+m_bAlpha	(false)		// ‰ÁZ‡¬
 {
-	// ‰ÁZ‡¬
-	m_bAlpha = false;
 }
 
 //===========================================

@@ -116,7 +116,7 @@ void CBullet::Update(void)
 		Uninit();
 	}
 
-	// 敵との当たり判定
+	// プレイヤーとの当たり判定
 	CollisionPlayer(pos);
 
 	// 闘技場との当たり判定
@@ -145,9 +145,6 @@ void CBullet::Draw(void)
 	//Zテストを無効にする
 	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
-	//描画
-	//CBillboard::Draw();
 
 	//αブレンディングを元に戻す
 	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
@@ -207,7 +204,7 @@ void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
 
 	float fRadius = GetSize();
 
-	// 敵の情報取得
+	// プレイヤーの情報取得
 	CPlayer* pPlayer = CPlayer::GetInstance();
 
 	if (pPlayer == nullptr)

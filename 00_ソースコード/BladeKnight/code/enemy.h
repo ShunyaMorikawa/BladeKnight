@@ -23,7 +23,7 @@ class CGauge;
 class CEnemy : public CCharacter
 {
 public:
-	CEnemy();		//コンストラクタ
+	CEnemy(int nPriority = 4);		//コンストラクタ
 	~CEnemy();		//デストラクタ
 
 	// メンバ関数

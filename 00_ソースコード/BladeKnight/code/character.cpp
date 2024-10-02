@@ -24,19 +24,19 @@ const float CHARACTER_INERTIA = 0.3f;	// キャラクターの慣性
 //========================================
 //コンストラクタ
 //========================================
-CCharacter::CCharacter(int nPriority) :
-	m_pTexture(nullptr),
-	m_nIdxTexture(0),				// テクスチャの番号
-	m_pMesh(nullptr),				// メッシュ(頂点情報)へのポインタ
-	m_pBuffMat(nullptr),			// マテリアルへのポインタ
-	m_dwNumMat(0),					// マテリアルの数
-	m_apNumModel(0), 				// モデル(パーツ)の総数
-	m_RotDest(0.0f, 0.0f, 0.0f),	// 目的の向き
-	m_nState(STATE_NONE),			// キャラの状態
-	m_bJump(false),					// ジャンプ中
-	m_bMove(false),					// 移動モーション
-	m_bWait(false),					// 待機モーション
-	m_pMotion(nullptr)				// モーションポインタ
+CCharacter::CCharacter(int nPriority) : CObject(nPriority),
+m_pTexture		(nullptr),			// テクスチャのポインタ
+m_nIdxTexture	(0),				// テクスチャの番号
+m_pMesh			(nullptr),			// メッシュ(頂点情報)へのポインタ
+m_pBuffMat		(nullptr),			// マテリアルへのポインタ
+m_dwNumMat		(0),				// マテリアルの数
+m_apNumModel	(0), 				// モデル(パーツ)の総数
+m_RotDest		(0.0f, 0.0f, 0.0f),	// 目的の向き
+m_nState		(STATE_NONE),		// キャラの状態
+m_bJump			(false),			// ジャンプ中
+m_bMove			(false),			// 移動モーション
+m_bWait			(false),			// 待機モーション
+m_pMotion		(nullptr)			// モーションポインタ
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデルのポインタ
 }

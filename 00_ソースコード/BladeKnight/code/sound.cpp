@@ -9,11 +9,10 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-CSound::CSound()
+CSound::CSound() : 
+m_pXAudio2			(nullptr),	// XAudio2オブジェクトへのインターフェイス
+m_pMasteringVoice	(nullptr)	// マスターボイス
 {
-	m_pXAudio2 = nullptr;							// XAudio2オブジェクトへのインターフェイス
-	m_pMasteringVoice = nullptr;					// マスターボイス
-
 	for (int nCnt = 0; nCnt < SOUND_LABEL_MAX; nCnt++)
 	{
 		m_apSourceVoice[nCnt] = {};		// ソースボイス

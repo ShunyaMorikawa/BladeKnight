@@ -23,13 +23,12 @@ const char* BILLBOARD_TEX = "data\\TEXTURE\\effect000.jpg";	// ƒ}ƒbƒvƒIƒuƒWƒFƒNƒ
 //=======================================
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //=======================================
-CBillboard::CBillboard(int nPriority) :
-	CObject(nPriority),
-	m_nIdxTexture(0),		//ƒeƒNƒXƒ`ƒƒ”Ô†
-	m_pVtxBuff(nullptr),	//’¸“_î•ñ
-	m_col(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)),	//F
-	m_fLength(0.0f),	//‘ÎŠpü‚Ì’·‚³
-	m_fAngle(0.0f)		//‘ÎŠpü‚Ì’·‚³
+CBillboard::CBillboard(int nPriority) : CObject(nPriority),
+m_nIdxTexture	(0),		//ƒeƒNƒXƒ`ƒƒ”Ô†
+m_pVtxBuff		(nullptr),	//’¸“_î•ñ
+m_col			(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)),	//F
+m_fLength		(0.0f),		//‘ÎŠpü‚Ì’·‚³
+m_fAngle		(0.0f)		//‘ÎŠpü‚Ì’·‚³
 {
 }
 

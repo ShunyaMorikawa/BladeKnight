@@ -17,7 +17,8 @@ DIMOUSESTATE CInputMouse::m_PrevMouseState;
 //========================================
 //コンストラクタ
 //========================================
-CInput::CInput() : m_pDevice(nullptr)
+CInput::CInput() :
+m_pDevice	(nullptr)	// デバイスのポインタ
 {
 }
 
@@ -282,10 +283,10 @@ bool CInputMouse::OnMouseUp(int MouseButton)
 //========================================
 CInputPad::CInputPad()
 {
-	memset(&m_aPadState[0], 0, sizeof(m_aPadState));
-	memset(&m_aPadStateTrigger[0], 0, sizeof(m_aPadStateTrigger));
-	memset(&m_aPadStateRelease[0], 0, sizeof(m_aPadStateRelease));
-	memset(&m_aPadStateRepeat[0], 0, sizeof(m_aPadStateRepeat));
+	memset(&m_aPadState[0], 0, sizeof(m_aPadState));	// プレス
+	memset(&m_aPadStateTrigger[0], 0, sizeof(m_aPadStateTrigger));	// トリガー
+	memset(&m_aPadStateRelease[0], 0, sizeof(m_aPadStateRelease));	// リリース
+	memset(&m_aPadStateRepeat[0], 0, sizeof(m_aPadStateRepeat));	// リピート
 }
 
 //========================================

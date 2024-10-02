@@ -35,14 +35,14 @@ const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 //コンストラクタ
 //========================================
 CGame::CGame() : 
-	m_bPause(false),
-	m_nTransition(0),
-	m_pObjectX(nullptr),
-	m_pIdxMesh(nullptr),
-	m_pFade(nullptr),
-	m_pObj2D(nullptr)
+m_bPause		(false),	// ポーズ
+m_nTransition	(0),		// 遷移時間
+m_pObjectX		(nullptr),	// オブジェクトXのポインタ
+m_pIdxMesh		(nullptr),	// インデックスメッシュのポインタ
+m_pFade			(nullptr),	// フェードのポインタ
+m_pObj2D		(nullptr)	// オブジェクト2Dのポインタ
 {
-	m_pGame = nullptr;
+	m_pGame = nullptr;	// ゲームのポインタ
 }
 
 //========================================

@@ -20,8 +20,8 @@ const char* OBJECT_PASS = "data\\MODEL\\stage\\tougijo_001.x";	// マップオブジェ
 //========================================
 // コンストラクタ
 //========================================
-CMapObject::CMapObject(int nPriority) :
-	m_pModel(nullptr)
+CMapObject::CMapObject(int nPriority) : CObject(nPriority),
+m_pModel	(nullptr)	// モデルのポインタ
 {
 }
 
@@ -51,9 +51,6 @@ CMapObject* CMapObject::Create()
 //========================================
 HRESULT CMapObject::Init(void)
 {
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	if (m_pModel == nullptr)
 	{
 		m_pModel = CModel::Create(OBJECT_PASS);

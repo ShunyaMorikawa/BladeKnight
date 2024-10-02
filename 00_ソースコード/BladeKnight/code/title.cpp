@@ -26,9 +26,9 @@ const char* TITLE_TEX = "data\\TEXTURE\\title.png";	// タイトルテクスチャのパス
 //=======================================
 //コンストラクタ
 //=======================================
-CTitle::CTitle(int nPriority)
+CTitle::CTitle() :
+m_pObj2D	(nullptr)	// オブジェクト2Dのポインタ
 {
-	m_pObj2D = nullptr;
 }
 
 //=======================================
