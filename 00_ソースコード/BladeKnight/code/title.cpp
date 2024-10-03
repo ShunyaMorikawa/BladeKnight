@@ -14,7 +14,7 @@
 #include "field.h"
 #include "mapobject.h"
 #include "wall.h"
-#include "player.h"
+#include "titleplayer.h"
 #include "useful.h"
 
 //========================================
@@ -22,14 +22,23 @@
 //========================================
 namespace
 {
-	const char* TITLE_TEX = "data\\TEXTURE\\title.png";	// タイトルテクスチャのパス
+	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報のパス
+	const char* TITLE_TEX = "data\\TEXTURE\\title.png";			// タイトルテクスチャのパス
+	const char* ENTER_TEX = "data\\TEXTURE\\press_enter.png";	// 文字テクスチャのパス
+
+	const float LOGO_POS_Y = 150.0f;	// ロゴテクスチャのY座標
+	const float LOGO_SIZE_WIDTH = 640.0f;		// ロゴテクスチャのサイズ
+	const float LOGO_SIZE_HEIGHT = 250.0f;		// ロゴテクスチャのサイズ
+	const float ENTER_POS_Y = 550.0f;	// 文字テクスチャのY座標
+	const float ENTER_SIZE = 250.0f;	// 文字テクスチャのサイズ
 }
 
 //=======================================
 //コンストラクタ
 //=======================================
 CTitle::CTitle() :
-m_pObj2D	(nullptr)	// オブジェクト2Dのポインタ
+m_pObj2D	(nullptr),	// オブジェクト2Dのポインタ
+m_pTitleObj	(nullptr)	// PressEnter文字用のポインタ
 {
 }
 
@@ -66,18 +75,17 @@ HRESULT CTitle::Init(void)
 	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
-	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
 	// カメラの初期化
 	pCamera->Init();
 
-	if (m_pObj2D == nullptr)
-	{
-	}
+	// タイトルロゴ
+	TitleLogo();
 
-	// プレイヤー生成
-	CPlayer::Create("data//FILE//player.txt");
+	// PressEnter文字
+	PressEnter();
+
+	// タイトルプレイヤー読み込み
+	CTitlePlayer::Create(PLAYER_TXT);
 
 	// マップオブジェクト生成
 	CMapObject::Create();
@@ -149,4 +157,46 @@ void CTitle::Update(void)
 //=======================================
 void CTitle::Draw(void)
 {
+}
+
+//=======================================
+// タイトルロゴ
+//=======================================
+void CTitle::TitleLogo()
+{
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// インスタンス生成
+	m_pObj2D = CObject2D::Create();
+
+	// 位置設定
+	m_pObj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, LOGO_POS_Y, 0.0f));
+
+	// サイズ設定
+	m_pObj2D->SetSize(LOGO_SIZE_WIDTH, LOGO_SIZE_HEIGHT);
+
+	// テクスチャ設定
+	m_pObj2D->BindTexture(pTexture->Regist(TITLE_TEX));
+}
+
+//=======================================
+// PressEnter文字
+//=======================================
+void CTitle::PressEnter()
+{
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// インスタンス生成
+	m_pTitleObj = CObject2D::Create();
+
+	// 位置設定
+	m_pTitleObj->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, ENTER_POS_Y, 0.0f));
+
+	// サイズ設定
+	m_pTitleObj->SetSize(ENTER_SIZE, ENTER_SIZE);
+
+	// テクスチャ設定
+	m_pTitleObj->BindTexture(pTexture->Regist(ENTER_TEX));
 }

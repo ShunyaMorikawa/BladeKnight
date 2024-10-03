@@ -1,0 +1,108 @@
+//========================================
+//
+// タイトルプレイヤー処理[titleplayer.h]
+// Author：森川駿弥
+//
+//========================================
+
+#include "titleplayer.h"
+
+//========================================
+// 定数定義
+//========================================
+namespace
+{
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 50.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
+}
+
+//========================================
+// 静的メンバ変数
+//========================================
+CTitlePlayer* CTitlePlayer::m_pTitlePlayer = nullptr;
+
+//========================================
+// コンストラクタ
+//========================================
+CTitlePlayer::CTitlePlayer(int nPriority) : CCharacter(nPriority),
+m_apNumModel(0),		// モデルの総数
+m_nOldMotion(0),		// 前回のモーション
+m_nState(STATE_NONE),	// 状態
+m_bMove(false)			// 移動
+{//値をクリア
+	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
+}
+
+//========================================
+// デストラクタ
+//========================================
+CTitlePlayer::~CTitlePlayer()
+{
+}
+
+//========================================
+// タイトルプレイヤー生成
+//========================================
+CTitlePlayer* CTitlePlayer::Create(std::string pfile)
+{
+	if (m_pTitlePlayer == nullptr)
+	{
+		//プレイヤー生成
+		m_pTitlePlayer = new CTitlePlayer;
+
+		//初期化
+		m_pTitlePlayer->Init(pfile);
+	}
+
+	//ポインタを返す
+	return m_pTitlePlayer;
+}
+
+//========================================
+// 初期化
+//========================================
+HRESULT CTitlePlayer::Init(std::string pfile)
+{
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// キャラの初期化
+	CCharacter::Init(pfile);
+
+	// プレイヤー状態の初期化
+	m_nState = STATE_NORMAL;
+
+	// 位置設定
+	SetPos(INITIAL_POS);
+
+	// 向き設定
+	SetRot(INITIAL_ROT);
+
+	return S_OK;
+}
+
+//========================================
+//終了
+//========================================
+void CTitlePlayer::Uninit(void)
+{
+	// 終了
+	CCharacter::Uninit();
+	m_pTitlePlayer = nullptr;
+}
+
+//========================================
+//更新
+//========================================
+void CTitlePlayer::Update(void)
+{
+}
+
+//========================================
+//描画
+//========================================
+void CTitlePlayer::Draw(void)
+{
+	// 描画
+	CCharacter::Draw();
+}

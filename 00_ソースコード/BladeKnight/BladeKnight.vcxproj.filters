@@ -141,6 +141,9 @@
     <ClCompile Include="code\lockonMarker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="code\titleplayer.cpp">
+      <Filter>character\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\bullet.h">
@@ -244,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="code\lockonMarker.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="code\titleplayer.h">
+      <Filter>character\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

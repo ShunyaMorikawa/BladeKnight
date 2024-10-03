@@ -30,8 +30,12 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	void TitleLogo();
+	void PressEnter();
+
 private:
 	CObject2D* m_pObj2D;
+	CObject2D* m_pTitleObj;
 };
 
 #endif

@@ -15,8 +15,8 @@
 //========================================
 namespace
 {
-	//const char BUFFER = 640;	// 不要文字読み込み用
-	const char FILE_NAME = 64;	// 各モデルのファイル名
+	const int BUFFER = 640;		// =文字等格納用
+	const int FILE_NAME = 64;	// 各モデルのファイル名
 }
 
 //========================================
@@ -268,16 +268,16 @@ void CMotion::SetModel(CModel *ppModel, int nNumModel)
 void CMotion::Load(std::string pfile)
 {
 	//変数宣言
-	char garbage[640];		// 不要文字格納用
-	char FileName[64];	// 各モデルのファイル名
-	float move = 0.0f;			// 移動量
-	int nIdx = 0;				// 何番目のパーツか
-	int nParent = 0;			// 親子関係
-	int nNum = 0;				// 読み込む番号
-	int nMotion = 0;			// 何番目のモーションか
-	int nCntKey = 0;			// 何個目のキーか
-	int nLoop = 0;				// ループするかしないか
-	int KeyCount = 0;			// モーションのキー数
+	char Buffer[BUFFER];		// =文字等格納用
+	char FileName[FILE_NAME];	// 各モデルのファイル名
+	float move = 0.0f;		// 移動量
+	int nIdx = 0;			// 何番目のパーツか
+	int nParent = 0;		// 親子関係
+	int nNum = 0;			// 読み込む番号
+	int nMotion = 0;		// 何番目のモーションか
+	int nCntKey = 0;		// 何個目のキーか
+	int nLoop = 0;			// ループするかしないか
+	int KeyCount = 0;		// モーションのキー数
 
 	//FILEのポインタ
 	FILE *pFile = nullptr;
@@ -288,9 +288,9 @@ void CMotion::Load(std::string pfile)
 	while (1)
 	{//END_SCRIPTが来るまで繰り返す
 		//不要な文字を捨てる
-		fscanf(pFile, "%s", &garbage[0]);
+		fscanf(pFile, "%s", &Buffer[0]);
 
-		if (strcmp(&garbage[0], "END_SCRIPT") == 0)
+		if (strcmp(&Buffer[0], "END_SCRIPT") == 0)
 		{//文字列がEND_SCRIPTのとき
 			break;
 		}
@@ -298,10 +298,10 @@ void CMotion::Load(std::string pfile)
 		//========================================
 		//モデルファイルの読み込み
 		//========================================
-		if (strcmp(&garbage[0], "MODEL_FILENAME") == 0)
+		if (strcmp(&Buffer[0], "MODEL_FILENAME") == 0)
 		{//文字列がMODEL_FILENAMEのとき
 			//=捨てる
-			fscanf(pFile, "%s", &garbage[0]);
+			fscanf(pFile, "%s", &Buffer[0]);
 
 			//ファイルの名前取得
 			fscanf(pFile, "%s", &FileName[0]);
@@ -319,33 +319,33 @@ void CMotion::Load(std::string pfile)
 		//========================================
 		//モデル設定
 		//========================================
-		if (strcmp(&garbage[0], "CHARACTERSET") == 0)
+		if (strcmp(&Buffer[0], "CHARACTERSET") == 0)
 		{//文字列がCHARACTERSETのとき
 			while (1)
 			{//文字列がEND_CHARACTERSETになるまで繰り返す
-				fscanf(pFile, "%s", &garbage[0]);
+				fscanf(pFile, "%s", &Buffer[0]);
 
-				if (strcmp(&garbage[0], "END_CHARACTERSET") == 0)
+				if (strcmp(&Buffer[0], "END_CHARACTERSET") == 0)
 				{//文字列がEND_CHARACTERSETの時
 					break;
 				}
 
-				if (strcmp(&garbage[0], "NUM_PARTS") == 0)
+				if (strcmp(&Buffer[0], "NUM_PARTS") == 0)
 				{//文字列がNUM_PARTSの時
 					//=捨てる
-					fscanf(pFile, "%s", &garbage[0]);
+					fscanf(pFile, "%s", &Buffer[0]);
 
 					//パーツ数を入れる
 					fscanf(pFile, "%d", &m_nNumParts);
 				}
 
-				if (strcmp(&garbage[0], "PARTSSET") == 0)
+				if (strcmp(&Buffer[0], "PARTSSET") == 0)
 				{//文字列がPARTSSETの時
 					while (1)
 					{//END_PARTSSETが来るまで回す
-						fscanf(pFile, "%s", &garbage[0]);
+						fscanf(pFile, "%s", &Buffer[0]);
 
-						if (strcmp(&garbage[0], "END_PARTSSET") == 0)
+						if (strcmp(&Buffer[0], "END_PARTSSET") == 0)
 						{//文字列がEND_PARTSSETの時
 							//パーツ数を加算
 							m_nPartsIndex++;
@@ -353,10 +353,10 @@ void CMotion::Load(std::string pfile)
 							break;
 						}
 
-						if (strcmp(&garbage[0], "INDEX") == 0)
+						if (strcmp(&Buffer[0], "INDEX") == 0)
 						{//文字列がINDEXの時
 							//=捨てる
-							fscanf(pFile, "%s", &garbage[0]);
+							fscanf(pFile, "%s", &Buffer[0]);
 
 							//何番目のパーツかの設定
 							fscanf(pFile, "%d", &nIdx);
@@ -365,10 +365,10 @@ void CMotion::Load(std::string pfile)
 							m_ppModel[m_nPartsIndex]->SetIndex(m_ppModel[nIdx]);
 						}
 
-						if (strcmp(&garbage[0], "PARENT") == 0)
+						if (strcmp(&Buffer[0], "PARENT") == 0)
 						{//文字列がPARENTの時
 							//=捨てる
-							fscanf(pFile, "%s", &garbage[0]);
+							fscanf(pFile, "%s", &Buffer[0]);
 
 							//親子関係設定
 							fscanf(pFile, "%d", &nParent);
@@ -383,10 +383,10 @@ void CMotion::Load(std::string pfile)
 							}
 						}
 
-						if (strcmp(&garbage[0], "POS") == 0)
+						if (strcmp(&Buffer[0], "POS") == 0)
 						{//文字列がPARENTの時
 							//=捨てる
-							fscanf(pFile, "%s", &garbage[0]);
+							fscanf(pFile, "%s", &Buffer[0]);
 
 							fscanf(pFile, "%f", &m_pos.x);
 							fscanf(pFile, "%f", &m_pos.y);
@@ -396,10 +396,10 @@ void CMotion::Load(std::string pfile)
 							m_ppModel[m_nPartsIndex]->SetPos(m_pos);
 						}
 
-						if (strcmp(&garbage[0], "ROT") == 0)
+						if (strcmp(&Buffer[0], "ROT") == 0)
 						{//文字列がPARENTの時
 							//=捨てる
-							fscanf(pFile, "%s", &garbage[0]);
+							fscanf(pFile, "%s", &Buffer[0]);
 
 							fscanf(pFile, "%f", &m_rot.x);
 							fscanf(pFile, "%f", &m_rot.y);
@@ -416,13 +416,13 @@ void CMotion::Load(std::string pfile)
 		//========================================
 		//モーション設定
 		//========================================
-		if (strcmp(&garbage[0], "MOTIONSET") == 0)
+		if (strcmp(&Buffer[0], "MOTIONSET") == 0)
 		{//文字列がMOTIONSETの時
 			while (1)
 			{//END_PARTSSETが来るまで回す
-				fscanf(pFile, "%s", &garbage[0]);
+				fscanf(pFile, "%s", &Buffer[0]);
 
-				if (strcmp(&garbage[0], "END_MOTIONSET") == 0)
+				if (strcmp(&Buffer[0], "END_MOTIONSET") == 0)
 				{//文字列がEND_PARTSSETの時
 					// モーションの総数を加算
 					m_nNumAll++;
@@ -433,10 +433,10 @@ void CMotion::Load(std::string pfile)
 					break;
 				}
 
-				if (strcmp(&garbage[0], "LOOP") == 0)
+				if (strcmp(&Buffer[0], "LOOP") == 0)
 				{//文字列がINDEXの時
 					//=捨てる
-					fscanf(pFile, "%s", &garbage[0]);
+					fscanf(pFile, "%s", &Buffer[0]);
 
 					//親子関係設定
 					fscanf(pFile, "%d", &nLoop);
@@ -452,23 +452,23 @@ void CMotion::Load(std::string pfile)
 					}
 				}
 
-				if (strcmp(&garbage[0], "NUM_KEY") == 0)
+				if (strcmp(&Buffer[0], "NUM_KEY") == 0)
 				{//文字列がNUM_KEYの時
 					//=捨てる
-					fscanf(pFile, "%s", &garbage[0]);
+					fscanf(pFile, "%s", &Buffer[0]);
 
 					//キーの番号
 					fscanf(pFile, "%d", &m_aInfo[m_nNumAll].nNumKey);
 				}
 
-				if (strcmp(&garbage[0], "KEYSET") == 0)
+				if (strcmp(&Buffer[0], "KEYSET") == 0)
 				{//文字列がPARENTの時
 					while (1)
 					{//END_KEYSETが来るまで繰り返す
 						//=捨てる
-						fscanf(pFile, "%s", &garbage[0]);
+						fscanf(pFile, "%s", &Buffer[0]);
 
-						if (strcmp(&garbage[0], "END_KEYSET") == 0)
+						if (strcmp(&Buffer[0], "END_KEYSET") == 0)
 						{//文字列がEND_PARTSSETの時
 							//加算する
 							m_nNowKey++;
@@ -479,23 +479,23 @@ void CMotion::Load(std::string pfile)
 							break;
 						}
 
-						if (strcmp(&garbage[0], "FRAME") == 0)
+						if (strcmp(&Buffer[0], "FRAME") == 0)
 						{//文字列がFRAMEの時
 							//=捨てる
-							fscanf(pFile, "%s", &garbage[0]);
+							fscanf(pFile, "%s", &Buffer[0]);
 
 							//フレーム数
 							fscanf(pFile, "%d", &m_aInfo[m_nNumAll].aKeyInfo[m_nNowKey].nFrame);
 						}
 
-						if (strcmp(&garbage[0], "KEY") == 0)
+						if (strcmp(&Buffer[0], "KEY") == 0)
 						{//文字列がKEYの時
 							while (1)
 							{//END_KEYが来るまで繰り返す
 								//=捨てる
-								fscanf(pFile, "%s", &garbage[0]);
+								fscanf(pFile, "%s", &Buffer[0]);
 
-								if (strcmp(&garbage[0], "END_KEY") == 0)
+								if (strcmp(&Buffer[0], "END_KEY") == 0)
 								{//文字列がEND_KEYの時
 
 									// カウント加算する
@@ -504,10 +504,10 @@ void CMotion::Load(std::string pfile)
 									break;
 								}
 
-								if (strcmp(&garbage[0], "POS") == 0)
+								if (strcmp(&Buffer[0], "POS") == 0)
 								{//文字列がPOSの時
 									//=捨てる
-									fscanf(pFile, "%s", &garbage[0]);
+									fscanf(pFile, "%s", &Buffer[0]);
 
 									fscanf(pFile, "%f", &m_pos.x);
 									fscanf(pFile, "%f", &m_pos.y);
@@ -519,10 +519,10 @@ void CMotion::Load(std::string pfile)
 									pKey->pos = m_pos;
 								}
 
-								if (strcmp(&garbage[0], "ROT") == 0)
+								if (strcmp(&Buffer[0], "ROT") == 0)
 								{//文字列がROTの時
 									//=捨てる
-									fscanf(pFile, "%s", &garbage[0]);
+									fscanf(pFile, "%s", &Buffer[0]);
 
 									fscanf(pFile, "%f", &m_rot.x);
 									fscanf(pFile, "%f", &m_rot.y);
