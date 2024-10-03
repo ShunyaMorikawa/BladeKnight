@@ -1,11 +1,13 @@
 //========================================
 //
-//objectX処理[objectX.h]
+//オブジェクトX処理[objectX.h]
 //Author：森川駿弥
 //
 //========================================
+
 #ifndef _OBJECTX_H_
 #define _OBJECTX_H_
+
 #include "main.h"
 #include "object.h"
 #include <functional>
@@ -37,11 +39,15 @@ public:
 	void Draw(void);		//描画
 	void SetVertex(void);
 	void SetSize(float fWidht, float fHeight);
-	void SetPosition(D3DXVECTOR3 pos);
-	void Load(void);
-	D3DXVECTOR3 GetPosition(void) { return m_pos; }		//位置取得
+
+	// 位置設定・取得
+	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }
+	D3DXVECTOR3 GetPosition(void) { return m_pos; }
+
 	D3DXVECTOR3 GetVtxMin(void) { return m_vtxMin; }	//モデルの最小値取得
 	D3DXVECTOR3 GetVtxMax(void) { return m_vtxMax; }	//モデルの最大値取得
+
+	void Load(void);
 
 private:
 	//メンバ変数

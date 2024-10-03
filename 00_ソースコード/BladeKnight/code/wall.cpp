@@ -4,10 +4,21 @@
 // Author：森川駿弥
 //
 //========================================
+
 #include "wall.h"
 #include "manager.h"
 #include "renderer.h"
 #include "texture.h"
+
+//========================================
+// 名前空間
+//========================================
+namespace
+{
+	const char* SKY_TEX = "data\\texture\\sky_02.jpg";	// 背景のテクスチャ
+
+	float U_TEX = 0.0001f;	// テクスチャ座標の更新値
+}
 
 //========================================
 // 静的メンバ変数
@@ -58,10 +69,11 @@ HRESULT CWall::Init(void)
 	// 継承の初期化
 	CObject3D::Init();
 
+	// U値の初期化
 	m_aTexU = 0.0f;
 
 	//テクスチャ割り当て
-	BindTexture(pTexture->Regist("data\\texture\\sky_02.jpg"));
+	BindTexture(pTexture->Regist(SKY_TEX));
 
 	return S_OK;
 }
@@ -83,7 +95,7 @@ void CWall::Update(void)
 	CObject3D::Update();
 
 	//テクスチャ座標の更新(U値)
-	m_aTexU += 0.0001f;
+	m_aTexU += U_TEX;
 }
 
 //========================================

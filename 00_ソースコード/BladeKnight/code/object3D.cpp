@@ -1,9 +1,10 @@
 //========================================
 //
-//シューティングアクション[object3D.h]
+//3Dオブジェクト処理[object3D.h]
 //Author：森川駿弥
 //
 //========================================
+
 #include "object3D.h"
 #include "renderer.h"
 #include "manager.h"

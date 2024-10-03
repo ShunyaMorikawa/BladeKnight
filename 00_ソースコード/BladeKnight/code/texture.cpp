@@ -4,13 +4,20 @@
 //Author：森川駿弥
 //
 //========================================
+
 #include "texture.h"
 #include "renderer.h"
 #include "manager.h"
 
-//一括管理
-const char *str[] = 
-{"data\\texture\\Player.png"};
+//========================================
+//定数定義
+//========================================
+namespace
+{
+	// テクスチャ一括管理
+	const char* str[] =
+	{ "data\\texture\\Player.png" };
+}
 
 //========================================
 //静的メンバ変数

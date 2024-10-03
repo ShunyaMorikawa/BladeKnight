@@ -4,8 +4,10 @@
 //AuthorFXìx–í
 //
 //========================================
+
 #ifndef _MODEL_H_
 #define _MODEL_H_
+
 #include "main.h"
 #include "object.h"
 

@@ -4,6 +4,7 @@
 // AuthorFXìx–í
 //
 //========================================
+
 #ifndef _MAPOBJECT_H_
 #define _MAPOBJECT_H_
 

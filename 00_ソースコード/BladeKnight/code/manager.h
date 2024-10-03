@@ -4,8 +4,10 @@
 // AuthorFXìx–í
 //
 //========================================
+
 #ifndef _MANAGER_H_
 #define _MANAGER_H_
+
 #include "main.h"
 #include "object.h"
 

@@ -4,8 +4,10 @@
 //AuthorFXìx–í
 //
 //========================================
+
 #ifndef _TITLE_H_
 #define _TITLE_H_
+
 #include "main.h"
 #include "manager.h"
 #include "object2D.h"

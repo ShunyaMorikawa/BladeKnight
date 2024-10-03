@@ -16,6 +16,15 @@
 #include "particle.h"
 #include "useful.h"
 
+//=======================================
+// 定数定義
+//=======================================
+namespace
+{
+	const int DAMAGE = 1;	// ヒット時のダメージ
+	const float BULLET_SIZE = 150.0f;	// 弾の最大数
+}
+
 //===========================================
 //コンストラクタ
 //===========================================
@@ -56,7 +65,7 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife)
 }
 
 //===========================================
-//初期化処理
+//初期化
 //===========================================
 HRESULT CBullet::Init(void)
 {
@@ -67,7 +76,7 @@ HRESULT CBullet::Init(void)
 	CBillboard::Init();
 
 	// サイズ設定
-	SetSize(150.0f, 150.0f);
+	SetSize(BULLET_SIZE, BULLET_SIZE);
 
 	BindTexture(pTexture->Regist("data\\texture\\effect000.png"));
 
@@ -76,7 +85,7 @@ HRESULT CBullet::Init(void)
 }
 
 //===========================================
-//終了処理
+//終了
 //===========================================
 void CBullet::Uninit(void)
 {
@@ -85,7 +94,7 @@ void CBullet::Uninit(void)
 }
 
 //===========================================
-//更新処理
+//更新
 //===========================================
 void CBullet::Update(void)
 {
@@ -124,7 +133,7 @@ void CBullet::Update(void)
 }
 
 //===========================================
-//描画処理
+//描画
 //===========================================
 void CBullet::Draw(void)
 {
@@ -162,39 +171,6 @@ void CBullet::Draw(void)
 }
 
 //===========================================
-// 敵との当たり判定
-//===========================================
-void CBullet::CollisionEnemy(D3DXVECTOR3 pos)
-{
-	// 長さ
-	float fLength;
-
-	float fRadius = GetSize();
-
-	// 敵の情報取得
-	CEnemy *pEnemy = CEnemy::GetInstance();
-
-	// プレイヤーの位置
-	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
-
-	// 半径
-	float radiusEnemy = pEnemy->GetRadius();
-
-	// ベクトルを求める
-	D3DXVECTOR3 vec = posEnemy - pos;
-
-	//ベクトル代入
-	fLength = D3DXVec3Length(&vec);
-
-	if (fLength <= radiusEnemy + fRadius)
-	{
-		Uninit();
-
-		pEnemy->Hit(1);
-	}
-}
-
-//===========================================
 // プレイヤーとの当たり判定
 //===========================================
 void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
@@ -229,7 +205,7 @@ void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
 		Uninit();
 
 		// 体力消費
-		pPlayer->Hit(1);
+		pPlayer->Hit(DAMAGE);
 	}
 }
 

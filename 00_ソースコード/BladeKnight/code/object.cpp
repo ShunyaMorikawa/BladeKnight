@@ -4,6 +4,7 @@
 //AuthorFXìx–í
 //
 //========================================
+
 #include "object.h"
 #include "camera.h"
 #include "manager.h"

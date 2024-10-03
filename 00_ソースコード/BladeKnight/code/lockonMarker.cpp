@@ -16,7 +16,7 @@
 //===========================================
 namespace
 {
-	const float MARKERSIZE = 90.0f;		// マーカーのサイズ
+	const float MARKER_SIZE = 90.0f;		// マーカーのサイズ
 	const std::string TEXTURE = "data\\TEXTURE\\rockon_point2.png";	// マーカーのテクスチャ
 }
 
@@ -68,7 +68,7 @@ HRESULT CLockonMarker::Init(bool alpha)
 	CBillboard::Init();
 
 	// サイズ設定
-	SetSize(MARKERSIZE, MARKERSIZE);
+	SetSize(MARKER_SIZE, MARKER_SIZE);
 
 	//テクスチャ割り当て
 	BindTexture(pTexture->Regist(TEXTURE));

@@ -4,8 +4,10 @@
 //AuthorFXìx–í
 //
 //========================================
+
 #ifndef _OBJECT2D_H_
 #define _OBJECT2D_H_
+
 #include "main.h"
 #include "object.h"
 

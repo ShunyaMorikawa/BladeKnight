@@ -4,6 +4,7 @@
 //Author：森川駿弥
 //
 //========================================
+
 #include "motion.h"
 #include "debugproc.h"
 #include "renderer.h"
@@ -14,7 +15,7 @@
 //========================================
 namespace
 {
-	const char  = 640;	// 各モデルのファイル名
+	//const char BUFFER = 640;	// 不要文字読み込み用
 	const char FILE_NAME = 64;	// 各モデルのファイル名
 }
 
@@ -267,8 +268,8 @@ void CMotion::SetModel(CModel *ppModel, int nNumModel)
 void CMotion::Load(std::string pfile)
 {
 	//変数宣言
-	char garbage[640];			// 不要文字格納用
-	char FileName[FILE_NAME];	// 各モデルのファイル名
+	char garbage[640];		// 不要文字格納用
+	char FileName[64];	// 各モデルのファイル名
 	float move = 0.0f;			// 移動量
 	int nIdx = 0;				// 何番目のパーツか
 	int nParent = 0;			// 親子関係

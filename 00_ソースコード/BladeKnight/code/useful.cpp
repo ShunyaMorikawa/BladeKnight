@@ -8,7 +8,7 @@
 #include "useful.h"
 
 //=======================================
-// ³‹K‰»
+// Œü‚«‚ÆŠp“x‚Ì³‹K‰»
 //=======================================
 void USEFUL::NormalizeRotAngle(float& fRotAngle)
 {

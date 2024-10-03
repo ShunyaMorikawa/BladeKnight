@@ -4,6 +4,7 @@
 // Author：森川駿弥
 //
 //========================================
+
 #include "enemy.h"
 #include "manager.h"
 #include "renderer.h"
@@ -27,19 +28,22 @@
 //========================================
 namespace
 {
-	const int LIFE = 20;			// 体力
-	const int ATTACKCOUNTER = 180;	// 攻撃するまでの時間
-	const int MAXDIRECTION = 8;		// 弾を飛ばす最大方向
-	const int BULLETLIFE = 120;		// 弾の寿命
+	const int LIFE = 20;				// 体力
+	const int ATTACKCOUNTER = 180;		// 攻撃するまでの時間
+	const int MAXDIRECTION = 8;			// 弾を飛ばす最大方向
+	const int BULLETLIFE = 120;			// 弾の寿命
 	
-	const float BULLETMOVE = 10.0f;	// 弾の移動量
-	const float SPEED = 0.3f;		// 速度
-	const float GRAVITY = 2.0f;		// 重力
-	const float INERTIA = 0.1f;		// 慣性
-	const float RADIUS = 200.0f;	// 半径
-	const float NOCKBACK = 50.0f;	// ノックバック値
+	const float BULLETMOVE = 10.0f;		// 弾の移動量
+	const float SPEED = 0.3f;			// 速度
+	const float GRAVITY = 2.0f;			// 重力
+	const float INERTIA = 0.1f;			// 慣性
+	const float RADIUS = 200.0f;		// 半径
+	const float NOCKBACK = 50.0f;		// ノックバック値
+	const float GAUGE_SIZE = 50.0f;		// ゲージサイズ
+	const float RESULT_HEIGHT = 200.0f;		// リザルトの高さ
 
-	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, -500.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, -500.0f };	// 敵の初期位置
+	const D3DXVECTOR3 GAUGE_POS = { 600.0f, 25.0f, 0.0f };	// 敵ゲージの初期位置
 }
 
 //========================================
@@ -109,10 +113,10 @@ HRESULT CEnemy::Init(std::string pfile)
 	m_pGauge = CGauge::Create(m_nLife);
 
 	// 位置設定
-	m_pGauge->SetPos(D3DXVECTOR3(600.0f, 25.0f, 0.0f));
+	m_pGauge->SetPos(GAUGE_POS);
 
 	// サイズ設定
-	m_pGauge->SetSize(50.0f, 50.0f);
+	m_pGauge->SetSize(GAUGE_SIZE, GAUGE_SIZE);
 
 	return S_OK;
 }
@@ -334,7 +338,7 @@ void CEnemy::Hit(int nLife)
 		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
 		// サイズ設定
-		pObje2D->SetSize(SCREEN_WIDTH, 200.0f);
+		pObje2D->SetSize(SCREEN_WIDTH, RESULT_HEIGHT);
 
 		// 勝利テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));

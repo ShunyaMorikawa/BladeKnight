@@ -18,7 +18,7 @@ namespace
 {
 	const std::string TEXTURE[CEffect::TYPE::TYPE_MAX] =
 	{
-		"data\\TEXTURE\\effect\\effect000.jpg",		// 通常
+		"data\\TEXTURE\\effect\\effect000.jpg",			// 通常
 		"data\\TEXTURE\\effect\\effect_point01.tga",	// 点
 		"data\\TEXTURE\\effect\\smoke_05.tga",			// 煙
 		"data\\TEXTURE\\effect\\smoke_05.tga",			// 黒煙
@@ -114,6 +114,7 @@ void CEffect::TexLoad()
 		m_TexIdx[i] = pTexture->Regist(TEXTURE[i]);
 	}
 
+	// テクスチャを読み込む
 	m_bTexLoad = true;
 }
 

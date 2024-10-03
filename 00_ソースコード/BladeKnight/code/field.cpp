@@ -4,10 +4,19 @@
 // Author：森川駿弥
 //
 //========================================
+
 #include "field.h"
 #include "manager.h"
 #include "renderer.h"
 #include "texture.h"
+
+//========================================
+//名前空間
+//========================================
+namespace
+{
+	const char* FIELD_TEX = "data\\texture\\soil.jpg";	// 地面のテクスチャ
+}
 
 //========================================
 //静的メンバ変数
@@ -55,8 +64,7 @@ HRESULT CField::Init(void)
 	CObject3D::Init();
 
 	//テクスチャ割り当て
-	BindTexture(pTexture->Regist("data\\texture\\soil.jpg"));
-
+	BindTexture(pTexture->Regist(FIELD_TEX));
 
 	return S_OK;
 }

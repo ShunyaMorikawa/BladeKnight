@@ -4,6 +4,7 @@
 // Author：森川駿弥
 //
 //========================================
+
 #include "gauge.h"
 #include "texture.h"
 #include "renderer.h"
@@ -14,13 +15,16 @@
 //========================================
 namespace
 {
-	const float LENGTH = 640.0f;		// ゲージの長さ
 	const char* GAUGETEX[] =
 	{// 読み込むテクスチャ
 		"",
 		"data\\texture\\gauge.png",
 		"data\\texture\\frame.png"
 	};
+
+	const float LENGTH = 640.0f;		// ゲージの長さ
+
+	float U_TEX = 0.002f;	// テクスチャ座標の更新値
 }
 
 //========================================
@@ -118,7 +122,7 @@ void CGauge::Update()
 	SetVertex();
 
 	// テクスチャ座標の更新(U値)
-	m_aTexU += 0.002f;
+	m_aTexU += U_TEX;
 }
 
 //========================================

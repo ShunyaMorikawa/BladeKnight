@@ -4,6 +4,7 @@
 //Author : MORIKAWA SHUNYA
 //
 //=======================================
+
 #include "light.h"
 #include "renderer.h"
 #include "manager.h"

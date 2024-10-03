@@ -4,6 +4,7 @@
 //Author Ibuki Okusada
 //
 //==========================================================
+
 #ifndef _DEBUGPROC_H_		//‚±‚Ìƒ}ƒNƒ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡
 #define _DEBUGPROC_H_
 

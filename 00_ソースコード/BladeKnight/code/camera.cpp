@@ -4,6 +4,7 @@
 //Author : MORIKAWA SHUNYA
 //
 //=======================================
+
 #include "camera.h"   
 #include "renderer.h"
 #include "manager.h"
@@ -26,6 +27,8 @@ namespace
 	const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
 	const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
 	const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
+	const float VIEWING = 100.0f;	// 視野角
+	const float DISTANCE = 500.0f;	// カメラとの距離
 }
 
 //=======================================
@@ -129,7 +132,7 @@ void CCamera::SetCamera(void)
 
 	//プロジェクションマトリックスを作成[透視投影]
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
-								D3DXToRadian(100.0f),	//視野角
+								D3DXToRadian(VIEWING),	//視野角
 								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
 								10.0f,		//Z値の最小値
 								400000.0f);	//Z値の最大値(描画距離)
@@ -191,7 +194,6 @@ void CCamera::CameraMoveV(void)
 
 	//位置を更新
 	m_posV += m_move;
-
 	m_posR += m_move;
 
 	//移動量を更新(減衰させる)
@@ -278,7 +280,8 @@ void CCamera::TitleCamera()
 		m_rot.y += D3DX_PI * 2;
 	}
 
-	m_fDistance = 500.0f;
+	// 距離
+	m_fDistance = DISTANCE;
 
 	// 視点
 	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
@@ -298,28 +301,4 @@ void CCamera::CollisionArena()
 		m_posV.x = vec.x * Constance::ARENA_SIZE;
 		m_posV.z = vec.z * Constance::ARENA_SIZE;
 	}
-}
-
-//=======================================
-//向きの取得
-//=======================================
-D3DXVECTOR3 CCamera::GetRot(void)
-{
-	return m_rot;
-}
-
-//=======================================
-//視点の取得
-//=======================================
-D3DXVECTOR3 CCamera::GetPosV(void)
-{
-	return m_posV;
-}
-
-//=======================================
-//注視点の取得
-//=======================================
-D3DXVECTOR3 CCamera::GetPosR(void)
-{
-	return m_posR;
 }

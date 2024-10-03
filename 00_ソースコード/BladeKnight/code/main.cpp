@@ -4,6 +4,7 @@
 // Author：森川駿弥
 //
 //========================================
+
 #include "main.h"
 #include "renderer.h"
 #include "object.h"
@@ -15,8 +16,8 @@
 //=======================================
 namespace
 {
-	const char* CLASS_NAME = "WindowClass";	// ライトの最大数
-	const char* WINDOW_NAME = "BladeKnight";	// ライトの最大数
+	const char* CLASS_NAME = "WindowClass";		// ウィンドウクラス名
+	const char* WINDOW_NAME = "BladeKnight";	// キャプション名
 }
 
 //========================================

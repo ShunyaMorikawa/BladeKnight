@@ -4,6 +4,7 @@
 // AuthorFXìx–í
 //
 //========================================
+
 #include "manager.h"
 #include "renderer.h"
 #include "input.h"

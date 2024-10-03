@@ -7,6 +7,7 @@
 
 #ifndef _FADE_H_	 //このマクロ定義が定義されていなかったら
 #define _FADE_H_	 //2連インクルード防止のマクロを定義する
+
 #include "main.h"
 #include "object.h"
 #include "object2d.h"

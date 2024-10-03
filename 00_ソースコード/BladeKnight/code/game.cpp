@@ -4,6 +4,7 @@
 //Author：森川駿弥
 //
 //========================================
+
 #include "game.h"
 #include "camera.h"
 #include "input.h"
@@ -31,6 +32,8 @@ namespace
 {
 	const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 	
+	const char* GUIDE_TEX = "data\\texture\\guide_game.png";	// テクスチャのパス
+
 	const float GUIDE_WIDTH = 300.0f;	// ガイドの幅
 	const float GUIDE_HEIGHT = 350.0f;	// ガイドの高さ
 	
@@ -48,7 +51,7 @@ m_pIdxMesh		(nullptr),	// インデックスメッシュのポインタ
 m_pFade			(nullptr),	// フェードのポインタ
 m_pObj2D		(nullptr)	// オブジェクト2Dのポインタ
 {
-	m_pGame = nullptr;	// ゲームのポインタ
+	m_pGame = nullptr;		// ゲームのポインタ
 }
 
 //========================================
@@ -115,7 +118,7 @@ HRESULT CGame::Init(void)
 	m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide_game.png"));
+	m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();

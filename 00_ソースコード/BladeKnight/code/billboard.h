@@ -36,11 +36,13 @@ public:
 	void SetEffectVertex(float fwidth, float fHeight);
 
 	void SetVertex(void);
-	void SetSize(float fWidht, float fHeight);
-	float GetSize();
 
-	void SetCol(D3DXCOLOR col);
-	D3DXCOLOR GetCol();
+	void SetSize(float fWidht, float fHeight);
+	float GetSize() { return m_fWidth, m_fHeight; }	// サイズ取得
+
+	// 色の設定・取得
+	void SetCol(D3DXCOLOR col) { m_col = col; }
+	D3DXCOLOR GetCol() { return m_col; }
 
 private:
 	int m_nIdxTexture;		//テクスチャの番号

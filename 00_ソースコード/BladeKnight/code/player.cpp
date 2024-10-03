@@ -4,6 +4,7 @@
 // Author：森川駿弥
 //
 //========================================
+
 #include "player.h"
 #include "input.h"
 #include "manager.h"
@@ -33,7 +34,10 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
-	
+	const int NORMAL_ATTACK = 1;	// 通常攻撃のダメージ
+	const int MEDIUM_ATTACK = 2;	// 中攻撃のダメージ
+	const int STRONG_ATTACK = 3;	// 強攻撃のダメージ
+
 	const float NOCKBACK = 50.0f;	// ノックバック値
 	const float SPEED = 4.0f;		// 速度
 	const float INERTIA = 0.3f;		// 慣性
@@ -42,7 +46,8 @@ namespace
 	const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
 	const float GAUGE_WIDTH = 50.0f;	// ゲージの幅
 	const float GAUGE_HEIGHT = 50.0f;	// ゲージの高さ
-	
+	const float RESULT_HEIGHT = 200.0f;		// リザルトの高さ
+
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
 	
@@ -216,7 +221,7 @@ void CPlayer::Update(void)
 		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
 		// サイズ設定
-		pObje2D->SetSize(SCREEN_WIDTH, 200.0f);
+		pObje2D->SetSize(SCREEN_WIDTH, RESULT_HEIGHT);
 
 		// 敗北テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
@@ -491,7 +496,7 @@ void CPlayer::Attack()
 		m_bMove = false;
 
 		// 敵との当たり判定
-		CollisionEnemy(1);
+		CollisionEnemy(NORMAL_ATTACK);
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_E) == true
@@ -502,7 +507,7 @@ void CPlayer::Attack()
 		m_bMove = false;
 
 		// 敵との当たり判定
-		CollisionEnemy(2);
+		CollisionEnemy(MEDIUM_ATTACK);
 	}
 
 	if (pInputKeyboard->GetTrigger(DIK_Q) == true
@@ -513,7 +518,7 @@ void CPlayer::Attack()
 		m_bMove = false;
 
 		// 敵との当たり判定
-		CollisionEnemy(3);
+		CollisionEnemy(STRONG_ATTACK);
 	}
 }
 
@@ -590,9 +595,6 @@ void CPlayer::CollisionEnemy(int nDamage)
 	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 100.0f, 1, true, CEffect::TYPE::TYPE_NORMAL);
 #endif
 
-	// 長さ
-	float fLength = 0.0f;
-
 	// プレイヤーの半径
 	float fRadius = RADIUS;
 
@@ -617,7 +619,7 @@ void CPlayer::CollisionEnemy(int nDamage)
 		D3DXVECTOR3 vec = posEnemy - pos;
 
 		// ベクトル代入
-		fLength = D3DXVec3Length(&vec);
+		float fLength = D3DXVec3Length(&vec);
 
 		// 無敵時間
 		int Invincible = 0;
@@ -661,7 +663,7 @@ void CPlayer::NockBack()
 		// 位置更新
 		moveEnemy.x = sinf(angle) * -NOCKBACK;
 		moveEnemy.z = cosf(angle) * -NOCKBACK;
-		moveEnemy.y = 25.0f;
+		moveEnemy.y = NOCKBACK * 0.5f;
 
 		// 移動量設定
 		pEnemy->SetMove(moveEnemy);

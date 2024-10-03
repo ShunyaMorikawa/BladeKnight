@@ -95,7 +95,6 @@ void Mypartcile_Func::BULLET_PARTICLE()
 	D3DXVECTOR3 move;
 	CEffect* pEffect = nullptr;
 
-
 	//=============================
 	// ê‘êF
 	//=============================

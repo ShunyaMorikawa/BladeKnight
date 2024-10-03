@@ -30,13 +30,13 @@ public:
 	void TitleCamera();
 	void CollisionArena();
 
-	D3DXVECTOR3 GetRot(void);				//位置取得
-	D3DXVECTOR3 GetPosV(void);				//視点の取得
-	D3DXVECTOR3 GetPosR(void);				//注視点の取得
+	// 向き・視点・注視点・上方向ベクトルの取得
+	D3DXVECTOR3 GetRot(void) { return m_rot; }
+	D3DXVECTOR3 GetPosV(void) { return m_posV; }
+	D3DXVECTOR3 GetPosR(void) { return m_posR; }
 	D3DXVECTOR3 GetVecU() { return m_vecU; }
 
 private:
-
 	//メンバ変数
 	D3DXMATRIX m_mtxProjection;		//プロジェクションマトリックス
 	D3DXMATRIX m_mtxView;			//ビューマトリックス

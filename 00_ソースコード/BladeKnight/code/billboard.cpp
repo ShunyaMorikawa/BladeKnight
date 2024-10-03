@@ -247,7 +247,6 @@ void CBillboard::SetSizeVertex(float fwidth, float fheight)
 void CBillboard::SetEffectVertex(float fwidth, float fHeight)
 {
 	m_fWidth = fwidth;
-
 	m_fHeight = fHeight;
 
 	//頂点情報へのポインタ
@@ -257,10 +256,10 @@ void CBillboard::SetEffectVertex(float fwidth, float fHeight)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャ座標の再設定
-	pVtx[0].pos = D3DXVECTOR3(-m_fWidth, m_fHeight, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_fWidth, m_fHeight, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-m_fWidth, -m_fHeight, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_fWidth, -m_fHeight, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(-fwidth, fHeight, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(fwidth, fHeight, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-fwidth, -fHeight, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(fwidth, -fHeight, 0.0f);
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();
@@ -318,28 +317,4 @@ void CBillboard::SetSize(float fWidht, float fHeight)
 
 	//対角線の向き(横、縦)
 	m_fAngle = atan2f(fWidht, fHeight);
-}
-
-//========================================
-//弾ビルボードの頂点座標
-//========================================
-float CBillboard::GetSize()
-{
-	return m_fWidth, m_fHeight;
-}
-
-//========================================
-//色設定
-//========================================
-void CBillboard::SetCol(D3DXCOLOR col)
-{
-	m_col = col;
-}
-
-//========================================
-//色取得
-//========================================
-D3DXCOLOR CBillboard::GetCol()
-{
-	return m_col;
 }

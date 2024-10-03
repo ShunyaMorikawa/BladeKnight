@@ -4,6 +4,7 @@
 //AuthorFXìx–í
 //
 //========================================
+
 #include "object2D.h"
 #include "renderer.h"
 #include "manager.h"
@@ -87,9 +88,9 @@ HRESULT CObject2D::Init(void)
 			return E_FAIL;
 		}
 
-		//•Ï”‚Ì‰Šú‰»
-		m_fLength = sqrtf(50.0f * 50.0f + 50.0f * 50.0f) * 1.0f;	//‘ÎŠpü‚Ì’·‚³‚ğZo‚·‚é
-		m_fAngle = atan2f(50.0f, 50.0f);	//‘ÎŠpü‚ÌŠp“x‚ğZo‚·‚é
+		// ‘ÎŠpü‚Ì’·‚³EŠp“x‚ğZo‚·‚é
+		m_fLength = sqrtf(50.0f * 50.0f + 50.0f * 50.0f) * 1.0f;	
+		m_fAngle = atan2f(50.0f, 50.0f);
 
 		//’¸“_î•ñ
 		SetVertex();

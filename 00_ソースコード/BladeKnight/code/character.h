@@ -4,6 +4,7 @@
 //AuthorFXìx–í
 //
 //========================================
+
 #ifndef _CHARACTER_H_
 #define _CHARACTER_H_
 

@@ -4,6 +4,7 @@
 // AuthorFXìx–í
 //
 //========================================
+
 #ifndef _WALL_H_
 #define _WALL_H_
 
