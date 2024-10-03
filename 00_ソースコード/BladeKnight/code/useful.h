@@ -8,7 +8,6 @@
 #ifndef _USEFUL_H_     //このマクロ定義が定義されていなかったら
 #define _USEFUL_H_     //2連インクルード防止のマクロを定義する
 
-#include "main.h"
 
 //=======================================
 // 関数定義
@@ -42,9 +41,12 @@ namespace USEFUL
 //=======================================
 namespace Constance
 {// 便利定数
-const float ARENA_SIZE = 2250.0f;	// 闘技場のサイズ
-const float WALL_POS = 4000.0f;	// 壁
-const float WALL_POS_Y = 2000.0f;	// 壁
+	const float ARENA_SIZE = 2250.0f;	// 闘技場のサイズ
+	const float WALL_POS = 4000.0f;		// 壁
+	const float WALL_POS_Y = 2000.0f;	// 壁
+
+	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報のパス
+	const std::string ENEMY_TXT = "data//FILE//enemy.txt";	// エネミー情報パス
 }
 
 #endif

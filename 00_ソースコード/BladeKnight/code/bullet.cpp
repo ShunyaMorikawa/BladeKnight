@@ -14,7 +14,6 @@
 #include "enemy.h"
 #include "player.h"
 #include "particle.h"
-#include "useful.h"
 
 //=======================================
 // ’è”’è‹`

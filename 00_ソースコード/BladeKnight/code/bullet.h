@@ -37,7 +37,6 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	void CollisionEnemy(D3DXVECTOR3 pos);
 	void CollisionPlayer(D3DXVECTOR3 pos);
 	void CollisionCircle();
 

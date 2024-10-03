@@ -30,7 +30,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 //========================================
 namespace
 {
-	const int TRANSITIONTIME = 180;		// 遷移するまでの時間
+	const int TRANSITION_TIME = 180;		// 遷移するまでの時間
 	
 	const char* GUIDE_TEX = "data\\texture\\guide_game.png";	// テクスチャのパス
 
@@ -85,13 +85,13 @@ HRESULT CGame::Init(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// プレイヤー生成
-	CPlayer::Create("data//FILE//player.txt");
+	CPlayer::Create(Constance::PLAYER_TXT);
+
+	// エネミー生成
+	CEnemy::Create(Constance::ENEMY_TXT);
 
 	// フィールド生成
 	CField::Create();
-
-	// エネミー生成
-	CEnemy::Create("data//FILE//motion.txt");
 
 	// 4方向に壁生成
 	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, -Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
@@ -123,9 +123,6 @@ HRESULT CGame::Init(void)
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
-	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_TUTORIAL);
-
 	// サウンド再生
 	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_GAME);
 
@@ -142,6 +139,12 @@ void CGame::Uninit(void)
 		m_pObj2D->Uninit();
 		m_pObj2D = nullptr;
 	}
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop(CSound::SOUND_LABEL_BGM_TUTORIAL);
 
 	m_pGame = nullptr;
 }
@@ -164,7 +167,7 @@ void CGame::Update(void)
 	{// 敵かプレイヤーの体力が0以下になったら
 		m_nTransition++;
 
-		if (m_nTransition > TRANSITIONTIME ||
+		if (m_nTransition > TRANSITION_TIME ||
 			pInputKeyboard->GetTrigger(DIK_RETURN))
 		{
 			// 画面遷移(フェード)

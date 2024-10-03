@@ -25,5 +25,6 @@
 #include <string.h>
 #include <time.h>
 #include <vector>
+#include "useful.h"
 
 #endif // _PRECOMPILE_H_

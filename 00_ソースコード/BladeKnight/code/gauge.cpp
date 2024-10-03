@@ -100,6 +100,14 @@ HRESULT CGauge::Init()
 //========================================
 void CGauge::Uninit()
 {
+	for (int i = 0; i < CGauge::TYPE_MAX; i++)
+	{
+		if (m_p2D[i] != nullptr)
+		{
+			m_p2D[i]->Uninit();
+		}
+	}
+
 	// é©êgÇÃèIóπ
 	Release();
 }

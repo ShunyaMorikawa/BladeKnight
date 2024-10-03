@@ -24,6 +24,8 @@ namespace
 {
 	const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 
+	const char* GUIDE_TEX = "data\\texture\\guide_tutorial.png";	// テクスチャのパス
+
 	const float GUIDE_WIDTH = 300.0f;	// ガイドの幅
 	const float GUIDE_HEIGHT = 350.0f;	// ガイドの高さ
 
@@ -92,13 +94,10 @@ HRESULT CTutorial::Init(void)
 	m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide_tutorial.png"));
+	m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_TITLE);
 
 	// サウンド再生
 	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TUTORIAL);
@@ -112,6 +111,17 @@ HRESULT CTutorial::Init(void)
 //=======================================
 void CTutorial::Uninit(void)
 {
+	if (m_pObj2D != nullptr)
+	{
+		m_pObj2D->Uninit();
+		m_pObj2D = nullptr;
+	}
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop(CSound::SOUND_LABEL_BGM_TITLE);
 }
 
 //=======================================
