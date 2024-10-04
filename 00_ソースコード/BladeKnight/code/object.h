@@ -41,16 +41,16 @@ public:
 	static void DeleteAll(void);
 
 	// 位置の設定と取得
-	void SetPos(D3DXVECTOR3 pos);
-	D3DXVECTOR3 GetPos(void);
+	void SetPos(const D3DXVECTOR3& pos) { m_pos = pos; }
+	D3DXVECTOR3 GetPos(void) { return m_pos; }
 
 	// 移動量の設定と取得
-	void SetMove(D3DXVECTOR3 move);
-	D3DXVECTOR3 GetMove();
+	void SetMove(const D3DXVECTOR3& move) { m_move = move; }
+	D3DXVECTOR3 GetMove() { return m_move; }
 
 	// 向きの設定と取得
-	void SetRot(D3DXVECTOR3 rot);
-	D3DXVECTOR3 GetRot(void);
+	void SetRot(const D3DXVECTOR3& rot) { m_rot = rot; }
+	D3DXVECTOR3 GetRot(void) { return m_rot; }
 	
 	void Delete(void);
 	void BindTexture(int pTexture);		//テクスチャ割り当て
@@ -58,15 +58,15 @@ public:
 	void SetDrawFrag(bool bDraw);		// 描画するかしないか
 
 	// ワールドマトリックスの設定と取得
-	void SetmtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }
+	void SetmtxWorld(const D3DXMATRIX& mtxWorld) { m_mtxWorld = mtxWorld; }
 	D3DXMATRIX GetmtxWorld() { return m_mtxWorld; }
 
 	// メッシュの頂点情報と設定と取得
-	void SetMesh(LPD3DXMESH pMesh) { m_pMesh = pMesh; }
+	void SetMesh(const LPD3DXMESH& pMesh) { m_pMesh = pMesh; }
 	LPD3DXMESH GetMesh() { return m_pMesh; }
 
 	// マテリアルの取得と設定
-	void SetBuffMat(LPD3DXBUFFER pBuffMat) { m_pBuffMat = pBuffMat; }
+	void SetBuffMat(const LPD3DXBUFFER& pBuffMat) { m_pBuffMat = pBuffMat; }
 	LPD3DXBUFFER GetBuffMat() { return m_pBuffMat; }
 
 	// マテリアルの設定と取得

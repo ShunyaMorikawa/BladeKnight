@@ -45,7 +45,7 @@ public:
 	CMotion* GetMotion() { return m_pMotion; }	// ƒ‚[ƒVƒ‡ƒ“î•ñæ“¾
 
 	// –Ú“I‚ÌŒü‚«‚Ìİ’è‚Ææ“¾
-	void SetRotDest(D3DXVECTOR3 RotDest) { m_RotDest = RotDest; }
+	void SetRotDest(const D3DXVECTOR3& RotDest) { m_RotDest = RotDest; }
 	D3DXVECTOR3 GetRotDest() { return m_RotDest; }
 
 	// ó‘Ôæ“¾

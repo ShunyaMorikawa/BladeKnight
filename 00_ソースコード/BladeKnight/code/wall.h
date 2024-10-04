@@ -22,7 +22,7 @@ public:
 	~CWall();	//デストラクタ
 
 	//メンバ関数
-	static CWall* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
+	static CWall* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);
 
 	HRESULT Init(void);
 	void Uninit(void);

@@ -41,7 +41,7 @@ CBullet::~CBullet()
 //===========================================
 //生成
 //===========================================
-CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife)
+CBullet* CBullet::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, int nLife)
 {
 	//CBullet型のポインタ
 	CBullet* pEffect = nullptr;
@@ -172,7 +172,7 @@ void CBullet::Draw(void)
 //===========================================
 // プレイヤーとの当たり判定
 //===========================================
-void CBullet::CollisionPlayer(D3DXVECTOR3 pos)
+void CBullet::CollisionPlayer(const D3DXVECTOR3& pos)
 {
 	// 長さ
 	float fLength;

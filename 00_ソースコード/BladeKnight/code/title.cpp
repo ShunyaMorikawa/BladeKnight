@@ -26,11 +26,11 @@ namespace
 	const char* TITLE_TEX = "data\\TEXTURE\\title.png";			// タイトルテクスチャのパス
 	const char* ENTER_TEX = "data\\TEXTURE\\press_enter.png";	// 文字テクスチャのパス
 
-	const float LOGO_POS_Y = 150.0f;	// ロゴテクスチャのY座標
-	const float LOGO_SIZE_WIDTH = 640.0f;		// ロゴテクスチャのサイズ
-	const float LOGO_SIZE_HEIGHT = 250.0f;		// ロゴテクスチャのサイズ
-	const float ENTER_POS_Y = 550.0f;	// 文字テクスチャのY座標
-	const float ENTER_SIZE = 250.0f;	// 文字テクスチャのサイズ
+	const float LOGO_POS_Y = 150.0f;		// ロゴテクスチャのY座標
+	const float LOGO_SIZE_WIDTH = 640.0f;	// ロゴテクスチャのサイズ
+	const float LOGO_SIZE_HEIGHT = 250.0f;	// ロゴテクスチャのサイズ
+	const float ENTER_POS_Y = 550.0f;		// 文字テクスチャのY座標
+	const float ENTER_SIZE = 250.0f;		// 文字テクスチャのサイズ
 }
 
 //=======================================

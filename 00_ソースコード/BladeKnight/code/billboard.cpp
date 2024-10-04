@@ -42,7 +42,7 @@ CBillboard::~CBillboard()
 //=======================================
 //ビルボード生成
 //=======================================
-CBillboard *CBillboard::Create(D3DXVECTOR3 pos, float fwidth, float fheight)
+CBillboard *CBillboard::Create(const D3DXVECTOR3& pos, float fwidth, float fheight)
 {
 	//pBillboard型のポインタ
 	CBillboard *pBillboard = nullptr;

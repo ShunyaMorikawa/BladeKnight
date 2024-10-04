@@ -25,10 +25,10 @@ CTitlePlayer* CTitlePlayer::m_pTitlePlayer = nullptr;
 // コンストラクタ
 //========================================
 CTitlePlayer::CTitlePlayer(int nPriority) : CCharacter(nPriority),
-m_apNumModel(0),		// モデルの総数
-m_nOldMotion(0),		// 前回のモーション
-m_nState(STATE_NONE),	// 状態
-m_bMove(false)			// 移動
+m_apNumModel	(0),			// モデルの総数
+m_nOldMotion	(0),			// 前回のモーション
+m_nState		(STATE_NONE),	// 状態
+m_bMove			(false)			// 移動
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }

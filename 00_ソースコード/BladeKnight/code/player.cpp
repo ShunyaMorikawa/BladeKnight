@@ -752,7 +752,7 @@ void CPlayer::CollisionArena()
 //========================================
 // “G‚Æ‚Ì”»’è
 //========================================
-void CPlayer::CollisionEnemy(D3DXVECTOR3 pos)
+void CPlayer::CollisionEnemy(const D3DXVECTOR3 &pos)
 {
 	// ’·‚³
 	float fLength;

@@ -224,7 +224,7 @@ float CCamera::RotNor(float RotN)
 //=======================================
 //ÉJÉÅÉâí«è]
 //=======================================
-void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+void CCamera::following(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
 	//íçéãì_
 	D3DXVECTOR3 Diff;

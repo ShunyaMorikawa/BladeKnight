@@ -41,7 +41,7 @@ public:
 	void SetSize(float fWidht, float fHeight);
 
 	// 位置設定・取得
-	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }
+	void SetPosition(const D3DXVECTOR3& pos) { m_pos = pos; }
 	D3DXVECTOR3 GetPosition(void) { return m_pos; }
 
 	D3DXVECTOR3 GetVtxMin(void) { return m_vtxMin; }	//モデルの最小値取得

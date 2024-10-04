@@ -43,7 +43,7 @@ CWall::~CWall()
 //========================================
 // ï«ê∂ê¨
 //========================================
-CWall* CWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CWall* CWall::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
 	// CWallå^ÇÃÉ|ÉCÉìÉ^
 	CWall* pWall = new CWall;

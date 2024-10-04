@@ -21,7 +21,7 @@ public:
 	~CBillboard();	//デストラクタ
 
 	//メンバ関数
-	static CBillboard *Create(D3DXVECTOR3 pos, float fwidth, float fheight);
+	static CBillboard *Create(const D3DXVECTOR3& pos, float fwidth, float fheight);
 
 	HRESULT Init(void);
 	void Uninit(void);

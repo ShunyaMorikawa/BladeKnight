@@ -56,8 +56,9 @@ CEnemy* CEnemy::m_pEnemy = nullptr;
 //========================================
 CEnemy::CEnemy(int nPriority) : CCharacter(nPriority),
 m_nLife		(0),			// ‘Ì—Í
-m_fRadius	(0.0f),			// ”¼Œa
+m_nCnt		(0),			// ƒJƒEƒ“ƒg
 m_nState	(STATE_NORMAL),	// ó‘Ô
+m_fRadius	(0.0f),			// ”¼Œa
 m_bWalk		(false),		// •à‚«
 m_bAttack	(false),		// UŒ‚
 m_pGauge	(nullptr)		// ƒQ[ƒW

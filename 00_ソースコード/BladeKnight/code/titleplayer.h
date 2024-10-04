@@ -42,8 +42,6 @@ public:
 	void Update();
 	void Draw();
 
-	void Turn();
-
 	static CTitlePlayer* GetInstance() { return m_pTitlePlayer; }
 
 private:

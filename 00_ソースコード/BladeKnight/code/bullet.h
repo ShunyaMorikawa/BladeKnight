@@ -30,14 +30,14 @@ public:
 	~CBullet();		//デストラクタ
 
 	//メンバ関数
-	static CBullet* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife);
+	static CBullet* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, int nLife);
 
 	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	void CollisionPlayer(D3DXVECTOR3 pos);
+	void CollisionPlayer(const D3DXVECTOR3& pos);
 	void CollisionCircle();
 
 private:

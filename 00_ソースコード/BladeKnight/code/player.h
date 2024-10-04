@@ -63,7 +63,7 @@ public:
 
 	void CollisionArena();
 
-	void CollisionEnemy(D3DXVECTOR3 pos);
+	void CollisionEnemy(const D3DXVECTOR3& pos);
 
 	void LockOn();
 	void Turn();
