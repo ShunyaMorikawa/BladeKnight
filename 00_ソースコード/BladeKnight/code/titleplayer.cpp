@@ -26,9 +26,8 @@ CTitlePlayer* CTitlePlayer::m_pTitlePlayer = nullptr;
 // コンストラクタ
 //========================================
 CTitlePlayer::CTitlePlayer(int nPriority) : CCharacter(nPriority),
-m_apNumModel	(0),			// モデルの総数
-m_nOldMotion	(0),			// 前回のモーション
-m_nState		(STATE_NONE)	// 状態
+m_apNumModel	(0),	// モデルの総数
+m_nOldMotion	(0)		// 前回のモーション
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -65,9 +64,6 @@ HRESULT CTitlePlayer::Init(std::string pfile)
 {
 	// キャラの初期化
 	CCharacter::Init(pfile);
-
-	// プレイヤー状態の初期化
-	m_nState = STATE_NORMAL;
 
 	// 位置設定
 	SetPos(INITIAL_POS);
@@ -126,7 +122,7 @@ void CTitlePlayer::Motion()
 	CMotion* pMotion = GetMotion();
 
 	// タイトルモーション
-	pMotion->Set(CMotion::TITLE_MOTIONTYPE_TITLE);
+	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
 
 	if (pMotion != nullptr)
 	{// モーション更新

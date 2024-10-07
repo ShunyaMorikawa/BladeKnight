@@ -22,14 +22,6 @@ class CMotion;
 class CTitlePlayer : public CCharacter
 {
 public:
-	// 状態
-	enum PLAYERSTATE
-	{// プレイヤーの状態
-		STATE_NONE = 0,
-		STATE_NORMAL,		// 通常
-		STATE_MAX
-	};
-
 	CTitlePlayer(int nPriority = 4);		//コンストラクタ
 	~CTitlePlayer();		//デストラクタ
 
@@ -51,8 +43,6 @@ private:
 	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nOldMotion;		// 前回のモーション
-
-	PLAYERSTATE m_nState;	// 状態
 
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 

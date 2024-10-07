@@ -22,7 +22,7 @@
 //========================================
 namespace
 {
-	const std::string PLAYER_TXT = "data\\FILE\\titleplayer.txt";	// プレイヤー情報のパス
+	const std::string RESULT_PLAYER_TXT = "data\\FILE\\resultplayer.txt";	// プレイヤー情報のパス
 	const char* WIN_TEX = "data\\TEXTURE\\title.png";			// 勝利テクスチャのパス
 	const char* LOSE_TEX = "data\\TEXTURE\\press_enter.png";	// 敗北テクスチャのパス
 
@@ -82,7 +82,7 @@ HRESULT CResult::Init(void)
 	pCamera->Init();
 
 	// リザルトプレイヤー生成
-	CResultPlayer::Create(PLAYER_TXT);
+	CResultPlayer::Create(RESULT_PLAYER_TXT);
 
 	// マップオブジェクト生成
 	CMapObject::Create();

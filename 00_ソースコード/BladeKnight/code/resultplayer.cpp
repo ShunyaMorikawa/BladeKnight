@@ -125,21 +125,8 @@ void CResultPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
-	switch (m_nState)
-	{
-	case STATE_WIN:
-		m_IsWin = true;
-		pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
-		break;
-
-	case STATE_LOSE:
-		m_IsLose = true;
-		pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
-		break;
-
-	default:
-		break;
-	}
+	// タイトルモーション
+	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
 
 	if (pMotion != nullptr)
 	{// モーション更新
