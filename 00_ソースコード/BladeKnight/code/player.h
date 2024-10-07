@@ -46,11 +46,6 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void Act(float fSpeed);
-	void Attack();
-	void Motion();
-	void CollisionEnemy(int nDamage);
-	void NockBack();
 	void Hit(int nLife);
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
@@ -65,13 +60,18 @@ public:
 
 	void CollisionEnemy(const D3DXVECTOR3& pos);
 
-	void LockOn();
-	void DestRot();
-
 	// 自身の情報
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
+	void Act(float fSpeed);
+	void Attack();
+	void Motion();
+	void CollisionEnemy(int nDamage);
+	void NockBack();
+
+	void LockOn();
+	void DestRot();
 
 	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数

@@ -176,9 +176,6 @@ void CPlayer::Update(void)
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
-	//テクスチャの情報取得
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
@@ -214,18 +211,6 @@ void CPlayer::Update(void)
 
 	if (m_nLife <= 0)
 	{
-		// 生成
-		CObject2D* pObje2D = CObject2D::Create();
-
-		// 位置設定
-		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
-
-		// サイズ設定
-		pObje2D->SetSize(SCREEN_WIDTH, RESULT_HEIGHT);
-
-		// 敗北テクスチャ
-		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
-
 		// サウンド停止
 		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
 

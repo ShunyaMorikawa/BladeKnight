@@ -35,10 +35,6 @@ public:
 	void Update(void);
 	void Draw(void);
 	void Hit(int nLife);
-	void NockBack();
-	void Motion();
-	void CollisionPlayer(int nDamage);
-	void CollisionCircle();
 
 	int GetLife() { return m_nLife; }			// 体力取得
 
@@ -47,6 +43,11 @@ public:
 	static CEnemy* GetInstance() { return m_pEnemy; }	// 敵の情報取得
 
 private:
+	void NockBack();
+	void Motion();
+	void CollisionPlayer(int nDamage);
+	void CollisionCircle();
+
 	//メンバ変数
 	int m_nLife;		// 体力
 	int m_nCnt;			// カウント

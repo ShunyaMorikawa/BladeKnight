@@ -30,10 +30,10 @@ CGame *CGame::m_pGame = nullptr;		// ゲームのポインタ
 //========================================
 namespace
 {
-	const int TRANSITION_TIME = 180;	// 遷移するまでの時間
+	const int TRANSITION_TIME = 120;	// 遷移するまでの時間
 	
 	const char* GUIDE_TEX = "data\\texture\\guide_game.png";	// テクスチャのパス
-	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報のパス
+	const std::string PLAYER_TXT = "data\\FILE\\player.txt";	// プレイヤー情報のパス
 
 	const float GUIDE_WIDTH = 300.0f;	// ガイドの幅
 	const float GUIDE_HEIGHT = 350.0f;	// ガイドの高さ

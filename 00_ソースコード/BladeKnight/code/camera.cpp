@@ -26,9 +26,10 @@ namespace
 	const float CAMERA_V_MOVE = 0.03f;		// 視点の移動速度
 	const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
 	const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
-	const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
+	const float CAMERA_DISTANCE_TITLE = 300.0f;	// カメラ
 	const float VIEWING = 100.0f;	// 視野角
-	const float DISTANCE = 500.0f;	// カメラとの距離
+	const float TITLE_DISTANCE = 300.0f;	// タイトル画面のカメラとの距離
+	const float RESULT_DISTANCE = 150.0f;	// タイトル画面のカメラとの距離
 }
 
 //=======================================
@@ -283,7 +284,7 @@ void CCamera::TitleCamera()
 	}
 
 	// 距離
-	m_fDistance = DISTANCE;
+	m_fDistance = TITLE_DISTANCE;
 
 	// 視点
 	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
@@ -296,12 +297,11 @@ void CCamera::TitleCamera()
 void CCamera::ResultCamera()
 {
 	// 距離
-	m_fDistance = DISTANCE;
+	m_fDistance = RESULT_DISTANCE;
 
 	// 視点
 	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
 	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
-
 }
 
 //=======================================

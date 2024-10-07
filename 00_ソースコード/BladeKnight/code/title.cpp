@@ -30,7 +30,8 @@ namespace
 	const float LOGO_SIZE_WIDTH = 640.0f;	// ロゴテクスチャのサイズ
 	const float LOGO_SIZE_HEIGHT = 250.0f;	// ロゴテクスチャのサイズ
 	const float ENTER_POS_Y = 550.0f;		// 文字テクスチャのY座標
-	const float ENTER_SIZE = 250.0f;		// 文字テクスチャのサイズ
+	const float ENTER_WIDTH = 500.0f;		// 文字テクスチャのサイズ
+	const float ENTER_HEIGHT = 150.0f;		// 文字テクスチャのサイズ
 }
 
 //=======================================
@@ -195,7 +196,7 @@ void CTitle::PressEnter()
 	m_pEnter->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, ENTER_POS_Y, 0.0f));
 
 	// サイズ設定
-	m_pEnter->SetSize(ENTER_SIZE, ENTER_SIZE);
+	m_pEnter->SetSize(ENTER_WIDTH, ENTER_HEIGHT);
 
 	// テクスチャ設定
 	m_pEnter->BindTexture(pTexture->Regist(ENTER_TEX));

@@ -1,7 +1,7 @@
 //========================================
 //
-//リザルトプレイヤー処理[resultplayer.h]
-//Author：森川駿弥
+// リザルトプレイヤー処理[resultplayer.h]
+// Author：森川駿弥
 //
 //========================================
 
@@ -42,12 +42,12 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void Motion();
 
 	// 自身の情報
 	static CResultPlayer* GetInstance() { return m_pResultPlayer; }
 
 private:
+	void Motion();
 
 	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数

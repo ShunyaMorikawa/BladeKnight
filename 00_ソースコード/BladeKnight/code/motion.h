@@ -44,6 +44,13 @@ public:
 		ENEMY_MOTIONTYPE_MAX
 	};
 
+	enum ResultMotion
+	{// エネミーモーション種類
+		RESULT_MOTIONTYPE_NEUTRAL = 0,	// 待機
+		RESULT_MOTIONTYPE_WIN,		// 勝利
+		RESULT_MOTIONTYPE_MAX
+	};
+
 	struct KEY
 	{//キーの構造体
 		D3DXVECTOR3 pos;

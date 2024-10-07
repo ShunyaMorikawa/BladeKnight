@@ -306,9 +306,6 @@ void CEnemy::Hit(int nLife)
 
 	D3DXVECTOR3 pos = GetPos();
 
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	// 状態取得
 	int nState = GetState();
 
@@ -332,18 +329,6 @@ void CEnemy::Hit(int nLife)
 		// 終了
 		Uninit();
 
-		// 生成
-		CObject2D* pObje2D = CObject2D::Create();
-
-		// 位置設定
-		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
-
-		// サイズ設定
-		pObje2D->SetSize(SCREEN_WIDTH, RESULT_HEIGHT);
-
-		// 勝利テクスチャ
-		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));
-	
 		// サウンド情報取得
 		CSound* pSound = CManager::GetInstance()->GetSound();
 

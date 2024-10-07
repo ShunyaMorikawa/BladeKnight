@@ -1,12 +1,14 @@
 //========================================
 //
-// タイトルプレイヤー処理[titleplayer.h]
+// リザルトプレイヤー処理[resultplayer.h]
 // Author：森川駿弥
 //
 //========================================
 
 #include "resultplayer.h"
 #include "debugproc.h"
+#include "player.h"
+#include "enemy.h"
 
 //========================================
 // 定数定義
@@ -79,7 +81,7 @@ HRESULT CResultPlayer::Init(std::string pfile)
 }
 
 //========================================
-//終了
+// 終了
 //========================================
 void CResultPlayer::Uninit(void)
 {
@@ -89,7 +91,7 @@ void CResultPlayer::Uninit(void)
 }
 
 //========================================
-//更新
+// 更新
 //========================================
 void CResultPlayer::Update(void)
 {
@@ -109,7 +111,7 @@ void CResultPlayer::Update(void)
 }
 
 //========================================
-//描画
+// 描画
 //========================================
 void CResultPlayer::Draw(void)
 {
@@ -125,8 +127,41 @@ void CResultPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
-	// タイトルモーション
-	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	// プレイヤー情報
+	CPlayer* pPlayer = CPlayer::GetInstance();
+
+	// 敵情報
+	CEnemy* pEnemy = CEnemy::GetInstance();
+
+	// 向き
+	D3DXVECTOR3 rot = {0.0f, 0.0f, 0.0f};
+
+	if (pPlayer != nullptr)
+	{
+		// プレイヤーの体力取得
+		int playerLife = pPlayer->GetLife();
+
+		// プレイヤーの向き取得
+		rot = pPlayer->GetRot();
+
+		if (playerLife <= 0)
+		{// 敗北モーション
+			pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
+		}
+	}
+
+	if (pEnemy != nullptr)
+	{
+		// 敵の体力取得
+		int enemyLife = pEnemy->GetLife();
+
+		rot.y = D3DX_PI;
+
+		if (enemyLife <= 0)
+		{// 勝利モーション
+			pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+		}
+	}
 
 	if (pMotion != nullptr)
 	{// モーション更新
