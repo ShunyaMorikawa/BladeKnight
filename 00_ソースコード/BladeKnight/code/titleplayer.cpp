@@ -125,8 +125,8 @@ void CTitlePlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
-	// 待機
-	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	// タイトルモーション
+	pMotion->Set(CMotion::TITLE_MOTIONTYPE_TITLE);
 
 	if (pMotion != nullptr)
 	{// モーション更新

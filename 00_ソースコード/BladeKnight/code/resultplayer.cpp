@@ -67,7 +67,7 @@ HRESULT CResultPlayer::Init(std::string pfile)
 	CCharacter::Init(pfile);
 
 	// プレイヤー状態の初期化
-	m_nState = STATE_NORMAL;
+	m_nState = STATE_NONE;
 
 	// 位置設定
 	SetPos(INITIAL_POS);
@@ -125,8 +125,21 @@ void CResultPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
-	// 待機
-	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	switch (m_nState)
+	{
+	case STATE_WIN:
+		m_IsWin = true;
+		pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
+		break;
+
+	case STATE_LOSE:
+		m_IsLose = true;
+		pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
+		break;
+
+	default:
+		break;
+	}
 
 	if (pMotion != nullptr)
 	{// モーション更新

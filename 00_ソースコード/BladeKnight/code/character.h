@@ -68,7 +68,7 @@ private:
 
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nOldMotion;		// 前回のモーション
-	int m_nState;			// 現在の状態
+	STATE m_nState;			// 現在の状態
 
 	bool m_bJump;			//ジャンプ
 	bool m_bMove;			//移動

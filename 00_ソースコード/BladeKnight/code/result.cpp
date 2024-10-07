@@ -75,6 +75,9 @@ HRESULT CResult::Init(void)
 	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// カメラの初期化
 	pCamera->Init();
 
@@ -86,9 +89,6 @@ HRESULT CResult::Init(void)
 
 	// フィールド生成
 	CField::Create();
-
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// 4方向に壁生成
 	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, -Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));

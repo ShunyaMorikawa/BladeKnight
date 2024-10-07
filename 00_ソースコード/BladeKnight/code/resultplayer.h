@@ -26,7 +26,8 @@ public:
 	enum PLAYERSTATE
 	{// プレイヤーの状態
 		STATE_NONE = 0,
-		STATE_NORMAL,		// 通常
+		STATE_WIN,		// 勝利
+		STATE_LOSE,		// 敗北
 		STATE_MAX
 	};
 
@@ -54,7 +55,8 @@ private:
 
 	PLAYERSTATE m_nState;	// 状態
 
-	bool m_bWait;			// 待機
+	bool m_IsWin;	// 勝利
+	bool m_IsLose;	// 敗北
 
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 

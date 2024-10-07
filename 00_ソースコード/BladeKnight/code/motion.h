@@ -44,6 +44,23 @@ public:
 		ENEMY_MOTIONTYPE_MAX
 	};
 
+	enum TitleMotion
+	{// タイトルモーション
+		TITLE_MOTIONTYPE_NONE = 0,
+		TITLE_MOTIONTYPE_TITLE,		// タイトルモーション
+		TITLE_MOTIONTYPE_MAX
+	};
+
+	enum ResultMotion
+	{// リザルトモーション
+		RESULT_MOTIONTYPE_NONE = 0,
+		RESULT_MOTIONTYPE_WIN,		// 勝利モーション
+		RESULT_MOTIONTYPE_LOSE,		// 敗北モーション
+		RESULT_MOTIONTYPE_MAX
+
+	};
+
+
 	struct KEY
 	{//キーの構造体
 		D3DXVECTOR3 pos;
