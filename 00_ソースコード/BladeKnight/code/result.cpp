@@ -14,7 +14,6 @@
 #include "field.h"
 #include "mapobject.h"
 #include "wall.h"
-#include "titleplayer.h"
 #include "useful.h"
 
 //========================================
@@ -23,8 +22,8 @@
 namespace
 {
 	const std::string PLAYER_TXT = "data\\FILE\\titleplayer.txt";	// プレイヤー情報のパス
-	const char* TITLE_TEX = "data\\TEXTURE\\title.png";			// タイトルテクスチャのパス
-	const char* ENTER_TEX = "data\\TEXTURE\\press_enter.png";	// 文字テクスチャのパス
+	const char* WIN_TEX = "data\\TEXTURE\\title.png";			// 勝利テクスチャのパス
+	const char* LOSE_TEX = "data\\TEXTURE\\press_enter.png";	// 敗北テクスチャのパス
 
 	const float LOGO_POS_Y = 150.0f;		// ロゴテクスチャのY座標
 	const float LOGO_SIZE_WIDTH = 640.0f;	// ロゴテクスチャのサイズ
@@ -36,7 +35,9 @@ namespace
 //=======================================
 //コンストラクタ
 //=======================================
-CResult::CResult()
+CResult::CResult() : 
+m_pWin		(nullptr),	// 勝利テクスチャ
+m_pLose		(nullptr)	// 敗北テクスチャ
 {
 }
 
@@ -127,8 +128,8 @@ void CResult::Update(void)
 	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
-	// タイトルカメラ
-	pCamera->TitleCamera();
+	// リザルトカメラ
+	pCamera->ResultCamera();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||

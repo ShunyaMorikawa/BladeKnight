@@ -185,7 +185,7 @@ void CTitle::TitleLogo()
 //=======================================
 void CTitle::PressEnter()
 {
-	//テクスチャのポインタ
+	// テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// インスタンス生成

@@ -18,6 +18,14 @@
 class CResult : public CScene
 {
 public:
+	enum RESULTMOTION
+	{
+		MOTION_NONE = 0,
+		MOTION_WIN,		// 勝利
+		MOTION_LOSE,	// 敗北
+		MOTION_MAX
+	};
+
 	CResult();	//コンストラクタ
 	~CResult();	//デストラクタ
 
@@ -30,8 +38,8 @@ public:
 	void Draw(void);
 
 private:
-	CObject2D* m_pObj2D;
-	CObject2D* m_pTitleObj;
+	CObject2D* m_pWin;	// 勝利テクスチャ
+	CObject2D* m_pLose;	// 敗北テクスチャ
 };
 
 #endif

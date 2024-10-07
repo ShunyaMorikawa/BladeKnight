@@ -147,6 +147,9 @@
     <ClCompile Include="code\result.cpp">
       <Filter>scene</Filter>
     </ClCompile>
+    <ClCompile Include="code\resultplayer.cpp">
+      <Filter>character\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\bullet.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="code\result.h">
       <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="code\resultplayer.h">
+      <Filter>character\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

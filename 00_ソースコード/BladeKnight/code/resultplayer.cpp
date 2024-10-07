@@ -5,7 +5,7 @@
 //
 //========================================
 
-#include "titleplayer.h"
+#include "resultplayer.h"
 #include "debugproc.h"
 
 //========================================
@@ -20,15 +20,16 @@ namespace
 //========================================
 // 静的メンバ変数
 //========================================
-CTitlePlayer* CTitlePlayer::m_pTitlePlayer = nullptr;
+CResultPlayer* CResultPlayer::m_pResultPlayer = nullptr;
 
 //========================================
 // コンストラクタ
 //========================================
-CTitlePlayer::CTitlePlayer(int nPriority) : CCharacter(nPriority),
-m_apNumModel	(0),			// モデルの総数
-m_nOldMotion	(0),			// 前回のモーション
-m_nState		(STATE_NONE)	// 状態
+CResultPlayer::CResultPlayer(int nPriority) : CCharacter(nPriority),
+m_apNumModel(0),		// モデルの総数
+m_nOldMotion(0),		// 前回のモーション
+m_nState(STATE_NONE),	// 状態
+m_bWait(false)			// 待機
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -36,32 +37,32 @@ m_nState		(STATE_NONE)	// 状態
 //========================================
 // デストラクタ
 //========================================
-CTitlePlayer::~CTitlePlayer()
+CResultPlayer::~CResultPlayer()
 {
 }
 
 //========================================
 // タイトルプレイヤー生成
 //========================================
-CTitlePlayer* CTitlePlayer::Create(std::string pfile)
+CResultPlayer* CResultPlayer::Create(std::string pfile)
 {
-	if (m_pTitlePlayer == nullptr)
+	if (m_pResultPlayer == nullptr)
 	{
 		//プレイヤー生成
-		m_pTitlePlayer = new CTitlePlayer;
+		m_pResultPlayer = new CResultPlayer;
 
 		//初期化
-		m_pTitlePlayer->Init(pfile);
+		m_pResultPlayer->Init(pfile);
 	}
 
 	//ポインタを返す
-	return m_pTitlePlayer;
+	return m_pResultPlayer;
 }
 
 //========================================
 // 初期化
 //========================================
-HRESULT CTitlePlayer::Init(std::string pfile)
+HRESULT CResultPlayer::Init(std::string pfile)
 {
 	// キャラの初期化
 	CCharacter::Init(pfile);
@@ -81,17 +82,17 @@ HRESULT CTitlePlayer::Init(std::string pfile)
 //========================================
 //終了
 //========================================
-void CTitlePlayer::Uninit(void)
+void CResultPlayer::Uninit(void)
 {
 	// 終了
 	CCharacter::Uninit();
-	m_pTitlePlayer = nullptr;
+	m_pResultPlayer = nullptr;
 }
 
 //========================================
 //更新
 //========================================
-void CTitlePlayer::Update(void)
+void CResultPlayer::Update(void)
 {
 	// 位置・移動量・向き取得
 	D3DXVECTOR3 pos = GetPos();
@@ -111,7 +112,7 @@ void CTitlePlayer::Update(void)
 //========================================
 //描画
 //========================================
-void CTitlePlayer::Draw(void)
+void CResultPlayer::Draw(void)
 {
 	// 描画
 	CCharacter::Draw();
@@ -120,7 +121,7 @@ void CTitlePlayer::Draw(void)
 //========================================
 // モーション管理
 //========================================
-void CTitlePlayer::Motion()
+void CResultPlayer::Motion()
 {
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();

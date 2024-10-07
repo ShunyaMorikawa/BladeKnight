@@ -23,14 +23,14 @@
 //========================================
 //静的メンバ変数
 //========================================
-CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
+CGame *CGame::m_pGame = nullptr;		// ゲームのポインタ
 
 //========================================
 // 定数定義
 //========================================
 namespace
 {
-	const int TRANSITION_TIME = 180;		// 遷移するまでの時間
+	const int TRANSITION_TIME = 180;	// 遷移するまでの時間
 	
 	const char* GUIDE_TEX = "data\\texture\\guide_game.png";	// テクスチャのパス
 	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報のパス
@@ -189,7 +189,13 @@ void CGame::Update(void)
 	{// ゲーム画面に遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 	}
+
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
+	{// ゲーム画面に遷移
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);
+	}
 #endif
+
 }
 
 //========================================

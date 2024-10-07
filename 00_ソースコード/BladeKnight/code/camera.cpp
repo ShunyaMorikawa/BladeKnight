@@ -291,6 +291,20 @@ void CCamera::TitleCamera()
 }
 
 //=======================================
+// リザルト用カメラ
+//=======================================
+void CCamera::ResultCamera()
+{
+	// 距離
+	m_fDistance = DISTANCE;
+
+	// 視点
+	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
+	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
+
+}
+
+//=======================================
 // 闘技場との判定
 //=======================================
 void CCamera::CollisionArena()
