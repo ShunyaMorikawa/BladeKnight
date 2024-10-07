@@ -1,11 +1,11 @@
 //========================================
 //
-//タイトル[title.cpp]
-//Author：森川駿弥
+// リザルト[result.h]
+// Author：森川駿弥
 //
 //========================================
 
-#include "title.h"
+#include "result.h"
 #include "texture.h"
 #include "input.h"
 #include "fade.h"
@@ -36,41 +36,39 @@ namespace
 //=======================================
 //コンストラクタ
 //=======================================
-CTitle::CTitle() :
-m_pTitleLogo	(nullptr),	// オブジェクト2Dのポインタ
-m_pEnter	(nullptr)	// PressEnter文字用のポインタ
+CResult::CResult()
 {
 }
 
 //=======================================
 //デストラクタ
 //=======================================
-CTitle::~CTitle()
+CResult::~CResult()
 {
 }
 
 //=======================================
 //生成
 //=======================================
-CTitle* CTitle::Create(void)
+CResult* CResult::Create(void)
 {
 	//タイトルのポインタ
-	CTitle* pTitle = nullptr;
+	CResult* pResult = nullptr;
 
 	//インスタンス生成
-	pTitle = new CTitle;
+	pResult = new CResult;
 
 	//初期化
-	pTitle->Init();
+	pResult->Init();
 
 	//ポインタを返す
-	return pTitle;
+	return pResult;
 }
 
 //=======================================
 //初期化
 //=======================================
-HRESULT CTitle::Init(void)
+HRESULT CResult::Init(void)
 {
 	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
@@ -78,21 +76,12 @@ HRESULT CTitle::Init(void)
 	// カメラの初期化
 	pCamera->Init();
 
-	// タイトルロゴ
-	TitleLogo();
-
-	// PressEnter文字
-	PressEnter();
-
-	// タイトルプレイヤー読み込み
-	CTitlePlayer::Create(PLAYER_TXT);
-
 	// マップオブジェクト生成
 	CMapObject::Create();
 
 	// フィールド生成
 	CField::Create();
-	
+
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
@@ -112,7 +101,7 @@ HRESULT CTitle::Init(void)
 //=======================================
 //終了
 //=======================================
-void CTitle::Uninit(void)
+void CResult::Uninit(void)
 {
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
@@ -124,14 +113,14 @@ void CTitle::Uninit(void)
 //=======================================
 //更新
 //=======================================
-void CTitle::Update(void)
+void CResult::Update(void)
 {
 	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-	
+	CInputKeyboard* pInputKeyboard = pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
 	//CInputPad型のポインタ
-	CInputPad *pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
-	
+	CInputPad* pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
+
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
@@ -141,62 +130,18 @@ void CTitle::Update(void)
 	// タイトルカメラ
 	pCamera->TitleCamera();
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
-		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_ENTER);
-
 		// 画面遷移(フェード)
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TUTORIAL);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
 	}
 }
 
 //=======================================
 //描画
 //=======================================
-void CTitle::Draw(void)
+void CResult::Draw(void)
 {
-}
-
-//=======================================
-// タイトルロゴ
-//=======================================
-void CTitle::TitleLogo()
-{
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-	// インスタンス生成
-	m_pTitleLogo = CObject2D::Create();
-
-	// 位置設定
-	m_pTitleLogo->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, LOGO_POS_Y, 0.0f));
-
-	// サイズ設定
-	m_pTitleLogo->SetSize(LOGO_SIZE_WIDTH, LOGO_SIZE_HEIGHT);
-
-	// テクスチャ設定
-	m_pTitleLogo->BindTexture(pTexture->Regist(TITLE_TEX));
-}
-
-//=======================================
-// PressEnter文字
-//=======================================
-void CTitle::PressEnter()
-{
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-	// インスタンス生成
-	m_pEnter = CObject2D::Create();
-
-	// 位置設定
-	m_pEnter->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, ENTER_POS_Y, 0.0f));
-
-	// サイズ設定
-	m_pEnter->SetSize(ENTER_SIZE, ENTER_SIZE);
-
-	// テクスチャ設定
-	m_pEnter->BindTexture(pTexture->Regist(ENTER_TEX));
 }

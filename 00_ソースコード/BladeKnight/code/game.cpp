@@ -172,7 +172,7 @@ void CGame::Update(void)
 			pInputKeyboard->GetTrigger(DIK_RETURN))
 		{
 			// 画面遷移(フェード)
-			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);
 
 			m_nTransition = 0;
 		}

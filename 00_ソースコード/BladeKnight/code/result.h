@@ -1,41 +1,37 @@
 //========================================
 //
-//シューティングアクション[title.h]
-//Author：森川駿弥
+// リザルト[result.h]
+// Author：森川駿弥
 //
 //========================================
 
-#ifndef _TITLE_H_
-#define _TITLE_H_
+#ifndef _RESULT_H_
+#define _RESULT_H_
 
-#include "main.h"
 #include "manager.h"
 #include "object2D.h"
 #include "renderer.h"
 
 //========================================
-//タイトルクラス
+// リザルトクラス
 //========================================
-class CTitle : public CScene
+class CResult : public CScene
 {
 public:
-	CTitle();	//コンストラクタ
-	~CTitle();	//デストラクタ
+	CResult();	//コンストラクタ
+	~CResult();	//デストラクタ
 
 	//メンバ関数
-	static CTitle *Create(void);
+	static CResult* Create(void);
 
 	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	void TitleLogo();
-	void PressEnter();
-
 private:
-	CObject2D* m_pTitleLogo;
-	CObject2D* m_pEnter;
+	CObject2D* m_pObj2D;
+	CObject2D* m_pTitleObj;
 };
 
 #endif

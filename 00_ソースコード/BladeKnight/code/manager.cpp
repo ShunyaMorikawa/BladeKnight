@@ -17,6 +17,7 @@
 #include "game.h"
 #include "fade.h"
 #include "sound.h"
+#include "result.h"
 
 //========================================
 //静的メンバ変数
@@ -308,14 +309,6 @@ void CManager::SetMode(CScene::MODE mode)
 }
 
 //========================================
-// 勝敗判定
-//========================================
-bool CManager::bResult()
-{
-	return m_IsResult;
-}
-
-//========================================
 //コンストラクタ
 //========================================
 CScene::CScene() : 
@@ -356,8 +349,13 @@ CScene* CScene::Create(int nMode)
 		break;
 
 	case MODE_GAME:
-		// ゲームシーン生成
+		// ゲーム生成
 		pScene = CGame::Create();
+		break;
+
+	case MODE_RESULT:
+		// リザルト生成
+		pScene = CResult::Create();
 		break;
 	}
 

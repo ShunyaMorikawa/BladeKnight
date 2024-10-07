@@ -38,10 +38,11 @@ class CScene
 public:
 	enum MODE
 	{//モードの列挙型
-		MODE_NONE = 0,	//設定なし
-		MODE_TITLE,		//タイトル
-		MODE_TUTORIAL,	//チュートリアル
-		MODE_GAME,		//ゲーム
+		MODE_NONE = 0,	//	設定なし
+		MODE_TITLE,		//	タイトル
+		MODE_TUTORIAL,	//	チュートリアル
+		MODE_GAME,		//	ゲーム
+		MODE_RESULT,	//	リザルト
 		MODE_MAX
 	};
 
@@ -82,19 +83,35 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	// レンダラー取得
 	CRenderer *GetRenderer(void) { return m_pRenderer; }
+
+	// キーボード・パッド・マウス取得
 	CInputKeyboard *GetInputKeyboard(void) { return m_pInputKeyboard; }
 	CInputPad *GetInputPad(void) { return m_pInputPad; }
 	CInputMouse *GetInputMouse(void) { return m_pInputMouse; }
+
+	// テクスチャ取得
 	CTexture *GetTexture(void) { return m_pTexture; }
+
+	// デバッグ表示
 	CDebugProc *GetDebugProc(void) { return m_pDebugProc; }
+
+	// モード設定。取得
 	void SetMode(CScene::MODE mode);
-	CScene::MODE GetMode(void) { return m_pScene->GetMode(); }	//モード取得
+	CScene::MODE GetMode(void) { return m_pScene->GetMode(); }
+
+	// カメラ取得
 	CCamera *GetCamera(void) { return m_pCamera; }
+
+	// フェード取得
 	CFade* GetFade() { return m_pFade; }
+
+	// 音取得
 	CSound* GetSound() { return m_pSound; }
 
-	bool bResult();
+	// 勝敗判定
+	bool bResult() {return m_IsResult;}
 
 private:
 	static CManager *m_pManager;

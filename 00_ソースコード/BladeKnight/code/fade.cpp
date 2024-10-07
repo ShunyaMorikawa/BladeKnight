@@ -52,6 +52,7 @@ HRESULT CFade::Init(CScene::MODE modenext)
 	//フェード設定
 	SetFade(modenext);
 
+	// 描画するかしない
 	m_pObject2D->SetDrawFrag(true);
 
 	return S_OK;
@@ -74,7 +75,10 @@ void CFade::Uninit()
 //=======================================
 void CFade::Update()
 {
-	if (m_pObject2D == nullptr)return;
+	if (m_pObject2D == nullptr)
+	{
+		return;
+	}
 
 	// 色取得
 	D3DXCOLOR col = m_pObject2D->GetCol();
@@ -191,6 +195,7 @@ CFade *CFade::Create(CScene::MODE modenext)
 {
 	CFade* pFade = new CFade;
 
+	// 初期化と設定
 	pFade->Init(modenext);
 	pFade->SetState(FADE_IN);
 
