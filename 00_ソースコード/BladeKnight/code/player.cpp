@@ -675,12 +675,6 @@ void CPlayer::NockBack()
 //========================================
 void CPlayer::Hit(int nLife)
 {
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// サウンド再生
-	pSound->PlaySoundA(CSound::SOUND_LABEL_SE_HIT);
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -735,7 +729,7 @@ void CPlayer::CollisionField()
 //========================================
 void CPlayer::CollisionArena()
 {
-	// プレイヤー位置
+	// プレイヤー位置・ベクトル
 	D3DXVECTOR3 posPlayer = GetPos();
 	D3DXVECTOR3 vec;
 	D3DXVec3Normalize(&vec, &posPlayer);
@@ -771,11 +765,11 @@ void CPlayer::CollisionEnemy(const D3DXVECTOR3 &pos)
 		return;
 	}
 
-	// プレイヤーの位置
+	// 敵の位置
 	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
 
-	// 半径
-	float radiusPlayer = pEnemy->GetRadius();
+	// 敵の半径
+	float radiusEnemy = pEnemy->GetRadius();
 
 	// ベクトルを求める
 	D3DXVECTOR3 vec = posEnemy - pos;
@@ -783,7 +777,7 @@ void CPlayer::CollisionEnemy(const D3DXVECTOR3 &pos)
 	//ベクトル代入
 	fLength = D3DXVec3Length(&vec);
 
-	if (fLength <= radiusPlayer + fRadius)
+	if (fLength <= radiusEnemy + fRadius)
 	{// 敵に当たった
 		// 位置設定
 		SetPos(posPlayer);
@@ -825,13 +819,13 @@ void CPlayer::LockOn()
 	}
 
 	// 敵の方を向く
-	Turn();
+	DestRot();
 }
 
 //========================================
 // 敵の方に向く
 //========================================
-void CPlayer::Turn()
+void CPlayer::DestRot()
 {
 	// カメラの情報取得
 	CCamera* pCampera = CManager::GetInstance()->GetCamera();
@@ -860,5 +854,4 @@ void CPlayer::Turn()
 		D3DXVECTOR3 rot = pCampera->GetRot();
 		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, rot.y, 0.0f));
 	}
-
 }

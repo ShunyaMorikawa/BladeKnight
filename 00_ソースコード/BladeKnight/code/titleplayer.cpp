@@ -6,6 +6,7 @@
 //========================================
 
 #include "titleplayer.h"
+#include "debugproc.h"
 
 //========================================
 // 定数定義
@@ -28,7 +29,7 @@ CTitlePlayer::CTitlePlayer(int nPriority) : CCharacter(nPriority),
 m_apNumModel	(0),			// モデルの総数
 m_nOldMotion	(0),			// 前回のモーション
 m_nState		(STATE_NONE),	// 状態
-m_bMove			(false)			// 移動
+m_bWait			(false)			// 待機
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -63,9 +64,6 @@ CTitlePlayer* CTitlePlayer::Create(std::string pfile)
 //========================================
 HRESULT CTitlePlayer::Init(std::string pfile)
 {
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	// キャラの初期化
 	CCharacter::Init(pfile);
 
@@ -96,6 +94,19 @@ void CTitlePlayer::Uninit(void)
 //========================================
 void CTitlePlayer::Update(void)
 {
+	// 位置・移動量・向き取得
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 move = GetMove();
+	D3DXVECTOR3 rot = GetRot();
+
+	// モーション
+	Motion();
+
+	// デバッグ表示の情報取得
+	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+	// デバッグ表示
+	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 }
 
 //========================================
@@ -105,4 +116,21 @@ void CTitlePlayer::Draw(void)
 {
 	// 描画
 	CCharacter::Draw();
+}
+
+//========================================
+// モーション管理
+//========================================
+void CTitlePlayer::Motion()
+{
+	// モーション情報取得
+	CMotion* pMotion = GetMotion();
+
+	// 待機
+	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+
+	if (pMotion != nullptr)
+	{// モーション更新
+		pMotion->Update();
+	}
 }

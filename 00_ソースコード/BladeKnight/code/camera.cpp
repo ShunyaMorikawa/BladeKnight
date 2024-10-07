@@ -114,6 +114,7 @@ void CCamera::Update(void)
 	pDebugProc->Print("注視点の位置：%f、%f、%f\n", m_posR.x, m_posR.y, m_posR.z);
 	pDebugProc->Print("カメラの向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 #endif
+
 }
 
 //=======================================
@@ -218,6 +219,7 @@ float CCamera::RotNor(float RotN)
 	{
 		RotN += D3DX_PI * 2;
 	}
+
 	return RotN;
 }
 

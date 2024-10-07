@@ -41,18 +41,20 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	void Motion();
 
+	// 自身の情報
 	static CTitlePlayer* GetInstance() { return m_pTitlePlayer; }
 
 private:
-	//メンバ変数
 
+	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nOldMotion;		// 前回のモーション
 
-	int m_nState;			// 状態
+	PLAYERSTATE m_nState;	// 状態
 
-	bool m_bMove;			// 移動
+	bool m_bWait;			// 待機
 
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 

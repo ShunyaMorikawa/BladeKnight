@@ -22,7 +22,7 @@
 //========================================
 namespace
 {
-	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報のパス
+	const std::string PLAYER_TXT = "data//FILE//titleplayer.txt";	// プレイヤー情報のパス
 	const char* TITLE_TEX = "data\\TEXTURE\\title.png";			// タイトルテクスチャのパス
 	const char* ENTER_TEX = "data\\TEXTURE\\press_enter.png";	// 文字テクスチャのパス
 

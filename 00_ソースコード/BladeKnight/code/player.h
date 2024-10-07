@@ -66,19 +66,20 @@ public:
 	void CollisionEnemy(const D3DXVECTOR3& pos);
 
 	void LockOn();
-	void Turn();
+	void DestRot();
 
+	// 自身の情報
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
-	//メンバ変数
 
+	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
 	int m_WalkCounter;		// 歩行時のカウンター
 
-	int m_nState;			// 状態
+	PLAYERSTATE m_nState;	// 状態
 
 	float m_fRadius;		// 半径
 
