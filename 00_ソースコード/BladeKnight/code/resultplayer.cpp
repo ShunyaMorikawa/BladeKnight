@@ -26,10 +26,9 @@ CResultPlayer* CResultPlayer::m_pResultPlayer = nullptr;
 // コンストラクタ
 //========================================
 CResultPlayer::CResultPlayer(int nPriority) : CCharacter(nPriority),
-m_apNumModel(0),		// モデルの総数
-m_nOldMotion(0),		// 前回のモーション
-m_nState(STATE_NONE),	// 状態
-m_bWait(false)			// 待機
+m_apNumModel	(0),			// モデルの総数
+m_nOldMotion	(0),			// 前回のモーション
+m_nState		(STATE_NONE)	// 状態
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }

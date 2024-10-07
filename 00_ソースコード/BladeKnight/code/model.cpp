@@ -15,7 +15,7 @@
 CModel::CModel() : 
 m_pMesh		(nullptr),			// メッシュ(頂点情報)へのポインタ
 m_pBuffMat	(nullptr),			// マテリアルへのポインタ
-m_dwNumMat	(NULL),				// マテリアルの数
+m_dwNumMat	(0),				// マテリアルの数
 m_pos		(0.0f, 0.0f, 0.0f),	// 位置
 m_rot		(0.0f, 0.0f, 0.0f),	// 向き
 m_pParent	(nullptr)			// 親モデルへのポインタ

@@ -15,6 +15,7 @@
 #include "mapobject.h"
 #include "wall.h"
 #include "useful.h"
+#include "resultplayer.h"
 
 //========================================
 // 定数定義
@@ -76,6 +77,9 @@ HRESULT CResult::Init(void)
 
 	// カメラの初期化
 	pCamera->Init();
+
+	// リザルトプレイヤー生成
+	CResultPlayer::Create(PLAYER_TXT);
 
 	// マップオブジェクト生成
 	CMapObject::Create();
