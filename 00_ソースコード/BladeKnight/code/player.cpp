@@ -211,6 +211,9 @@ void CPlayer::Update(void)
 
 	if (m_nLife <= 0)
 	{
+		// Ž€–Só‘Ô
+		m_nState = STATE_DETAH;
+
 		// ƒTƒEƒ“ƒh’âŽ~
 		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
 

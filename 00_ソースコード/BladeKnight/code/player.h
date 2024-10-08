@@ -52,7 +52,7 @@ public:
 
 	int GetLife() { return m_nLife; }			// ‘Ì—Íæ“¾
 
-	int GetState() { return m_nState; }			// ó‘Ôæ“¾
+	PLAYERSTATE GetState() { return m_nState; }			// ó‘Ôæ“¾
 
 	void CollisionField();
 

@@ -138,28 +138,13 @@ void CResultPlayer::Motion()
 
 	if (pPlayer != nullptr)
 	{
-		// プレイヤーの体力取得
-		int playerLife = pPlayer->GetLife();
+		// ステート取得
+		CPlayer::PLAYERSTATE nState = pPlayer->GetState();
 
-		// プレイヤーの向き取得
-		rot = pPlayer->GetRot();
-
-		if (playerLife <= 0)
-		{// 敗北モーション
+		if (nState == CPlayer::PLAYERSTATE::STATE_DETAH)
+		{
+			// 勝利モーション
 			pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
-		}
-	}
-
-	if (pEnemy != nullptr)
-	{
-		// 敵の体力取得
-		int enemyLife = pEnemy->GetLife();
-
-		rot.y = D3DX_PI;
-
-		if (enemyLife <= 0)
-		{// 勝利モーション
-			pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
 		}
 	}
 

@@ -27,11 +27,11 @@ namespace
 	const char* ENTER_TEX = "data\\TEXTURE\\press_enter.png";	// 文字テクスチャのパス
 
 	const float LOGO_POS_Y = 150.0f;		// ロゴテクスチャのY座標
-	const float LOGO_SIZE_WIDTH = 640.0f;	// ロゴテクスチャのサイズ
-	const float LOGO_SIZE_HEIGHT = 250.0f;	// ロゴテクスチャのサイズ
+	const float LOGO_SIZE_WIDTH = 640.0f;	// ロゴテクスチャの幅
+	const float LOGO_SIZE_HEIGHT = 250.0f;	// ロゴテクスチャの高さ
 	const float ENTER_POS_Y = 550.0f;		// 文字テクスチャのY座標
-	const float ENTER_WIDTH = 500.0f;		// 文字テクスチャのサイズ
-	const float ENTER_HEIGHT = 150.0f;		// 文字テクスチャのサイズ
+	const float ENTER_WIDTH = 500.0f;		// 文字テクスチャの幅
+	const float ENTER_HEIGHT = 150.0f;		// 文字テクスチャの高さ
 }
 
 //=======================================
