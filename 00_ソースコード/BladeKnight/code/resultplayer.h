@@ -23,7 +23,7 @@ class CResultPlayer : public CCharacter
 {
 public:
 	// 状態
-	enum PLAYERSTATE
+	enum RESULTSTATE
 	{// プレイヤーの状態
 		STATE_NONE = 0,
 		STATE_WIN,		// 勝利
@@ -43,6 +43,10 @@ public:
 	void Update();
 	void Draw();
 
+	// 状態取得・設定
+	RESULTSTATE GetState() { return m_eState; }
+	void SetState(RESULTSTATE nState) { m_eState = nState; }
+
 	// 自身の情報
 	static CResultPlayer* GetInstance() { return m_pResultPlayer; }
 
@@ -53,14 +57,14 @@ private:
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nOldMotion;		// 前回のモーション
 
-	PLAYERSTATE m_nState;	// 状態
+	RESULTSTATE m_eState;	// 状態
 
 	bool m_IsWin;	// 勝利
 	bool m_IsLose;	// 敗北
 
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 
-	static CResultPlayer* m_pResultPlayer;		// 自身のポインタ
+	static CResultPlayer* m_pResultPlayer;	// 自身のポインタ
 };
 
 #endif

@@ -24,6 +24,16 @@ class CGauge;
 class CEnemy : public CCharacter
 {
 public:
+	// 状態
+	enum ENEMYSTATE
+	{// プレイヤーの状態
+		STATE_NONE = 0,
+		STATE_NORMAL,	// 通常
+		STATE_DAMAGE,	// ダメージ
+		STATE_DEATH,	// 死亡
+		STATE_MAX
+	};
+
 	CEnemy(int nPriority = 4);		//コンストラクタ
 	~CEnemy();		//デストラクタ
 
@@ -57,6 +67,8 @@ private:
 
 	bool m_bWalk;		// 移動判定
 	bool m_bAttack;		// 攻撃判定
+
+	ENEMYSTATE m_eState;	// 状態
 
 	CGauge* m_pGauge;	// ゲージのポインタ
 

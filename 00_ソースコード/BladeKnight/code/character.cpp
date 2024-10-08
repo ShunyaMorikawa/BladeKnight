@@ -25,7 +25,6 @@ m_pBuffMat		(nullptr),			// マテリアルへのポインタ
 m_dwNumMat		(0),				// マテリアルの数
 m_apNumModel	(0), 				// モデル(パーツ)の総数
 m_RotDest		(0.0f, 0.0f, 0.0f),	// 目的の向き
-m_nState		(STATE_NONE),		// キャラの状態
 m_bJump			(false),			// ジャンプ中
 m_bMove			(false),			// 移動モーション
 m_bWait			(false),			// 待機モーション
@@ -64,9 +63,6 @@ HRESULT CCharacter::Init(std::string pfile)
 	// 向き設定
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	
-	// 状態初期化
-	m_nState = STATE_NONE;
-
 	//モーションのポインタ
 	m_pMotion = nullptr;
 

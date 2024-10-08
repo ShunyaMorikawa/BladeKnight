@@ -140,7 +140,7 @@ void CTitle::Update(void)
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	// タイトルカメラ
-	pCamera->TitleCamera();
+	pCamera->Title();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||

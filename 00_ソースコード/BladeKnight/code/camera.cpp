@@ -29,7 +29,7 @@ namespace
 	const float CAMERA_DISTANCE_TITLE = 300.0f;	// カメラ
 	const float VIEWING = 100.0f;	// 視野角
 	const float TITLE_DISTANCE = 300.0f;	// タイトル画面のカメラとの距離
-	const float RESULT_DISTANCE = 150.0f;	// タイトル画面のカメラとの距離
+	const float RESULT_DISTANCE = 400.0f;	// リザルト画面のカメラとの距離
 }
 
 //=======================================
@@ -267,7 +267,7 @@ void CCamera::following(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=======================================
 // タイトル用カメラ
 //=======================================
-void CCamera::TitleCamera()
+void CCamera::Title()
 {
 	m_rot.y += 0.005f;
 
@@ -294,7 +294,7 @@ void CCamera::TitleCamera()
 //=======================================
 // リザルト用カメラ
 //=======================================
-void CCamera::ResultCamera()
+void CCamera::Result()
 {
 	// 距離
 	m_fDistance = RESULT_DISTANCE;

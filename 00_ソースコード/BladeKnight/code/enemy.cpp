@@ -57,10 +57,10 @@ CEnemy* CEnemy::m_pEnemy = nullptr;
 CEnemy::CEnemy(int nPriority) : CCharacter(nPriority),
 m_nLife		(0),			// 体力
 m_nCnt		(0),			// カウント
-m_nState	(STATE_NORMAL),	// 状態
 m_fRadius	(0.0f),			// 半径
 m_bWalk		(false),		// 歩き
 m_bAttack	(false),		// 攻撃
+m_eState	(STATE_NONE),	// 状態
 m_pGauge	(nullptr)		// ゲージ
 {//値をクリア
 }
@@ -260,14 +260,6 @@ void CEnemy::Update(void)
 	// 闘技場との当たり判定
 	CollisionCircle();
 
-	switch (m_nState)
-	{
-	case STATE_NORMAL:
-		break;
-	default:
-		break;
-	}
-
 #ifdef _DEBUG
 	if (pInputKeyboard->GetPress(DIK_F4))
 	{// 体力減算
@@ -306,9 +298,6 @@ void CEnemy::Hit(int nLife)
 
 	D3DXVECTOR3 pos = GetPos();
 
-	// 状態取得
-	int nState = GetState();
-
 	// 体力減らす
 	m_nLife -= nLife;
 
@@ -320,9 +309,6 @@ void CEnemy::Hit(int nLife)
 
 	if (m_nLife <= 0)
 	{
-		// 死亡状態
-		nState = STATE_DEATH;
-
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
 

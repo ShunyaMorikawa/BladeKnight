@@ -29,9 +29,9 @@ public:
 	enum PLAYERSTATE
 	{// プレイヤーの状態
 		STATE_NONE = 0,
-		STATE_NORMAL,		// 通常
-		STATE_DAMAGE,		// ダメージ
-		STATE_DETAH,		// 死亡
+		STATE_NORMAL,	// 通常
+		STATE_DAMAGE,	// ダメージ
+		STATE_DEATH,	// 死亡
 		STATE_MAX
 	};
 
@@ -52,7 +52,9 @@ public:
 
 	int GetLife() { return m_nLife; }			// 体力取得
 
-	PLAYERSTATE GetState() { return m_nState; }			// 状態取得
+	// 状態取得・設定
+	PLAYERSTATE GetState() { return m_eState; }
+	void SetState(PLAYERSTATE nState) { m_eState = nState; }
 
 	void CollisionField();
 
@@ -79,8 +81,6 @@ private:
 	int m_nOldMotion;		// 前回のモーション
 	int m_WalkCounter;		// 歩行時のカウンター
 
-	PLAYERSTATE m_nState;	// 状態
-
 	float m_fRadius;		// 半径
 
 	bool m_bJump;			// ジャンプ
@@ -90,6 +90,8 @@ private:
 	bool m_bCutdown;		// 切り下ろし
 	bool m_bStrongAttack;	// 強攻撃
 	bool m_IsLock;			// ロックオンフラグ
+
+	PLAYERSTATE m_eState;	// 状態
 
 	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ

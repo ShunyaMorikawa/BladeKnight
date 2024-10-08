@@ -16,7 +16,7 @@
 namespace
 {
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 50.0f };	// プレイヤー初期位置
-	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
+	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, D3DX_PI, 0.0f };	// プレイヤー初期向き
 }
 
 //========================================
@@ -30,7 +30,7 @@ CResultPlayer* CResultPlayer::m_pResultPlayer = nullptr;
 CResultPlayer::CResultPlayer(int nPriority) : CCharacter(nPriority),
 m_apNumModel	(0),			// モデルの総数
 m_nOldMotion	(0),			// 前回のモーション
-m_nState		(STATE_NONE)	// 状態
+m_eState		(STATE_NONE)	// 状態
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -69,7 +69,7 @@ HRESULT CResultPlayer::Init(std::string pfile)
 	CCharacter::Init(pfile);
 
 	// プレイヤー状態の初期化
-	m_nState = STATE_NONE;
+	m_eState = STATE_NONE;
 
 	// 位置設定
 	SetPos(INITIAL_POS);
@@ -127,24 +127,32 @@ void CResultPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
-	// プレイヤー情報
-	CPlayer* pPlayer = CPlayer::GetInstance();
-
-	// 敵情報
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	// 向き
 	D3DXVECTOR3 rot = {0.0f, 0.0f, 0.0f};
 
+	// 状態
+	CPlayer* pPlayer = CPlayer::GetInstance();
+
+	if (pPlayer == nullptr)
+	{
+		return;
+	}
+
+	// プレイヤーの状態取得
+	CPlayer::PLAYERSTATE state = pPlayer->GetState();
+
 	if (pPlayer != nullptr)
 	{
-		// ステート取得
-		CPlayer::PLAYERSTATE nState = pPlayer->GetState();
+		// 状態取得
+		pPlayer->SetState(state);
 
-		if (nState == CPlayer::PLAYERSTATE::STATE_DETAH)
-		{
-			// 勝利モーション
+		if (state == STATE_WIN)
+		{// 通常状態なら
 			pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
+		}
+		else if (state == CPlayer::STATE_DEATH)
+		{// 死亡状態なら
+			pMotion->Set(CMotion::RESULT_MOTIONTYPE_NEUTRAL);
 		}
 	}
 

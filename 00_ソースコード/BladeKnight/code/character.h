@@ -20,15 +20,6 @@
 class CCharacter : public CObject
 {
 public:
-	enum STATE
-	{// キャラクターの状態
-		STATE_NONE = 0,
-		STATE_NORMAL,		// 通常
-		STATE_DAMAGE,		// ダメージ
-		STATE_DEATH,		// 死亡
-		STATE_MAX
-	};
-
 	CCharacter(int nPriority = 4);		//コンストラクタ
 	~CCharacter();		//デストラクタ
 
@@ -48,9 +39,6 @@ public:
 	void SetRotDest(const D3DXVECTOR3& RotDest) { m_RotDest = RotDest; }
 	D3DXVECTOR3 GetRotDest() { return m_RotDest; }
 
-	// 状態取得
-	int GetState() { return m_nState; }
-
 private:
 	//メンバ変数
 	LPDIRECT3DTEXTURE9 m_pTexture;	// 共有テクスチャ
@@ -68,7 +56,6 @@ private:
 
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nOldMotion;		// 前回のモーション
-	STATE m_nState;			// 現在の状態
 
 	bool m_bJump;			//ジャンプ
 	bool m_bMove;			//移動

@@ -27,6 +27,7 @@
 #include "fade.h"
 #include "texture.h"
 #include "lockonMarker.h"
+#include "resultplayer.h"
 
 //========================================
 // 定数定義
@@ -67,7 +68,7 @@ m_apNumModel	(0),			// モデルの総数
 m_nLife			(0),			// 体力
 m_nOldMotion	(0),			// 前回のモーション
 m_WalkCounter	(0),			// 歩行時エフェクト出す用のカウンター
-m_nState		(STATE_NONE),	// 状態
+m_eState		(STATE_NONE),	// 状態
 m_fRadius		(0.0f),			// 半径
 m_bJump			(false),		// ジャンプフラグ
 m_bMove			(false),		// 移動
@@ -120,7 +121,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	CCharacter::Init(pfile);
 
 	// プレイヤー状態の初期化
-	m_nState = STATE_NORMAL;
+	m_eState = STATE_NORMAL;
 
 	// 位置設定
 	SetPos(INITIAL_POS);
@@ -154,6 +155,12 @@ HRESULT CPlayer::Init(std::string pfile)
 //========================================
 void CPlayer::Uninit(void)
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop();
+
 	if (m_pGauge != nullptr)
 	{// ゲージが使用されていた場合
 		m_pGauge->Uninit();
@@ -182,6 +189,9 @@ void CPlayer::Update(void)
 	// 敵の情報取得
 	CEnemy* pEnemy = CEnemy::GetInstance();
 
+	// リザルトプレイヤーの情報取得
+	CResultPlayer* pResultplayer = CResultPlayer::GetInstance();
+
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -195,12 +205,7 @@ void CPlayer::Update(void)
 	Act(SPEED);
 
 #ifdef _DEBUG
-	if (pInputKeyboard->GetPress(DIK_F1))
-	{// 体力減算
-		Hit(1);
-	}
-
-	if (pInputKeyboard->GetPress(DIK_F3))
+	if (pInputKeyboard->GetTrigger(DIK_F3))
 	{// 体力減算
 		Hit(LIFE);
 	}
@@ -212,10 +217,7 @@ void CPlayer::Update(void)
 	if (m_nLife <= 0)
 	{
 		// 死亡状態
-		m_nState = STATE_DETAH;
-
-		// サウンド停止
-		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
+		m_eState = STATE_DEATH;
 
 		// サウンド再生
 		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_LOSE);
@@ -260,6 +262,7 @@ void CPlayer::Update(void)
 	pDebugProc->Print("プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
 	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	pDebugProc->Print("プレイヤーの体力：%d\n", m_nLife);
+	pDebugProc->Print("プレイヤーの状態：%d\n", m_eState);
 }
 
 //========================================

@@ -133,7 +133,7 @@ void CResult::Update(void)
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	// ƒŠƒUƒ‹ƒgƒJƒƒ‰
-	pCamera->ResultCamera();
+	pCamera->Result();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||

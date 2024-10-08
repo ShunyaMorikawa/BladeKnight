@@ -27,8 +27,8 @@ public:
 	void CameraMoveV(void);
 	float RotNor(float RotN);
 	void following(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);
-	void TitleCamera();
-	void ResultCamera();
+	void Title();
+	void Result();
 	void CollisionArena();
 
 	// 向き・視点・注視点・上方向ベクトルの取得
