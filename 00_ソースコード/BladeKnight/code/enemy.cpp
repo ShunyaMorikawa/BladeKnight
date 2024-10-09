@@ -297,6 +297,10 @@ void CEnemy::Hit(int nLife)
 	//CInputPad情報取得
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
+	//テクスチャの情報取得
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
 	// 体力減らす
@@ -314,6 +318,18 @@ void CEnemy::Hit(int nLife)
 
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
+
+		// 生成
+		CObject2D* pObje2D = CObject2D::Create();
+
+		// 位置設定
+		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 00.0f));
+
+		// サイズ設定
+		pObje2D->SetSize(1280.0f, 200.0f);
+
+		// 勝利テクスチャ
+		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));
 
 		// 終了
 		Uninit();
