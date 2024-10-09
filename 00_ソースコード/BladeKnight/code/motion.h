@@ -48,6 +48,7 @@ public:
 	{// リザルトモーション種類
 		RESULT_MOTIONTYPE_NEUTRAL = 0,	// 待機
 		RESULT_MOTIONTYPE_WIN,		// 勝利
+		RESULT_MOTIONTYPE_LOSE,		// 敗北
 		RESULT_MOTIONTYPE_MAX
 	};
 

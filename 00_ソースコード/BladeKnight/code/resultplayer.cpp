@@ -15,7 +15,7 @@
 //========================================
 namespace
 {
-	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 50.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 50.0f };		// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, D3DX_PI, 0.0f };	// プレイヤー初期向き
 }
 
@@ -147,12 +147,15 @@ void CResultPlayer::Motion()
 		pPlayer->SetState(state);
 
 		if (state == STATE_WIN)
-		{// 通常状態なら
+		{// 勝利なら
 			pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
 		}
 		else if (state == CPlayer::STATE_DEATH)
-		{// 死亡状態なら
-			pMotion->Set(CMotion::RESULT_MOTIONTYPE_NEUTRAL);
+		{// 敗北なら
+			m_eState = STATE_LOSE;
+
+			// 敗北モーション
+			pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
 		}
 	}
 
