@@ -9,6 +9,7 @@
 #include "debugproc.h"
 #include "player.h"
 #include "enemy.h"
+#include "result.h"
 
 //========================================
 // 定数定義
@@ -128,36 +129,22 @@ void CResultPlayer::Motion()
 	CMotion* pMotion = GetMotion();
 
 	// 向き
-	D3DXVECTOR3 rot = {0.0f, 0.0f, 0.0f};
+	D3DXVECTOR3 rot = { 0.0f, 0.0f, 0.0f };
 
-	// 状態
-	CPlayer* pPlayer = CPlayer::GetInstance();
+	// リザルトフラグの取得
+	bool frag = CResult::GetFrag();
 
-	if (pPlayer == nullptr)
-	{
-		return;
+	if (frag)
+	{// 勝利なら
+		pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
+	}
+	else
+	{// 敗北なら
+		// 敗北モーション
+		pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
 	}
 
-	// プレイヤーの状態取得
-	CPlayer::PLAYERSTATE state = pPlayer->GetState();
-
-	if (pPlayer != nullptr)
-	{
-		// 状態取得
-		pPlayer->SetState(state);
-
-		if (state == STATE_WIN)
-		{// 勝利なら
-			pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
-		}
-		else if (state == CPlayer::STATE_DEATH)
-		{// 敗北なら
-			m_eState = STATE_LOSE;
-
-			// 敗北モーション
-			pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
-		}
-	}
+	CResult::ChangeFrag(frag);
 
 	if (pMotion != nullptr)
 	{// モーション更新

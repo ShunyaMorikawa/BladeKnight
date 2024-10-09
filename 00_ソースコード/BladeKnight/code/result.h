@@ -37,7 +37,12 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	static void ChangeFrag(bool frag) { m_bResult = frag; }
+	static bool GetFrag() { return m_bResult; }
+
 private:
+	static bool m_bResult;	// フラグ
+
 	CObject2D* m_pWin;	// 勝利テクスチャ
 	CObject2D* m_pLose;	// 敗北テクスチャ
 };

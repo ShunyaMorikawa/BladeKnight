@@ -28,6 +28,7 @@
 #include "texture.h"
 #include "lockonMarker.h"
 #include "resultplayer.h"
+#include "result.h"
 
 //========================================
 // 定数定義
@@ -216,8 +217,7 @@ void CPlayer::Update(void)
 
 	if (m_nLife <= 0)
 	{
-		// 死亡状態
-		m_eState = STATE_DEATH;
+		CResult::ChangeFrag(false);
 
 		// サウンド再生
 		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_LOSE);

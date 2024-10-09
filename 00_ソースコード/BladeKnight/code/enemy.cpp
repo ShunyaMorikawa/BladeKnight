@@ -22,6 +22,7 @@
 #include "sound.h"
 #include "fade.h"
 #include "gauge.h"
+#include "result.h"
 
 //========================================
 //名前空間
@@ -309,20 +310,13 @@ void CEnemy::Hit(int nLife)
 
 	if (m_nLife <= 0)
 	{
+		CResult::ChangeFrag(true);
+
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
 
 		// 終了
 		Uninit();
-
-		// サウンド情報取得
-		CSound* pSound = CManager::GetInstance()->GetSound();
-
-		// サウンド停止
-		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
-
-		// サウンド再生
-		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_WIN);
 	}
 }
 
@@ -397,6 +391,7 @@ void CEnemy::Motion()
 		pMotion->Update();
 	}
 
+	// 移動量設定
 	SetMove(move);
 }
 
