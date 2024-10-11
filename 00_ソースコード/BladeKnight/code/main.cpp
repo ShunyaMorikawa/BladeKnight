@@ -36,6 +36,9 @@ LPD3DXFONT g_pFont = NULL;                  //フォントへのポインタ
 //========================================
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine, int nCmdShow)
 {
+	//デバッグ
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	//画面サイズの構造体
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 
@@ -93,9 +96,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 
 	//マネージャのポインタ
 	CManager *pManager = CManager::GetInstance();
-
-	{//マネージャ初期化
-		pManager->Init(hInstance, hWnd, TRUE);
+	if (FAILED(pManager->Init(hInstance, hWnd, TRUE)))
+	{//初期化処理が失敗した場合
+		pManager->Uninit();
+		delete pManager;
+		return -1;
 	}
 
 	//現在時刻を取得(保存)
@@ -126,7 +131,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 		}
 		else
 		{//DirectXの処理
-		 //現在の時刻を取得
+			//現在の時刻を取得
 			dwCurrentTime = timeGetTime();
 
 			if ((dwCurrentTime - dwFPSLastTime) >= 500)

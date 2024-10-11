@@ -33,7 +33,7 @@ m_fAngle			(0.0f),		// 対角線の角度
 m_nCounterAnim		(0),		// アニメーションカウンター
 m_nPatternAnim		(0),		// アニメーションパターンNo
 m_pVtxBuff			(nullptr),	// 頂点情報を格納
-m_nIdxTexture		(0)			// テクスチャの番号
+m_nIdxTexture		(-1)			// テクスチャの番号
 {//値クリア
 }
 
@@ -145,7 +145,14 @@ void CObject2D::Draw(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャ設定
-	pDevice->SetTexture(0, pTexture->GetAddress(m_nIdxTexture));
+	if (m_nIdxTexture == -1)
+	{
+		pDevice->SetTexture(0, nullptr);
+	}
+	else
+	{
+		pDevice->SetTexture(0, pTexture->GetAddress(m_nIdxTexture));
+	}
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);

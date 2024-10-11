@@ -18,6 +18,11 @@
 #include "useful.h"
 
 //========================================
+//静的メンバ変数
+//========================================
+CTutorial* CTutorial::m_pTutorial = nullptr;		// ゲームのポインタ
+
+//========================================
 // 定数定義
 //========================================
 namespace
@@ -37,6 +42,7 @@ namespace
 //=======================================
 CTutorial::CTutorial()
 {
+	m_pTutorial = nullptr;
 }
 
 //=======================================
@@ -47,18 +53,34 @@ CTutorial::~CTutorial()
 }
 
 //=======================================
+//シングルトン
+//=======================================
+CTutorial* CTutorial::GetInstance()
+{
+	if (m_pTutorial == nullptr)
+	{//インスタンス生成
+		return m_pTutorial = new CTutorial;
+	}
+	else
+	{//ポインタを返す
+		return m_pTutorial;
+	}
+}
+
+//=======================================
 //生成
 //=======================================
 CTutorial* CTutorial::Create(void)
 {
-	//タイトルのポインタ
-	CTutorial* pTutorial = nullptr;
-
-	//インスタンス生成
-	pTutorial = new CTutorial;
+	if (m_pTutorial == nullptr)
+	{
+		//インスタンス生成
+		m_pTutorial = new CTutorial;
+		m_pTutorial->Init();
+	}
 
 	//ポインタを返す
-	return pTutorial;
+	return m_pTutorial;
 }
 
 //=======================================
@@ -85,16 +107,16 @@ HRESULT CTutorial::Init(void)
 	m_pMobj = CMapObject::Create();
 
 	// インスタンス生成
-	m_pObj2D = CObject2D::Create();
+	//m_pObj2D = CObject2D::Create();
 
 	// 位置設定
-	m_pObj2D->SetPos(GUIDE_POS);
+	//m_pObj2D->SetPos(GUIDE_POS);
 
 	// サイズ設定
-	m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
+	//m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
+	//m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
@@ -111,17 +133,23 @@ HRESULT CTutorial::Init(void)
 //=======================================
 void CTutorial::Uninit(void)
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	if (m_pObj2D != nullptr)
 	{
 		m_pObj2D->Uninit();
 		m_pObj2D = nullptr;
 	}
 
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
 	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_TITLE);
+	pSound->Stop();
+
+	if (m_pTutorial != nullptr)
+	{//モード破棄
+		delete m_pTutorial;
+		m_pTutorial = nullptr;
+	}
 }
 
 //=======================================

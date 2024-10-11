@@ -30,7 +30,7 @@ public:
 		SOUND_LABEL_SE_BULLET,		// 敵の弾
 		SOUND_LABEL_SE_HIT,			// プレイヤーヒット
 		SOUND_LABEL_SE_ENEMYHIT,	// 敵ヒット
-		SOUND_LABEL_SE_ENTER,	// 敵ヒット
+		SOUND_LABEL_SE_ENTER,		// 敵ヒット
 		SOUND_LABEL_MAX,
 	} SOUND_LABEL;
 
@@ -67,16 +67,16 @@ private:
 	// サウンドの情報
 	SOUNDINFO m_aSoundInfo[SOUND_LABEL_MAX] =
 	{
-		{ "data\\BGM\\game.wav", -1 },		//ゲームBGM
-		{ "data\\BGM\\tutorial.wav", -1 },	//チュートリアルBGM
-		{ "data\\BGM\\title.wav", -1 },		//タイトルBGM
-		{ "data\\BGM\\win.wav", 0 },		//勝利BGM
-		{ "data\\BGM\\lose.wav", 0 },		//敗北BGM
-		{ "data\\SE\\walk02.wav", 0 },		//歩行時
-		{ "data\\SE\\flame.wav", 0 },		//敵の弾
-		{ "data\\SE\\dmg_01.wav", 0 },		//プレイヤーのヒット
-		{ "data\\SE\\EnemyDamage.wav", 0 },		//敵ヒット
-		{ "data\\SE\\Enter.wav", 0 },		//敵ヒット
+		{ "data\\BGM\\game.wav", -1 },		// ゲームBGM
+		{ "data\\BGM\\tutorial.wav", -1 },	// チュートリアルBGM
+		{ "data\\BGM\\title.wav", -1 },		// タイトルBGM
+		{ "data\\BGM\\win.wav", 0 },		// 勝利BGM
+		{ "data\\BGM\\lose.wav", 0 },		// 敗北BGM
+		{ "data\\SE\\walk02.wav", 0 },		// 歩行時
+		{ "data\\SE\\flame.wav", 0 },		// 敵の弾
+		{ "data\\SE\\dmg_01.wav", 0 },		// プレイヤーのヒット
+		{ "data\\SE\\EnemyDamage.wav", 0 },	// 敵ヒット
+		{ "data\\SE\\Enter.wav", 0 },		// 敵ヒット
 	};
 };
 

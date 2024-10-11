@@ -80,7 +80,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		//レンダラーの初期化処理
 		if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 		{//初期化処理が失敗した場合
-			return -1;
+			return E_FAIL;
 		}
 	}
 
@@ -92,7 +92,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		//キーボードの初期化処理
 		if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
 		{//初期化処理が失敗した場合
-			return -1;
+			return E_FAIL;
 		}
 	}
 
@@ -104,7 +104,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		//コントローラーの初期化処理
 		if (FAILED(m_pInputPad->Init(hInstance, hWnd)))
 		{//初期化処理が失敗した場合
-			return -1;
+			return E_FAIL;
 		}
 	}
 
@@ -116,7 +116,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		//カメラの初期化処理
 		if (FAILED(m_pCamera->Init()))
 		{//初期化処理が失敗した場合
-			return -1;
+			return E_FAIL;
 		}
 	}
 
@@ -135,7 +135,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 		if (FAILED(m_pLight->Init()))
 		{// 初期化失敗
-			return -1;
+			return E_FAIL;
 		}
 	}
 
@@ -146,7 +146,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 		if (FAILED(m_pSound->Init(hWnd)))
 		{// 初期化失敗
-			return -1;
+			return E_FAIL;
 		}
 
 	}
@@ -158,16 +158,12 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	if (m_pFade == nullptr)
 	{
 		// フェード生成・設定
-		m_pFade = CFade::Create(CScene::MODE_TITLE);
-		m_pFade->SetFade(CScene::MODE_TITLE);
-	}
-
 #ifdef _DEBUG
-	{
 		m_pFade = CFade::Create(CScene::MODE_GAME);
-		m_pFade->SetFade(CScene::MODE_GAME);
-	}
+#else
+		m_pFade = CFade::Create(CScene::MODE_TITLE);
 #endif
+	}
 
 	//成功を返す
 	return S_OK;
@@ -178,6 +174,26 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //========================================
 void CManager::Uninit(void)
 {
+	if (m_pScene != nullptr)
+	{//シーンの終了
+		m_pScene->Uninit();
+		m_pScene = nullptr;
+	}
+
+	if (m_pInputKeyboard != nullptr)
+	{//キーボードの破棄
+		m_pInputKeyboard->Uninit();
+		delete m_pInputKeyboard;
+		m_pInputKeyboard = nullptr;
+	}
+
+	if (m_pFade != nullptr)
+	{// フェード終了
+		m_pFade->Uninit();
+		delete m_pFade;
+		m_pFade = nullptr;
+	}
+
 	//オブジェクトの破棄
 	CObject::ReleaseAll();
 	
@@ -188,11 +204,18 @@ void CManager::Uninit(void)
 		m_pRenderer = nullptr;
 	}
 
-	if (m_pInputKeyboard != nullptr)
-	{//キーボードの破棄
-		m_pInputKeyboard->Uninit();
-		delete m_pInputKeyboard;
-		m_pInputKeyboard = nullptr;
+	if (m_pCamera != nullptr)
+	{//カメラの破棄
+		m_pCamera->Uninit();
+		delete m_pCamera;
+		m_pCamera = nullptr;
+	}
+
+	if (m_pLight != nullptr)
+	{//ライトの破棄
+		m_pLight->Uninit();
+		delete m_pLight;
+		m_pLight = nullptr;
 	}
 
 	if (m_pInputPad != nullptr)
@@ -214,13 +237,6 @@ void CManager::Uninit(void)
 		m_pTexture->Unload();
 		delete m_pTexture;
 		m_pTexture = nullptr;
-	}
-
-	if (m_pFade != nullptr)
-	{// フェード終了
-		m_pFade->Uninit();
-		delete m_pFade;
-		m_pFade = nullptr;
 	}
 
 	if (m_pSound != nullptr)
@@ -255,15 +271,15 @@ void CManager::Update(void)
 	{//DebugProの更新
 		m_pDebugProc->Update();
 	}
-	
-	if (m_pScene != nullptr)
-	{//シーンの更新
-		m_pScene->Update();
-	}
 
 	if (m_pFade != nullptr)
 	{// フェード更新
 		m_pFade->Update();
+	}
+	
+	if (m_pScene != nullptr)
+	{//シーンの更新
+		m_pScene->Update();
 	}
 
 	if (m_pCamera != nullptr)
@@ -297,7 +313,6 @@ void CManager::SetMode(CScene::MODE mode)
 	if (m_pScene != nullptr)
 	{//モード破棄
 		m_pScene->Uninit();
-		delete m_pScene;
 		m_pScene = nullptr;
 	}
 
@@ -361,9 +376,6 @@ CScene* CScene::Create(int nMode)
 
 	if (pScene != nullptr)
 	{
-		// シーンの初期化
-		pScene->Init();
-
 		// カメラの初期化
 		pCamera->Init();
 	}

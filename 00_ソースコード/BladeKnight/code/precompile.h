@@ -27,4 +27,13 @@
 #include <vector>
 #include "useful.h"
 
+#ifdef _DEBUG
+//#define CHECK_MEM_LEAK
+#endif // _DEBUG
+
+//ïÅíiégópã÷é~
+#ifdef CHECK_MEM_LEAK
+#define new new ( NORMALBLOCK , FILE , __LINE )
+#endif // CHECK_MEM_LEAK
+
 #endif // _PRECOMPILE_H_

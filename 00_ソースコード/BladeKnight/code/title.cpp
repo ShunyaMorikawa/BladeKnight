@@ -18,6 +18,11 @@
 #include "useful.h"
 
 //========================================
+//静的メンバ変数
+//========================================
+CTitle* CTitle::m_pTitle = nullptr;		// ゲームのポインタ
+
+//========================================
 // 定数定義
 //========================================
 namespace
@@ -51,21 +56,36 @@ CTitle::~CTitle()
 }
 
 //=======================================
+//シングルトン
+//=======================================
+CTitle* CTitle::GetInstance()
+{
+	if (m_pTitle == nullptr)
+	{//インスタンス生成
+		return m_pTitle = new CTitle;
+	}
+	else
+	{//ポインタを返す
+		return m_pTitle;
+	}
+}
+
+//=======================================
 //生成
 //=======================================
 CTitle* CTitle::Create(void)
 {
-	//タイトルのポインタ
-	CTitle* pTitle = nullptr;
+	if (m_pTitle == nullptr)
+	{
+		//インスタンス生成
+		m_pTitle = new CTitle;
 
-	//インスタンス生成
-	pTitle = new CTitle;
-
-	//初期化
-	pTitle->Init();
+		//初期化
+		m_pTitle->Init();
+	}
 
 	//ポインタを返す
-	return pTitle;
+	return m_pTitle;
 }
 
 //=======================================
@@ -120,6 +140,12 @@ void CTitle::Uninit(void)
 
 	// サウンド停止
 	pSound->Stop();
+
+	if (m_pTitle != nullptr)
+	{//モード破棄
+		delete m_pTitle;
+		m_pTitle = nullptr;
+	}
 }
 
 //=======================================

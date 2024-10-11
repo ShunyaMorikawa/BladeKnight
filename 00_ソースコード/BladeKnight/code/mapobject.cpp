@@ -39,9 +39,14 @@ CMapObject::~CMapObject()
 CMapObject* CMapObject::Create()
 {
 	// CMapObject型のポインタ
-	CMapObject* pMapObject = new CMapObject;
+	CMapObject* pMapObject = nullptr;
 
-	pMapObject->Init();
+	if (pMapObject == nullptr)
+	{
+		pMapObject = new CMapObject;
+
+		pMapObject->Init();
+	}
 
 	//ポインタを返す
 	return pMapObject;
@@ -71,6 +76,7 @@ void CMapObject::Uninit(void)
 	if (m_pModel != nullptr)
 	{
 		m_pModel->Uninit();
+		delete m_pModel;
 		m_pModel = nullptr;
 	}
 
@@ -85,7 +91,7 @@ void CMapObject::Update(void)
 {
 	if (m_pModel != nullptr)
 	{// モデルの更新
-		m_pModel->Update();
+		//m_pModel->Update();
 	}
 }
 

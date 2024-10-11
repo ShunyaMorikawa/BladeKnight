@@ -36,7 +36,7 @@ public:
 	void Motion();
 
 	// ©g‚Ìî•ñ
-	static CTitlePlayer* GetInstance() { return m_pTitlePlayer; }
+	static CTitlePlayer* GetInstance();
 
 private:
 

@@ -25,6 +25,11 @@
 #include "result.h"
 
 //========================================
+// 静的メンバ変数
+//========================================
+CEnemy* CEnemy::m_pEnemy = nullptr;
+
+//========================================
 //名前空間
 //========================================
 namespace
@@ -46,11 +51,6 @@ namespace
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, -500.0f };	// 敵の初期位置
 	const D3DXVECTOR3 GAUGE_POS = { 600.0f, 25.0f, 0.0f };	// 敵ゲージの初期位置
 }
-
-//========================================
-// 静的メンバ変数
-//========================================
-CEnemy* CEnemy::m_pEnemy = nullptr;
 
 //========================================
 //コンストラクタ
@@ -240,8 +240,11 @@ void CEnemy::Update(void)
 		m_nCnt = 0;
 	}
 
-	// ゲージに体力設定
-	m_pGauge->SetLife(m_nLife);
+	if (m_pGauge != nullptr)
+	{
+		// ゲージに体力設定
+		m_pGauge->SetLife(m_nLife);
+	}
 
 	// 位置設定
 	SetPos(pos);
@@ -373,6 +376,10 @@ void CEnemy::Motion()
 {
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
+	if (pMotion == nullptr)
+	{
+		return;
+	}
 
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();

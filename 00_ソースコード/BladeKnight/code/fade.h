@@ -38,8 +38,12 @@ public:
 	void SetState(FADE state);
 	static CFade *Create(CScene::MODE modenext);
 
+	// 自身の情報
+	static CFade* GetInstance();
+
 private:
 	//メンバ変数
+	static CFade* m_pFade;		// 自身のポインタ
 	bool m_bTrans;				// 遷移するかどうか
 	FADE m_State;				//フェードの状態
 	CScene::MODE m_modeNext;	//次の画面(モード)

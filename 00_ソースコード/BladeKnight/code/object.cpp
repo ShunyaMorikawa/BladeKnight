@@ -169,7 +169,10 @@ void CObject::DrawAll(void)
 	CCamera *pCamera = CManager::GetInstance()->GetCamera();
 
 	//ƒJƒƒ‰Ý’è
-	pCamera->SetCamera();
+	if (pCamera != nullptr)
+	{
+		pCamera->SetCamera();
+	}
 
 	for (int nCntPri = 0; nCntPri < NUM_PRIORITY; nCntPri++)
 	{

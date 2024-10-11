@@ -29,6 +29,7 @@ CTitlePlayer::CTitlePlayer(int nPriority) : CCharacter(nPriority),
 m_apNumModel	(0),	// モデルの総数
 m_nOldMotion	(0)		// 前回のモーション
 {//値をクリア
+	m_pTitlePlayer = nullptr;
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -37,6 +38,21 @@ m_nOldMotion	(0)		// 前回のモーション
 //========================================
 CTitlePlayer::~CTitlePlayer()
 {
+}
+
+//=======================================
+//シングルトン
+//=======================================
+CTitlePlayer* CTitlePlayer::GetInstance()
+{
+	if (m_pTitlePlayer == nullptr)
+	{//インスタンス生成
+		return m_pTitlePlayer = new CTitlePlayer;
+	}
+	else
+	{//ポインタを返す
+		return m_pTitlePlayer;
+	}
 }
 
 //========================================

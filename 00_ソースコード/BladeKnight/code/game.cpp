@@ -63,6 +63,21 @@ CGame::~CGame()
 }
 
 //========================================
+//描画
+//========================================
+CGame* CGame::GetInstance()
+{
+	if (m_pGame == nullptr)
+	{//インスタンス生成
+		return m_pGame = new CGame;
+	}
+	else
+	{//ポインタを返す
+		return m_pGame;
+	}
+}
+
+//========================================
 //生成
 //========================================
 CGame *CGame::Create(void)
@@ -71,6 +86,7 @@ CGame *CGame::Create(void)
 	{
 		//インスタンス生成
 		m_pGame = new CGame;
+		m_pGame->Init();
 	}
 
 	//ポインタを返す
@@ -110,16 +126,19 @@ HRESULT CGame::Init(void)
 	m_bPause = false;
 
 	// インスタンス生成
-	m_pObj2D = CObject2D::Create();
+	if (m_pObj2D == nullptr)
+	{
+		m_pObj2D = CObject2D::Create();
 
-	// 位置設定
-	m_pObj2D->SetPos(GUIDE_POS);
+		// 位置設定
+		m_pObj2D->SetPos(GUIDE_POS);
 
-	// サイズ設定
-	m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
+		// サイズ設定
+		m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
 
-	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
+		// テクスチャ設定
+		m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
+	}
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
@@ -145,9 +164,13 @@ void CGame::Uninit(void)
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_TUTORIAL);
+	pSound->Stop();
 
-	m_pGame = nullptr;
+	if (m_pGame != nullptr)
+	{//モード破棄
+		delete m_pGame;
+		m_pGame = nullptr;
+	}
 }
 
 //========================================
@@ -168,8 +191,7 @@ void CGame::Update(void)
 	{// 敵かプレイヤーの体力が0以下になったら
 		m_nTransition++;
 
-		if (m_nTransition > TRANSITION_TIME ||
-			pInputKeyboard->GetTrigger(DIK_RETURN))
+		if (m_nTransition > TRANSITION_TIME)
 		{
 			// 画面遷移(フェード)
 			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);
@@ -195,7 +217,6 @@ void CGame::Update(void)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);
 	}
 #endif
-
 }
 
 //========================================

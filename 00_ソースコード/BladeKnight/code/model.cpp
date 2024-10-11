@@ -105,7 +105,6 @@ HRESULT CModel::Init(const char *pFilename)
 		{// ‘¶İ‚µ‚È‚¢‚Æ‚«
 			m_pTexture.push_back(nullptr);
 		}
-
 	}
 
 	//¬Œ÷‚ğ•Ô‚·
@@ -143,6 +142,7 @@ void CModel::Uninit(void)
 
 	// ‘SƒNƒŠƒA
 	m_pTexture.clear();
+
 }
 
 //========================================

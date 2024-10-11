@@ -49,32 +49,15 @@ CTexture::~CTexture()
 //========================================
 HRESULT CTexture::Load(void)
 {
-	////CRenderer型のポインタ
-	//CRenderer *pRenderer = CManager::GetRenderer();
-
-	////デバイスの取得
-	//LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
-
-	//for (int nCntTex = 0; nCntTex < m_nNumAll; nCntTex++)
-	//{//全てのテクスチャの読み込み
-	//	if (FAILED(D3DXCreateTextureFromFile(pDevice,
-	//		str[nCntTex],
-	//		&m_apTexture[nCntTex])))
-	//	{// 失敗を返す
-	//		return E_FAIL;
-	//	}
-	//}
-
-
 	//デバイスの取得
 	CRenderer* pRenderer = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
 
 	//指定のテクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\NULL.png", &m_apTexture[0]);
+	//D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\NULL.png", &m_apTexture[0]);
 
 	//総数をカウントアップ
-	m_nNumAll++;
+	//m_nNumAll++;
 
 	return S_OK;
 }
@@ -130,7 +113,7 @@ int CTexture::Regist(std::string pfile)
 	}
 
 	//NULLを返す
-	return NULL;
+	return -1;
 }
 
 //========================================

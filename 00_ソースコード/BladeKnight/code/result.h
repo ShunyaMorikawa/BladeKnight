@@ -40,7 +40,11 @@ public:
 	static void ChangeFrag(bool frag) { m_bResult = frag; }
 	static bool GetFrag() { return m_bResult; }
 
+	static CResult* GetInstance();	// ゲームマネージャーの情報
+
 private:
+	static CResult* m_pResult;		// ゲームマネージャーのポインタ
+
 	static bool m_bResult;	// フラグ
 
 	CObject2D* m_pWin;	// 勝利テクスチャ

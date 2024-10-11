@@ -7,6 +7,11 @@
 
 #include "fade.h"
 
+//========================================
+// 静的メンバ変数
+//========================================
+CFade* CFade::m_pFade = nullptr;
+
 //=======================================
 //コンストラクタ
 //=======================================
@@ -126,7 +131,10 @@ void CFade::Update()
 //=======================================
 void CFade::Draw()
 {
-	if (m_pObject2D == nullptr) return;
+	if (m_pObject2D == nullptr)
+	{
+		return;
+	}
 
 	// 描画
 	m_pObject2D->Draw();
@@ -198,6 +206,22 @@ CFade *CFade::Create(CScene::MODE modenext)
 	// 初期化と設定
 	pFade->Init(modenext);
 	pFade->SetState(FADE_IN);
+	pFade->SetFade(modenext);
 
 	return pFade;
+}
+
+//=======================================
+// シングルトン
+//=======================================
+CFade* CFade::GetInstance()
+{
+	if (m_pFade == nullptr)
+	{//インスタンス生成
+		return m_pFade = new CFade;
+	}
+	else
+	{//ポインタを返す
+		return m_pFade;
+	}
 }

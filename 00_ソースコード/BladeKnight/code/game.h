@@ -53,7 +53,7 @@ public:
 	void Draw(void);
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
 
-	static CGame* GetInstance(void) { return m_pGame; }		// ゲームマネージャーの情報
+	static CGame* GetInstance();		// ゲームマネージャーの情報
 	
 private:
 	static CGame *m_pGame;		// ゲームマネージャーのポインタ

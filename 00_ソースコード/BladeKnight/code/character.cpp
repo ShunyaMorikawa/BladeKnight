@@ -102,8 +102,12 @@ void CCharacter::Uninit(void)
 //========================================
 void CCharacter::Update(void)
 {
-	// モーション更新
-	m_pMotion->Update();
+	if (m_pMotion != nullptr)
+	{
+		// モーション更新
+		m_pMotion->Update();
+
+	}
 }
 
 //========================================
@@ -140,6 +144,9 @@ void CCharacter::Draw(void)
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	//モーション描画
-	m_pMotion->Draw();
+	if (m_pMotion != nullptr)
+	{
+		//モーション描画
+		m_pMotion->Draw();
+	}
 }

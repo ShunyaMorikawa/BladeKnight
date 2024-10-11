@@ -37,6 +37,7 @@ namespace
 // 静的メンバ変数
 //========================================
 bool CResult::m_bResult = false;	// リザルトフラグ
+CResult* CResult::m_pResult = nullptr;
 
 //=======================================
 //コンストラクタ
@@ -56,21 +57,36 @@ CResult::~CResult()
 }
 
 //=======================================
+//シングルトン
+//=======================================
+CResult* CResult::GetInstance()
+{
+	if (m_pResult == nullptr)
+	{//インスタンス生成
+		return m_pResult = new CResult;
+	}
+	else
+	{//ポインタを返す
+		return m_pResult;
+	}
+}
+
+//=======================================
 //生成
 //=======================================
 CResult* CResult::Create(void)
 {
-	//タイトルのポインタ
-	CResult* pResult = nullptr;
+	if (m_pResult == nullptr)
+	{
+		//インスタンス生成
+		m_pResult = new CResult;
 
-	//インスタンス生成
-	pResult = new CResult;
-
-	//初期化
-	pResult->Init();
+		//初期化
+		m_pResult->Init();
+	}
 
 	//ポインタを返す
-	return pResult;
+	return m_pResult;
 }
 
 //=======================================
@@ -102,9 +118,6 @@ HRESULT CResult::Init(void)
 	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
 	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
-	// サウンド再生
-	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TITLE);
-
 	//成功を返す
 	return S_OK;
 }
@@ -119,6 +132,12 @@ void CResult::Uninit(void)
 
 	// サウンド停止
 	pSound->Stop();
+
+	if (m_pResult != nullptr)
+	{//モード破棄
+		delete m_pResult;
+		m_pResult = nullptr;
+	}
 }
 
 //=======================================
@@ -127,10 +146,10 @@ void CResult::Uninit(void)
 void CResult::Update(void)
 {
 	//CInputKeyboard型のポインタ
-	CInputKeyboard* pInputKeyboard = pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	//CInputPad型のポインタ
-	CInputPad* pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
+	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();

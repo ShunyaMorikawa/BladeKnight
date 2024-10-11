@@ -48,7 +48,7 @@ public:
 	void SetState(RESULTSTATE nState) { m_eState = nState; }
 
 	// ©g‚Ìî•ñ
-	static CResultPlayer* GetInstance() { return m_pResultPlayer; }
+	static CResultPlayer* GetInstance();
 
 private:
 	void Motion();

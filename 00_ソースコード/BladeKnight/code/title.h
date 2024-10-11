@@ -22,6 +22,8 @@ public:
 	CTitle();	//コンストラクタ
 	~CTitle();	//デストラクタ
 
+	static CTitle* GetInstance();
+
 	//メンバ関数
 	static CTitle *Create(void);
 
@@ -34,6 +36,8 @@ public:
 	void PressEnter();
 
 private:
+	static CTitle* m_pTitle;		// チュートリアルのポインタ
+
 	CObject2D* m_pTitleLogo;
 	CObject2D* m_pEnter;
 };

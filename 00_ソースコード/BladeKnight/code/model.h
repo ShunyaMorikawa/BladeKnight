@@ -68,7 +68,7 @@ public:
 
 private:
 	//メンバ変数
-	HIERARCHY m_nType;
+	HIERARCHY m_nType;				// 階層あるかないか
 
 	std::vector<LPDIRECT3DTEXTURE9> m_pTexture;	//共有テクスチャ
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス

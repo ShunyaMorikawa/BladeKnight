@@ -136,6 +136,7 @@ void CObjectX::Uninit(void)
 		m_pBuffMat->Release();
 		m_pBuffMat = nullptr;
 	}
+
 	//テクスチャの破棄
 	if (m_pTexture != nullptr)
 	{

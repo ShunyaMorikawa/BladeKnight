@@ -10,6 +10,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "result.h"
+#include "sound.h"
 
 //========================================
 // 定数定義
@@ -33,6 +34,7 @@ m_apNumModel	(0),			// モデルの総数
 m_nOldMotion	(0),			// 前回のモーション
 m_eState		(STATE_NONE)	// 状態
 {//値をクリア
+	m_pResultPlayer = nullptr;
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -41,6 +43,21 @@ m_eState		(STATE_NONE)	// 状態
 //========================================
 CResultPlayer::~CResultPlayer()
 {
+}
+
+//=======================================
+//シングルトン
+//=======================================
+CResultPlayer* CResultPlayer::GetInstance()
+{
+	if (m_pResultPlayer == nullptr)
+	{//インスタンス生成
+		return m_pResultPlayer = new CResultPlayer;
+	}
+	else
+	{//ポインタを返す
+		return m_pResultPlayer;
+	}
 }
 
 //========================================
@@ -66,6 +83,9 @@ CResultPlayer* CResultPlayer::Create(std::string pfile)
 //========================================
 HRESULT CResultPlayer::Init(std::string pfile)
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// キャラの初期化
 	CCharacter::Init(pfile);
 
@@ -78,6 +98,23 @@ HRESULT CResultPlayer::Init(std::string pfile)
 	// 向き設定
 	SetRot(INITIAL_ROT);
 
+	// リザルトフラグの取得
+	bool frag = CResult::GetFrag();
+
+	if (frag)
+	{// 勝利なら
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_WIN);
+	}
+	else
+	{// 敗北なら
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_LOSE);
+	}
+
+	// リザルトフラグ管理
+	CResult::ChangeFrag(frag);
+
 	return S_OK;
 }
 
@@ -86,6 +123,12 @@ HRESULT CResultPlayer::Init(std::string pfile)
 //========================================
 void CResultPlayer::Uninit(void)
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop();
+
 	// 終了
 	CCharacter::Uninit();
 	m_pResultPlayer = nullptr;
@@ -125,6 +168,9 @@ void CResultPlayer::Draw(void)
 //========================================
 void CResultPlayer::Motion()
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
@@ -144,6 +190,7 @@ void CResultPlayer::Motion()
 		pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
 	}
 
+	// リザルトフラグ管理
 	CResult::ChangeFrag(frag);
 
 	if (pMotion != nullptr)

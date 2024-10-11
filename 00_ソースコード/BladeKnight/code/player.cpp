@@ -193,9 +193,6 @@ void CPlayer::Update(void)
 	// 敵の情報取得
 	CEnemy* pEnemy = CEnemy::GetInstance();
 
-	// リザルトプレイヤーの情報取得
-	CResultPlayer* pResultplayer = CResultPlayer::GetInstance();
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -535,11 +532,15 @@ void CPlayer::Motion()
 {
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
-
+	if (pMotion == nullptr)
+	{
+		return;
+	}
 	if (m_bMove)
 	{// 歩きモーション
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
 	}
+
 	else if (m_bCutdown)
 	{// 切り下ろしモーション
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);

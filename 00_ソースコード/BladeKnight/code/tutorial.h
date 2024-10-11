@@ -34,6 +34,8 @@ public:
 	CTutorial();	//コンストラクタ
 	~CTutorial();	//デストラクタ
 
+	static CTutorial* GetInstance();
+
 	//メンバ関数
 	static CTutorial *Create(void);
 
@@ -43,6 +45,8 @@ public:
 	void Draw(void);
 
 private:
+	static CTutorial* m_pTutorial;		// チュートリアルのポインタ
+
 	CObjectX* m_pObjectX;		// Xファイルオブジェクトのポインタ
 	CPlayer* m_pPlayer;			// プレイヤーのポインタ
 	CIdxMeshField* m_pIdxMesh;	// メッシュフィールドのポインタ
