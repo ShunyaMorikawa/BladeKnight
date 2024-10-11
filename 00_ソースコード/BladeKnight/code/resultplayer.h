@@ -9,6 +9,7 @@
 #define _RESULTPLAYER_H_
 
 #include "character.h"
+#include "object2D.h"
 
 //========================================
 // 前方宣言
@@ -61,6 +62,9 @@ private:
 
 	bool m_IsWin;	// 勝利
 	bool m_IsLose;	// 敗北
+
+	CObject2D* m_pWin;	// 勝利テクスチャ
+	CObject2D* m_pLose;	// 敗北テクスチャ
 
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 

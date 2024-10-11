@@ -11,12 +11,22 @@
 #include "enemy.h"
 #include "result.h"
 #include "sound.h"
+#include "texture.h"
 
 //========================================
 // 定数定義
 //========================================
 namespace
 {
+	const char* WIN_TEX = "data\\TEXTURE\\Result_Win.png";		// 勝利テクスチャのパス
+	const char* LOSE_TEX = "data\\TEXTURE\\Result_Lose.png";	// 敗北テクスチャのパス
+
+	const float LOGO_POS_Y = 150.0f;		// ロゴテクスチャのY座標
+	const float LOGO_SIZE_WIDTH = 640.0f;	// ロゴテクスチャのサイズ
+	const float LOGO_SIZE_HEIGHT = 250.0f;	// ロゴテクスチャのサイズ
+	const float ENTER_POS_Y = 550.0f;		// 文字テクスチャのY座標
+	const float ENTER_SIZE = 250.0f;		// 文字テクスチャのサイズ
+
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 50.0f };		// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, D3DX_PI, 0.0f };	// プレイヤー初期向き
 }
@@ -32,7 +42,10 @@ CResultPlayer* CResultPlayer::m_pResultPlayer = nullptr;
 CResultPlayer::CResultPlayer(int nPriority) : CCharacter(nPriority),
 m_apNumModel	(0),			// モデルの総数
 m_nOldMotion	(0),			// 前回のモーション
-m_eState		(STATE_NONE)	// 状態
+m_eState		(STATE_NONE),	// 状態
+m_pWin(nullptr),	// 勝利テクスチャ
+m_pLose(nullptr)	// 敗北テクスチャ
+
 {//値をクリア
 	m_pResultPlayer = nullptr;
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
@@ -174,6 +187,9 @@ void CResultPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// 向き
 	D3DXVECTOR3 rot = { 0.0f, 0.0f, 0.0f };
 
@@ -183,11 +199,42 @@ void CResultPlayer::Motion()
 	if (frag)
 	{// 勝利なら
 		pMotion->Set(CMotion::RESULT_MOTIONTYPE_WIN);
+
+		// インスタンス生成
+		if (m_pWin == nullptr)
+		{
+			m_pWin = CObject2D::Create();
+
+			// 位置設定
+			m_pWin->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, LOGO_POS_Y, 0.0f));
+
+			// サイズ設定
+			m_pWin->SetSize(LOGO_SIZE_WIDTH, LOGO_SIZE_HEIGHT);
+
+			// テクスチャ設定
+			m_pWin->BindTexture(pTexture->Regist(WIN_TEX));
+		}
+
 	}
 	else
 	{// 敗北なら
 		// 敗北モーション
 		pMotion->Set(CMotion::RESULT_MOTIONTYPE_LOSE);
+
+		if (m_pLose == nullptr)
+		{
+			m_pLose = CObject2D::Create();
+
+			// 位置設定
+			m_pLose->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, LOGO_POS_Y, 0.0f));
+
+			// サイズ設定
+			m_pLose->SetSize(LOGO_SIZE_WIDTH, LOGO_SIZE_HEIGHT);
+
+			// テクスチャ設定
+			m_pLose->BindTexture(pTexture->Regist(LOSE_TEX));
+		}
+
 	}
 
 	// リザルトフラグ管理
