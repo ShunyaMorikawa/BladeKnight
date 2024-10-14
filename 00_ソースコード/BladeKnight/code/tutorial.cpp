@@ -107,16 +107,16 @@ HRESULT CTutorial::Init(void)
 	m_pMobj = CMapObject::Create();
 
 	// インスタンス生成
-	//m_pObj2D = CObject2D::Create();
+	m_pObj2D = CObject2D::Create();
 
 	// 位置設定
-	//m_pObj2D->SetPos(GUIDE_POS);
+	m_pObj2D->SetPos(GUIDE_POS);
 
 	// サイズ設定
-	//m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
+	m_pObj2D->SetSize(GUIDE_WIDTH, GUIDE_HEIGHT);
 
 	// テクスチャ設定
-	//m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
+	m_pObj2D->BindTexture(pTexture->Regist(GUIDE_TEX));
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();

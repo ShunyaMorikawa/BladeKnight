@@ -231,6 +231,7 @@ void CPlayer::Update(void)
 
 		// 敗北テクスチャ
 		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
+
 		// サウンド再生
 		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_LOSE);
 
