@@ -112,8 +112,15 @@ int CTexture::Regist(std::string pfile)
 		}
 	}
 
-	//NULLを返す
-	return -1;
+	if (m_nNumAll > MAX_TEXTURE)
+	{// 総数がテクスチャの最大数を超えたら
+		assert(false);
+	}
+	else
+	{
+		// -1を返す
+		return -1;
+	}
 }
 
 //========================================
