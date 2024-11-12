@@ -54,6 +54,7 @@
     <ClCompile Include="code\resultplayer.cpp" />
     <ClCompile Include="code\sound.cpp" />
     <ClCompile Include="code\texture.cpp" />
+    <ClCompile Include="code\time.cpp" />
     <ClCompile Include="code\title.cpp" />
     <ClCompile Include="code\titleplayer.cpp" />
     <ClCompile Include="code\tutorial.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="code\resultplayer.h" />
     <ClInclude Include="code\sound.h" />
     <ClInclude Include="code\texture.h" />
+    <ClInclude Include="code\time.h" />
     <ClInclude Include="code\title.h" />
     <ClInclude Include="code\titleplayer.h" />
     <ClInclude Include="code\tutorial.h" />

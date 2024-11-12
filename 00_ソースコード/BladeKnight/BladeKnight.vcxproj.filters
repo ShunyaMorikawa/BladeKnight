@@ -150,6 +150,9 @@
     <ClCompile Include="code\resultplayer.cpp">
       <Filter>character\player</Filter>
     </ClCompile>
+    <ClCompile Include="code\time.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\bullet.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="code\resultplayer.h">
       <Filter>character\player</Filter>
+    </ClInclude>
+    <ClInclude Include="code\time.h">
+      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

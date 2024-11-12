@@ -48,11 +48,10 @@ namespace
 	const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
 	const float GAUGE_WIDTH = 50.0f;	// ゲージの幅
 	const float GAUGE_HEIGHT = 50.0f;	// ゲージの高さ
-	const float RESULT_HEIGHT = 200.0f;		// リザルトの高さ
+	const float COOLTIME = 120.0f;		// 攻撃のクールタイム
 
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
-	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
-	
+	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き	
 	const D3DXVECTOR3 GAUGE_POS = { 50.0f, 600.0f, 0.0f };	// ゲージの位置
 }
 
@@ -486,12 +485,6 @@ void CPlayer::Attack()
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
-	// モード取得
-	int nMode = CManager::GetInstance()->GetMode();
-
-	// 移動量取得
-	D3DXVECTOR3 move = GetMove();
-
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
 	{// 切りおろし
@@ -537,6 +530,7 @@ void CPlayer::Motion()
 	{
 		return;
 	}
+
 	if (m_bMove)
 	{// 歩きモーション
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);

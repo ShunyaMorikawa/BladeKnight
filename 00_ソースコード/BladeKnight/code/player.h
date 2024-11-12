@@ -82,6 +82,8 @@ private:
 	int m_WalkCounter;		// 歩行時のカウンター
 
 	float m_fRadius;		// 半径
+	float m_fCT;			// クールタイム経過時間
+	float m_fDeltaTime;		// デルタタイム
 
 	bool m_bJump;			// ジャンプ
 	bool m_bMove;			// 移動

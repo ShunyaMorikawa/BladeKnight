@@ -116,11 +116,9 @@ int CTexture::Regist(std::string pfile)
 	{// 総数がテクスチャの最大数を超えたら
 		assert(false);
 	}
-	else
-	{
-		// -1を返す
-		return -1;
-	}
+
+	// -1を返す
+	return -1;
 }
 
 //========================================
