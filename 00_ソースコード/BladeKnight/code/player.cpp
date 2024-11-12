@@ -479,6 +479,9 @@ void CPlayer::Act(float fSpeed)
 //========================================
 void CPlayer::Attack()
 {
+	// 時間取得
+	DWORD Time = timeGetTime();
+
 	// キーボードの情報取得
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
