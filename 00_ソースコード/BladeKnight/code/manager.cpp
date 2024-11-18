@@ -372,6 +372,9 @@ CScene* CScene::Create(int nMode)
 		// ƒŠƒUƒ‹ƒg¶¬
 		pScene = CResult::Create();
 		break;
+
+	default:
+		break;
 	}
 
 	if (pScene != nullptr)

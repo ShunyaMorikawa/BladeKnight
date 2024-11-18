@@ -48,7 +48,7 @@ namespace
 	const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
 	const float GAUGE_WIDTH = 50.0f;	// ゲージの幅
 	const float GAUGE_HEIGHT = 50.0f;	// ゲージの高さ
-	const float COOLTIME = 120.0f;		// 攻撃のクールタイム
+	const float COOLTIME = 2.0f;		// 攻撃のクールタイム
 
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き	
@@ -70,6 +70,8 @@ m_nOldMotion	(0),			// 前回のモーション
 m_WalkCounter	(0),			// 歩行時エフェクト出す用のカウンター
 m_eState		(STATE_NONE),	// 状態
 m_fRadius		(0.0f),			// 半径
+m_fCoolDown		(0.0f),			// クールダウンタイマー
+m_fDeltaTime	(0.0f),			// デルタタイム
 m_bJump			(false),		// ジャンプフラグ
 m_bMove			(false),		// 移動
 m_bWait			(false),		// 待機
@@ -146,6 +148,9 @@ HRESULT CPlayer::Init(std::string pfile)
 
 	// サイズ設定
 	m_pGauge->SetSize(GAUGE_WIDTH, GAUGE_HEIGHT);
+
+	// クールダウンタイマー
+	m_fCoolDown = 0.0f;
 
 	return S_OK;
 }
@@ -275,6 +280,7 @@ void CPlayer::Update(void)
 	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	pDebugProc->Print("プレイヤーの体力：%d\n", m_nLife);
 	pDebugProc->Print("プレイヤーの状態：%d\n", m_eState);
+	pDebugProc->Print("時間：%f\n", m_fDeltaTime);
 }
 
 //========================================
@@ -479,8 +485,25 @@ void CPlayer::Act(float fSpeed)
 //========================================
 void CPlayer::Attack()
 {
-	// 時間取得
+	// これまでの時間
+	DWORD previous = timeGetTime();
+
+	// 現在時間取得
 	DWORD Time = timeGetTime();
+
+	// 秒数計算
+	m_fDeltaTime = Time - previous;
+	previous = Time;
+
+	if (m_fCoolDown > 0.0f)
+	{// クールタイムを減らす
+		m_fCoolDown;
+
+		if (m_fCoolDown < 0.0f)
+		{// タイマーリセット
+			m_fCoolDown = 0.0f;
+		}
+	}
 
 	// キーボードの情報取得
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
