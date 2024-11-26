@@ -150,9 +150,6 @@
     <ClCompile Include="code\resultplayer.cpp">
       <Filter>character\player</Filter>
     </ClCompile>
-    <ClCompile Include="code\shadow.cpp">
-      <Filter>object</Filter>
-    </ClCompile>
     <ClCompile Include="code\scene.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -268,9 +265,6 @@
     </ClInclude>
     <ClInclude Include="code\resultplayer.h">
       <Filter>character\player</Filter>
-    </ClInclude>
-    <ClInclude Include="code\shadow.h">
-      <Filter>object</Filter>
     </ClInclude>
     <ClInclude Include="code\scene.h">
       <Filter>scene</Filter>
