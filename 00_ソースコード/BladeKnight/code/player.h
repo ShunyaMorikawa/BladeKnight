@@ -18,6 +18,7 @@ class CMotion;
 class CEffect;
 class CGauge;
 class CLockonMarker;
+class CShadow;
 
 //========================================
 //プレイヤークラス

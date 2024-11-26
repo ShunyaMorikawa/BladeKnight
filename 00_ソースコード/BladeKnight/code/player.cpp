@@ -29,6 +29,7 @@
 #include "lockonMarker.h"
 #include "resultplayer.h"
 #include "result.h"
+#include "shadow.h"
 
 //========================================
 // 定数定義
@@ -49,6 +50,7 @@ namespace
 	const float GAUGE_WIDTH = 50.0f;	// ゲージの幅
 	const float GAUGE_HEIGHT = 50.0f;	// ゲージの高さ
 	const float COOLTIME = 2.0f;		// 攻撃のクールタイム
+	const float SHADOW_SIZE = 50.0f;
 
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き	
@@ -81,7 +83,7 @@ m_bStrongAttack	(false),		// 強攻撃
 m_IsLock		(false),		// ロックオン
 m_pEffect		(nullptr),		// エフェクトのポインタ
 m_pGauge		(nullptr),		// ゲージのポインタ
-m_pMarker		(nullptr)		// ロックオンマーカー表示
+m_pMarker		(nullptr),		// ロックオンマーカー表示
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -116,6 +118,8 @@ CPlayer *CPlayer::Create(std::string pfile)
 //========================================
 HRESULT CPlayer::Init(std::string pfile)
 {
+	D3DXVECTOR3 pos = GetPos();
+
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 

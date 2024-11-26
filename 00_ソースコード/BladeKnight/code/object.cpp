@@ -24,22 +24,22 @@ CObject::CObject(int nPriority)
 {//値クリア
 	if (m_pTop[nPriority] == nullptr && m_pCurrent[nPriority] == nullptr)
 	{//先頭と最後がnullptrの時
-		m_pTop[nPriority] = this;	//自身を代入
-		m_nNumAll++;				//総数をカウントアップ
+		m_pTop[nPriority] = this;	// 先頭のnPriority番目に自身を代入
+		m_nNumAll++;				// 総数をカウントアップ
 		m_nPriority = nPriority;	// 優先順位
 		m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//位置
-		m_pNext = nullptr;	//次
-		m_pPrev = nullptr;	//前
-		m_pCurrent[nPriority] = this;	//自身を代入
-		m_bRelease = false;	//終了フラグ
-		m_bDrawFrag = false;
+		m_pNext = nullptr;	// 次
+		m_pPrev = nullptr;	// 前
+		m_pCurrent[nPriority] = this;	// 最後尾のnPriority番目に自身を代入
+		m_bRelease = false;		//終了フラグ
+		m_bDrawFrag = false;	// 描画するかしないか
 	}
 	else if (m_pTop[nPriority] != nullptr && m_pCurrent[nPriority] != nullptr)
-	{
-		m_pPrev = m_pCurrent[nPriority];
-		m_pNext = nullptr;
-		m_pPrev->m_pNext = this;
-		m_pCurrent[nPriority] = this;
+	{// 先頭のnPriority番目とm_pCurrent[nPriority]があるとき
+		m_pPrev = m_pCurrent[nPriority];	// 前回に最後尾のnPriority番目を代入
+		m_pNext = nullptr;	// 次がをnullptrに
+		m_pPrev->m_pNext = this;	// 前回のnextに自身代入
+		m_pCurrent[nPriority] = this; // m_pCurrent[nPriority]に自身代入
 	}
 }
 
@@ -57,7 +57,7 @@ void CObject::ReleaseAll(void)
 {
 	for (int nCntPri = 0; nCntPri < NUM_PRIORITY; nCntPri++)
 	{
-		// 先頭代入
+		// 先頭のnCntPri番目代入
 		CObject* Now = m_pTop[nCntPri];
 
 		CObject* Next;
@@ -74,7 +74,7 @@ void CObject::ReleaseAll(void)
 				Next = Now->m_pNext;
 
 				if (Now->m_bDrawFrag != true)
-				{
+				{// 描画しない
 					// 先頭の終了
 					Now->Uninit();
 				}
@@ -100,7 +100,7 @@ void CObject::UpdateAll(void)
 {
 	for (int nCntPri = 0; nCntPri < NUM_PRIORITY; nCntPri++)
 	{
-		// 先頭代入
+		// 先頭のnCntPri番目代入
 		CObject *Now = m_pTop[nCntPri];
 
 		while (1)
@@ -111,11 +111,12 @@ void CObject::UpdateAll(void)
 			}
 			else if (Now != nullptr)
 			{
+				// 先頭のnext代入
 				CObject* pNext = Now->m_pNext;
 
 				// 先頭の更新
 				if (Now->m_bRelease != true)
-				{
+				{// 削除しない場合
 					Now->Update();
 				}
 
@@ -127,7 +128,7 @@ void CObject::UpdateAll(void)
 
 	for (int nCntPri = 0; nCntPri < NUM_PRIORITY; nCntPri++)
 	{
-		// 先頭代入
+		// 先頭のnCntPri番目代入
 		CObject* pNow = m_pTop[nCntPri];
 
 		while (1)
@@ -142,9 +143,9 @@ void CObject::UpdateAll(void)
 				CObject* pNext = pNow->m_pNext;
 
 				if (pNow->m_bRelease == true)
-				{
+				{// 削除するとき
 					if (pNow->m_bDrawFrag != true)
-					{
+					{// 描画しない
 						// 先頭の削除
 						pNow->Delete();
 					}
@@ -187,12 +188,12 @@ void CObject::DrawAll(void)
 			}
 			else if (Now != nullptr)
 			{
-				// 次に先頭の次を代入
+				// 先頭のnextを代入
 				CObject* pNext = Now->m_pNext;
 
 				// 先頭の更新
 				if (Now->m_bRelease != true)
-				{
+				{// 削除しない
 					if (Now->m_bDrawFrag != true)
 					{
 						// 先頭の描画
@@ -227,7 +228,7 @@ void CObject::DeleteAll(void)
 			}
 			else if (Now != nullptr)
 			{
-				//次
+				// 現在のnext代入
 				Next = Now->m_pNext;
 
 				if (Now->m_bRelease == true)

@@ -106,7 +106,6 @@ void CCharacter::Update(void)
 	{
 		// モーション更新
 		m_pMotion->Update();
-
 	}
 }
 

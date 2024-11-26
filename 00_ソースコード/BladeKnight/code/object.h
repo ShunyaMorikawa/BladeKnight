@@ -86,8 +86,8 @@ private:
 	int m_nIdxTexture;		// テクスチャの番号
 	int m_nPriority;		// 優先順位の位置
 
-	bool m_bRelease;		//終了フラグ
-	bool m_bDrawFrag;		//終了フラグ
+	bool m_bRelease;		// 終了フラグ
+	bool m_bDrawFrag;		// 描画するかしないか
 
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス
 	LPD3DXMESH m_pMesh;				//メッシュ(頂点情報)へのポインタ
