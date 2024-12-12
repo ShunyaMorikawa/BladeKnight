@@ -150,9 +150,6 @@
     <ClCompile Include="code\resultplayer.cpp">
       <Filter>character\player</Filter>
     </ClCompile>
-    <ClCompile Include="code\scene.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\bullet.h">
@@ -265,9 +262,6 @@
     </ClInclude>
     <ClInclude Include="code\resultplayer.h">
       <Filter>character\player</Filter>
-    </ClInclude>
-    <ClInclude Include="code\scene.h">
-      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

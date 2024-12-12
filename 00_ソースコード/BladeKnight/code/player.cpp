@@ -29,7 +29,6 @@
 #include "lockonMarker.h"
 #include "resultplayer.h"
 #include "result.h"
-#include "shadow.h"
 
 //========================================
 // 定数定義
@@ -83,7 +82,7 @@ m_bStrongAttack	(false),		// 強攻撃
 m_IsLock		(false),		// ロックオン
 m_pEffect		(nullptr),		// エフェクトのポインタ
 m_pGauge		(nullptr),		// ゲージのポインタ
-m_pMarker		(nullptr),		// ロックオンマーカー表示
+m_pMarker		(nullptr)		// ロックオンマーカー表示
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -496,8 +495,8 @@ void CPlayer::Attack()
 	DWORD Time = timeGetTime();
 
 	// 秒数計算
-	m_fDeltaTime = Time - previous;
-	previous = Time;
+	//m_fDeltaTime = Time - previous;
+	//previous = Time;
 
 	if (m_fCoolDown > 0.0f)
 	{// クールタイムを減らす
