@@ -159,7 +159,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	{
 		// フェード生成・設定
 #ifdef _DEBUG
-		m_pFade = CFade::Create(CScene::MODE_GAME);
+		m_pFade = CFade::Create(CScene::MODE_TUTORIAL);
 #else
 		m_pFade = CFade::Create(CScene::MODE_TITLE);
 #endif

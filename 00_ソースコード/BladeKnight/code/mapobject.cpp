@@ -42,7 +42,7 @@ CMapObject* CMapObject::Create()
 	CMapObject* pMapObject = nullptr;
 
 	if (pMapObject == nullptr)
-	{
+	{// インスタンス生成
 		pMapObject = new CMapObject;
 
 		pMapObject->Init();
@@ -58,10 +58,10 @@ CMapObject* CMapObject::Create()
 HRESULT CMapObject::Init(void)
 {
 	if (m_pModel == nullptr)
-	{
+	{// マップオブジェクトの生成
 		m_pModel = CModel::Create(OBJECT_PASS);
 
-		// 階層
+		// 階層があるかどうか
 		m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 	}
 
@@ -74,7 +74,7 @@ HRESULT CMapObject::Init(void)
 void CMapObject::Uninit(void)
 {
 	if (m_pModel != nullptr)
-	{
+	{// モデルの削除
 		m_pModel->Uninit();
 		delete m_pModel;
 		m_pModel = nullptr;
@@ -89,10 +89,6 @@ void CMapObject::Uninit(void)
 //========================================
 void CMapObject::Update(void)
 {
-	if (m_pModel != nullptr)
-	{// モデルの更新
-		//m_pModel->Update();
-	}
 }
 
 //========================================

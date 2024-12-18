@@ -777,7 +777,7 @@ void CPlayer::CollisionArena()
 //========================================
 // 敵との判定
 //========================================
-void CPlayer::CollisionEnemy(const D3DXVECTOR3 &pos)
+void CPlayer::CollisionEnemy(const D3DXVECTOR3& pos)
 {
 	// 長さ
 	float fLength;
@@ -811,7 +811,12 @@ void CPlayer::CollisionEnemy(const D3DXVECTOR3 &pos)
 	if (fLength <= radiusEnemy + fRadius)
 	{// 敵に当たった
 		// 位置設定
-		SetPos(posPlayer);
+		//SetPos(posPlayer);
+
+		// デバッグ表示
+		CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
+		pDebugProc->Print("\nプレイヤーと当たったよ");
+
 	}
 }
 

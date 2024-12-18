@@ -33,7 +33,6 @@ namespace
 	const int TRANSITION_TIME = 120;	// 遷移するまでの時間
 	
 	const char* GUIDE_TEX = "data\\texture\\guide_game.png";	// テクスチャのパス
-	const std::string PLAYER_TXT = "data\\FILE\\player.txt";	// プレイヤー情報のパス
 
 	const float GUIDE_WIDTH = 300.0f;	// ガイドの幅
 	const float GUIDE_HEIGHT = 350.0f;	// ガイドの高さ
@@ -102,7 +101,7 @@ HRESULT CGame::Init(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// プレイヤー生成
-	CPlayer::Create(PLAYER_TXT);
+	CPlayer::Create(Constance::PLAYER_TXT);
 
 	// エネミー生成
 	CEnemy::Create(Constance::ENEMY_TXT);

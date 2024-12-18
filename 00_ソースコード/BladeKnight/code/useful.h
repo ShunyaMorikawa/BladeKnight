@@ -45,7 +45,9 @@ namespace Constance
 	const float WALL_POS = 4000.0f;		// 壁
 	const float WALL_POS_Y = 2000.0f;	// 壁
 
-	const std::string ENEMY_TXT = "data//FILE//enemy.txt";	// エネミー情報パス
+	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報パス
+	const std::string ENEMY_TXT = "data//FILE//enemy.txt";		// エネミー情報パス
+	const std::string TUTORIAL_ENEMY_TXT = "data//FILE//tutorialenemy.txt";		// エネミー情報パス
 }
 
 #endif

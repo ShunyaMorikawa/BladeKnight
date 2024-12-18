@@ -16,6 +16,7 @@
 #include "mapobject.h"
 #include "sound.h"
 #include "useful.h"
+#include "enemy.h"
 
 //========================================
 //静的メンバ変数
@@ -92,10 +93,13 @@ HRESULT CTutorial::Init(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// プレイヤー生成
-	m_pPlayer = CPlayer::Create("data\\FILE\\player.txt");
+	CPlayer::Create(Constance::PLAYER_TXT);
+
+	// エネミー生成
+	CEnemy::Create(Constance::ENEMY_TXT);
 
 	// フィールド生成
-	m_pField = CField::Create();
+	CField::Create();
 
 	// 壁生成
 	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, -Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));

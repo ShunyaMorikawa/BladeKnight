@@ -48,7 +48,6 @@ private:
 	static CTutorial* m_pTutorial;		// チュートリアルのポインタ
 
 	CObjectX* m_pObjectX;		// Xファイルオブジェクトのポインタ
-	CPlayer* m_pPlayer;			// プレイヤーのポインタ
 	CIdxMeshField* m_pIdxMesh;	// メッシュフィールドのポインタ
 	CField* m_pField;			// ポリゴンのポインタ
 	CFade* m_pFade;				// フェードのポインタ

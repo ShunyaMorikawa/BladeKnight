@@ -39,18 +39,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="code\bullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="code\camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="code\fade.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="code\gauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="code\object.cpp">
       <Filter>object</Filter>
     </ClCompile>
@@ -138,9 +126,6 @@
     <ClCompile Include="code\particle.cpp">
       <Filter>effect</Filter>
     </ClCompile>
-    <ClCompile Include="code\lockonMarker.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="code\titleplayer.cpp">
       <Filter>character\player</Filter>
     </ClCompile>
@@ -150,20 +135,23 @@
     <ClCompile Include="code\resultplayer.cpp">
       <Filter>character\player</Filter>
     </ClCompile>
+    <ClCompile Include="code\bullet.cpp">
+      <Filter>character\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="code\camera.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="code\fade.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="code\gauge.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="code\lockonMarker.cpp">
+      <Filter>character\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\bullet.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="code\camera.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="code\fade.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="code\gauge.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="code\object.h">
       <Filter>object</Filter>
     </ClInclude>
@@ -251,9 +239,6 @@
     <ClInclude Include="code\particle.h">
       <Filter>effect</Filter>
     </ClInclude>
-    <ClInclude Include="code\lockonMarker.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="code\titleplayer.h">
       <Filter>character\player</Filter>
     </ClInclude>
@@ -261,6 +246,21 @@
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="code\resultplayer.h">
+      <Filter>character\player</Filter>
+    </ClInclude>
+    <ClInclude Include="code\bullet.h">
+      <Filter>character\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="code\camera.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="code\fade.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="code\gauge.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="code\lockonMarker.h">
       <Filter>character\player</Filter>
     </ClInclude>
   </ItemGroup>
