@@ -150,6 +150,9 @@
     <ClCompile Include="code\lockonMarker.cpp">
       <Filter>character\player</Filter>
     </ClCompile>
+    <ClCompile Include="code\mask.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\object.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="code\lockonMarker.h">
       <Filter>character\player</Filter>
+    </ClInclude>
+    <ClInclude Include="code\mask.h">
+      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

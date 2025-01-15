@@ -811,12 +811,13 @@ void CPlayer::CollisionEnemy(const D3DXVECTOR3& pos)
 	if (fLength <= radiusEnemy + fRadius)
 	{// 敵に当たった
 		// 位置設定
-		//SetPos(posPlayer);
+		SetPos(posEnemy);
+
+		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 		// デバッグ表示
 		CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 		pDebugProc->Print("\nプレイヤーと当たったよ");
-
 	}
 }
 
