@@ -99,6 +99,9 @@ HRESULT CTutorial::Init(void)
 	// エネミー生成
 	CEnemy::Create(Constance::ENEMY_TXT);
 
+	// マスク生成
+	CMask::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
 	// フィールド生成
 	CField::Create();
 
