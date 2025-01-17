@@ -17,6 +17,7 @@
 #include "sound.h"
 #include "useful.h"
 #include "enemy.h"
+#include "mask.h"
 
 //========================================
 //Ã“Iƒƒ“ƒo•Ï”

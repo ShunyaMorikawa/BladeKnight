@@ -26,7 +26,7 @@ CMask::~CMask()
 //========================================
 // 生成
 //========================================
-CMask* CMask::Create(int nRefdx, D3DXCOLOR col)
+CMask* CMask::Create(D3DXCOLOR col)
 {
 	CMask* pMask = new CMask();
 
@@ -35,9 +35,6 @@ CMask* CMask::Create(int nRefdx, D3DXCOLOR col)
 	{//初期化処理が失敗した場合
 		return nullptr;
 	}
-
-	// 参照値
-	pMask->SetRefidx(nRefdx);
 
 	// カラー設定
 	pMask->SetCol(col);
@@ -57,7 +54,7 @@ HRESULT CMask::Init()
 	SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// 位置設定
-	SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT, 0.0f));
+	SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
 	return S_OK;
 }
@@ -92,12 +89,12 @@ void CMask::Draw()
 	pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 
 	//ステンシルバッファと比較する参照値の設定 => ref
-	pDevice->SetRenderState(D3DRS_STENCILREF, m_nRefidx);
+	pDevice->SetRenderState(D3DRS_STENCILREF, 2);
 
 	//ステンシルバッファの値に対してのマスク設定 => 0xff(全て真)
 	pDevice->SetRenderState(D3DRS_STENCILMASK, 255);
 
-	//ステンシルバッファの比較方法 <= (参照値 <= ステンシルバッファの参照値)なら合格
+	//ステンシルバッファの比較方法 = (参照値 = ステンシルバッファの参照値)なら合格
 	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 
 	//ステンシルテスト結果に対しての反映設定

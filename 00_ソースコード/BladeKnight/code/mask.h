@@ -20,7 +20,7 @@ public:
 	CMask(int nPriority = 5);	//コンストラクタ
 	~CMask();	//デストラクタ
 
-	static CMask* Create(int nRefidx, D3DXCOLOR col);
+	static CMask* Create(D3DXCOLOR col);
 
 	HRESULT Init();
 	void Uninit();

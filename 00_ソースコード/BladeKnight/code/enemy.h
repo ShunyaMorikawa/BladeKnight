@@ -34,7 +34,7 @@ public:
 		STATE_MAX
 	};
 
-	CEnemy(int nPriority = 4);		//コンストラクタ
+	CEnemy(int nPriority = 5);		//コンストラクタ
 	~CEnemy();		//デストラクタ
 
 	// メンバ関数

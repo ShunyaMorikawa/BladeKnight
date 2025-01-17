@@ -20,7 +20,7 @@
 class CCharacter : public CObject
 {
 public:
-	CCharacter(int nPriority = 4);		//コンストラクタ
+	CCharacter(int nPriority = 3);		//コンストラクタ
 	~CCharacter();		//デストラクタ
 
 	// メンバ関数

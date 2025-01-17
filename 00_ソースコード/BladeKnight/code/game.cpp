@@ -19,6 +19,7 @@
 #include "debugproc.h"
 #include "texture.h"
 #include "useful.h"
+#include "mask.h"
 
 //========================================
 //静的メンバ変数
@@ -31,7 +32,8 @@ CGame *CGame::m_pGame = nullptr;		// ゲームのポインタ
 namespace
 {
 	const int TRANSITION_TIME = 120;	// 遷移するまでの時間
-	
+	const int REF = 2;		// マスクの参照値
+
 	const char* GUIDE_TEX = "data\\texture\\guide_game.png";	// テクスチャのパス
 
 	const float GUIDE_WIDTH = 300.0f;	// ガイドの幅
@@ -62,7 +64,7 @@ CGame::~CGame()
 }
 
 //========================================
-//描画
+// シングルトン
 //========================================
 CGame* CGame::GetInstance()
 {
@@ -105,6 +107,9 @@ HRESULT CGame::Init(void)
 
 	// エネミー生成
 	CEnemy::Create(Constance::ENEMY_TXT);
+
+	// マスク生成
+	CMask::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	// フィールド生成
 	CField::Create();

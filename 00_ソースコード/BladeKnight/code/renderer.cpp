@@ -147,23 +147,6 @@ void CRenderer::Draw(void)
 	//画面クリア(バックバッファとZバッファ、ステンシルバッファのクリア)
 	m_pD3DDevice->Clear(0, nullptr, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
 
-	//ステンシルバッファ有効
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-
-	//ステンシルバッファと比較する参照値の設定 => ref
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILREF, 0x01);
-
-	//ステンシルバッファの値に対してのマスク設定 => 0xff(全て真)
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILMASK, 0xff);
-
-	//ステンシルバッファの比較方法 => (参照値 => ステンシルバッファの参照値)なら合格
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_GREATEREQUAL);
-
-	//ステンシルテスト結果に対しての反映設定
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
-
 	//描画開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{//描画開始が成功した場合
